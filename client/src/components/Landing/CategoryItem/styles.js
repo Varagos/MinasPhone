@@ -2,8 +2,11 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
+  stretch: { height: "100%" },
+  item: { display: "flex", flexDirection: "column" }, // KEY CHANGES
   main: {
     border: "1px solid #D3D3D3",
+    height: "100%",
     color: "#000",
     backgroundColor: "white",
     "&:hover": {

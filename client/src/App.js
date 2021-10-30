@@ -76,12 +76,18 @@ const App = () => {
 
   const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
     try {
-      const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
+      const incomingOrder = await commerce.checkout.capture(
+        checkoutTokenId,
+        newOrder
+      );
 
       setOrder(incomingOrder);
       refreshCart();
     } catch (error) {
-      setErrorMessage("There was an error capturing checkout", error.data.error.message);
+      setErrorMessage(
+        "There was an error capturing checkout",
+        error.data.error.message
+      );
     }
   };
   const fetchCategories = async () => {
@@ -109,7 +115,10 @@ const App = () => {
         <AppBreadcrumb />
         <Switch>
           <Route exact path='/'>
-            <Landing />
+            <Landing
+              recommendedProducts={products}
+              onAddToCart={handleAddToCart}
+            />
           </Route>
           <Route exact path='/products'>
             <ProductsPage {...productsProps} />

@@ -15,4 +15,6 @@ export default makeStyles((theme) => ({
     paddingBottom: "3px",
     marginBottom: "40px",
   },
+  stretch: { height: "100%" },
+  item: { display: "flex", flexDirection: "column" }, // KEY CHANGES
 }));

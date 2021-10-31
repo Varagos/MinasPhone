@@ -1,0 +1,39 @@
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{  
+    "email": "test@admin.org", 
+    "password": "changeme" 
+}
+
+###
+
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{ 
+    "password": "changeme", 
+    "email": "customer@test.org",
+    "firstName": "Mark",
+    "lastName": "Mark",
+    "role": "admin",
+    "telephone": "6978756666"
+}
+
+###
+
+GET http://localhost:3000/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImN1c3RvbWVyQHRlc3Qub3JnIiwic3ViIjoiNzhmZmYzYTktZDJjYS00M2I3LTk5NmYtNmIwOTkxMTk0MWI1Iiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNjM1Njc2NTU0LCJleHAiOjE2MzU2ODAxNTR9.xqDLu0CpNM80BpKDj0uG76IMBB4uVB3bX-TTlyZhiV4
+
+###
+
+
+GET http://localhost:3000/users/dadad/addresses
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYzNTYwMzUyNCwiZXhwIjoxNjM1NjA3MTI0fQ.Q5lTQJEXBZpzPpYG6gL7Z9nt2h4Q8ueHKfcoOncb35M
+
+###
+
+POST http://localhost:3000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYzNTYwMzUyNCwiZXhwIjoxNjM1NjA3MTI0fQ.Q5lTQJEXBZpzPpYG6gL7Z9nt2h4Q8ueHKfcoOncb35M
+
+###

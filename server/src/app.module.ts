@@ -1,3 +1,7 @@
+import { Discount } from './discounts/entities/discount.entity';
+import { Inventory } from './products/entities/inventory.entity';
+import { Category } from './categories/entities/category.entity';
+import { Product } from './products/entities/product.entity';
 import { UserPayment } from './users/entities/payment.entity';
 import { UserAddress } from './users/entities/address.entity';
 import { User } from './users/entities/user.entity';
@@ -8,6 +12,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ProductsModule } from './products/products.module';
+import { CategoriesModule } from './categories/categories.module';
+import { DiscountsModule } from './discounts/discounts.module';
 
 @Module({
   imports: [
@@ -18,11 +25,22 @@ import { AuthModule } from './auth/auth.module';
       username: 'user',
       password: 'password',
       database: 'db',
-      entities: [User, UserAddress, UserPayment],
+      entities: [
+        User,
+        UserAddress,
+        UserPayment,
+        Product,
+        Inventory,
+        Category,
+        Discount,
+      ],
       synchronize: true, // false for production
     }),
     UsersModule,
     AuthModule,
+    ProductsModule,
+    CategoriesModule,
+    DiscountsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

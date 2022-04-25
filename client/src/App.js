@@ -1,26 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { commerce } from "./components/lib/commerce";
-import {
-  Landing,
-  Navbar,
-  Cart,
-  Checkout,
-  Footer,
-  AppBreadcrumb,
-  Category,
-  ProductsPage,
-} from "./components";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { commerce } from './components/lib/commerce';
+import { Landing, Navbar, Cart, Checkout, Footer, AppBreadcrumb, Category, ProductsPage } from './components';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Register from './components/Register/Register';
 
 const App = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({});
   const [order, setOrder] = useState({});
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [productsLoading, setProductsLoading] = useState(false);
 
   const fetchProducts = async (slug = null) => {
-    console.log("fetching products with slug:", slug);
+    console.log('fetching products with slug:', slug);
 
     setProductsLoading(true);
     let data;
@@ -76,18 +68,12 @@ const App = () => {
 
   const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
     try {
-      const incomingOrder = await commerce.checkout.capture(
-        checkoutTokenId,
-        newOrder
-      );
+      const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
 
       setOrder(incomingOrder);
       refreshCart();
     } catch (error) {
-      setErrorMessage(
-        "There was an error capturing checkout",
-        error.data.error.message
-      );
+      setErrorMessage('There was an error capturing checkout', error.data.error.message);
     }
   };
   const fetchCategories = async () => {
@@ -114,19 +100,16 @@ const App = () => {
         <Navbar totalItems={cart.total_items} />
         <AppBreadcrumb />
         <Switch>
-          <Route exact path='/'>
-            <Landing
-              recommendedProducts={products}
-              onAddToCart={handleAddToCart}
-            />
+          <Route exact path="/">
+            <Landing recommendedProducts={products} onAddToCart={handleAddToCart} />
           </Route>
-          <Route exact path='/products'>
+          <Route exact path="/products">
             <ProductsPage {...productsProps} />
           </Route>
-          <Route exact path='/category/:category_id'>
+          <Route exact path="/category/:category_id">
             <Category {...productsProps} />
           </Route>
-          <Route exact path='/cart'>
+          <Route exact path="/cart">
             <Cart
               cart={cart}
               handleUpdateCartQty={handleUpdateCartQty}
@@ -134,13 +117,11 @@ const App = () => {
               handleEmptyCart={handleEmptyCart}
             />
           </Route>
-          <Route exact path='/checkout'>
-            <Checkout
-              cart={cart}
-              order={order}
-              onCaptureCheckout={handleCaptureCheckout}
-              error={errorMessage}
-            />
+          <Route exact path="/checkout">
+            <Checkout cart={cart} order={order} onCaptureCheckout={handleCaptureCheckout} error={errorMessage} />
+          </Route>
+          <Route exact path="/register">
+            <Register />
           </Route>
           <Route render={() => <h1>Not found!</h1>} />
         </Switch>

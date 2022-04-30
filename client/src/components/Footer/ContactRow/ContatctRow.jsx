@@ -1,10 +1,10 @@
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography } from '@mui/material';
 const ContactRow = ({ icon, header, details }) => {
   return (
     <Box py={1}>
       <Box>
         {icon}
-        <Box pl={2} style={{ display: "inline-block" }}>
+        <Box pl={2} style={{ display: 'inline-block' }}>
           <Typography>{header}</Typography>
         </Box>
       </Box>

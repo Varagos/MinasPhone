@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Paper,
   Stepper,
@@ -9,20 +9,21 @@ import {
   Divider,
   Button,
   CssBaseline,
-} from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
+} from '@mui/material';
+import { Link, useHistory } from 'react-router-dom';
 
-import { commerce } from "../../lib/commerce";
-import AddressForm from "../AddressForm";
-import PaymentForm from "../PaymentForm";
+import { commerce } from '../../lib/commerce';
+import AddressForm from '../AddressForm';
+import PaymentForm from '../PaymentForm';
 
-import useStyles from "./styles";
+import useStyles from './styles';
+import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
 
-const steps = ["Shipping address", "Payment details"];
+const steps = ['Shipping address', 'Payment details'];
 
-const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
+const Checkout = ({ cart, order, onCaptureCheckout, error }: any) => {
   const [activeStep, setActiveStep] = useState(0);
-  const [checkoutToken, setCheckoutToken] = useState(null);
+  const [checkoutToken, setCheckoutToken] = useState<CheckoutToken | null>(null);
   const [shippingData, setShippingData] = useState({});
   const classes = useStyles();
   const history = useHistory();
@@ -30,11 +31,11 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
   useEffect(() => {
     const generateToken = async () => {
       try {
-        const token = await commerce.checkout.generateToken(cart.id, { type: "cart" });
+        const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
 
         setCheckoutToken(token);
       } catch (error) {
-        history.pushState("/");
+        (history as any).pushState('/');
       }
     };
 
@@ -44,24 +45,24 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
-  const next = (data) => {
-    console.log("NEXT function", data);
+  const next = (data: any) => {
+    console.log('NEXT function', data);
     setShippingData(data);
     nextStep();
   };
 
-  let Confirmation = () =>
+  const Confirmation = () =>
     order.customer ? (
       <>
         <div>
-          <Typography variant='h5'>
+          <Typography variant="h5">
             Thank you for your purchase, {order.customer.firstname} {order.customer.lastname}
           </Typography>
           <Divider className={classes.divider} />
-          <Typography variant='subtitle2'>Order ref: {order.customer_reference}</Typography>
+          <Typography variant="subtitle2">Order ref: {order.customer_reference}</Typography>
         </div>
         <br />
-        <Button component={Link} to='/' variant='outlined' type='button'>
+        <Button component={Link} to="/" variant="outlined" type="button">
           Back to Home
         </Button>
       </>
@@ -73,9 +74,9 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 
   if (error) {
     <>
-      <Typography variant='h5'>Error: {error}</Typography>
+      <Typography variant="h5">Error: {error}</Typography>
       <br />
-      <Button component={Link} to='/' variant='outlined' type='button'>
+      <Button component={Link} to="/" variant="outlined" type="button">
         Back to Home
       </Button>
     </>;
@@ -100,7 +101,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
       <div className={classes.toolbar} />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-          <Typography variant='h4' align='center'>
+          <Typography variant="h4" align="center">
             Checkout
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>

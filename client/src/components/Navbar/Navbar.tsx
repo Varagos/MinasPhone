@@ -1,26 +1,35 @@
 import { useState } from 'react';
-import { AppBar, Toolbar, IconButton, Badge, Typography, Button, Box, SwipeableDrawer } from '@material-ui/core';
-import { ShoppingCart, Menu as MenuIcon, SettingsInputAntennaTwoTone } from '@material-ui/icons';
 import { Link, useLocation } from 'react-router-dom';
-import { Phone, PersonOutline } from '@material-ui/icons';
-
 import newLogo from '../../assets/free-logo-design (1).png';
 import useStyles from './styles';
 import AppDrawer from './AppDrawer/AppDrawer';
+import { AppBar, Badge, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
+import { PersonOutline, Phone, ShoppingCart, Menu as MenuIcon } from '@mui/icons-material';
+import LoginForm from '../Register/LoginDialog/LoginForm';
 
-const Navbar = ({ totalItems }) => {
+const Navbar = ({ totalItems }: any) => {
   const classes = useStyles();
   const location = useLocation();
   const [anchor, setAnchor] = useState(false);
 
-  const toggleDrawer = (open) => (event) => {
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const toggleDrawer = (open: any) => (event: any) => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
     setAnchor(open);
   };
 
-  function activeClass(currentPath) {
+  function activeClass(currentPath: any) {
     if (location.pathname === currentPath) return classes.navLinkHome;
     return classes.navLink;
   }
@@ -38,15 +47,15 @@ const Navbar = ({ totalItems }) => {
           <Box>
             <PersonOutline fontSize="medium" color="primary" style={{ verticalAlign: 'bottom', paddingBottom: 1 }} />
             <Box ml={1} style={{ display: 'inline-block' }} color="text.disabled">
-              <Typography>
-                <Link className={classes.authLink} to="/login">
+              {/* <Typography> */}
+              {/* <Link className={classes.authLink} to="/login">
                   Σύνδεση
                 </Link>{' '}
                 ή{' '}
                 <Link className={classes.authLink} to="/signup">
                   Δημιουργία Λογαριασμού
-                </Link>
-              </Typography>
+                </Link> */}
+              {/* </Typography> */}
             </Box>
           </Box>
         </Toolbar>
@@ -79,8 +88,20 @@ const Navbar = ({ totalItems }) => {
               ALL PRODUCTS
             </Button>
           </Box>
+          <div>
+            <IconButton aria-label="Login user" color="inherit" onClick={handleClickOpen}>
+              <Badge badgeContent={totalItems} color="secondary">
+                <PersonOutline
+                  fontSize="medium"
+                  // color="black"
+                  style={{ verticalAlign: 'bottom', paddingBottom: 1 }}
+                />
+              </Badge>
+            </IconButton>
+          </div>
+          <LoginForm open={open} handleClose={handleClose} />
           {location.pathname !== '/cart' && (
-            <div className={classes.button}>
+            <div>
               <IconButton component={Link} to="/cart" aria-label="Show cart items" color="inherit">
                 <Badge badgeContent={totalItems} color="secondary">
                   <ShoppingCart />

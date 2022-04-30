@@ -1,20 +1,24 @@
-import { Container, Typography, Button, Grid, Box } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import CartItem from "./CartItem/CartItem";
+import { Container, Typography, Button, Grid, Box } from '@mui/material';
+import { Link } from 'react-router-dom';
+import CartItem from './CartItem/CartItem';
 
-import useStyles from "./styles";
+import useStyles from './styles';
 
 const Cart = ({ cart, handleUpdateCartQty, handleRemoveFromCard, handleEmptyCart }) => {
   const classes = useStyles();
 
   const EmptyCart = () => (
-    <Typography variant='subtitle1'>
-      You have no items in your shopping cart,
-      <Link to='/' className={classes.link}>
-        {" "}
-        start adding some!
-      </Link>
-    </Typography>
+    <div style={{ minHeight: '60vh' }}>
+      <Typography variant="h6">Δεν υπάρχει τίποτα στο καλάθι σου.</Typography>
+      <Typography variant="subtitle1">
+        Κάποιος πρέπει να ψωνίσει αυτά τα υπέροχα προϊόντα!
+        <br />
+        <Link to="/" className={classes.link}>
+          {' '}
+          Ανακάλυψε τα!
+        </Link>
+      </Typography>
+    </div>
   );
 
   const FilledCart = () => (
@@ -22,35 +26,31 @@ const Cart = ({ cart, handleUpdateCartQty, handleRemoveFromCard, handleEmptyCart
       <Grid container spacing={3}>
         {cart.line_items.map((item) => (
           <Grid item xs={12} sm={4} key={item.id}>
-            <CartItem
-              item={item}
-              onUpdateCartQty={handleUpdateCartQty}
-              onRemoveFromCart={handleRemoveFromCard}
-            />
+            <CartItem item={item} onUpdateCartQty={handleUpdateCartQty} onRemoveFromCart={handleRemoveFromCard} />
           </Grid>
         ))}
       </Grid>
       <div className={classes.cardDetails}>
-        <Typography variant='h4'>Subtotal: {cart.subtotal.formatted_with_symbol}</Typography>
+        <Typography variant="h4">Subtotal: {cart.subtotal.formatted_with_symbol}</Typography>
         <div>
           <Button
             className={classes.emptyButton}
-            size='large'
-            type='button'
-            variant='contained'
-            color='secondary'
+            size="large"
+            type="button"
+            variant="contained"
+            color="secondary"
             onClick={handleEmptyCart}
           >
             Empty Cart
           </Button>
           <Button
             component={Link}
-            to='/checkout'
+            to="/checkout"
             className={classes.checkoutButton}
-            size='large'
-            type='button'
-            variant='contained'
-            color='primary'
+            size="large"
+            type="button"
+            variant="contained"
+            color="primary"
           >
             Checkout
           </Button>
@@ -60,12 +60,12 @@ const Cart = ({ cart, handleUpdateCartQty, handleRemoveFromCard, handleEmptyCart
   );
 
   console.log(cart.line_items);
-  if (!cart.line_items) return "Loading...";
+  if (!cart.line_items) return <div>"Loading..."</div>;
 
   return (
-    <Container>
+    <Container sx={{ py: 2 }}>
       {/* <div className={classes.toolbar} /> */}
-      <Typography className={classes.title} variant='h3' gutterBottom>
+      <Typography className={classes.title} variant="h3" gutterBottom>
         Your shopping Cart
       </Typography>
       {!cart.line_items.length ? <EmptyCart /> : <FilledCart />}

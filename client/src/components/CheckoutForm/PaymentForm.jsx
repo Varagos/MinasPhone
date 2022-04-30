@@ -1,9 +1,9 @@
-import React from "react";
-import { Typography, Button, Divider } from "@material-ui/core";
-import { Elements, CardElement, ElementsConsumer } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import React from 'react';
+import { Typography, Button, Divider } from '@mui/material';
+import { Elements, CardElement, ElementsConsumer } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
-import Review from "./Review";
+import Review from './Review';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
@@ -16,7 +16,7 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
     const cardElement = elements.getElement(CardElement);
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
+      type: 'card',
       card: cardElement,
     });
 
@@ -31,7 +31,7 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
           email: shippingData.email,
         },
         shipping: {
-          name: "Primary",
+          name: 'Primary',
           street: shippingData.address1,
           town_city: shippingData.city,
           county_state: shippingData.shippingSubdivision,
@@ -40,7 +40,7 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
         },
         fulfillment: { shipping_method: shippingData.shippingOption },
         payment: {
-          gateway: "stripe",
+          gateway: 'stripe',
           stripe: {
             payment_method_id: paymentMethod.id,
           },
@@ -57,7 +57,7 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
     <>
       <Review checkoutToken={checkoutToken} />
       <Divider />
-      <Typography variant='h6' gutterBottom style={{ margin: "20px 0" }}>
+      <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>
         Payment method
       </Typography>
       <Elements stripe={stripePromise}>
@@ -66,11 +66,11 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
             <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
               <CardElement />
               <br /> <br />
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Button variant='outlined' onClick={backStep}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Button variant="outlined" onClick={backStep}>
                   Back
                 </Button>
-                <Button type='submit' variant='contained' disabled={!stripe} color='primary'>
+                <Button type="submit" variant="contained" disabled={!stripe} color="primary">
                   Pay {checkoutToken.live.subtotal.formatted_with_symbol}
                 </Button>
               </div>

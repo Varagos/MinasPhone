@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { commerce } from './components/lib/commerce';
-import { Landing, Navbar, Cart, Checkout, Footer, AppBreadcrumb, Category, ProductsPage } from './components';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Register from './components/Register/Register';
+import { Cart as CartType } from '@chec/commerce.js/types/cart';
+import { CheckoutCapture } from '@chec/commerce.js/types/checkout-capture';
+import { Product } from '@chec/commerce.js/types/product';
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import { AppBreadcrumb, Cart, Category, Checkout, Footer, Landing, Navbar, ProductsPage } from '../components';
+import { commerce } from '../components/lib/commerce';
+import Register from '../components/Register/Register';
+import CssBaseline from '@mui/material/CssBaseline';
+import { useAppDispatch } from '../redux/store';
+import { categoriesFetched } from '../redux/categoriesSlice';
+import { productsFetched } from '../redux/productsSlice';
 
-const App = () => {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState({});
+const Routes = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [cart, setCart] = useState<Partial<CartType>>({});
   const [order, setOrder] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
   const [productsLoading, setProductsLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
   const fetchProducts = async (slug = null) => {
     console.log('fetching products with slug:', slug);
 
     setProductsLoading(true);
-    let data;
+    let data: Product[];
     if (!slug) {
       ({ data } = await commerce.products.list());
     } else {
@@ -27,6 +35,7 @@ const App = () => {
     data = data || [];
     setProducts(data);
     setProductsLoading(false);
+    dispatch(productsFetched(JSON.parse(JSON.stringify(data))));
   };
 
   const fetchCart = async () => {
@@ -35,20 +44,20 @@ const App = () => {
     setCart(cart);
   };
 
-  const handleAddToCart = async (productId, quantity) => {
+  const handleAddToCart = async (productId: string, quantity: number) => {
     const { cart } = await commerce.cart.add(productId, quantity);
 
     setCart(cart);
   };
 
-  const handleUpdateCartQty = async (productId, quantity) => {
+  const handleUpdateCartQty = async (productId: string, quantity: number) => {
     console.log(productId, quantity);
     const { cart } = await commerce.cart.update(productId, { quantity });
 
     setCart(cart);
   };
 
-  const handleRemoveFromCard = async (productId) => {
+  const handleRemoveFromCard = async (productId: string) => {
     const { cart } = await commerce.cart.remove(productId);
 
     setCart(cart);
@@ -66,19 +75,20 @@ const App = () => {
     setCart(newCart);
   };
 
-  const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
+  const handleCaptureCheckout = async (checkoutTokenId: string, newOrder: CheckoutCapture) => {
     try {
       const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
 
       setOrder(incomingOrder);
       refreshCart();
     } catch (error) {
-      setErrorMessage('There was an error capturing checkout', error.data.error.message);
+      setErrorMessage('There was an error capturing checkout' + (error as any).data.error.message);
     }
   };
   const fetchCategories = async () => {
-    const category = await commerce.categories.list();
-    console.log(category);
+    const result = await commerce.categories.list();
+    console.log('categories:', result);
+    dispatch(categoriesFetched(result.data));
   };
 
   useEffect(() => {
@@ -120,9 +130,9 @@ const App = () => {
           <Route exact path="/checkout">
             <Checkout cart={cart} order={order} onCaptureCheckout={handleCaptureCheckout} error={errorMessage} />
           </Route>
-          <Route exact path="/register">
+          {/* <Route exact path="/register">
             <Register />
-          </Route>
+          </Route> */}
           <Route render={() => <h1>Not found!</h1>} />
         </Switch>
         <Footer />
@@ -131,4 +141,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Routes;

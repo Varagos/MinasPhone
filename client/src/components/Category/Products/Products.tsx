@@ -1,16 +1,16 @@
-import { Box, Container, Grid, Hidden, Typography } from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
 
-import Product from './Product/Product';
+import ProductCard from './ProductCard/ProductCard';
 import useStyles from './styles';
 import EmptyLogo from '../../../assets/undraw_empty_xct9.svg';
 import Filter from '../Filter/Filter';
+import { Link } from 'react-router-dom';
 
 type ProductsType = {
   products: any[];
-  onAddToCart: any;
 };
 
-function Products({ products, onAddToCart }: ProductsType) {
+function Products({ products }: ProductsType) {
   const classes = useStyles();
 
   if (!products.length) {
@@ -39,7 +39,7 @@ function Products({ products, onAddToCart }: ProductsType) {
           <Grid item container xs={12} sm={9} spacing={4}>
             {products.map((product) => (
               <Grid item key={product.id} xs={12} md={6} lg={4}>
-                <Product product={product} onAddToCart={onAddToCart} />
+                <ProductCard product={product} />
               </Grid>
             ))}
           </Grid>

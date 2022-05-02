@@ -6,13 +6,16 @@ import AppDrawer from './AppDrawer/AppDrawer';
 import { AppBar, Badge, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import { PersonOutline, Phone, ShoppingCart, Menu as MenuIcon } from '@mui/icons-material';
 import LoginForm from '../Register/LoginDialog/LoginForm';
+import { useAppSelector } from '../../redux/store';
 
-const Navbar = ({ totalItems }: any) => {
+const Navbar = () => {
   const classes = useStyles();
   const location = useLocation();
   const [anchor, setAnchor] = useState(false);
 
   const [open, setOpen] = useState(false);
+
+  const cart = useAppSelector((state) => state.cart.data);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -90,20 +93,18 @@ const Navbar = ({ totalItems }: any) => {
           </Box>
           <div>
             <IconButton aria-label="Login user" color="inherit" onClick={handleClickOpen}>
-              <Badge badgeContent={totalItems} color="secondary">
-                <PersonOutline
-                  fontSize="medium"
-                  // color="black"
-                  style={{ verticalAlign: 'bottom', paddingBottom: 1 }}
-                />
-              </Badge>
+              <PersonOutline
+                fontSize="medium"
+                // color="black"
+                style={{ verticalAlign: 'bottom', paddingBottom: 1 }}
+              />
             </IconButton>
           </div>
           <LoginForm open={open} handleClose={handleClose} />
           {location.pathname !== '/cart' && (
             <div>
               <IconButton component={Link} to="/cart" aria-label="Show cart items" color="inherit">
-                <Badge badgeContent={totalItems} color="secondary">
+                <Badge badgeContent={cart?.total_items} color="secondary">
                   <ShoppingCart />
                 </Badge>
               </IconButton>

@@ -33,7 +33,7 @@ export default makeStyles(() => ({
     justifyContent: 'flex-end',
   },
   cardContent: {
-    display: 'flex',
-    justifyContent: 'space-between',
+    // display: 'flex',
+    // justifyContent: 'space-between',
   },
 }));

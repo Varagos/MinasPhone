@@ -7,9 +7,8 @@ type CategoryProps = {
   products: any[];
   fetchProducts: any;
   productsLoading: boolean;
-  onAddToCart: any;
 };
-const Category = ({ products, fetchProducts, productsLoading, onAddToCart }: CategoryProps) => {
+const Category = ({ products, fetchProducts, productsLoading }: CategoryProps) => {
   const params = useParams<any>();
   console.log('params', params);
   const { category_id: categoryId } = params;
@@ -19,7 +18,7 @@ const Category = ({ products, fetchProducts, productsLoading, onAddToCart }: Cat
     fetchProducts(categoryId);
   }, [categoryId]);
 
-  return productsLoading ? <Spinner /> : <Products products={products} onAddToCart={onAddToCart} />;
+  return productsLoading ? <Spinner /> : <Products products={products} />;
 };
 
 export default Category;

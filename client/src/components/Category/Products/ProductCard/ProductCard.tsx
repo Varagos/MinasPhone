@@ -2,17 +2,30 @@ import { Card, CardMedia, CardContent, CardActions, Typography, IconButton, Card
 import { AddShoppingCart } from '@mui/icons-material';
 
 import useStyles from './styles';
+import { Link } from 'react-router-dom';
+import { Product as ProductType } from '@chec/commerce.js/types/product';
+import { useAppDispatch } from '../../../../redux/store';
+import { addToCart } from '../../../../redux/cartSlice';
 
-function Product({ product, onAddToCart }) {
+type ProductProps = {
+  product: ProductType;
+};
+
+function ProductCard({ product }: ProductProps) {
   const classes = useStyles();
+  const dispatch = useAppDispatch();
+
+  const handleAddToCart = (id: string, quantity = 1) => {
+    dispatch(addToCart({ productId: id, quantity }));
+  };
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea component={Link} to={`/products/${product.id}`}>
         <CardMedia component="img" className={classes.media} image={product.media.source} title={product.name} />
       </CardActionArea>
       <CardContent>
-        <div className={classes.CardContent}>
+        <div className={classes.cardContent}>
           <Typography display="inline" color="textSecondary" variant="h6" gutterBottom>
             {product.name}
           </Typography>
@@ -25,7 +38,7 @@ function Product({ product, onAddToCart }) {
             <Typography style={{ marginRight: 'auto', color: '#69b67c' }} variant="h6">
               {product.price.formatted_with_symbol}
             </Typography>
-            <IconButton aria-label="Add to Card" onClick={() => onAddToCart(product.id, 1)}>
+            <IconButton aria-label="Add to Card" onClick={() => handleAddToCart(product.id, 1)}>
               <AddShoppingCart />
             </IconButton>
           </CardActions>
@@ -35,4 +48,4 @@ function Product({ product, onAddToCart }) {
   );
 }
 
-export default Product;
+export default ProductCard;

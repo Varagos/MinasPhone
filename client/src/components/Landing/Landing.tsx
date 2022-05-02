@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import useStyles from './styles';
 import CategoryItem from './CategoryItem/CategoryItem';
-import Product from '../Category/Products/Product/Product';
+import ProductCard from '../Category/Products/ProductCard/ProductCard';
 import PhoneFix from '../../assets/undraw_phone_fix.svg';
 import Carousel from 'react-material-ui-carousel';
 
@@ -84,7 +84,7 @@ const Landing = ({ recommendedProducts, onAddToCart }: any) => {
           <Grid container justifyContent="center" spacing={2} alignItems="stretch">
             {shuffled.slice(0, 4).map((product: any) => (
               <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-                <Product product={product} onAddToCart={onAddToCart} />
+                <ProductCard product={product} />
               </Grid>
             ))}
           </Grid>

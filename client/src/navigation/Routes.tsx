@@ -10,6 +10,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useAppDispatch } from '../redux/store';
 import { categoriesFetched } from '../redux/categoriesSlice';
 import { productsFetched } from '../redux/productsSlice';
+import ProductPage from '../components/Category/Products/Product/Product';
+import { fetchCart } from '../redux/cartSlice';
 
 const Routes = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -38,11 +40,11 @@ const Routes = () => {
     dispatch(productsFetched(JSON.parse(JSON.stringify(data))));
   };
 
-  const fetchCart = async () => {
-    const cart = await commerce.cart.retrieve();
+  // const fetchCart = async () => {
+  //   const cart = await commerce.cart.retrieve();
 
-    setCart(cart);
-  };
+  //   setCart(cart);
+  // };
 
   const handleAddToCart = async (productId: string, quantity: number) => {
     const { cart } = await commerce.cart.add(productId, quantity);
@@ -57,7 +59,7 @@ const Routes = () => {
     setCart(cart);
   };
 
-  const handleRemoveFromCard = async (productId: string) => {
+  const handleRemoveFromCart = async (productId: string) => {
     const { cart } = await commerce.cart.remove(productId);
 
     setCart(cart);
@@ -94,20 +96,20 @@ const Routes = () => {
   useEffect(() => {
     fetchCategories();
     fetchProducts();
-    fetchCart();
+    // fetchCart();
+    dispatch(fetchCart());
   }, []);
 
   const productsProps = {
     products,
     productsLoading,
     fetchProducts,
-    onAddToCart: handleAddToCart,
   };
 
   return (
     <Router>
       <div>
-        <Navbar totalItems={cart.total_items} />
+        <Navbar />
         <AppBreadcrumb />
         <Switch>
           <Route exact path="/">
@@ -119,11 +121,14 @@ const Routes = () => {
           <Route exact path="/category/:category_id">
             <Category {...productsProps} />
           </Route>
+          <Route exact path="/products/:product_id">
+            <ProductPage />
+          </Route>
           <Route exact path="/cart">
             <Cart
               cart={cart}
               handleUpdateCartQty={handleUpdateCartQty}
-              handleRemoveFromCard={handleRemoveFromCard}
+              handleRemoveFromCart={handleRemoveFromCart}
               handleEmptyCart={handleEmptyCart}
             />
           </Route>

@@ -1,11 +1,21 @@
 import { Container, Typography, Button, Grid, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { emptyCart, removeFromCart } from '../../redux/cartSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 import CartItem from './CartItem/CartItem';
-
 import useStyles from './styles';
 
-const Cart = ({ cart, handleUpdateCartQty, handleRemoveFromCart, handleEmptyCart }) => {
+const Cart = () => {
   const classes = useStyles();
+
+  const cart = useAppSelector((state) => state.cart.data);
+  const dispatch = useAppDispatch();
+
+  const handleEmptyCart = async () => {
+    dispatch(emptyCart());
+  };
+
+  if (!cart) return <div>"Loading..."</div>;
 
   const EmptyCart = () => (
     <div style={{ minHeight: '60vh' }}>
@@ -26,7 +36,7 @@ const Cart = ({ cart, handleUpdateCartQty, handleRemoveFromCart, handleEmptyCart
       <Grid container spacing={3}>
         {cart.line_items.map((item) => (
           <Grid item xs={12} sm={4} key={item.id}>
-            <CartItem item={item} onUpdateCartQty={handleUpdateCartQty} onRemoveFromCart={handleRemoveFromCart} />
+            <CartItem item={item} />
           </Grid>
         ))}
       </Grid>

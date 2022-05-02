@@ -2,7 +2,7 @@ import React from 'react';
 import { TextField, Grid } from '@mui/material';
 import { useFormContext, Controller } from 'react-hook-form';
 
-const FormInput = ({ name, label, required }) => {
+const FormInput = ({ name, label, required }: any) => {
   const { control } = useFormContext();
   const isError = false;
 

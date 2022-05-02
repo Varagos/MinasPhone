@@ -7,7 +7,7 @@ import ProductCard from '../Category/Products/ProductCard/ProductCard';
 import PhoneFix from '../../assets/undraw_phone_fix.svg';
 import Carousel from 'react-material-ui-carousel';
 
-const Landing = ({ recommendedProducts, onAddToCart }: any) => {
+const Landing = ({ recommendedProducts }: any) => {
   const classes = useStyles();
   const items = [
     {

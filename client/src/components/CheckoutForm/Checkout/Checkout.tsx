@@ -13,20 +13,26 @@ import {
 import { Link, useHistory } from 'react-router-dom';
 
 import { commerce } from '../../lib/commerce';
-import AddressForm from '../AddressForm';
-import PaymentForm from '../PaymentForm';
+import Account from '../Account';
+import PaymentForm from '../Payment/PaymentForm';
 
 import useStyles from './styles';
 import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
+import { useAppSelector } from '../../../redux/store';
+import Address from '../Address';
 
-const steps = ['Shipping address', 'Payment details'];
+const steps = ['Λογαριασμός', 'Διέυθυνση', 'Πληρωμή'];
 
-const Checkout = ({ cart, order, onCaptureCheckout, error }: any) => {
+const Checkout = ({ order, onCaptureCheckout, error }: any) => {
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState<CheckoutToken | null>(null);
-  const [shippingData, setShippingData] = useState({});
+  const [shippingData, setShippingData] = useState<any>({});
   const classes = useStyles();
   const history = useHistory();
+
+  const cart = useAppSelector((state) => state.cart.data);
+
+  if (!cart) return <div>No cart</div>;
 
   useEffect(() => {
     const generateToken = async () => {
@@ -84,11 +90,19 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }: any) => {
 
   const Form = () =>
     activeStep === 0 ? (
-      <AddressForm checkoutToken={checkoutToken} next={next} />
+      <Account checkoutToken={checkoutToken} next={next} />
+    ) : activeStep === 1 ? (
+      <Address
+        shippingData={shippingData}
+        checkoutToken={checkoutToken}
+        next={next}
+        backStep={backStep}
+        onCaptureCheckout={onCaptureCheckout}
+      />
     ) : (
       <PaymentForm
         shippingData={shippingData}
-        checkoutToken={checkoutToken}
+        checkoutToken={checkoutToken!}
         nextStep={nextStep}
         backStep={backStep}
         onCaptureCheckout={onCaptureCheckout}
@@ -100,7 +114,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }: any) => {
       <CssBaseline />
       <div className={classes.toolbar} />
       <main className={classes.layout}>
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} sx={{ mx: 20 }}>
           <Typography variant="h4" align="center">
             Checkout
           </Typography>

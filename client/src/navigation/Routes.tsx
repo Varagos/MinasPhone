@@ -11,11 +11,11 @@ import { useAppDispatch } from '../redux/store';
 import { categoriesFetched } from '../redux/categoriesSlice';
 import { productsFetched } from '../redux/productsSlice';
 import ProductPage from '../components/Category/Products/Product/Product';
-import { fetchCart } from '../redux/cartSlice';
+import { fetchCart, refreshCart } from '../redux/cartSlice';
 
 const Routes = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [cart, setCart] = useState<Partial<CartType>>({});
+  // const [cart, setCart] = useState<Partial<CartType>>({});
   const [order, setOrder] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
   const [productsLoading, setProductsLoading] = useState(false);
@@ -40,49 +40,12 @@ const Routes = () => {
     dispatch(productsFetched(JSON.parse(JSON.stringify(data))));
   };
 
-  // const fetchCart = async () => {
-  //   const cart = await commerce.cart.retrieve();
-
-  //   setCart(cart);
-  // };
-
-  const handleAddToCart = async (productId: string, quantity: number) => {
-    const { cart } = await commerce.cart.add(productId, quantity);
-
-    setCart(cart);
-  };
-
-  const handleUpdateCartQty = async (productId: string, quantity: number) => {
-    console.log(productId, quantity);
-    const { cart } = await commerce.cart.update(productId, { quantity });
-
-    setCart(cart);
-  };
-
-  const handleRemoveFromCart = async (productId: string) => {
-    const { cart } = await commerce.cart.remove(productId);
-
-    setCart(cart);
-  };
-
-  const handleEmptyCart = async () => {
-    const { cart } = await commerce.cart.empty();
-
-    setCart(cart);
-  };
-
-  const refreshCart = async () => {
-    const newCart = await commerce.cart.refresh();
-
-    setCart(newCart);
-  };
-
   const handleCaptureCheckout = async (checkoutTokenId: string, newOrder: CheckoutCapture) => {
     try {
       const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
 
       setOrder(incomingOrder);
-      refreshCart();
+      dispatch(refreshCart());
     } catch (error) {
       setErrorMessage('There was an error capturing checkout' + (error as any).data.error.message);
     }
@@ -113,7 +76,7 @@ const Routes = () => {
         <AppBreadcrumb />
         <Switch>
           <Route exact path="/">
-            <Landing recommendedProducts={products} onAddToCart={handleAddToCart} />
+            <Landing recommendedProducts={products} />
           </Route>
           <Route exact path="/products">
             <ProductsPage {...productsProps} />
@@ -125,15 +88,10 @@ const Routes = () => {
             <ProductPage />
           </Route>
           <Route exact path="/cart">
-            <Cart
-              cart={cart}
-              handleUpdateCartQty={handleUpdateCartQty}
-              handleRemoveFromCart={handleRemoveFromCart}
-              handleEmptyCart={handleEmptyCart}
-            />
+            <Cart />
           </Route>
           <Route exact path="/checkout">
-            <Checkout cart={cart} order={order} onCaptureCheckout={handleCaptureCheckout} error={errorMessage} />
+            <Checkout order={order} onCaptureCheckout={handleCaptureCheckout} error={errorMessage} />
           </Route>
           {/* <Route exact path="/register">
             <Register />

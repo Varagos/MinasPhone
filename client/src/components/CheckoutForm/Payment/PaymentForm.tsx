@@ -139,7 +139,7 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
             icon={<CreditCardSharpIcon />}
             iconPosition="end"
             label="Κάρτα στο κατάστημα"
-            // disabled
+            disabled
             sx={{ textTransform: 'none', justifyContent: 'start' }}
             {...a11yProps(1)}
           />
@@ -147,6 +147,7 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
             icon={<PaymentsSharpIcon />}
             iconPosition="end"
             label="Πληρωμή με κάρτα"
+            disabled
             sx={{ textTransform: 'none', justifyContent: 'start' }}
             {...a11yProps(2)}
           />

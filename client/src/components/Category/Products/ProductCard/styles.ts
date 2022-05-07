@@ -15,9 +15,9 @@ export default makeStyles(() => ({
     transition: 'transform .6s, color .4s',
     '&:hover': {
       borderStyle: 'solid',
-      borderColor: '#ffce2a',
-      transform: 'translateY(-20px)',
-      color: '#ffce2a',
+      // borderColor: '#ffce2a',
+      // transform: 'translateY(-20px)',
+      // color: '#ffce2a',
     },
   },
   media: {

@@ -8,7 +8,7 @@ import { commerce } from '../lib/commerce';
 import FormInput from './FormInput';
 import { GetShippingOptionsResponse } from '@chec/commerce.js/features/checkout';
 
-const AddressForm = ({ checkoutToken, next }: any) => {
+const Account = ({ checkoutToken, next }: any) => {
   // const [shippingCountries, setShippingCountries] = useState<Record<string, string>>({});
   // const [shippingCountry, setShippingCountry] = useState('');
   // const [shippingSubdivisions, setShippingSubdivisions] = useState<Record<string, string>>({});
@@ -147,4 +147,4 @@ const AddressForm = ({ checkoutToken, next }: any) => {
   );
 };
 
-export default AddressForm;
+export default Account;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Cart as CartType } from '@chec/commerce.js/types/cart';
 import { CheckoutCapture } from '@chec/commerce.js/types/checkout-capture';
 import { Product } from '@chec/commerce.js/types/product';
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import { AppBreadcrumb, Cart, Category, Checkout, Footer, Landing, Navbar, ProductsPage } from '../components';
 import { commerce } from '../components/lib/commerce';
 import Register from '../components/Register/Register';
@@ -12,8 +12,10 @@ import { categoriesFetched } from '../redux/categoriesSlice';
 import { productsFetched } from '../redux/productsSlice';
 import ProductPage from '../components/Category/Products/Product/Product';
 import { fetchCart, refreshCart } from '../redux/cartSlice';
+import SuperTokens, { getSuperTokensRoutesForReactRouterDom } from 'supertokens-auth-react';
+import * as reactRouterDom from 'react-router-dom';
 
-const Routes = () => {
+const AppRoutes = () => {
   const [products, setProducts] = useState<Product[]>([]);
   // const [cart, setCart] = useState<Partial<CartType>>({});
   const [order, setOrder] = useState({});
@@ -74,34 +76,27 @@ const Routes = () => {
       <div>
         <Navbar />
         <AppBreadcrumb />
-        <Switch>
-          <Route exact path="/">
-            <Landing recommendedProducts={products} />
-          </Route>
-          <Route exact path="/products">
-            <ProductsPage {...productsProps} />
-          </Route>
-          <Route exact path="/category/:category_id">
-            <Category {...productsProps} />
-          </Route>
-          <Route exact path="/products/:product_id">
-            <ProductPage />
-          </Route>
-          <Route exact path="/cart">
-            <Cart />
-          </Route>
-          <Route exact path="/checkout">
-            <Checkout order={order} onCaptureCheckout={handleCaptureCheckout} error={errorMessage} />
-          </Route>
+        <Routes>
+          {/*This renders the login UI on the /auth route*/}
+          {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
+          <Route path="/" element={<Landing recommendedProducts={products} />}></Route>
+          <Route path="/products" element={<ProductsPage {...productsProps} />}></Route>
+          <Route path="/category/:category_id" element={<Category {...productsProps} />}></Route>
+          <Route path="/products/:product_id" element={<ProductPage />}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
+          <Route
+            path="/checkout"
+            element={<Checkout order={order} onCaptureCheckout={handleCaptureCheckout} error={errorMessage} />}
+          ></Route>
           {/* <Route exact path="/register">
             <Register />
           </Route> */}
-          <Route render={() => <h1>Not found!</h1>} />
-        </Switch>
+          <Route element={<h1>Not found!</h1>} />
+        </Routes>
         <Footer />
       </div>
     </Router>
   );
 };
 
-export default Routes;
+export default AppRoutes;

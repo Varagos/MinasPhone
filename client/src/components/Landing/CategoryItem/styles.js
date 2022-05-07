@@ -9,6 +9,7 @@ export default makeStyles((theme) => ({
     height: '100%',
     color: '#000',
     backgroundColor: 'white',
+    '-webkit-transition': 'transform 1s, color .4s',
     '&:hover': {
       borderColor: '#ffce2a',
       transform: 'translateY(-10px)',

@@ -10,7 +10,7 @@ import {
   Button,
   CssBaseline,
 } from '@mui/material';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { commerce } from '../../lib/commerce';
 import Account from '../Account';
@@ -28,7 +28,8 @@ const Checkout = ({ order, onCaptureCheckout, error }: any) => {
   const [checkoutToken, setCheckoutToken] = useState<CheckoutToken | null>(null);
   const [shippingData, setShippingData] = useState<any>({});
   const classes = useStyles();
-  const history = useHistory();
+  // const history = useHistory();
+  const navigate = useNavigate();
 
   const cart = useAppSelector((state) => state.cart.data);
 
@@ -41,7 +42,8 @@ const Checkout = ({ order, onCaptureCheckout, error }: any) => {
 
         setCheckoutToken(token);
       } catch (error) {
-        (history as any).pushState('/');
+        // (history as any).pushState('/');
+        navigate('/');
       }
     };
 

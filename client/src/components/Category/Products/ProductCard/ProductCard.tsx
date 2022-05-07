@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Product as ProductType } from '@chec/commerce.js/types/product';
 import { useAppDispatch } from '../../../../redux/store';
 import { addToCart } from '../../../../redux/cartSlice';
+import { useState } from 'react';
 
 type ProductProps = {
   product: ProductType;
@@ -14,13 +15,22 @@ type ProductProps = {
 function ProductCard({ product }: ProductProps) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
+  const [raised, setRaised] = useState<boolean>(false);
 
   const handleAddToCart = (id: string, quantity = 1) => {
     dispatch(addToCart({ productId: id, quantity }));
   };
 
   return (
-    <Card className={classes.root}>
+    <Card
+      className={classes.root}
+      raised={raised}
+      onMouseOver={() => setRaised(true)}
+      onMouseOut={() => setRaised(false)}
+      sx={{
+        borderRadius: '16px',
+      }}
+    >
       <CardActionArea component={Link} to={`/products/${product.id}`}>
         <CardMedia component="img" className={classes.media} image={product.media.source} title={product.name} />
       </CardActionArea>

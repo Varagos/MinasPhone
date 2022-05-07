@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Box, Divider, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import HighlightOff from '@mui/icons-material/HighlightOff';
 import Slider from '@mui/material/Slider';
+import { Co2Sharp } from '@mui/icons-material';
 
 function valuetext(value: number) {
   return `${value}€`;
@@ -10,6 +11,9 @@ function valuetext(value: number) {
 
 const Filter = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const { search, pathname } = useLocation();
+  console.log('paramsss', search);
 
   const [value, setValue] = useState<number[]>([0, 200]);
 
@@ -27,6 +31,34 @@ const Filter = () => {
   return (
     <div>
       <Box border={1} borderColor="grey.300" borderRadius="1%" p={4}>
+        {search && (
+          <Button
+            variant="outlined"
+            size="small"
+            fullWidth
+            sx={{
+              textTransform: 'none',
+              whiteSpace: 'nowrap',
+              textAlign: 'center',
+              my: 2,
+              px: 1,
+              color: 'white',
+              backgroundColor: 'black',
+              borderColor: 'black',
+              '&:hover': {
+                // color: 'black',
+                borderColor: 'black',
+                backgroundColor: '#3A3845',
+              },
+            }}
+            color="primary"
+            onClick={handleClear}
+            component={Link}
+            to={pathname}
+          >
+            Απαλοιφή φίλτρων
+          </Button>
+        )}
         <Typography variant="h6" gutterBottom>
           <strong>Κατασκευαστής</strong>
         </Typography>

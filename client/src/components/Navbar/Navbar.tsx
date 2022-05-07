@@ -3,10 +3,12 @@ import { Link, useLocation } from 'react-router-dom';
 import newLogo from '../../assets/free-logo-design (1).png';
 import useStyles from './styles';
 import AppDrawer from './AppDrawer/AppDrawer';
-import { AppBar, Badge, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
+import { AppBar, Badge, Box, Button, IconButton, Toolbar, Typography, useTheme } from '@mui/material';
+
 import { PersonOutline, Phone, ShoppingCart, Menu as MenuIcon } from '@mui/icons-material';
 import LoginForm from '../Register/LoginDialog/LoginForm';
 import { useAppSelector } from '../../redux/store';
+import { MainThemeType } from '../../App';
 
 const Navbar = () => {
   const classes = useStyles();
@@ -14,6 +16,7 @@ const Navbar = () => {
   const [anchor, setAnchor] = useState(false);
 
   const [open, setOpen] = useState(false);
+  const theme = useTheme<MainThemeType>();
 
   const cart = useAppSelector((state) => state.cart.data);
 
@@ -39,7 +42,15 @@ const Navbar = () => {
 
   return (
     <div>
-      <AppBar position="static" className={classes.helperBar}>
+      <AppBar
+        position="static"
+        className={classes.helperBar}
+        sx={
+          {
+            // backgroundColor: 'black'
+          }
+        }
+      >
         <Toolbar variant="dense" className={classes.helperToolBar}>
           <Box>
             <Phone fontSize="inherit" color="primary" />
@@ -110,7 +121,15 @@ const Navbar = () => {
               </IconButton>
             </div>
           )}
-          <IconButton color="inherit" aria-label="menu" className={classes.menuButton} onClick={toggleDrawer(true)}>
+          <IconButton
+            color="inherit"
+            aria-label="menu"
+            className={classes.menuButton}
+            onClick={toggleDrawer(true)}
+            sx={{
+              display: { xs: 'block', md: 'none' },
+            }}
+          >
             <Badge>
               <MenuIcon fontSize="large" />
             </Badge>

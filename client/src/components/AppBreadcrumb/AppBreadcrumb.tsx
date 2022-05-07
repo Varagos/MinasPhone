@@ -10,8 +10,6 @@ const breadcrumbNameMap: any = {
   '/category/accessories': 'Accessories',
   '/category': 'Category',
   '/products': 'Products',
-  '/login': 'Login',
-  '/signup': 'Signup',
   '/drafts': 'Drafts',
 };
 

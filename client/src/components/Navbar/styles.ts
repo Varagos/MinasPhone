@@ -2,23 +2,13 @@ import { alpha } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 import { MainThemeType } from '../../App';
-// import { makeStyles, alpha } from '@mui/styles';
 
 const drawerWidth = 0;
 
 // https://stackoverflow.com/questions/69263383/what-is-the-alternative-of-makestyles-for-material-ui-v-5
 export default makeStyles((theme: MainThemeType) => ({
   helperBar: {
-    backgroundColor: '#ffce2a',
-    // background: '#2E3B55',
-
-    padding: '0 60px',
     minHeight: '48px',
-    // backgroundColor: theme.palette.secondary.dark,
-    [theme.breakpoints.down('sm')]: {
-      padding: '5px 0px',
-      display: 'none',
-    },
   },
   helperToolBar: {
     justifyContent: 'space-between',

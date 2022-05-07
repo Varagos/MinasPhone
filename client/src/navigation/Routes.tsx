@@ -14,6 +14,8 @@ import ProductPage from '../components/Category/Products/Product/Product';
 import { fetchCart, refreshCart } from '../redux/cartSlice';
 import SuperTokens, { getSuperTokensRoutesForReactRouterDom } from 'supertokens-auth-react';
 import * as reactRouterDom from 'react-router-dom';
+import { EmailPasswordAuth } from 'supertokens-auth-react/recipe/emailpassword';
+import AdminDashboard from '../components/admin-dashboard/AdminDashboard';
 
 const AppRoutes = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -76,23 +78,34 @@ const AppRoutes = () => {
       <div>
         <Navbar />
         <AppBreadcrumb />
-        <Routes>
-          {/*This renders the login UI on the /auth route*/}
-          {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
-          <Route path="/" element={<Landing recommendedProducts={products} />}></Route>
-          <Route path="/products" element={<ProductsPage {...productsProps} />}></Route>
-          <Route path="/category/:category_id" element={<Category {...productsProps} />}></Route>
-          <Route path="/products/:product_id" element={<ProductPage />}></Route>
-          <Route path="/cart" element={<Cart />}></Route>
-          <Route
-            path="/checkout"
-            element={<Checkout order={order} onCaptureCheckout={handleCaptureCheckout} error={errorMessage} />}
-          ></Route>
-          {/* <Route exact path="/register">
+        <main style={{ minHeight: '80vh' }}>
+          <Routes>
+            {/*This renders the login UI on the /auth route*/}
+            {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
+            <Route path="/" element={<Landing recommendedProducts={products} />}></Route>
+            <Route path="/products" element={<ProductsPage {...productsProps} />}></Route>
+            <Route path="/category/:category_id" element={<Category {...productsProps} />}></Route>
+            <Route path="/products/:product_id" element={<ProductPage />}></Route>
+            <Route path="/cart" element={<Cart />}></Route>
+            <Route
+              path="/checkout"
+              element={<Checkout order={order} onCaptureCheckout={handleCaptureCheckout} error={errorMessage} />}
+            ></Route>
+            <Route
+              path="/dashboard"
+              element={
+                <EmailPasswordAuth>
+                  {/*Components that require to be protected by authentication*/}
+                  <AdminDashboard />
+                </EmailPasswordAuth>
+              }
+            />
+            {/* <Route exact path="/register">
             <Register />
           </Route> */}
-          <Route element={<h1>Not found!</h1>} />
-        </Routes>
+            <Route element={<h1>Not found!</h1>} />
+          </Routes>
+        </main>
         <Footer />
       </div>
     </Router>

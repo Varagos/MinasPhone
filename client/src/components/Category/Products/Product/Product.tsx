@@ -34,14 +34,17 @@ const Product = () => {
         <Grid container item xs={12} sm={6} sx={{ pt: 13 }} justifyContent="center">
           <Box
             component="img"
-            sx={
-              {
-                // height: 233,
-                // width: 350,
-                // maxHeight: { xs: 233, md: 167 },
-                // maxWidth: { xs: 350, md: 250 },
-              }
-            }
+            sx={{
+              objectFit: 'cover',
+              width: '60%',
+              height: 'auto',
+              py: 5,
+
+              // height: 233,
+              // width: 350,
+              // maxHeight: { xs: 233, md: 167 },
+              // maxWidth: { xs: 350, md: 250 },
+            }}
             alt={product.name}
             src={product.media.source}
           />
@@ -61,7 +64,9 @@ const Product = () => {
             </Box>
           </Box>
 
-          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Box
+            sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', my: 8 }}
+          >
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <StoreMallDirectoryTwoToneIcon />
               <Typography variant="caption">Παραλαβή από το κατάστημα.</Typography>

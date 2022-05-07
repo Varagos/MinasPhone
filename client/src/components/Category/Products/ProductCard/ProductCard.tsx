@@ -29,6 +29,7 @@ function ProductCard({ product }: ProductProps) {
       onMouseOut={() => setRaised(false)}
       sx={{
         borderRadius: '16px',
+        // p: 2,
       }}
     >
       <CardActionArea component={Link} to={`/products/${product.id}`}>

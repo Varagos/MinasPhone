@@ -1,22 +1,44 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import newLogo from '../../assets/free-logo-design (1).png';
 import useStyles from './styles';
 import AppDrawer from './AppDrawer/AppDrawer';
-import { AppBar, Badge, Box, Button, IconButton, Toolbar, Typography, useTheme } from '@mui/material';
+import { AppBar, Badge, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 
 import { PersonOutline, Phone, ShoppingCart, Menu as MenuIcon } from '@mui/icons-material';
 import LoginForm from '../Register/LoginDialog/LoginForm';
-import { useAppSelector } from '../../redux/store';
-import { MainThemeType } from '../../App';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+
+import { doesSessionExist } from 'supertokens-auth-react/recipe/session';
+import Session from 'supertokens-auth-react/recipe/session';
+
+import LogoutButton from './Logout/LogoutButton';
+import { userFetched, userSignedIn, userSignedOut } from '../../redux/userSlice';
 
 const Navbar = () => {
   const classes = useStyles();
   const location = useLocation();
   const [anchor, setAnchor] = useState(false);
-
   const [open, setOpen] = useState(false);
-  const theme = useTheme<MainThemeType>();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const authStatus = useAppSelector((state) => state.user.status);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    (async () => {
+      const res = await doesSessionExist();
+      setIsLoggedIn(res);
+      console.log('RES IS ', res);
+      if (res === true) {
+        dispatch(userSignedIn());
+        const accessTokenPayload = await Session.getAccessTokenPayloadSecurely();
+
+        dispatch(userFetched(accessTokenPayload));
+      } else dispatch(userSignedOut());
+    })();
+  }, []);
+
+  console.log('doesSessionExist', isLoggedIn);
 
   const cart = useAppSelector((state) => state.cart.data);
 
@@ -43,33 +65,19 @@ const Navbar = () => {
   return (
     <div>
       <AppBar
-        position="static"
+        position={location.pathname === '/' ? 'sticky' : 'static'}
         className={classes.helperBar}
-        sx={
-          {
-            // backgroundColor: 'black'
-          }
-        }
+        sx={{
+          backgroundColor: '#ffce2a',
+          display: { xs: 'none', md: 'block' },
+          px: 8,
+        }}
       >
         <Toolbar variant="dense" className={classes.helperToolBar}>
           <Box>
             <Phone fontSize="inherit" color="primary" />
             <Box pl={2} style={{ display: 'inline-block' }}>
               <Typography variant="h6">210 9224 764</Typography>
-            </Box>
-          </Box>
-          <Box>
-            <PersonOutline fontSize="medium" color="primary" style={{ verticalAlign: 'bottom', paddingBottom: 1 }} />
-            <Box ml={1} style={{ display: 'inline-block' }} color="text.disabled">
-              {/* <Typography> */}
-              {/* <Link className={classes.authLink} to="/login">
-                  Σύνδεση
-                </Link>{' '}
-                ή{' '}
-                <Link className={classes.authLink} to="/signup">
-                  Δημιουργία Λογαριασμού
-                </Link> */}
-              {/* </Typography> */}
             </Box>
           </Box>
         </Toolbar>
@@ -103,13 +111,16 @@ const Navbar = () => {
             </Button>
           </Box>
           <div>
-            <IconButton aria-label="Login user" color="inherit" onClick={handleClickOpen}>
-              <PersonOutline
-                fontSize="medium"
-                // color="black"
-                style={{ verticalAlign: 'bottom', paddingBottom: 1 }}
-              />
-            </IconButton>
+            {authStatus === 'signedIn' && <LogoutButton />}
+            {authStatus === 'signedOut' && (
+              <IconButton aria-label="Login user" color="inherit" component={Link} to="/auth">
+                <PersonOutline
+                  fontSize="medium"
+                  // color="black"
+                  style={{ verticalAlign: 'bottom', paddingBottom: 1 }}
+                />
+              </IconButton>
+            )}
           </div>
           <LoginForm open={open} handleClose={handleClose} />
           {location.pathname !== '/cart' && (

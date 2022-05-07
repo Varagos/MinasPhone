@@ -4,7 +4,7 @@ import Products from '../Products/Products';
 
 import useStyles from './styles';
 
-const ProductsPage = ({ products, fetchProducts, productsLoading }) => {
+const ProductsPage = ({ products, fetchProducts, productsLoading }: any) => {
   const classes = useStyles();
 
   useEffect(() => {

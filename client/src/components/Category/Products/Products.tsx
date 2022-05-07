@@ -38,7 +38,14 @@ function Products({ products }: ProductsType) {
           </Grid>
           <Grid item container xs={12} sm={9} spacing={4}>
             {products.map((product) => (
-              <Grid item key={product.id} xs={12} md={6} lg={4}>
+              <Grid
+                item
+                key={product.id}
+                xs={12}
+                md={6}
+                lg={4}
+                // sx={{ borderColor: 'red', borderWidth: 1, borderStyle: 'solid' }}
+              >
                 <ProductCard product={product} />
               </Grid>
             ))}

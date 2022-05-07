@@ -29,22 +29,59 @@ function ProductCard({ product }: ProductProps) {
       onMouseOut={() => setRaised(false)}
       sx={{
         borderRadius: '16px',
-        // p: 2,
+        p: 2,
       }}
     >
-      <CardActionArea component={Link} to={`/products/${product.id}`}>
-        <CardMedia component="img" className={classes.media} image={product.media.source} title={product.name} />
+      <CardActionArea component={Link} to={`/products/${product.id}`} sx={{ pt: 2, px: 0 }}>
+        {/* Small: Thumbnails
+          These are small (100 x 100 or 200 x 200)  */}
+        <CardMedia
+          component="img"
+          image={product.media.source}
+          title={product.name}
+          sx={{
+            objectFit: 'contain',
+            width: 200,
+            height: 200,
+            mx: 'auto',
+          }}
+        />
       </CardActionArea>
-      <CardContent>
-        <div className={classes.cardContent}>
-          <Typography display="inline" color="textSecondary" variant="h6" gutterBottom>
+      <CardContent
+        sx={{
+          px: 0,
+          paddingBottom: 0,
+          '&:last-child': {
+            paddingBottom: 0, // IMPORTANT SHIT
+          },
+        }}
+      >
+        <div>
+          <Typography
+            display="block"
+            color="textSecondary"
+            variant="body1"
+            gutterBottom
+            // noWrap
+            component={Link}
+            to={`/products/${product.id}`}
+            sx={{
+              textDecoration: 'none',
+              height: 50, // need fixed height to keep all cards same height
+              // textOverflow: 'ellipsis',
+              // overflow: 'hidden',
+              width: '100%',
+              // whiteSpace: 'noWrap',
+              // Ellipsis on 2 lines attempt...
+              display: '-webkit-box',
+              boxOrient: 'vertical',
+              lineClamp: 2,
+              wordBreak: 'break-all',
+              overflow: 'hidden',
+            }}
+          >
             {product.name}
           </Typography>
-          {/* <Typography
-            dangerouslySetInnerHTML={{ __html: product.description }}
-            variant='body2'
-            color='textSecondary'
-          /> */}
           <CardActions disableSpacing className={classes.cardActions}>
             <Typography style={{ marginRight: 'auto', color: '#69b67c' }} variant="h6">
               {product.price.formatted_with_symbol}

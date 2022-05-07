@@ -2,8 +2,9 @@ import { makeStyles } from '@mui/styles';
 
 export default makeStyles(() => ({
   root: {
-    maxWidth: '100%',
-    height: '100%',
+    // maxWidth: '100%',
+    // width: '100%',
+    // height: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -20,20 +21,8 @@ export default makeStyles(() => ({
       // color: '#ffce2a',
     },
   },
-  media: {
-    maxWidth: '80%',
-    maxHeight: '300px',
-    objectFit: 'contain',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    paddingTop: '25px',
-  },
   cardActions: {
     display: 'flex',
     justifyContent: 'flex-end',
-  },
-  cardContent: {
-    // display: 'flex',
-    // justifyContent: 'space-between',
   },
 }));

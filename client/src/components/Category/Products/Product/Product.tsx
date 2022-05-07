@@ -32,6 +32,8 @@ const Product = () => {
     <Container maxWidth="lg" sx={{ pt: 10, pb: 20, bgcolor: 'background.paper' }}>
       <Grid container spacing={2}>
         <Grid container item xs={12} sm={6} sx={{ pt: 13 }} justifyContent="center">
+          {/* Medium: Product pages
+Every product needs good product page-quality images. These images (usually 640 x 640 or 800 x 800) */}
           <Box
             component="img"
             sx={{

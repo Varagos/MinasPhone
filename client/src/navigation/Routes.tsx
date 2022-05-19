@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Cart as CartType } from '@chec/commerce.js/types/cart';
 import { CheckoutCapture } from '@chec/commerce.js/types/checkout-capture';
 import { Product } from '@chec/commerce.js/types/product';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
@@ -12,7 +11,7 @@ import { categoriesFetched } from '../redux/categoriesSlice';
 import { productsFetched } from '../redux/productsSlice';
 import ProductPage from '../components/Category/Products/Product/Product';
 import { fetchCart, refreshCart } from '../redux/cartSlice';
-import SuperTokens, { getSuperTokensRoutesForReactRouterDom } from 'supertokens-auth-react';
+import { getSuperTokensRoutesForReactRouterDom } from 'supertokens-auth-react';
 import * as reactRouterDom from 'react-router-dom';
 import { EmailPasswordAuth } from 'supertokens-auth-react/recipe/emailpassword';
 import AdminDashboard from '../components/admin-dashboard/AdminDashboard';

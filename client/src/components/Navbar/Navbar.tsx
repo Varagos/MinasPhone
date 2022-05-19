@@ -31,9 +31,10 @@ const Navbar = () => {
       console.log('RES IS ', res);
       if (res === true) {
         dispatch(userSignedIn());
+        const userId = await Session.getUserId();
         const accessTokenPayload = await Session.getAccessTokenPayloadSecurely();
 
-        dispatch(userFetched(accessTokenPayload));
+        dispatch(userFetched({ ...accessTokenPayload, userId }));
       } else dispatch(userSignedOut());
     })();
   }, []);

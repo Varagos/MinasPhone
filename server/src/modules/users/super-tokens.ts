@@ -10,6 +10,7 @@ export const supertokensInit = () => {
       connectionURI:
         'https://2d8b2ca1cdf511ec964f014fe604f8e7-eu-west-1.aws.supertokens.io:3568',
       // apiKey: "IF YOU HAVE AN API KEY FOR THE CORE, ADD IT HERE",
+      // apiKey: process.env.SUPER_TOKENS_API_KEY, //,
       apiKey: 'MQWVdONmPFLNUbgUIkZycv=qSgbcX-',
     },
     appInfo: {
@@ -29,12 +30,21 @@ export const supertokensInit = () => {
               ...originalImplementation,
               createNewSession: async function (input) {
                 const userId = input.userId;
+                // const email
+                const userInfo = await EmailPassword.getUserById(userId);
+                console.log({ userInfo });
+                const { email } = userInfo!;
 
-                const role = 'admin'; // TODO: fetch role based on userId
+                const adminEmails = ['markos.girgis13@gmail.com'];
+                let role = 'customer'; // TODO: fetch role based on userId
+                if (adminEmails.includes(email)) {
+                  role = 'admin';
+                }
 
                 input.accessTokenPayload = {
                   ...input.accessTokenPayload,
                   role,
+                  email,
                 };
 
                 return originalImplementation.createNewSession(input);

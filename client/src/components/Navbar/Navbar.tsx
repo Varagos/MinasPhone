@@ -58,7 +58,25 @@ const Navbar = () => {
     setAnchor(open);
   };
 
-  function activeClass(currentPath: any) {
+  function activeClass(currentPath: any): any {
+    if (location.pathname === currentPath) {
+      return {
+        color: '#ffce2a',
+        '&:hover': {
+          backgroundColor: '#ffff',
+        },
+      };
+    }
+
+    return {
+      textDecoration: 'none',
+      color: 'black',
+      transition: 'all .5s ease-in-out',
+      '&:hover': {
+        color: '#ffce2a',
+        backgroundColor: '#ffff',
+      },
+    };
     if (location.pathname === currentPath) return classes.navLinkHome;
     return classes.navLink;
   }
@@ -76,7 +94,7 @@ const Navbar = () => {
       >
         <Toolbar variant="dense" className={classes.helperToolBar}>
           <Box>
-            <Phone fontSize="inherit" color="primary" />
+            <Phone fontSize="inherit" color="primary" sx={{ color: 'black' }} />
             <Box pl={2} style={{ display: 'inline-block' }}>
               <Typography variant="h6">210 9224 764</Typography>
             </Box>
@@ -92,23 +110,43 @@ const Navbar = () => {
           </Box>
           <div className={classes.grow} />
           <Box mr={12} className={classes.standardNavLinks}>
-            <Button className={activeClass('/')} component={Link} to="/">
+            <Button component={Link} to="/" sx={activeClass('/')}>
               ΑΡΧΙΚΗ
             </Button>
-            <Button className={activeClass('/category/smartphones')} component={Link} to="/category/smartphones">
+            <Button
+              // className={activeClass('/category/smartphones')}
+              component={Link}
+              to="/category/smartphones"
+              sx={activeClass('/category/smartphones')}
+            >
               ΚΙΝΗΤΑ
             </Button>
-            <Button className={activeClass('/category/smartwatches')} component={Link} to="/category/smartwatches">
+            <Button
+              className={activeClass('/category/smartwatches')}
+              component={Link}
+              to="/category/smartwatches"
+              sx={activeClass('/category/smartwatches')}
+            >
               SMARTWATCH
             </Button>
-            <Button className={activeClass('/category/tablets')} component={Link} to="/category/tablets">
+            <Button
+              className={activeClass('/category/tablets')}
+              component={Link}
+              to="/category/tablets"
+              sx={activeClass('/category/tablets')}
+            >
               TABLET
             </Button>
-            <Button className={activeClass('/category/accessories')} component={Link} to="/category/accessories">
+            <Button
+              className={activeClass('/category/accessories')}
+              component={Link}
+              to="/category/accessories"
+              sx={activeClass('/category/accessories')}
+            >
               ΑΞΕΣΟΥΑΡ
             </Button>
-            <Button className={activeClass('/products')} component={Link} to="/products">
-              ALL PRODUCTS
+            <Button className={activeClass('/products')} component={Link} to="/products" sx={activeClass('/products')}>
+              ΟΛΑ ΤΑ ΠΡΟΪΟΝΤΑ
             </Button>
           </Box>
           <div>

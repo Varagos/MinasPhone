@@ -1,5 +1,4 @@
 import { alpha } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 import { MainThemeType } from '../../App';
 
@@ -44,7 +43,8 @@ export default makeStyles((theme: MainThemeType) => ({
   },
   navLink: {
     flexGrow: 1,
-    color: '#000000',
+    // color: '#000000',
+    color: 'black',
     '&:hover': {
       color: '#ffce2a',
       backgroundColor: '#ffff',

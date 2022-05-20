@@ -2,7 +2,7 @@ import SuperTokens from 'supertokens-auth-react';
 import EmailPassword from 'supertokens-auth-react/recipe/emailpassword';
 import Session from 'supertokens-auth-react/recipe/session';
 import { store } from '../redux/store';
-import { userSignedIn } from '../redux/userSlice';
+import { userFetched, userSignedIn } from '../redux/userSlice';
 import { gr } from './translations/greek';
 
 export default function init() {
@@ -61,6 +61,10 @@ export default function init() {
           } else {
             if (context.action === 'SUCCESS') {
               store.dispatch(userSignedIn());
+              const userId = await Session.getUserId();
+              const accessTokenPayload = await Session.getAccessTokenPayloadSecurely();
+              store.dispatch(userFetched({ ...accessTokenPayload, userId }));
+
               if (context.isNewUser) {
                 // TODO: Sign up
               } else {

@@ -64,14 +64,14 @@ const Checkout = ({ order, onCaptureCheckout, error }: any) => {
       <>
         <div>
           <Typography variant="h5">
-            Thank you for your purchase, {order.customer.firstname} {order.customer.lastname}
+            Σας ευχαριστούμε για την παραγγελία, {order.customer.firstname} {order.customer.lastname}
           </Typography>
           <Divider className={classes.divider} />
-          <Typography variant="subtitle2">Order ref: {order.customer_reference}</Typography>
+          <Typography variant="subtitle2">Κωδικός παραγγελίας: {order.customer_reference}</Typography>
         </div>
         <br />
         <Button component={Link} to="/" variant="outlined" type="button">
-          Back to Home
+          Πίσω στην αρχική
         </Button>
       </>
     ) : (

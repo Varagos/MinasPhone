@@ -23,8 +23,17 @@ const CartItem = ({ item }: CartItemProps) => {
   };
 
   return (
-    <Card>
-      <CardMedia image={item.media.source} className={classes.media} />
+    <Card sx={{ pt: 5 }}>
+      <CardMedia
+        image={item.media.source}
+        className={classes.media}
+        sx={{
+          objectFit: 'contain',
+          width: 200,
+          height: 200,
+          mx: 'auto',
+        }}
+      />
       <CardContent className={classes.cardContent}>
         <Typography variant="h4">{item.name}</Typography>
         <Typography variant="h5">{item.line_total.formatted_with_symbol}</Typography>

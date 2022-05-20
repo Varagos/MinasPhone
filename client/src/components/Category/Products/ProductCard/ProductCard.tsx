@@ -32,7 +32,12 @@ function ProductCard({ product }: ProductProps) {
         p: 2,
       }}
     >
-      <CardActionArea component={Link} to={`/products/${product.id}`} sx={{ pt: 2, px: 0 }}>
+      <Link
+        to={`/products/${product.id}`}
+        style={{
+          paddingTop: 2,
+        }}
+      >
         {/* Small: Thumbnails
           These are small (100 x 100 or 200 x 200)  */}
         <CardMedia
@@ -46,7 +51,7 @@ function ProductCard({ product }: ProductProps) {
             mx: 'auto',
           }}
         />
-      </CardActionArea>
+      </Link>
       <CardContent
         sx={{
           px: 0,

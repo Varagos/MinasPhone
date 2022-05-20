@@ -41,6 +41,12 @@ Every product needs good product page-quality images. These images (usually 640 
               width: '60%',
               height: 'auto',
               py: 5,
+              backgroundColor: 'white',
+              pointerEvents: 'none',
+              '&:hover': {
+                backgroundColor: 'white',
+              },
+              textTransform: 'none',
 
               // height: 233,
               // width: 350,

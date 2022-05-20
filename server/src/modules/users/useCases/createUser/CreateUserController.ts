@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 import { ParsedQs } from 'qs';
-import { BaseController } from '../../../shared/infra/http/models/BaseController';
+import { BaseController } from '../../../../shared/infra/http/models/BaseController';
 interface IUserRepo {
   a: string;
 }

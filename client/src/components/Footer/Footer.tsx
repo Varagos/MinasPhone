@@ -1,6 +1,8 @@
 import { Container, Grid, Box, Link, Divider, Typography } from '@mui/material';
 import { Home, Email, Phone, Schedule } from '@mui/icons-material';
 import ContactRow from './ContactRow/ContatctRow';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const Footer = () => {
   return (
@@ -13,23 +15,23 @@ const Footer = () => {
             {/* on mobile screen, each col -> full screen */}
             <Grid item xs={12} sm={4}>
               <Box borderBottom={1}>ΧΡΗΣΙΜΟΙ ΣΥΝΔΕΣΜΟΙ</Box>
-              <Box>
-                <Link href="/" color="inherit">
+              <Box sx={{ my: 2 }}>
+                <Link href="/" color="inherit" sx={{ textDecoration: 'none' }}>
                   Όροι χρήσης
                 </Link>
               </Box>
-              <Box>
-                <Link href="/" color="inherit">
+              <Box sx={{ my: 2 }}>
+                <Link href="/" color="inherit" sx={{ textDecoration: 'none' }}>
                   Τρόποι Αποστολής & Κόστη
                 </Link>
               </Box>
-              <Box>
-                <Link href="/" color="inherit">
+              <Box sx={{ my: 2 }}>
+                <Link href="/" color="inherit" sx={{ textDecoration: 'none' }}>
                   Τρόποι Πληρωμής
                 </Link>
               </Box>
-              <Box>
-                <Link href="/" color="inherit">
+              <Box sx={{ my: 2 }}>
+                <Link href="/" color="inherit" sx={{ textDecoration: 'none' }}>
                   Ο λογαριασμός μου
                 </Link>
               </Box>
@@ -37,7 +39,7 @@ const Footer = () => {
 
             <Grid item xs={12} sm={4}>
               <Box borderBottom={1} mb={4}>
-                'ΕΠΙΚΟΙΝΩΝΗΣΤΕ ΜΑΖΙ ΜΑΣ'
+                ΕΠΙΚΟΙΝΩΝΗΣΤΕ ΜΑΖΙ ΜΑΣ
               </Box>
               <ContactRow
                 icon={<Home fontSize="inherit" />}
@@ -91,23 +93,9 @@ const Footer = () => {
               />
             </Grid>
 
-            <Grid item xs={12} sm={4}>
-              <Box borderBottom={1}>Messages</Box>
-              <Box>
-                <Link href="/" color="inherit">
-                  Backup
-                </Link>
-              </Box>
-              <Box>
-                <Link href="/" color="inherit">
-                  History
-                </Link>
-              </Box>
-              <Box>
-                <Link href="/" color="inherit">
-                  Roll
-                </Link>
-              </Box>
+            <Grid item container xs={12} sm={4} alignContent="center" justifyContent="center">
+              <FacebookIcon fontSize="large" sx={{ mr: 2 }} />
+              <LinkedInIcon fontSize="large" sx={{ mr: 2 }} />
             </Grid>
           </Grid>
         </Container>

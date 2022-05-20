@@ -4,8 +4,8 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import supertokens from 'supertokens-node';
 import { middleware, errorHandler } from 'supertokens-node/framework/express';
-import { supertokensInit } from '../../../users/super-tokens';
-import { userRouter } from '../../../users/infra/http/routes';
+import { supertokensInit } from '../../../modules/users/super-tokens';
+import { userRouter } from '../../../modules/users/infra/http/routes';
 
 supertokensInit();
 

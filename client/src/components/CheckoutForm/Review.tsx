@@ -5,12 +5,12 @@ const Review = ({ checkoutToken }: any) => {
   return (
     <>
       <Typography variant="h6" gutterBottom>
-        Order summary
+        Ανακεφαλαίωση παραγγελίας
       </Typography>
       <List disablePadding>
         {checkoutToken.live.line_items.map((product: any) => (
           <ListItem style={{ padding: '10px 0' }} key={product.name}>
-            <ListItemText primary={product.name} secondary={`Quantity: ${product.quantity}`} />
+            <ListItemText primary={product.name} secondary={`Ποσότητα: ${product.quantity}`} />
             <Typography variant="body2">{product.line_total.formatted_with_symbol}</Typography>
           </ListItem>
         ))}

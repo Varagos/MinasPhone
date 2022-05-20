@@ -47,11 +47,12 @@ const Cart = () => {
             className={classes.emptyButton}
             size="large"
             type="button"
-            variant="contained"
-            color="secondary"
+            variant="outlined"
+            color="primary"
             onClick={handleEmptyCart}
+            sx={{ textTransform: 'none' }}
           >
-            Empty Cart
+            Άδειασε το καλάθι
           </Button>
           <Button
             component={Link}
@@ -61,8 +62,9 @@ const Cart = () => {
             type="button"
             variant="contained"
             color="primary"
+            sx={{ ml: 5, textTransform: 'none' }}
           >
-            Checkout
+            Ολοκλήρωση παραγγελίας
           </Button>
         </div>
       </div>

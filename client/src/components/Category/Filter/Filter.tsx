@@ -31,7 +31,7 @@ const Filter = () => {
   return (
     <div>
       <Box border={1} borderColor="grey.300" borderRadius="1%" p={4}>
-        {search && (
+        {/* {search && (
           <Button
             variant="outlined"
             size="small"
@@ -95,7 +95,7 @@ const Filter = () => {
             min={0}
             max={2000}
           />
-        </Box>
+        </Box> */}
         {/* <Typography variant="body2" onClick={handleClear} component={Link}>
           <HighlightOff fontSize="inherit" /> Clear all
         </Typography> */}

@@ -30,7 +30,7 @@ function Products({ products }: ProductsType) {
   return (
     <main className={classes.content} style={{ minHeight: '80vh' }}>
       <div className={classes.toolbar} />
-      <Container>
+      <Container sx={{ pb: 20 }}>
         <Grid container justifyContent="center" spacing={4}>
           {/* <Hidden xsDown> */}
           <Grid item xs={0} sm={3} sx={{ display: { xs: 'none', md: 'block' } }}>

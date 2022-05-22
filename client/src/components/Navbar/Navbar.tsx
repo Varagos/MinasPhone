@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import newLogo from '../../assets/free-logo-design (1).png';
 import useStyles from './styles';
 import AppDrawer from './AppDrawer/AppDrawer';
-import { AppBar, Badge, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
+import { Alert, AppBar, Badge, Box, Button, IconButton, Snackbar, Toolbar, Typography } from '@mui/material';
 
 import { PersonOutline, Phone, ShoppingCart, Menu as MenuIcon } from '@mui/icons-material';
 import LoginForm from '../Register/LoginDialog/LoginForm';
@@ -14,6 +14,7 @@ import Session from 'supertokens-auth-react/recipe/session';
 
 import LogoutButton from './Logout/LogoutButton';
 import { userFetched, userSignedIn, userSignedOut } from '../../redux/userSlice';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 const Navbar = () => {
   const classes = useStyles();
@@ -22,6 +23,8 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const authStatus = useAppSelector((state) => state.user.status);
+  const user = useAppSelector((state) => state.user.data);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -150,6 +153,11 @@ const Navbar = () => {
             </Button>
           </Box>
           <div>
+            {user?.role === 'admin' && (
+              <IconButton aria-label="Admin panel" color="inherit" component={Link} to="/dashboard">
+                <AdminPanelSettingsIcon fontSize="medium" style={{ verticalAlign: 'bottom', paddingBottom: 1 }} />
+              </IconButton>
+            )}
             {authStatus === 'signedIn' && <LogoutButton />}
             {authStatus === 'signedOut' && (
               <IconButton aria-label="Login user" color="inherit" component={Link} to="/auth">

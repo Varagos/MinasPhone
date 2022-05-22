@@ -3,15 +3,17 @@ import Session from 'supertokens-node/recipe/session';
 import EmailPassword from 'supertokens-node/recipe/emailpassword';
 
 export const supertokensInit = () => {
+  console.log(
+    'process.env.SUPER_TOKENS_CONNECTION_URI!',
+    process.env.SUPER_TOKENS_CONNECTION_URI!,
+  );
   supertokens.init({
     framework: 'express',
     supertokens: {
       // try.supertokens.com is for demo purposes. Replace this with the address of your core instance (sign up on supertokens.com), or self host a core.
-      connectionURI:
-        'https://2d8b2ca1cdf511ec964f014fe604f8e7-eu-west-1.aws.supertokens.io:3568',
+      connectionURI: process.env.SUPER_TOKENS_CONNECTION_URI!,
       // apiKey: "IF YOU HAVE AN API KEY FOR THE CORE, ADD IT HERE",
-      // apiKey: process.env.SUPER_TOKENS_API_KEY, //,
-      apiKey: 'MQWVdONmPFLNUbgUIkZycv=qSgbcX-',
+      apiKey: process.env.SUPER_TOKENS_API_KEY,
     },
     appInfo: {
       // learn more about this on https://supertokens.com/docs/session/appinfo
@@ -22,7 +24,18 @@ export const supertokensInit = () => {
       websiteBasePath: '/auth',
     },
     recipeList: [
-      EmailPassword.init(), // initializes signin / sign up features
+      EmailPassword.init({
+        signUpFeature: {
+          formFields: [
+            {
+              id: 'firstName',
+            },
+            {
+              id: 'lastName',
+            },
+          ],
+        },
+      }), // initializes signin / sign up features
       Session.init({
         override: {
           functions: (originalImplementation) => {

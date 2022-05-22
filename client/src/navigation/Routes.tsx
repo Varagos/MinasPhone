@@ -15,6 +15,7 @@ import { getSuperTokensRoutesForReactRouterDom } from 'supertokens-auth-react';
 import * as reactRouterDom from 'react-router-dom';
 import { EmailPasswordAuth } from 'supertokens-auth-react/recipe/emailpassword';
 import AdminDashboard from '../components/admin-dashboard/AdminDashboard';
+import { RequireAdminAuth } from '../components/auth-guards/RequireAdmin';
 
 const AppRoutes = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -93,10 +94,12 @@ const AppRoutes = () => {
             <Route
               path="/dashboard"
               element={
-                <EmailPasswordAuth>
-                  {/*Components that require to be protected by authentication*/}
-                  <AdminDashboard />
-                </EmailPasswordAuth>
+                <RequireAdminAuth>
+                  <EmailPasswordAuth>
+                    {/*Components that require to be protected by authentication*/}
+                    <AdminDashboard />
+                  </EmailPasswordAuth>
+                </RequireAdminAuth>
               }
             />
             {/* <Route exact path="/register">

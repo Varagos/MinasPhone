@@ -6,15 +6,16 @@ import supertokens from 'supertokens-node';
 import { middleware, errorHandler } from 'supertokens-node/framework/express';
 import { supertokensInit } from '../../../modules/users/super-tokens';
 import { userRouter } from '../../../modules/users/infra/http/routes';
+import { v1Router } from './api/v1';
 
 supertokensInit();
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan('combined'));
+app.use(morgan('dev'));
 app.use(
   cors({
     origin: 'http://localhost:3000',
@@ -34,7 +35,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.use('/user', userRouter);
+app.use('/api/v1', v1Router);
 // app.post('/refresh', supertokens.middleware(), (req, res) => {
 //   res.send('');
 // });

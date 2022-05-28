@@ -4,13 +4,19 @@ import createProduct from './Product';
 import createCategory from './Category';
 import createCart from './Cart';
 
-const createModels = async () => {
-  createUser(sequelize);
-  createProduct(sequelize);
-  createCategory(sequelize);
-  createCart(sequelize);
-  await sequelize.sync({ alter: true });
-  console.log('All models were synchronized successfully.');
+const createModels = () => {
+  const models: any = {};
+  models.User = createUser(sequelize);
+  models.Product = createProduct(sequelize);
+  models.Category = createCategory(sequelize);
+  models.Cart = createCart(sequelize);
+  sequelize.sync({ alter: true }).then(() => {
+    console.log('All models were synchronized successfully.');
+  });
+  console.log({ models });
+  return models;
 };
 
-createModels();
+export default createModels();
+
+export { createModels };

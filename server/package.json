@@ -21,6 +21,7 @@
     "@types/express": "^4.17.13",
     "@types/morgan": "^1.9.3",
     "@types/node": "^17.0.31",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
     "eslint": "^8.15.0",
@@ -40,6 +41,7 @@
     "morgan": "^1.10.0",
     "sequelize": "^6.19.2",
     "sqlite3": "^5.0.8",
-    "supertokens-node": "^9.2.0"
+    "supertokens-node": "^9.2.0",
+    "uuid": "^8.3.2"
   }
 }

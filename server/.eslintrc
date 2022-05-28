@@ -9,6 +9,7 @@
     "prettier"
   ],
   "rules": {
-    "prettier/prettier": 2 // Means error
+    "prettier/prettier": 2, // Means error
+    "@typescript-eslint/no-namespace": 0
   }
 }

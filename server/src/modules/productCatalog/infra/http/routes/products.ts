@@ -1,5 +1,6 @@
 import express from 'express';
 import { createProductController } from '../../../use-cases/products/CreateProduct';
+import { deleteProductController } from '../../../use-cases/products/DeleteProduct';
 import { getAllProductsController } from '../../../use-cases/products/GetAllProducts';
 import { updateProductController } from '../../../use-cases/products/UpdateProduct';
 
@@ -16,8 +17,9 @@ productRouter.get('/', (req, res) =>
 productRouter.put('/:id', (req, res) =>
   updateProductController.execute(req, res),
 );
-// productRouter.delete('/:id', (req, res) =>
-//   deleteCategoryController.execute(req, res),
-// );
+
+productRouter.delete('/:id', (req, res) =>
+  deleteProductController.execute(req, res),
+);
 
 export { productRouter };

@@ -1,27 +1,19 @@
-import { UpdateProduct } from './UpdateProduct';
+import { DeleteProduct } from './DeleteProduct';
 import { BaseController } from '../../../../../shared/infra/http/models/BaseController';
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest';
-import { UpdateProductDTO } from './UpdateProductDTO';
+import { DeleteProductDTO } from './DeleteProductDTO';
 
-export class UpdateProductController extends BaseController {
-  private useCase: UpdateProduct;
+export class DeleteProductController extends BaseController {
+  private useCase: DeleteProduct;
 
-  constructor(useCase: UpdateProduct) {
+  constructor(useCase: DeleteProduct) {
     super();
     this.useCase = useCase;
   }
 
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
-    const dto: UpdateProductDTO = {
+    const dto: DeleteProductDTO = {
       id: req.params.id,
-      active: req.body.active,
-      permalink: req.body.permalink,
-      name: req.body.name,
-      description: req.body.description,
-      quantity: req.body.quantity,
-      media: req.body.media,
-      sku: req.body.sku,
-      price: req.body.price,
     };
 
     try {

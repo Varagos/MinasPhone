@@ -1,7 +1,7 @@
-import { CategoryDetailsMap } from '../../mappers/CategoryDetailsMap';
+import { CategoryDetailsMap } from '../../../mappers/CategoryDetailsMap';
 import * as express from 'express';
-import { BaseController } from '../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../shared/infra/http/models/decodedRequest';
+import { BaseController } from '../../../../../shared/infra/http/models/BaseController';
+import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest';
 import { GetAllCategories } from './GetAllCategories';
 import { GetAllCategoriesResponseDTO } from './GetAllCategoriesResponseDTO';
 

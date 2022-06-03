@@ -16,7 +16,7 @@ export class CategoryMap implements Mapper<Category> {
   }
 
   public static toDomain(raw: any): Category {
-    const commentOrError = Category.create(
+    const categoryOrError = Category.create(
       {
         slug: raw.slug,
         name: raw.name,
@@ -25,8 +25,8 @@ export class CategoryMap implements Mapper<Category> {
       new UniqueEntityID(raw.id),
     );
 
-    commentOrError.isFailure && console.log(commentOrError.getErrorValue());
+    categoryOrError.isFailure && console.log(categoryOrError.getErrorValue());
 
-    return commentOrError.getValue();
+    return categoryOrError.getValue();
   }
 }

@@ -1,8 +1,8 @@
 import express from 'express';
-import { createCategoryController } from '../../../useCases/CreateCategory';
-import { deleteCategoryController } from '../../../useCases/DeleteCategory';
-import { getAllCategoriesController } from '../../../useCases/GetAllCategories';
-import { updateCategoryController } from '../../../useCases/UpdateCategory';
+import { createCategoryController } from '../../../use-cases/categories/CreateCategory';
+import { deleteCategoryController } from '../../../use-cases/categories/DeleteCategory';
+import { getAllCategoriesController } from '../../../use-cases/categories/GetAllCategories';
+import { updateCategoryController } from '../../../use-cases/categories/UpdateCategory';
 
 const categoryRouter = express.Router();
 

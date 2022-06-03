@@ -1,10 +1,10 @@
-import { Category } from './../../domain/Category';
-import { AppError } from './../../../../shared/core/AppError';
-import { Either, left, Result, right } from '../../../../shared/core/Result';
-import { CategoryDetails } from '../../domain/CategoryDetails';
-import { UseCase } from '../../../../shared/core/UseCase';
+import { Category } from '../../../domain/Category';
+import { AppError } from '../../../../../shared/core/AppError';
+import { Either, left, Result, right } from '../../../../../shared/core/Result';
+import { CategoryDetails } from '../../../domain/CategoryDetails';
+import { UseCase } from '../../../../../shared/core/UseCase';
 import { CreateCategoryDTO } from './CreateCategoryDTO';
-import { ICategoryRepo } from '../../repos/categoryRepo';
+import { ICategoryRepo } from '../../../repos/categoryRepo';
 
 type Response = Either<
   AppError.UnexpectedError | Result<any> | any,

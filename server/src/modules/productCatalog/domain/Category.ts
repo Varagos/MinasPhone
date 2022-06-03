@@ -8,9 +8,6 @@ interface CategoryProps {
   parentId?: string;
 }
 
-/**
- * @desc Read model for Category
- */
 export class Category extends AggregateRoot<CategoryProps> {
   private constructor(props: CategoryProps, id?: UniqueEntityID) {
     super(props, id);

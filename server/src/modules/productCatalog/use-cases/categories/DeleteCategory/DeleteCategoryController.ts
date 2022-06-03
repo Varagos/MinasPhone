@@ -1,7 +1,7 @@
 import { DeleteCategory } from './DeleteCategory';
 import * as express from 'express';
-import { BaseController } from '../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../shared/infra/http/models/decodedRequest';
+import { BaseController } from '../../../../../shared/infra/http/models/BaseController';
+import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest';
 import { DeleteCategoryDTO } from './DeleteCategoryDTO';
 
 export class DeleteCategoryController extends BaseController {

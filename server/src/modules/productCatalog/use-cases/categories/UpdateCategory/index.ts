@@ -1,5 +1,5 @@
 import { UpdateCategory } from './UpdateCategory';
-import { categoryRepo } from '../../repos';
+import { categoryRepo } from '../../../repos';
 import { UpdateCategoryController } from './UpdateCategoryController';
 
 const updateCategory = new UpdateCategory(categoryRepo);

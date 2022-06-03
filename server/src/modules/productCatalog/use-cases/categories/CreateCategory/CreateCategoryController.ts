@@ -1,23 +1,21 @@
-import { UpdateCategory } from './UpdateCategory';
+import { CreateCategory } from './CreateCategory';
 import * as express from 'express';
-import { BaseController } from '../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../shared/infra/http/models/decodedRequest';
-import { UpdateCategoryDTO } from './UpdateCategoryDTO';
+import { BaseController } from '../../../../../shared/infra/http/models/BaseController';
+import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest';
+import { CreateCategoryDTO } from './CreateCategoryDTO';
 
-export class UpdateCategoryController extends BaseController {
-  private useCase: UpdateCategory;
+export class CreateCategoryController extends BaseController {
+  private useCase: CreateCategory;
 
-  constructor(useCase: UpdateCategory) {
+  constructor(useCase: CreateCategory) {
     super();
     this.useCase = useCase;
   }
 
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
-    const dto: UpdateCategoryDTO = {
-      id: req.params.id,
+    const dto: CreateCategoryDTO = {
       slug: req.body.slug,
       name: req.body.name,
-      parentId: req.body.parent_id,
     };
 
     try {

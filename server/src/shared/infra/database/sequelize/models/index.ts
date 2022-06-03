@@ -5,7 +5,7 @@ import createCategory from './Category';
 import createCart from './Cart';
 
 const createModels = () => {
-  const models: any = {};
+  const models: Record<string, any> = {};
   models.User = createUser(sequelize);
   models.Product = createProduct(sequelize);
   models.Category = createCategory(sequelize);

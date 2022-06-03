@@ -34,7 +34,12 @@ export class Category extends AggregateRoot<CategoryProps> {
     // TODO validations
 
     const isNewCategory = !!id === false;
-    const category = new Category(props, id);
+    const defaultProps = {
+      slug: props.slug,
+      name: props.name,
+      parentId: props.parentId,
+    };
+    const category = new Category(defaultProps, id);
 
     if (isNewCategory) {
       // domain event

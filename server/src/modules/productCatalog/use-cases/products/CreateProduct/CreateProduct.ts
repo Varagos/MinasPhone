@@ -23,7 +23,7 @@ export class CreateProduct
       }
       const product = productOrError.getValue();
       await this.productRepo.save(product);
-      return right(Result.ok<void>());
+      return right(Result.ok<string>(product.id.toString()));
     } catch (error: any) {
       return left(new AppError.UnexpectedError(error));
     }

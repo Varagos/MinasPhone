@@ -34,7 +34,8 @@ export class CreateProductController extends BaseController {
 
         return this.fail(res, (error as any).getErrorValue().message);
       } else {
-        return this.ok(res);
+        const id = (result.value as any).getValue();
+        return this.ok(res, { id });
       }
     } catch (err: any) {
       console.log({ err });

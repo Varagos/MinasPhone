@@ -9,6 +9,7 @@ import {
   NumberInput,
   SimpleForm,
   TextInput,
+  Create,
 } from 'react-admin';
 
 export const ProductList = () => (
@@ -41,4 +42,19 @@ export const ProductEdit = () => (
       <NumberInput source="price" />
     </SimpleForm>
   </Edit>
+);
+
+export const ProductCreate = () => (
+  <Create>
+    <SimpleForm>
+      <BooleanInput source="active" />
+      <TextInput source="permalink" />
+      <TextInput source="name" />
+      <TextInput source="description" />
+      <NumberInput source="quantity" />
+      <TextInput source="media" />
+      <TextInput source="sku" />
+      <NumberInput source="price" />
+    </SimpleForm>
+  </Create>
 );

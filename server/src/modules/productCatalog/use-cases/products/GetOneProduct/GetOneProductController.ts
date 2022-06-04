@@ -1,26 +1,21 @@
-import { CreateCategory } from './CreateCategory';
-import * as express from 'express';
+import { GetOneProduct } from './GetOneProduct';
 import { BaseController } from '../../../../../shared/infra/http/models/BaseController';
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest';
-import { CreateCategoryDTO } from './CreateCategoryDTO';
+import { GetOneProductResponseDTO } from './GetOneProductResponseDTO';
+import { ProductDetailsMap } from '../../../mappers/ProductDetailsMap';
 
-export class CreateCategoryController extends BaseController {
-  private useCase: CreateCategory;
+export class GetOneProductController extends BaseController {
+  private useCase: GetOneProduct;
 
-  constructor(useCase: CreateCategory) {
+  constructor(useCase: GetOneProduct) {
     super();
     this.useCase = useCase;
   }
 
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
-    const dto: CreateCategoryDTO = {
-      slug: req.body.slug,
-      name: req.body.name,
-    };
-
     try {
-      console.log({ dto });
-      const result = await this.useCase.execute(dto);
+      const id = req.params.id;
+      const result = await this.useCase.execute({ id });
       console.log({ result });
 
       if (result.isLeft()) {
@@ -28,8 +23,10 @@ export class CreateCategoryController extends BaseController {
 
         return this.fail(res, (error as any).getErrorValue().message);
       } else {
-        const id = (result.value as any).getValue();
-        return this.ok(res, { id });
+        const productDetails = result.value.getValue();
+        return this.ok<GetOneProductResponseDTO>(res, {
+          product: ProductDetailsMap.toDTO(productDetails),
+        });
       }
     } catch (err: any) {
       console.log({ err });

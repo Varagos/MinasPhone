@@ -4,7 +4,7 @@ import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/d
 import { GetAllProductsResponseDTO } from './GetAllProductsResponseDTO';
 import { ProductDetailsMap } from '../../../mappers/ProductDetailsMap';
 
-export class GetAllCategoriesController extends BaseController {
+export class GetAllProductsController extends BaseController {
   private useCase: GetAllProducts;
 
   constructor(useCase: GetAllProducts) {

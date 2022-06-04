@@ -1,8 +1,8 @@
 import { GetAllProducts } from './GetAllProducts';
 import { productRepo } from '../../../repos';
-import { GetAllCategoriesController } from './GetAllProductsController';
+import { GetAllProductsController } from './GetAllProductsController';
 
 const getAllProducts = new GetAllProducts(productRepo);
-const getAllProductsController = new GetAllCategoriesController(getAllProducts);
+const getAllProductsController = new GetAllProductsController(getAllProducts);
 
 export { getAllProducts, getAllProductsController };

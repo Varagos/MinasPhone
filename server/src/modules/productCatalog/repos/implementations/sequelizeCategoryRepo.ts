@@ -22,6 +22,17 @@ export class CategoryRepo implements ICategoryRepo {
     return categories;
   }
 
+  async getOneById(id: string): Promise<CategoryDetails> {
+    const CategoryModel = this.models.Category;
+    const rawCategory = await CategoryModel.findOne({
+      where: {
+        id,
+      },
+    });
+    const category = CategoryDetailsMap.toDomain(rawCategory);
+    return category;
+  }
+
   async save(category: Category): Promise<any> {
     const CategoryModel = this.models.Category;
     const rawSequelizeCategory = CategoryMap.toPersistence(category);

@@ -24,7 +24,7 @@ export class CreateCategory
       }
       const category = categoryOrError.getValue();
       await this.categoryRepo.save(category);
-      return right(Result.ok<void>());
+      return right(Result.ok<string>(category.id.toString()));
     } catch (error: any) {
       return left(new AppError.UnexpectedError(error));
     }

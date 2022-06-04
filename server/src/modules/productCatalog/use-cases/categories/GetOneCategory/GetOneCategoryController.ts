@@ -1,25 +1,20 @@
-import { CreateCategory } from './CreateCategory';
-import * as express from 'express';
+import { CategoryDetailsMap } from '../../../mappers/CategoryDetailsMap';
 import { BaseController } from '../../../../../shared/infra/http/models/BaseController';
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest';
-import { CreateCategoryDTO } from './CreateCategoryDTO';
+import { GetOneCategory } from './GetOneCategory';
+import { GetOneCategoryResponseDTO } from './GetOneCategoryResponseDTO';
 
-export class CreateCategoryController extends BaseController {
-  private useCase: CreateCategory;
+export class GetOneCategoryController extends BaseController {
+  private useCase: GetOneCategory;
 
-  constructor(useCase: CreateCategory) {
+  constructor(useCase: GetOneCategory) {
     super();
     this.useCase = useCase;
   }
 
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
-    const dto: CreateCategoryDTO = {
-      slug: req.body.slug,
-      name: req.body.name,
-    };
-
     try {
-      console.log({ dto });
+      const dto = { id: req.params.id };
       const result = await this.useCase.execute(dto);
       console.log({ result });
 
@@ -28,8 +23,10 @@ export class CreateCategoryController extends BaseController {
 
         return this.fail(res, (error as any).getErrorValue().message);
       } else {
-        const id = (result.value as any).getValue();
-        return this.ok(res, { id });
+        const categoryDetails = result.value.getValue();
+        return this.ok<GetOneCategoryResponseDTO>(res, {
+          category: CategoryDetailsMap.toDTO(categoryDetails),
+        });
       }
     } catch (err: any) {
       console.log({ err });

@@ -19,7 +19,16 @@ export class ProductRepo implements IProductRepo {
     );
     return products;
   }
-
+  async getOneById(id: string): Promise<ProductDetails> {
+    const ProductModel = this.models.Product;
+    const rawProduct = await ProductModel.findOne({
+      where: {
+        id,
+      },
+    });
+    const product = ProductDetailsMap.toDomain(rawProduct);
+    return product;
+  }
   async save(product: Product): Promise<any> {
     const ProductModel = this.models.Product;
     const rawSequelizeProduct = ProductMap.toPersistence(product);

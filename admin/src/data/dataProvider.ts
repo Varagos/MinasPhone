@@ -17,22 +17,25 @@ const dataProvider: DataProvider = {
     const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
     return httpClient(url).then(({ headers, json }) => ({
-      data: json.users.map((item: any) => item.user),
-      total: json.users.length,
+      data: json[resource].map((item: any) => (resource === 'users' ? item.user : item)),
+      total: json[resource].length,
     }));
   },
 
   getOne: (resource, params) =>
-    httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
-      data: json,
-    })),
+    httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => {
+      // console.log('getOne', json);
+      return {
+        data: Object.values(json)[0] as any,
+      };
+    }),
 
   getMany: (resource, params) => {
     const query = {
       filter: JSON.stringify({ id: params.ids }),
     };
     const url = `${apiUrl}/${resource}?${stringify(query)}`;
-    return httpClient(url).then(({ json }) => ({ data: json }));
+    return httpClient(url).then(({ json }) => ({ data: json[resource] }));
   },
 
   getManyReference: (resource, params) => {
@@ -49,7 +52,7 @@ const dataProvider: DataProvider = {
     const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
     return httpClient(url).then(({ headers, json }) => ({
-      data: json,
+      data: json[resource],
       //   total: parseInt(headers.get('content-range').split('/').pop(), 10),
     }));
   },

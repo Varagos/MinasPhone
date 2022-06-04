@@ -10,6 +10,8 @@ import {
   SimpleForm,
   TextInput,
   Create,
+  ImageInput,
+  ImageField,
 } from 'react-admin';
 
 export const ProductList = () => (
@@ -37,7 +39,8 @@ export const ProductEdit = () => (
       <TextInput source="name" />
       <TextInput source="description" />
       <NumberInput source="quantity" />
-      <TextInput source="media" />
+      {/* <TextInput source="media" /> */}
+      <ImageField source="media" title="title" />
       <TextInput source="sku" />
       <NumberInput source="price" />
     </SimpleForm>
@@ -47,12 +50,15 @@ export const ProductEdit = () => (
 export const ProductCreate = () => (
   <Create>
     <SimpleForm>
-      <BooleanInput source="active" />
+      <BooleanInput source="active" defaultValue={true} />
       <TextInput source="permalink" />
       <TextInput source="name" />
       <TextInput source="description" />
       <NumberInput source="quantity" />
-      <TextInput source="media" />
+      <ImageInput source="media" label="Related pictures" accept="image/*">
+        <ImageField source="src" title="title" />
+      </ImageInput>
+      {/* <TextInput source="media" /> */}
       <TextInput source="sku" />
       <NumberInput source="price" />
     </SimpleForm>

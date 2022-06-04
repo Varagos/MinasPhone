@@ -1,4 +1,4 @@
-import { DataTypes, Sequelize } from 'sequelize';
+import { BLOB, DataTypes, Sequelize } from 'sequelize';
 
 export default (sequelize: Sequelize) => {
   const Product = sequelize.define(
@@ -28,6 +28,7 @@ export default (sequelize: Sequelize) => {
       },
       media: {
         type: DataTypes.STRING,
+        // type: BLOB('long'),
       },
       sku: {
         type: DataTypes.STRING,

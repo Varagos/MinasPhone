@@ -27,8 +27,8 @@ export default (sequelize: Sequelize) => {
         type: DataTypes.INTEGER,
       },
       media: {
-        type: DataTypes.STRING,
-        // type: BLOB('long'),
+        // type: DataTypes.STRING,
+        type: BLOB('long'),
       },
       sku: {
         type: DataTypes.STRING,

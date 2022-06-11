@@ -23,6 +23,7 @@ export class CreateProductController extends BaseController {
       sku: req.body.sku,
       price: req.body.price,
     };
+    console.log({ dto });
 
     try {
       console.log({ dto });

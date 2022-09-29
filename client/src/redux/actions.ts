@@ -18,6 +18,10 @@ const actions = {
     UPDATE_ITEM: 'cart/updateItem',
     REFRESH: 'cart/refresh',
   },
+  checkout: {
+    GENERATE_TOKEN: 'checkout/generateToken',
+    CAPTURE_ORDER: 'checkout/captureOrder',
+  },
 };
 
 export default actions;

@@ -151,7 +151,7 @@ export interface ICheckoutService {
   captureCheckout(checkoutTokenId: string, newOrder: CheckoutCapture): Promise<CheckoutCaptureResponse>;
 }
 
-const cartService: ICheckoutService =
+const checkoutService: ICheckoutService =
   process.env.REACT_APP_ENVIRONMENT === 'mock' ? new MockCheckoutService() : new CommerceJSCheckoutService(commerce);
 
-export { cartService };
+export { checkoutService };

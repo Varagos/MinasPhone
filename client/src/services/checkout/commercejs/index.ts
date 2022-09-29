@@ -8,12 +8,12 @@ class CommerceJSCheckoutService implements ICheckoutService {
   constructor(private client: Commerce) {}
   async generateToken(cartId: string, options: Record<string, string>): Promise<CheckoutToken> {
     const token = await this.client.checkout.generateToken(cartId, { type: 'cart' });
-    return token;
+    return structuredClone(token);
   }
 
   async captureCheckout(checkoutTokenId: string, newOrder: CheckoutCapture): Promise<CheckoutCaptureResponse> {
     const incomingOrder = await this.client.checkout.capture(checkoutTokenId, newOrder);
-    return incomingOrder;
+    return structuredClone(incomingOrder);
   }
 }
 

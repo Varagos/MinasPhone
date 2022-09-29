@@ -9,6 +9,7 @@ import authReducer from './authSlice';
 import { categoriesService, ICategoriesService } from '../services/categories';
 import { IProductsService, productsService } from '../services/products';
 import { cartService, ICartService } from '../services/cart';
+import { checkoutService, ICheckoutService } from '../services/checkout';
 
 console.log('Loading Redux store...', process.env.REACT_APP_ENVIRONMENT);
 export const store = configureStore({
@@ -42,6 +43,7 @@ export const store = configureStore({
             categories: categoriesService,
             products: productsService,
             cart: cartService,
+            checkout: checkoutService,
             //   vehicles:
             //     process.env.REACT_APP_ENVIRONMENT === 'mock' ? new MockVehiclesService() : new FirebaseVehiclesService(),
             //   geofences:
@@ -69,6 +71,7 @@ export type AsyncThunkConfig = {
       categories: ICategoriesService;
       products: IProductsService;
       cart: ICartService;
+      checkout: ICheckoutService;
     };
   };
   /** type to be passed into `rejectWithValue`'s first argument that will end up on `rejectedAction.payload` */

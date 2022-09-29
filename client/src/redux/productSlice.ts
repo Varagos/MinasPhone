@@ -1,5 +1,5 @@
-import { Product } from '@chec/commerce.js/types/product';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Product } from '../services/products';
 
 export interface IProductState {
   data?: Product;

@@ -4,9 +4,9 @@ import { Product } from '@chec/commerce.js/types/product';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import { AppBreadcrumb, Cart, Category, Checkout, Footer, Landing, Navbar, ProductsPage } from '../components';
 import { commerce } from '../components/lib/commerce';
-import { useAppDispatch } from '../redux/store';
-import { categoriesFetched, fetchCategories } from '../redux/slices/categoriesSlice';
-import { productsFetched } from '../redux/productsSlice';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import { categoriesFetched, fetchCategories } from '../redux/slices/categories';
+import { fetchProducts, fetchProductsByCategorySlug, productsFetched } from '../redux/slices/products';
 import ProductPage from '../components/Category/Products/Product/Product';
 import { fetchCart, refreshCart } from '../redux/cartSlice';
 import { getSuperTokensRoutesForReactRouterDom } from 'supertokens-auth-react';
@@ -16,30 +16,31 @@ import AdminDashboard from '../components/admin-dashboard/AdminDashboard';
 import { RequireAdminAuth } from '../components/auth-guards/RequireAdmin';
 
 const AppRoutes = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  // const [products, setProducts] = useState<Product[]>([]);
   // const [cart, setCart] = useState<Partial<CartType>>({});
   const [order, setOrder] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
-  const [productsLoading, setProductsLoading] = useState(false);
+  // const [productsLoading, setProductsLoading] = useState(false);
   const dispatch = useAppDispatch();
 
-  const fetchProducts = async (slug = null) => {
+  const fetchProductsLocal = async (slug = null) => {
     console.log('fetching products with slug:', slug);
 
-    setProductsLoading(true);
-    let data: Product[];
+    // setProductsLoading(true);
+    // let data: Product[];
     if (!slug) {
-      ({ data } = await commerce.products.list());
+      dispatch(fetchProducts());
     } else {
-      ({ data } = await commerce.products.list({
-        category_slug: [slug],
-      }));
+      dispatch(fetchProductsByCategorySlug(slug));
+      // ({ data } = await commerce.products.list({
+      //   category_slug: [slug],
+      // }));
     }
 
-    data = data || [];
-    setProducts(data);
-    setProductsLoading(false);
-    dispatch(productsFetched(JSON.parse(JSON.stringify(data))));
+    // data = data || [];
+    // setProducts(data);
+    // setProductsLoading(false);
+    // dispatch(productsFetched(JSON.parse(JSON.stringify(data))));
   };
 
   const handleCaptureCheckout = async (checkoutTokenId: string, newOrder: CheckoutCapture) => {
@@ -56,14 +57,13 @@ const AppRoutes = () => {
 
   useEffect(() => {
     dispatch(fetchCategories());
-    fetchProducts();
+    fetchProductsLocal();
     // fetchCart();
     dispatch(fetchCart());
   }, []);
 
   const productsProps = {
-    products,
-    productsLoading,
+    // productsLoading,
     fetchProducts,
   };
 
@@ -76,7 +76,7 @@ const AppRoutes = () => {
           <Routes>
             {/*This renders the login UI on the /auth route*/}
             {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
-            <Route path="/" element={<Landing recommendedProducts={products} />}></Route>
+            <Route path="/" element={<Landing />}></Route>
             <Route path="/products" element={<ProductsPage {...productsProps} />}></Route>
             <Route path="/category/:category_id" element={<Category {...productsProps} />}></Route>
             <Route path="/products/:product_id" element={<ProductPage />}></Route>

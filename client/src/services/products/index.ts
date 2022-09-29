@@ -3,7 +3,10 @@
 // getVariants(id: string, data?: object): Promise<VariantCollection>;
 // getVariant(id: string, variantId: string): Promise<Variant>;
 
-import { PaginationMeta } from '.';
+import { PaginationMeta } from '..';
+import { commerce } from '../../components/lib/commerce';
+import CommerceJSProductsService from './commercejs';
+import MockProductsService from './mock';
 
 export interface Product {
   id: string;
@@ -25,6 +28,7 @@ export interface Product {
   media: {
     type: string;
     source: string;
+    asset_id?: string;
   };
   sku: string | null;
   sort_order: number;
@@ -47,6 +51,8 @@ export interface Product {
     collects_shipping_address: boolean;
     collects_billing_address: boolean;
     collects_extra_fields: boolean;
+    has_video?: boolean;
+    has_rich_embed: boolean;
   };
   is: {
     active: boolean;
@@ -59,8 +65,8 @@ export interface Product {
     digital_delivery: boolean;
     physical_delivery: boolean;
     images: boolean;
-    video: boolean;
-    rich_embed: boolean;
+    video?: boolean;
+    rich_embed?: boolean;
   };
   collects: {
     fullname: boolean;
@@ -104,8 +110,8 @@ export interface ProductVariantOption {
 }
 
 export interface ProductAttributeOption {
-  label: string;
-  value: string;
+  label: string | null;
+  value: string | null;
 }
 
 export interface ProductAttribute {
@@ -149,3 +155,13 @@ export interface ProductCollection {
   data: Product[];
   meta: PaginationMeta;
 }
+
+export interface IProductsService {
+  fetchAll: () => Promise<Product[]>;
+  fetchAllByCategorySlug(categorySlug: string): Promise<Product[]>;
+}
+
+const productsService: IProductsService =
+  process.env.REACT_APP_ENVIRONMENT === 'mock' ? new MockProductsService() : new CommerceJSProductsService(commerce);
+
+export { productsService };

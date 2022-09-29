@@ -8,8 +8,10 @@ import PhoneFix from '../../assets/undraw_phone_fix.svg';
 import TabletCategory from '../../assets/tablet-category.jpg';
 import SmartWatchCategory from '../../assets/smartwatch-category.jpg';
 import Carousel from 'react-material-ui-carousel';
+import { useAppSelector } from '../../redux/store';
 
-const Landing = ({ recommendedProducts }: any) => {
+const Landing = () => {
+  const recommendedProducts = useAppSelector((state) => state.products.data);
   const classes = useStyles();
   const items = [
     {
@@ -23,7 +25,7 @@ const Landing = ({ recommendedProducts }: any) => {
       url: 'https://www.globalphone.gr/image/cache/catalog/Pocophone%20X3/poco%20x3%20banner%201-1920x800.jpg',
     },
   ];
-  console.log(recommendedProducts);
+  console.log('recommendedProducts:', recommendedProducts);
 
   function Item({ item }: any) {
     return (
@@ -35,7 +37,7 @@ const Landing = ({ recommendedProducts }: any) => {
     );
   }
 
-  const shuffled = recommendedProducts.sort(() => 0.5 - Math.random());
+  const shuffled = structuredClone(recommendedProducts).sort(() => 0.5 - Math.random());
 
   return (
     <main className={classes.content}>

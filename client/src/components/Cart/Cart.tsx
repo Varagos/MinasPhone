@@ -1,6 +1,6 @@
 import { Container, Typography, Button, Grid, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { emptyCart, removeFromCart } from '../../redux/cartSlice';
+import { emptyCart, removeFromCart } from '../../redux/slices/cart';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import CartItem from './CartItem/CartItem';
 import useStyles from './styles';

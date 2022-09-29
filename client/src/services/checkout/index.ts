@@ -1,3 +1,9 @@
+import { CheckoutCapture } from '@chec/commerce.js/types/checkout-capture';
+import { CheckoutCaptureResponse } from '@chec/commerce.js/types/checkout-capture-response';
+import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
+import { commerce } from '../../components/lib/commerce';
+import CommerceJSCheckoutService from './commercejs';
+import MockCheckoutService from './mock';
 // import Commerce = require('@chec/commerce.js');
 // import { Live } from '../types/live';
 // import { Price } from '../types/price';
@@ -133,3 +139,19 @@ export class Checkout {
   //   getToken(token: string): Promise<CheckoutToken>;
   //   checkGiftcard(token: string, params: { code: string }): Promise<CheckGiftcardResponse>;
 }
+
+const defaultGenerateTokenOptions = {
+  type: 'cart',
+};
+export interface ICheckoutService {
+  // TODO create local type for checkoutToken
+  generateToken(cartId: string, options: Record<string, string>): Promise<CheckoutToken>;
+
+  // TODO create local type for checkoutCapture, CheckoutCaptureResponse
+  captureCheckout(checkoutTokenId: string, newOrder: CheckoutCapture): Promise<CheckoutCaptureResponse>;
+}
+
+const cartService: ICheckoutService =
+  process.env.REACT_APP_ENVIRONMENT === 'mock' ? new MockCheckoutService() : new CommerceJSCheckoutService(commerce);
+
+export { cartService };

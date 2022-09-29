@@ -10,6 +10,14 @@ const actions = {
     FETCH_ALL: 'products/fetchAll',
     FETCH_ALL_BY_CAT_SLUG: 'products/fetchAllByCatSlug',
   },
+  cart: {
+    FETCH: 'cart/fetch',
+    ADD_ITEM: 'cart/addItem',
+    EMPTY: 'cart/empty',
+    REMOVE_ITEM: 'cart/removeItem',
+    UPDATE_ITEM: 'cart/updateItem',
+    REFRESH: 'cart/refresh',
+  },
 };
 
 export default actions;

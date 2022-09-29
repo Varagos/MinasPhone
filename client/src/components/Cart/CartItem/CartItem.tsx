@@ -1,5 +1,5 @@
 import { Typography, Button, Card, CardActions, CardContent, CardMedia } from '@mui/material';
-import { removeFromCart, updateCart } from '../../../redux/cartSlice';
+import { removeFromCart, updateCart } from '../../../redux/slices/cart';
 import { useAppDispatch } from '../../../redux/store';
 
 import useStyles from './styles';

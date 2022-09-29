@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../../redux/store';
 import StoreMallDirectoryTwoToneIcon from '@mui/icons-material/StoreMallDirectoryTwoTone';
 import { Product as ProductType } from '@chec/commerce.js/types/product';
 import { productSelected } from '../../../../redux/productSlice';
-import { addToCart } from '../../../../redux/cartSlice';
+import { addToCart } from '../../../../redux/slices/cart';
 
 const Product = () => {
   const dispatch = useAppDispatch();
@@ -13,11 +13,11 @@ const Product = () => {
   console.log('Product params', params);
   const { product_id: productId } = params;
   console.log(productId);
-  const allProducts = useAppSelector((state) => state.products);
+  const allProducts = useAppSelector((state) => state.products.data);
   const product = useAppSelector((state) => state.product.data);
 
   useEffect(() => {
-    const product = allProducts.data.find((product) => product.id === productId);
+    const product = allProducts.find((product) => product.id === productId);
     if (!product) return;
     dispatch(productSelected(product));
   }, []);

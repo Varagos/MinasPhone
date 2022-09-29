@@ -1,11 +1,11 @@
-import { Card, CardMedia, CardContent, CardActions, Typography, IconButton, CardActionArea, Box } from '@mui/material';
+import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@mui/material';
 import { AddShoppingCart } from '@mui/icons-material';
 
 import useStyles from './styles';
 import { Link } from 'react-router-dom';
 import { Product as ProductType } from '@chec/commerce.js/types/product';
 import { useAppDispatch } from '../../../../redux/store';
-import { addToCart } from '../../../../redux/cartSlice';
+import { addToCart } from '../../../../redux/slices/cart';
 import { useState } from 'react';
 
 type ProductProps = {

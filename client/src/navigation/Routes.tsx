@@ -4,10 +4,8 @@ import { Product } from '@chec/commerce.js/types/product';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import { AppBreadcrumb, Cart, Category, Checkout, Footer, Landing, Navbar, ProductsPage } from '../components';
 import { commerce } from '../components/lib/commerce';
-import Register from '../components/Register/Register';
-import CssBaseline from '@mui/material/CssBaseline';
 import { useAppDispatch } from '../redux/store';
-import { categoriesFetched } from '../redux/categoriesSlice';
+import { categoriesFetched, fetchCategories } from '../redux/slices/categoriesSlice';
 import { productsFetched } from '../redux/productsSlice';
 import ProductPage from '../components/Category/Products/Product/Product';
 import { fetchCart, refreshCart } from '../redux/cartSlice';
@@ -49,19 +47,15 @@ const AppRoutes = () => {
       const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
 
       setOrder(incomingOrder);
-      dispatch(refreshCart());
+
+      dispatch(refreshCart() as any);
     } catch (error) {
       setErrorMessage('There was an error capturing checkout' + (error as any).data.error.message);
     }
   };
-  const fetchCategories = async () => {
-    const result = await commerce.categories.list();
-    console.log('categories:', result);
-    dispatch(categoriesFetched(result.data));
-  };
 
   useEffect(() => {
-    fetchCategories();
+    dispatch(fetchCategories());
     fetchProducts();
     // fetchCart();
     dispatch(fetchCart());

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
+    "start:dev": "env-cmd -f .env.dev react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -16,18 +17,19 @@
     "@mui/material": "^5.6.3",
     "@mui/styles": "^5.6.2",
     "@mui/system": "^5.6.3",
-    "@reduxjs/toolkit": "^1.8.1",
+    "@reduxjs/toolkit": "^1.8.5",
     "@stripe/react-stripe-js": "^1.4.1",
     "@stripe/stripe-js": "^1.16.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.27.2",
+    "env-cmd": "^10.1.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-hook-form": "^6.11.5",
     "react-material-ui-carousel": "^3.3.3",
-    "react-redux": "^8.0.1",
+    "react-redux": "^8.0.4",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
     "supertokens-auth-react": "^0.20.4",
@@ -61,6 +63,6 @@
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "eslint": "^8.14.0",
-    "typescript": "^4.6.3"
+    "typescript": "^4.8.4"
   }
 }

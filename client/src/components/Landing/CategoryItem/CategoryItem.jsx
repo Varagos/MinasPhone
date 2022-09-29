@@ -10,7 +10,7 @@ const CategoryItem = ({ src, heading, dest, ...rest }) => {
       <Link to={dest} style={{ height: '100%', textDecoration: 'none' }}>
         <div className={classes.main}>
           <img src={src} className={classes.bannerImg} alt="smartphones" />
-          <div className={classes.bannerText}>
+          <div className={classes.bannerText} style={{ marginTop: 'auto' }}>
             <Typography variant="h6" align="center">
               {heading}
             </Typography>

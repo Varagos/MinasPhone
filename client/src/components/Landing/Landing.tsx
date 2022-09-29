@@ -5,6 +5,8 @@ import useStyles from './styles';
 import CategoryItem from './CategoryItem/CategoryItem';
 import ProductCard from '../Category/Products/ProductCard/ProductCard';
 import PhoneFix from '../../assets/undraw_phone_fix.svg';
+import TabletCategory from '../../assets/tablet-category.jpg';
+import SmartWatchCategory from '../../assets/smartwatch-category.jpg';
 import Carousel from 'react-material-ui-carousel';
 
 const Landing = ({ recommendedProducts }: any) => {
@@ -55,21 +57,13 @@ const Landing = ({ recommendedProducts }: any) => {
               heading="SMARTPHONES"
               dest="/category/smartphones"
             />
-            <CategoryItem
-              src="http://demo4.ltheme.com/joomla/lt-techshop/images/com_hikashop/upload/thumbnails/350x300f/apple-ipad-pro-11.webp"
-              heading="TABLETS"
-              dest="/category/tablets"
-            />
+            <CategoryItem src={TabletCategory} heading="TABLETS" dest="/category/tablets" />
             <CategoryItem
               src="https://i.ibb.co/R6vPgNz/Hnet-com-image.png"
               heading="ACCESSORIES"
               dest="/category/accessories"
             />
-            <CategoryItem
-              src="http://demo4.ltheme.com/joomla/lt-techshop/images/com_hikashop/upload/thumbnails/350x300f/apple-sport-seri-3.webp"
-              heading="SMARTWATCHES"
-              dest="/category/smartwatches"
-            />
+            <CategoryItem src={SmartWatchCategory} heading="SMARTWATCHES" dest="/category/smartwatches" />
           </Grid>
         </Container>
       </section>
@@ -105,16 +99,24 @@ const Landing = ({ recommendedProducts }: any) => {
                   ΕΠΙΣΚΕΥΕΣ ΤΗΛΕΦΩΝΩΝ
                 </Typography>
                 <Typography>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend finibus tincidunt. Nulla
-                  quis neque eu erat varius tincidunt id varius turpis. Praesent odio ante, dictum at turpis accumsan,
-                  varius bibendum ligula. Aenean justo quam, mattis a iaculis in, sodales ut arcu. Sed ipsum neque,
-                  tempus ut suscipit quis, dapibus sit amet turpis. Pellentesque quis ex sit amet ligula vestibulum
-                  sagittis vel vitae tortor. Nunc eget tristique sapien. Sed ut nisi ornare, volutpat diam vel, euismod
-                  est. Cras eu porta leo, vitae placerat dolor. Donec pretium mi ex, dignissim tempor nisi laoreet a.
-                  Proin dignissim odio vel velit condimentum tempus. Nam neque nulla, maximus eu risus sit amet, pretium
-                  pretium ligula. Suspendisse sed ipsum diam. Nam luctus lacus id nunc faucibus, ac ullamcorper odio
-                  tincidunt. Nulla tincidunt neque in nisi venenatis pulvinar consequat sed ex. Vestibulum fermentum
-                  suscipit quam, in fermentum lectus venenatis eu.
+                  Σε μια εποχή όπου κυριαρχούν τα πανάκριβα smartphones με τις αμέτρητες λειτουργίες, το παραδοσιακό
+                  κλασικό κινητό τηλέφωνο καταφέρνει να διατηρεί την αξία του, κι αυτό δεν είναι καθόλου τυχαίο.
+                </Typography>
+                <Typography variant="h6" align="left" gutterBottom>
+                  Υψηλής ποιότητας ανταλλακτικά
+                </Typography>
+                <Typography>
+                  Χρησιμοποιούμε για την επισκευή κινητών πάντα τα καλύτερα ανταλλακτικά που υπάρχουν στην αγορά.
+                  Κριτήρια για την επιλογή τους, είναι η απόδοση και η αντοχή. Ο λόγος είναι πως επιθυμούμε σε κάθε μας
+                  επισκευή το καλύτερο δυνατό αποτέλεσμα και με διάρκεια στο χρόνο.
+                </Typography>
+
+                <Typography variant="h6" align="left" gutterBottom>
+                  Οικονομικές τιμές
+                </Typography>
+                <Typography>
+                  Τις ποιοτικές μας υπηρεσίες έχουμε φροντίσει και τις προσφέρουμε στις καλύτερες δυνατές τιμές της
+                  αγοράς. Στο κατάστημα μας πραγματοποιούμε τις πιο συμφέρουσες επισκευές κινητών τηλεφώνων.
                 </Typography>
               </Container>
             </Grid>

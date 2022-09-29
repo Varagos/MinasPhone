@@ -1,4 +1,3 @@
-import { Cart } from '@chec/commerce.js/features/cart';
 import { Typography, Button, Card, CardActions, CardContent, CardMedia } from '@mui/material';
 import { removeFromCart, updateCart } from '../../../redux/cartSlice';
 import { useAppDispatch } from '../../../redux/store';

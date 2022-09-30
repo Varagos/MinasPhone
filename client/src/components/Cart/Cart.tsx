@@ -78,7 +78,7 @@ const Cart = () => {
     <Container sx={{ py: 2 }}>
       {/* <div className={classes.toolbar} /> */}
       <Typography className={classes.title} variant="h3" gutterBottom>
-        Your shopping Cart
+        Καλάθι Αγορών
       </Typography>
       {!cart.line_items.length ? <EmptyCart /> : <FilledCart />}
     </Container>

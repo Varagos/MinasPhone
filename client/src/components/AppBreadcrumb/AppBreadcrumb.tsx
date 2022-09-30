@@ -15,7 +15,7 @@ const breadcrumbNameMap: any = {
 };
 
 const isSpecialLastPathName = (lastPathName: string) => {
-  return lastPathName.startsWith('prod_');
+  return lastPathName.startsWith('prod_') || lastPathName === 'auth' || lastPathName === 'cart';
 };
 
 const LinkRouter = (props: any) => <Link {...props} component={RouterLink} />;
@@ -29,13 +29,19 @@ const AppBreadcrumb = () => {
   const pathNames = location.pathname.split('/').filter((x) => x !== '');
   const currentProductName = useAppSelector((state) => state.product.data?.name);
 
-  console.log('pathNames:', pathNames);
   if (!pathNames.length) {
     return <> </>;
   }
   const getNameForIdPathNames = (lastPathName: string) => {
     if (lastPathName.startsWith('prod_')) {
       return currentProductName;
+    }
+    if (lastPathName === 'auth') {
+      return 'Σύνδεση';
+    }
+
+    if (lastPathName === 'cart') {
+      return 'Καλάθι';
     }
     return lastPathName;
   };

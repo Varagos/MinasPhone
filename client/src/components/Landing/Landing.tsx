@@ -11,10 +11,13 @@ import PocoBanner from '../../assets/poco_x3_banner_1-1920x800.jpg';
 import RedMiBanner from '../../assets/redmi note 9 pro-1920x800.jpg';
 
 import Carousel from 'react-material-ui-carousel';
-import { useAppSelector } from '../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { useEffect } from 'react';
+import { fetchProducts } from '../../redux/slices/products';
 
 const Landing = () => {
   const recommendedProducts = useAppSelector((state) => state.products.data);
+  const dispatch = useAppDispatch();
   const classes = useStyles();
   const items = [
     {
@@ -39,6 +42,11 @@ const Landing = () => {
       </Link>
     );
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(fetchProducts());
+  }, []);
 
   const shuffled = structuredClone(recommendedProducts).sort(() => 0.5 - Math.random());
 

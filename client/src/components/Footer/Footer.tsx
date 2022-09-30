@@ -16,7 +16,7 @@ const Footer = () => {
             <Grid item xs={12} sm={4}>
               <Box borderBottom={1}>ΧΡΗΣΙΜΟΙ ΣΥΝΔΕΣΜΟΙ</Box>
               <Box sx={{ my: 2 }}>
-                <Link href="/" color="inherit" sx={{ textDecoration: 'none' }}>
+                <Link href="/information/user-terms" color="inherit" sx={{ textDecoration: 'none' }}>
                   Όροι χρήσης
                 </Link>
               </Box>

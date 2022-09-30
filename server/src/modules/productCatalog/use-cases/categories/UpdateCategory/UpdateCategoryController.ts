@@ -21,9 +21,9 @@ export class UpdateCategoryController extends BaseController {
     };
 
     try {
-      console.log({ dto });
+      // console.log({ dto });
       const result = await this.useCase.execute(dto);
-      console.log({ result });
+      // console.log({ result });
 
       if (result.isLeft()) {
         const error = result.value;
@@ -33,7 +33,7 @@ export class UpdateCategoryController extends BaseController {
         return this.ok(res);
       }
     } catch (err: any) {
-      console.log({ err });
+      // console.log({ err });
       return this.fail(res, err);
     }
   }

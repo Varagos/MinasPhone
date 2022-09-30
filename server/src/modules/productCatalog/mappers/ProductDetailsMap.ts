@@ -16,7 +16,7 @@ export class ProductDetailsMap implements Mapper<ProductDetails> {
       price: raw.price,
     });
 
-    productOrError.isFailure && console.log(productOrError.getErrorValue());
+    productOrError.isFailure && // console.log(productOrError.getErrorValue());
 
     return productOrError.getValue();
   }

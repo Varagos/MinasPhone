@@ -10,9 +10,9 @@ import { addToCart } from '../../../../redux/slices/cart';
 const Product = () => {
   const dispatch = useAppDispatch();
   const params = useParams<any>();
-  console.log('Product params', params);
+  // console.log('Product params', params);
   const { product_id: productId } = params;
-  console.log(productId);
+  // console.log(productId);
   const allProducts = useAppSelector((state) => state.products.data);
   const product = useAppSelector((state) => state.product.data);
 

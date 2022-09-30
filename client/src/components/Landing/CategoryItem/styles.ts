@@ -1,6 +1,6 @@
 import { makeStyles } from '@mui/styles';
 
-export default makeStyles((theme) => ({
+export default makeStyles((theme: any) => ({
   toolbar: theme.mixins?.toolbar,
   stretch: { height: '100%' },
   item: { display: 'flex', flexDirection: 'column' }, // KEY CHANGES
@@ -8,6 +8,8 @@ export default makeStyles((theme) => ({
     border: '1px solid #D3D3D3',
     height: '100%',
     color: '#000',
+    display: 'flex',
+    flexDirection: 'column',
     backgroundColor: 'white',
     '-webkit-transition': 'transform 1s, color .4s',
     '&:hover': {
@@ -17,8 +19,11 @@ export default makeStyles((theme) => ({
     },
   },
   bannerImg: {
+    objectFit: 'cover',
     width: '100%',
-    height: 'auto',
+    // height: 250px;
+    height: '100%',
+    // height: 'auto',
   },
   bannerText: {
     marginLeft: 'auto',

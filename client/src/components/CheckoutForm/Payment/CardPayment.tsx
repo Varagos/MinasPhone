@@ -20,7 +20,7 @@ const CardPayment = ({ checkoutToken, shippingData, onCaptureCheckout, nextStep 
     });
 
     if (error) {
-      console.log(error);
+      // console.log(error);
     } else {
       const orderData = {
         line_items: checkoutToken.live.line_items,
@@ -45,7 +45,7 @@ const CardPayment = ({ checkoutToken, shippingData, onCaptureCheckout, nextStep 
           },
         },
       };
-      console.log(orderData);
+      // console.log(orderData);
 
       onCaptureCheckout(checkoutToken.id, orderData);
 

@@ -21,7 +21,7 @@ const Account = ({ next }: any) => {
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit((data) => {
-            // console.log(data, shippingCountry);
+            // // console.log(data, shippingCountry);
             next({
               ...data,
               shippingCountry: 'GR',

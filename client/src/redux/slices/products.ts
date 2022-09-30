@@ -16,7 +16,7 @@ const initialState: IProductsState = {
 };
 
 // const fetchProducts = async (slug = null) => {
-//   console.log('fetching products with slug:', slug);
+//   // console.log('fetching products with slug:', slug);
 
 //   setProductsLoading(true);
 //   let data: Product[];

@@ -159,6 +159,7 @@ export interface ProductCollection {
 export interface IProductsService {
   fetchAll: () => Promise<Product[]>;
   fetchAllByCategorySlug(categorySlug: string): Promise<Product[]>;
+  fetchItemById(productId: string): Promise<Product>;
 }
 
 const productsService: IProductsService =

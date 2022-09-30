@@ -22,12 +22,12 @@ export default function LoginForm({ open, handleClose }: LoginFormProps) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-    });
+    // console.log({
+    //   email: data.get('email'),
+    // });
     const email = (data.get('email') ?? '') as string;
     const res = await commerce.customer.login(email, 'http://localhost:3000/login/callback');
-    console.log('res', res);
+    // console.log('res', res);
   };
 
   return (

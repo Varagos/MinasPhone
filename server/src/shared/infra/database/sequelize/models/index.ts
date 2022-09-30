@@ -11,9 +11,9 @@ const createModels = () => {
   models.Category = createCategory(sequelize);
   models.Cart = createCart(sequelize);
   sequelize.sync({ alter: true }).then(() => {
-    console.log('All models were synchronized successfully.');
+    // console.log('All models were synchronized successfully.');
   });
-  console.log({ models });
+  // console.log({ models });
   return models;
 };
 

@@ -11,9 +11,9 @@ export interface Cart {
   total_unique_items: number;
   subtotal: Price;
   currency: Currency;
-  meta?: any;
   discount_code: any; // todo
   hosted_checkout_url: string;
   line_items: LineItem[];
   discount?: any[];
+  meta?: any;
 }

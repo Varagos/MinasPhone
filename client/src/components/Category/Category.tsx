@@ -8,7 +8,7 @@ import Products from './Products/Products';
 const Category = () => {
   const params = useParams<any>();
   const { category_id: categorySlug } = params;
-  console.log(categorySlug);
+  // console.log(categorySlug);
 
   const products = useAppSelector((state) => state.products.data);
   const productsStatus = useAppSelector((state) => state.products.status);
@@ -16,7 +16,7 @@ const Category = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log('categorySlug changed', categorySlug);
+    // console.log('categorySlug changed', categorySlug);
     if (categorySlug) {
       dispatch(fetchProductsByCategorySlug(categorySlug));
     }

@@ -31,7 +31,7 @@ const Navbar = () => {
     (async () => {
       const res = await doesSessionExist();
       setIsLoggedIn(res);
-      console.log('RES IS ', res);
+      // console.log('RES IS ', res);
       if (res === true) {
         dispatch(userSignedIn());
         const userId = await Session.getUserId();
@@ -42,7 +42,7 @@ const Navbar = () => {
     })();
   }, []);
 
-  console.log('doesSessionExist', isLoggedIn);
+  // console.log('doesSessionExist', isLoggedIn);
 
   const cart = useAppSelector((state) => state.cart.data);
 

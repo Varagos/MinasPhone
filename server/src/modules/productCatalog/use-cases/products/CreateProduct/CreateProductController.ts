@@ -23,12 +23,12 @@ export class CreateProductController extends BaseController {
       sku: req.body.sku,
       price: req.body.price,
     };
-    console.log({ dto });
+    // console.log({ dto });
 
     try {
-      console.log({ dto });
+      // console.log({ dto });
       const result = await this.useCase.execute(dto);
-      console.log({ result });
+      // console.log({ result });
 
       if (result.isLeft()) {
         const error = result.value;
@@ -39,7 +39,7 @@ export class CreateProductController extends BaseController {
         return this.ok(res, { id });
       }
     } catch (err: any) {
-      console.log({ err });
+      // console.log({ err });
       return this.fail(res, err);
     }
   }

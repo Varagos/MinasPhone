@@ -15,6 +15,10 @@ class CommerceJSProductsService implements IProductsService {
     });
     return structuredClone(data) ?? [];
   }
+
+  async fetchItemById(productId: string): Promise<Product> {
+    throw new Error('Method not implemented.');
+  }
 }
 
 export default CommerceJSProductsService;

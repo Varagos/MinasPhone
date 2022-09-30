@@ -34,8 +34,8 @@ export abstract class BaseController {
     try {
       await this.executeImpl(req, res);
     } catch (err) {
-      console.log(`[BaseController]: Uncaught controller error`);
-      console.log(err);
+      // console.log(`[BaseController]: Uncaught controller error`);
+      // console.log(err);
       this.fail(res, 'An unexpected error occurred');
     }
   }
@@ -122,7 +122,7 @@ export abstract class BaseController {
   }
 
   public fail(res: express.Response, error: Error | string) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({
       message: error.toString(),
     });

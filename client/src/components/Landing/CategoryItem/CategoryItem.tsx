@@ -3,7 +3,7 @@ import useStyles from './styles';
 import { Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const CategoryItem = ({ src, heading, dest, ...rest }) => {
+const CategoryItem = ({ src, heading, dest }: any) => {
   const classes = useStyles();
   return (
     <Grid container item xs={12} md={3} alignContent="center" justifyContent="center" className={classes.item}>

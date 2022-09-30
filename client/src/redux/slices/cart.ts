@@ -77,6 +77,7 @@ export const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchCart.fulfilled, (state, action) => {
       state.data = action.payload;
+      state.status = 'success';
     });
     builder.addCase(fetchCart.pending, (state, action) => {
       state.status = 'loading';
@@ -88,6 +89,7 @@ export const cartSlice = createSlice({
 
     builder.addCase(addToCart.fulfilled, (state, action) => {
       state.data = action.payload;
+      state.status = 'success';
     });
     builder.addCase(addToCart.pending, (state, action) => {
       state.status = 'loading';
@@ -99,6 +101,7 @@ export const cartSlice = createSlice({
 
     builder.addCase(emptyCart.fulfilled, (state, action) => {
       state.data = action.payload;
+      state.status = 'success';
     });
     builder.addCase(emptyCart.pending, (state, action) => {
       state.status = 'loading';
@@ -110,6 +113,7 @@ export const cartSlice = createSlice({
 
     builder.addCase(removeFromCart.fulfilled, (state, action) => {
       state.data = action.payload;
+      state.status = 'success';
     });
     builder.addCase(removeFromCart.pending, (state, action) => {
       state.status = 'loading';
@@ -121,6 +125,7 @@ export const cartSlice = createSlice({
 
     builder.addCase(updateCart.fulfilled, (state, action) => {
       state.data = action.payload;
+      state.status = 'success';
     });
     builder.addCase(updateCart.pending, (state, action) => {
       state.status = 'loading';
@@ -132,6 +137,7 @@ export const cartSlice = createSlice({
 
     builder.addCase(refreshCart.fulfilled, (state, action) => {
       state.data = action.payload;
+      state.status = 'success';
     });
     builder.addCase(refreshCart.pending, (state, action) => {
       state.status = 'loading';

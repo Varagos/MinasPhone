@@ -11,6 +11,9 @@ import * as reactRouterDom from 'react-router-dom';
 import { EmailPasswordAuth } from 'supertokens-auth-react/recipe/emailpassword';
 import AdminDashboard from '../components/admin-dashboard/AdminDashboard';
 import { RequireAdminAuth } from '../components/auth-guards/RequireAdmin';
+import UserTerms from '../components/Information/UserTerms';
+import { Container } from '@mui/material';
+import Categories from '../components/Categories/Categories';
 
 const AppRoutes = () => {
   const dispatch = useAppDispatch();
@@ -32,6 +35,7 @@ const AppRoutes = () => {
             {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
             <Route path="/" element={<Landing />}></Route>
             <Route path="/products" element={<ProductsPage />}></Route>
+            <Route path="/category" element={<Categories />}></Route>
             <Route path="/category/:category_id" element={<Category />}></Route>
             <Route path="/products/:product_id" element={<ProductPage />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
@@ -47,6 +51,7 @@ const AppRoutes = () => {
                 </RequireAdminAuth>
               }
             />
+            <Route path="/information/user-terms" element={<UserTerms />} />
             {/* <Route exact path="/register">
             <Register />
           </Route> */}

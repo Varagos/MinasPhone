@@ -62,7 +62,7 @@ const Address = ({ checkoutToken, shippingData, backStep, next }: AddressProps) 
                 // defaultValue="store"
                 onChange={(e) => {
                   onChange(e);
-                  console.log(e.target.value); // will be called this time
+                  // console.log(e.target.value); // will be called this time
                 }}
               >
                 <FormControlLabel value="store" control={<Radio />} label="Παραλαβή από το κατάστημα" />

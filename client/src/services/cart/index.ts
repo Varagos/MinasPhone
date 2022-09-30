@@ -1,6 +1,6 @@
 import { commerce } from '../../components/lib/commerce';
 import { Cart as CartType } from '../../types/cart';
-import { Asset, Price } from '../products';
+import { Asset, Price, productsService } from '../products';
 import CommerceJSCartService from './commercejs';
 import MockCartService from './mock';
 
@@ -101,6 +101,8 @@ export interface ICartService {
 }
 
 const cartService: ICartService =
-  process.env.REACT_APP_ENVIRONMENT === 'mock' ? new MockCartService() : new CommerceJSCartService(commerce);
+  process.env.REACT_APP_ENVIRONMENT === 'mock'
+    ? new MockCartService(productsService)
+    : new CommerceJSCartService(commerce);
 
 export { cartService };

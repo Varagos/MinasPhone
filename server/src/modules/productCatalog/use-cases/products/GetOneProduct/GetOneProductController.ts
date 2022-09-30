@@ -16,7 +16,7 @@ export class GetOneProductController extends BaseController {
     try {
       const id = req.params.id;
       const result = await this.useCase.execute({ id });
-      console.log({ result });
+      // console.log({ result });
 
       if (result.isLeft()) {
         const error = result.value;
@@ -29,7 +29,7 @@ export class GetOneProductController extends BaseController {
         });
       }
     } catch (err: any) {
-      console.log({ err });
+      // console.log({ err });
       return this.fail(res, err);
     }
   }

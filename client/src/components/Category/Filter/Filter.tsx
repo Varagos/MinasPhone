@@ -13,7 +13,7 @@ const Filter = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const { search, pathname } = useLocation();
-  console.log('paramsss', search);
+  // console.log('paramsss', search);
 
   const [value, setValue] = useState<number[]>([0, 200]);
 

@@ -5,7 +5,7 @@ class CommerceJSCategoriesService implements ICategoriesService {
   constructor(private client: Commerce) {}
   async fetchAll(): Promise<CategoryCollection> {
     const result = await this.client.categories.list();
-    console.log('categories:', result);
+    // console.log('categories:', result);
     return structuredClone(result);
   }
 }

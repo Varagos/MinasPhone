@@ -102,14 +102,14 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
         },
       },
     };
-    console.log(orderData);
+    // console.log(orderData);
 
     onCaptureCheckout(checkoutToken.id, orderData);
 
     nextStep();
   };
 
-  console.log('FINAL SHIPPING DATA--', shippingData);
+  // console.log('FINAL SHIPPING DATA--', shippingData);
   return (
     <>
       <Review checkoutToken={checkoutToken} />

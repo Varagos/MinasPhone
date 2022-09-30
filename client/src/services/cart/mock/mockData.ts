@@ -1,10 +1,10 @@
 import { Cart } from '../../../types/cart';
 
 export const mockCart: Cart = {
-  id: 'cart_L1vOoZm3j2wRa8',
-  created: 1664443071,
-  updated: 1664443071,
-  expires: 1667035071,
+  id: 'cart_aZWNoyrVkY580J',
+  created: 1664522789,
+  updated: 1664523691,
+  expires: 1667115691,
   total_items: 0,
   total_unique_items: 0,
   subtotal: {
@@ -13,8 +13,7 @@ export const mockCart: Cart = {
     formatted_with_symbol: '€0.00',
     formatted_with_code: '0.00 EUR',
   },
-  hosted_checkout_url: 'https://checkout.chec.io/cart/cart_L1vOoZm3j2wRa8',
-  meta: null,
+  hosted_checkout_url: 'https://checkout.chec.io/cart/cart_aZWNoyrVkY580J',
   line_items: [],
   currency: {
     code: 'EUR',

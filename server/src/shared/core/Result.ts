@@ -26,7 +26,7 @@ export class Result<T> {
 
   public getValue(): T {
     if (!this.isSuccess || !this._value) {
-      console.log(this.error);
+      // console.log(this.error);
       throw new Error(
         "Can't get the value of an error result. Use 'errorValue' instead.",
       );

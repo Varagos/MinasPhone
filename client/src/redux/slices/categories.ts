@@ -16,7 +16,7 @@ const initialState: ICategoriesState = {
 };
 // const fetchCategories = async () => {
 //   const result = await commerce.categories.list();
-//   console.log('categories:', result);
+//   // console.log('categories:', result);
 //   dispatch(categoriesFetched(result.data));
 // };
 export const fetchCategories = createAsyncThunk<Category[], void, AsyncThunkConfig>(

@@ -71,7 +71,7 @@ const Cart = () => {
     </Box>
   );
 
-  console.log(cart.line_items);
+  // console.log(cart.line_items);
   if (!cart.line_items) return <div>"Loading..."</div>;
 
   return (

@@ -22,11 +22,11 @@ export const userSlice = createSlice({
       state.data = action.payload;
     },
     userSignedOut: (state) => {
-      console.log('reducer runnnnnnnnn');
+      // console.log('reducer runnnnnnnnn');
       state.status = 'signedOut';
     },
     userSignedIn: (state) => {
-      console.log('reducer runnnnnnnnn');
+      // console.log('reducer runnnnnnnnn');
       state.status = 'signedIn';
     },
   },

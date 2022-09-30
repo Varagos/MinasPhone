@@ -16,7 +16,7 @@ export class GetOneCategoryController extends BaseController {
     try {
       const dto = { id: req.params.id };
       const result = await this.useCase.execute(dto);
-      console.log({ result });
+      // console.log({ result });
 
       if (result.isLeft()) {
         const error = result.value;
@@ -29,7 +29,7 @@ export class GetOneCategoryController extends BaseController {
         });
       }
     } catch (err: any) {
-      console.log({ err });
+      // console.log({ err });
       return this.fail(res, err);
     }
   }

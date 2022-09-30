@@ -21,7 +21,7 @@ export const authSlice = createSlice({
     authChanged(state: IAuthState, action) {
       const userData = action.payload || undefined;
       if (userData) {
-        // console.log('userData in authChanged', userData);
+        // // console.log('userData in authChanged', userData);
         return { ...state, userData, isAuthenticated: true };
       } else {
         return { ...state, userData: undefined, isAuthenticated: false };

@@ -16,7 +16,7 @@ export class GetAllCategoriesController extends BaseController {
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
     try {
       const result = await this.useCase.execute();
-      console.log({ result });
+      // console.log({ result });
 
       if (result.isLeft()) {
         const error = result.value;
@@ -31,7 +31,7 @@ export class GetAllCategoriesController extends BaseController {
         });
       }
     } catch (err: any) {
-      console.log({ err });
+      // console.log({ err });
       return this.fail(res, err);
     }
   }

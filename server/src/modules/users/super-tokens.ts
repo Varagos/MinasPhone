@@ -3,7 +3,7 @@ import Session from 'supertokens-node/recipe/session';
 import EmailPassword from 'supertokens-node/recipe/emailpassword';
 
 export const supertokensInit = () => {
-  console.log(
+  // console.log(
     'process.env.SUPER_TOKENS_CONNECTION_URI!',
     process.env.SUPER_TOKENS_CONNECTION_URI!,
   );
@@ -45,7 +45,7 @@ export const supertokensInit = () => {
                 const userId = input.userId;
                 // const email
                 const userInfo = await EmailPassword.getUserById(userId);
-                console.log({ userInfo });
+                // console.log({ userInfo });
                 const { email } = userInfo!;
 
                 const adminEmails = ['markos.girgis13@gmail.com'];

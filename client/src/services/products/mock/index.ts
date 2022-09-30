@@ -15,6 +15,14 @@ class MockProductsService implements IProductsService {
     });
     return structuredClone(result);
   }
+
+  async fetchItemById(productId: string): Promise<Product> {
+    const product = this.products.find((product) => product.id === productId);
+    if (!product) {
+      throw new Error('Product not found');
+    }
+    return product;
+  }
 }
 
 export default MockProductsService;

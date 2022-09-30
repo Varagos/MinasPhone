@@ -33,7 +33,7 @@ export class ProductMap implements Mapper<Product> {
       new UniqueEntityID(raw.id),
     );
 
-    productOrError.isFailure && console.log(productOrError.getErrorValue());
+    productOrError.isFailure && // console.log(productOrError.getErrorValue());
 
     return productOrError.getValue();
   }

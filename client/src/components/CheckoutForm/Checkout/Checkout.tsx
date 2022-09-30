@@ -24,7 +24,7 @@ import { refreshCart } from '../../../redux/slices/cart';
 import { CheckoutCapture } from '@chec/commerce.js/types/checkout-capture';
 import { CheckoutCaptureResponse } from '@chec/commerce.js/types/checkout-capture-response';
 import Confirmation from './Confirmation';
-import { checkoutEnded, generateCheckoutToken } from '../../../redux/slices/checkout';
+import { captureCheckoutOrder, checkoutEnded, generateCheckoutToken } from '../../../redux/slices/checkout';
 
 const steps = ['Λογαριασμός', 'Διέυθυνση', 'Πληρωμή'];
 
@@ -74,7 +74,6 @@ const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [shippingData, setShippingData] = useState<any>({});
   const [error, setErrorMessage] = useState('');
-  const [order, setOrder] = useState<CheckoutCaptureResponse | null>(null);
 
   const classes = useStyles();
 
@@ -83,11 +82,10 @@ const Checkout = () => {
 
   const handleCaptureCheckout = async (checkoutTokenId: string, newOrder: CheckoutCapture) => {
     try {
-      const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
+      // const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
+      dispatch(captureCheckoutOrder({ checkoutTokenId: checkoutTokenId, newOrder }));
 
-      setOrder(incomingOrder);
-
-      dispatch(refreshCart() as any);
+      dispatch(refreshCart());
     } catch (error) {
       setErrorMessage('There was an error capturing checkout' + (error as any).data.error.message);
     }
@@ -100,7 +98,7 @@ const Checkout = () => {
 
   useEffect(() => {
     return () => {
-      // console.log('cleaned up');
+      // // console.log('cleaned up');
       dispatch(checkoutEnded());
     };
   }, []);
@@ -109,7 +107,7 @@ const Checkout = () => {
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
   const next = (data: any) => {
-    console.log('NEXT function', data);
+    // console.log('NEXT function', data);
     setShippingData(data);
     nextStep();
   };
@@ -131,7 +129,7 @@ const Checkout = () => {
       <main className={classes.layout}>
         <Paper className={classes.paper} sx={{ mx: 20 }}>
           <Typography variant="h4" align="center">
-            Checkout
+            Ολοκλήρωση Παραγγελίας
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((step) => (
@@ -141,7 +139,7 @@ const Checkout = () => {
             ))}
           </Stepper>
           {activeStep === steps.length ? (
-            <Confirmation order={order} />
+            <Confirmation />
           ) : (
             <Form
               activeStep={activeStep}

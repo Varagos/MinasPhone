@@ -52,7 +52,7 @@ export interface Product {
     collects_billing_address: boolean;
     collects_extra_fields: boolean;
     has_video?: boolean;
-    has_rich_embed: boolean;
+    // has_rich_embed: boolean;
   };
   is: {
     active: boolean;

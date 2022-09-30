@@ -83,7 +83,7 @@ const Checkout = () => {
   const handleCaptureCheckout = async (checkoutTokenId: string, newOrder: CheckoutCapture) => {
     try {
       // const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
-      dispatch(captureCheckoutOrder({ checkoutTokenId: checkoutTokenId, newOrder }));
+      await dispatch(captureCheckoutOrder({ checkoutTokenId: checkoutTokenId, newOrder })).unwrap();
 
       dispatch(refreshCart());
     } catch (error) {

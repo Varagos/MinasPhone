@@ -5,7 +5,7 @@ import useStyles from './styles';
 import { Link } from 'react-router-dom';
 import { Product as ProductType } from '@chec/commerce.js/types/product';
 import { useAppDispatch } from '../../../../redux/store';
-import { addToCart } from '../../../../redux/slices/cart';
+import { addedToCart, addToCart } from '../../../../redux/slices/cart';
 import { useState } from 'react';
 
 type ProductProps = {
@@ -18,6 +18,7 @@ function ProductCard({ product }: ProductProps) {
   const [raised, setRaised] = useState<boolean>(false);
 
   const handleAddToCart = (id: string, quantity = 1) => {
+    dispatch(addedToCart({ productId: id, quantity: 1 }));
     dispatch(addToCart({ productId: id, quantity }));
   };
 

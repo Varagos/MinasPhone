@@ -1,5 +1,5 @@
 import { Typography, Button, Card, CardActions, CardContent, CardMedia } from '@mui/material';
-import { removeFromCart, updateCart } from '../../../redux/slices/cart';
+import { cartItemRemoved, cartUpdated, removeFromCart, updateCart } from '../../../redux/slices/cart';
 import { useAppDispatch } from '../../../redux/store';
 
 import useStyles from './styles';
@@ -13,12 +13,14 @@ const CartItem = ({ item }: CartItemProps) => {
 
   const dispatch = useAppDispatch();
 
-  const handleRemoveFromCart = async (productId: string) => {
-    dispatch(removeFromCart(productId));
+  const handleRemoveFromCart = async (lineItemId: string) => {
+    dispatch(cartItemRemoved({ lineItemId }));
+    dispatch(removeFromCart(lineItemId));
   };
 
-  const onUpdateCartQty = async (productId: string, quantity: number) => {
-    dispatch(updateCart({ productId, quantity }));
+  const onUpdateCartQty = async (lineItemId: string, quantity: number) => {
+    dispatch(cartUpdated({ lineItemId, quantity }));
+    dispatch(updateCart({ productId: lineItemId, quantity }));
   };
 
   return (

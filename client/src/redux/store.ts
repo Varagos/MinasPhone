@@ -12,7 +12,7 @@ import { IProductsService, productsService } from '../services/products';
 import { cartService, ICartService } from '../services/cart';
 import { checkoutService, ICheckoutService } from '../services/checkout';
 
-// console.log('Loading Redux store...', process.env.REACT_APP_ENVIRONMENT);
+console.log('Loading Redux store...', process.env.REACT_APP_ENVIRONMENT);
 export const store = configureStore({
   reducer: {
     auth: authReducer,

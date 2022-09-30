@@ -1,6 +1,6 @@
 import { Container, Typography, Button, Grid, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { emptyCart, removeFromCart } from '../../redux/slices/cart';
+import { emptyCart } from '../../redux/slices/cart';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import CartItem from './CartItem/CartItem';
 import useStyles from './styles';
@@ -9,6 +9,8 @@ const Cart = () => {
   const classes = useStyles();
 
   const cart = useAppSelector((state) => state.cart.data);
+  // TODO Make sure Use cannot proceed to checkout if cart is status is pending
+  const status = useAppSelector((state) => state.cart.status);
   const dispatch = useAppDispatch();
 
   const handleEmptyCart = async () => {
@@ -62,6 +64,7 @@ const Cart = () => {
             type="button"
             variant="contained"
             color="primary"
+            disabled={status !== 'success'}
             sx={{ ml: 5, textTransform: 'none' }}
           >
             Ολοκλήρωση παραγγελίας

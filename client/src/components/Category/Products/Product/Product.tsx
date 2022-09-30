@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../../redux/store';
 import StoreMallDirectoryTwoToneIcon from '@mui/icons-material/StoreMallDirectoryTwoTone';
 import { Product as ProductType } from '@chec/commerce.js/types/product';
 import { productSelected } from '../../../../redux/productSlice';
-import { addToCart } from '../../../../redux/slices/cart';
+import { addedToCart, addToCart } from '../../../../redux/slices/cart';
 
 const Product = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +23,7 @@ const Product = () => {
   }, []);
 
   const handleAddToCart = (id: string) => {
+    dispatch(addedToCart({ productId: id, quantity: 1 }));
     dispatch(addToCart({ productId: id, quantity: 1 }));
   };
 

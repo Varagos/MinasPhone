@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { stat } from 'fs';
 import { commerce } from '../../components/lib/commerce';
 import { Cart } from '../../types/cart';
 import actions from '../actions';
@@ -63,15 +64,67 @@ export const refreshCart = createAsyncThunk<Cart, void, AsyncThunkConfig>(action
   return cart;
 });
 
+const lineItemFromProduct = (productId: string, quantity: number) => {
+  const lineItem = { id: productId, productId: productId, quantity: quantity } as any;
+  return lineItem;
+};
+
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
     addedToCart: (state, action: PayloadAction<{ productId: string; quantity: number }>) => {
-      if (state.data?.total_items) state.data.total_items++;
+      // TODO Update cart & line_item money
+      console.log('addedToCart', action.payload);
       const { productId, quantity } = action.payload;
+
       const lineItem = { id: productId, quantity: quantity } as any;
-      state.data?.line_items.push(lineItem);
+      if (!state.data)
+        state.data = {
+          id: 'temp-id',
+          line_items: [],
+          created: Date.now(),
+          updated: Date.now(),
+          expires: Date.now() + 20000,
+        } as unknown as Cart;
+      if (!state.data?.line_items) state.data!.line_items = [];
+      state.data.line_items.push(lineItem);
+      state.data!.total_items++;
+      if (!state.data.line_items.some((item) => item.product_id === productId)) {
+        state.data!.total_unique_items++;
+      }
+    },
+    cartUpdated: (state, action: PayloadAction<{ lineItemId: string; quantity: number }>) => {
+      // TODO Update cart & line_item money
+      if (!state.data) return;
+      const { lineItemId, quantity } = action.payload;
+      console.log('lineItemId', lineItemId);
+      const lineItemIndex = state.data.line_items.findIndex((item) => item.id === lineItemId);
+      if (lineItemIndex < 0) throw new Error('Line item not found');
+      const lineItem = state.data.line_items[lineItemIndex];
+
+      const previousLineItemQuantity = lineItem?.quantity;
+
+      const dif = quantity - previousLineItemQuantity!;
+      state.data.total_items += dif;
+      if (quantity === 0) {
+        state.data.line_items.splice(lineItemIndex, 1);
+        state.data.total_unique_items--;
+      } else {
+        state.data.line_items[lineItemIndex].quantity = quantity;
+      }
+    },
+    cartItemRemoved: (state, action: PayloadAction<{ lineItemId: string }>) => {
+      // TODO Update cart & line_item money
+      if (!state.data) return;
+      const { lineItemId } = action.payload;
+      const lineItemIndex = state.data.line_items.findIndex((item) => item.id === lineItemId);
+
+      const lineItem = state.data.line_items[lineItemIndex];
+      const quantity = lineItem.quantity;
+      state.data.total_items -= quantity;
+      state.data.line_items.splice(lineItemIndex, 1);
+      state.data.total_unique_items--;
     },
   },
   extraReducers: (builder) => {
@@ -150,6 +203,6 @@ export const cartSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addedToCart } = cartSlice.actions;
+export const { addedToCart, cartUpdated, cartItemRemoved } = cartSlice.actions;
 
 export default cartSlice.reducer;

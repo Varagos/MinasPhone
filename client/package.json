@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
+    "start": "serve -s build",
     "start:dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

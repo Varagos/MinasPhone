@@ -40,7 +40,6 @@ export const mockProducts: Product[] = [
       collects_shipping_address: true,
       collects_billing_address: false,
       collects_extra_fields: false,
-      has_rich_embed: false,
     },
     is: {
       active: true,
@@ -168,7 +167,6 @@ export const mockProducts: Product[] = [
       collects_billing_address: false,
       collects_extra_fields: false,
       has_video: false,
-      has_rich_embed: false,
     },
     is: {
       active: true,
@@ -296,7 +294,6 @@ export const mockProducts: Product[] = [
       collects_billing_address: false,
       collects_extra_fields: false,
       has_video: false,
-      has_rich_embed: false,
     },
     is: {
       active: true,
@@ -423,7 +420,6 @@ export const mockProducts: Product[] = [
       collects_billing_address: false,
       collects_extra_fields: false,
       has_video: false,
-      has_rich_embed: false,
     },
     is: {
       active: true,
@@ -551,7 +547,6 @@ export const mockProducts: Product[] = [
       collects_billing_address: false,
       collects_extra_fields: false,
       has_video: false,
-      has_rich_embed: false,
     },
     is: {
       active: true,
@@ -679,7 +674,6 @@ export const mockProducts: Product[] = [
       collects_billing_address: false,
       collects_extra_fields: false,
       has_video: false,
-      has_rich_embed: false,
     },
     is: {
       active: true,
@@ -808,7 +802,6 @@ export const mockProducts: Product[] = [
       collects_billing_address: false,
       collects_extra_fields: false,
       has_video: false,
-      has_rich_embed: false,
     },
     is: {
       active: true,
@@ -935,7 +928,6 @@ export const mockProducts: Product[] = [
       collects_billing_address: false,
       collects_extra_fields: false,
       has_video: false,
-      has_rich_embed: false,
     },
     is: {
       active: true,

@@ -13,7 +13,13 @@ import {
 import Review from './Review';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 
-const Address = ({ checkoutToken, shippingData, backStep, next }: any) => {
+type AddressProps = {
+  checkoutToken: any;
+  next: (data: any) => void;
+  backStep: () => void;
+  shippingData: any;
+};
+const Address = ({ checkoutToken, shippingData, backStep, next }: AddressProps) => {
   const { register, handleSubmit, control } = useForm();
 
   // const handleSubmit = async (event: any, elements: any, stripe: any) => {
@@ -39,12 +45,18 @@ const Address = ({ checkoutToken, shippingData, backStep, next }: any) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl component="fieldset">
           {/* <FormLabel component="legend">Τρόπος παραλαβής</FormLabel> */}
+
+          {/* render={({
+          field: { onChange, onBlur, value, name, ref },
+          fieldState: { invalid, isTouched, isDirty, error },
+          formState,
+        }) => ( */}
           <Controller
             rules={{ required: true }}
             control={control}
             name="receiptMethod"
             defaultValue={'store'}
-            render={({ name, onBlur, onChange, value }) => (
+            render={({ field: { onChange, value } }) => (
               <RadioGroup
                 value={value}
                 // defaultValue="store"

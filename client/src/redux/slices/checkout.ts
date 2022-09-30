@@ -1,18 +1,19 @@
-import { CheckoutCapture } from './../../types/checkout-capture.d';
-import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import actions from '../actions';
 import { AsyncThunkConfig } from '../store';
-import { CheckoutCaptureResponse } from '@chec/commerce.js/types/checkout-capture-response';
+import { CheckoutToken } from '../../types/checkout-token';
+import { CheckoutCapture } from './../../types/checkout-capture.d';
+import { CheckoutCaptureResponse } from '../../types/checkout-capture-response';
 
 export interface ICheckoutState {
-  response?: CheckoutCaptureResponse;
+  orderResponse: CheckoutCaptureResponse | null;
   token: CheckoutToken | null;
   status: 'idle' | 'loading' | 'success' | 'failed';
   error: string;
 }
 
 const initialState: ICheckoutState = {
+  orderResponse: null,
   token: null,
   status: 'idle',
   error: '',
@@ -43,10 +44,16 @@ export const captureCheckoutOrder = createAsyncThunk<
 export const checkoutSlice = createSlice({
   name: 'checkout',
   initialState,
-  reducers: {},
+  reducers: {
+    checkoutEnded: (state) => {
+      state.token = null;
+      state.orderResponse = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(generateCheckoutToken.fulfilled, (state, action) => {
       state.token = action.payload;
+      state.status = 'success';
     });
     builder.addCase(generateCheckoutToken.pending, (state) => {
       state.status = 'loading';
@@ -57,7 +64,8 @@ export const checkoutSlice = createSlice({
     });
 
     builder.addCase(captureCheckoutOrder.fulfilled, (state, action) => {
-      state.response = action.payload;
+      state.orderResponse = action.payload;
+      state.status = 'success';
     });
     builder.addCase(captureCheckoutOrder.pending, (state) => {
       state.status = 'loading';
@@ -70,6 +78,6 @@ export const checkoutSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-// export const { } = checkoutSlice.actions;
+export const { checkoutEnded } = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;

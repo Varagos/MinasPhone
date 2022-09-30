@@ -1,8 +1,8 @@
-import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
-import { ICheckoutService } from '..';
 import Commerce from '@chec/commerce.js';
-import { CheckoutCapture } from '@chec/commerce.js/types/checkout-capture';
-import { CheckoutCaptureResponse } from '@chec/commerce.js/types/checkout-capture-response';
+import { ICheckoutService } from '..';
+import { CheckoutCapture } from '../../../types/checkout-capture';
+import { CheckoutCaptureResponse } from '../../../types/checkout-capture-response';
+import { CheckoutToken } from '../../../types/checkout-token';
 
 class CommerceJSCheckoutService implements ICheckoutService {
   constructor(private client: Commerce) {}

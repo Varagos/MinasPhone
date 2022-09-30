@@ -1,7 +1,7 @@
-import { CheckoutCapture } from '@chec/commerce.js/types/checkout-capture';
-import { CheckoutCaptureResponse } from '@chec/commerce.js/types/checkout-capture-response';
-import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
 import { commerce } from '../../components/lib/commerce';
+import { CheckoutCapture } from '../../types/checkout-capture';
+import { CheckoutCaptureResponse } from '../../types/checkout-capture-response';
+import { CheckoutToken } from '../../types/checkout-token';
 import CommerceJSCheckoutService from './commercejs';
 import MockCheckoutService from './mock';
 // import Commerce = require('@chec/commerce.js');

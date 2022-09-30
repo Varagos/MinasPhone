@@ -1,22 +1,35 @@
 import React from 'react';
 import { TextField, Grid } from '@mui/material';
 import { useFormContext, Controller } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 
-const FormInput = ({ name, label, required }: any) => {
+const FormInput = ({ name, label, required, rules }: any) => {
   const { control } = useFormContext();
-  const isError = false;
+  // const isError = false;
 
   return (
     <Grid item xs={12} sm={6}>
       <Controller
-        as={TextField}
-        defaultValue=""
         name={name}
         control={control}
-        label={label}
-        fullWidth
-        required={required}
-        error={isError}
+        rules={rules ?? {}}
+        render={({
+          field: { onChange, onBlur, value, name, ref },
+          fieldState: { invalid, isTouched, isDirty, error },
+          formState,
+        }) => (
+          <TextField
+            label={label}
+            defaultValue=""
+            fullWidth
+            required={required}
+            error={!!error}
+            onBlur={onBlur} // notify when input is touched
+            onChange={onChange} // send value to hook form
+            inputRef={ref}
+            helperText={!!error && error.message}
+          />
+        )}
       />
     </Grid>
   );

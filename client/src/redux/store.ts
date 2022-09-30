@@ -6,6 +6,7 @@ import productReducer from './productSlice';
 import cartReducer from './slices/cart';
 import userReducer from './userSlice';
 import authReducer from './authSlice';
+import checkoutReducer from './slices/checkout';
 import { categoriesService, ICategoriesService } from '../services/categories';
 import { IProductsService, productsService } from '../services/products';
 import { cartService, ICartService } from '../services/cart';
@@ -19,6 +20,7 @@ export const store = configureStore({
     products: productsReducer,
     product: productReducer,
     cart: cartReducer,
+    checkout: checkoutReducer,
     user: userReducer,
   },
   middleware: (getDefaultMiddleware) =>

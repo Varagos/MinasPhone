@@ -1,77 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { InputLabel, Select, MenuItem, Button, Grid, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
+import { Button, Grid, Typography } from '@mui/material';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
-import { commerce } from '../lib/commerce';
-
 import FormInput from './FormInput';
-import { GetShippingOptionsResponse } from '@chec/commerce.js/features/checkout';
 
-const Account = ({ checkoutToken, next }: any) => {
-  // const [shippingCountries, setShippingCountries] = useState<Record<string, string>>({});
-  // const [shippingCountry, setShippingCountry] = useState('');
-  // const [shippingSubdivisions, setShippingSubdivisions] = useState<Record<string, string>>({});
-  // const [shippingSubdivision, setShippingSubdivision] = useState('');
-  // const [shippingOptions, setShippingOptions] = useState<GetShippingOptionsResponse[]>([]);
-  // const [shippingOption, setShippingOption] = useState('');
+const Account = ({ next }: any) => {
   const methods = useForm();
-
-  // const countries = Object.entries(shippingCountries).map(([code, name]) => ({
-  //   id: code,
-  //   label: name,
-  // }));
-  // const subdivisions = Object.entries(shippingSubdivisions).map(([code, name]) => ({
-  //   id: code,
-  //   label: name,
-  // }));
-
-  // const options = shippingOptions.map((sO) => ({
-  //   id: sO.id,
-  //   label: `${sO.description} - ${sO.price.formatted_with_symbol}`,
-  // }));
-
-  // // checkoutTokenId is created inside Checkout.jsx
-  // const fetchShippingCountries = async (checkoutTokenId: string) => {
-  //   const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
-
-  //   setShippingCountries(countries);
-  //   setShippingCountry(Object.keys(countries)[0]);
-  //   console.log('SHIPPING COUNTRY:', countries);
-  // };
-
-  // const fetchSubdivisions = async (countryCode: string) => {
-  //   const { subdivisions } = await commerce.services.localeListSubdivisions(countryCode);
-
-  //   setShippingSubdivisions(subdivisions);
-  //   setShippingSubdivision(Object.keys(subdivisions)[0]);
-
-  //   console.log('SHIPPING SUBDIVISIONS:', subdivisions);
-  // };
-
-  // const fetchShippingOptions = async (checkoutTokenId: string, country: string, region?: string) => {
-  //   const options = await commerce.checkout.getShippingOptions(checkoutTokenId, {
-  //     country,
-  //     region,
-  //   });
-
-  //   setShippingOptions(options);
-  //   setShippingOption(options[0].id);
-
-  //   console.log('SHIPPING OPTIONS:', options);
-  // };
+  const { errors } = methods.formState;
 
   // useEffect(() => {
-  //   fetchShippingCountries(checkoutToken.id);
-  // }, []);
-
-  // useEffect(() => {
-  //   if (shippingCountry) fetchSubdivisions(shippingCountry);
-  // }, [shippingCountry]);
-
-  // useEffect(() => {
-  //   if (shippingSubdivision) fetchShippingOptions(checkoutToken.id, shippingCountry, shippingSubdivision);
-  // }, [shippingSubdivision]);
+  //   console.error('Errors:::', errors);
+  // }, [errors]);
 
   return (
     <>
@@ -91,11 +31,45 @@ const Account = ({ checkoutToken, next }: any) => {
           })}
         >
           <Grid container spacing={3}>
-            <FormInput name="firstName" label="'Ονομα" required />
-            <FormInput name="lastName" label="Επώνυμο" required />
+            <FormInput
+              name="firstName"
+              label="'Ονομα"
+              rules={{
+                required: 'Υποχρεωτικό πεδίο',
+              }}
+            />
+            <FormInput
+              name="lastName"
+              label="Επώνυμο"
+              rules={{
+                required: 'Υποχρεωτικό πεδίο',
+              }}
+            />
             {/* <FormInput name="address1" label="Address" required /> */}
-            <FormInput name="email" label="Email" required />
-            <FormInput name="phoneNumber" label="Αριθμός Τηλεφώνου" required />
+            <FormInput
+              name="email"
+              label="Email"
+              rules={{
+                required: 'Υποχρεωτικό πεδίο',
+                pattern: {
+                  value:
+                    /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
+                  message: 'Λανθασμένη διεύθυνση email',
+                },
+              }}
+            />
+            <FormInput
+              name="phoneNumber"
+              label="Αριθμός Τηλεφώνου"
+              rules={{
+                required: 'Υποχρεωτικό πεδίο',
+                validate: {
+                  isNumber: (value: string) => {
+                    return value.match(/\d/g)?.length === 10 || 'Πρέπει να είναι 10-ψήφιος αριθμός';
+                  },
+                },
+              }}
+            />
             {/* <FormInput name="city" label="City" required />
             <FormInput name="zip" label="ZIP / Postal code" required /> */}
 
@@ -137,6 +111,7 @@ const Account = ({ checkoutToken, next }: any) => {
             <Button component={Link} to="/cart" variant="outlined">
               Πίσω στο καλάθι
             </Button>
+
             <Button type="submit" variant="contained" color="primary">
               Συνέχεια
             </Button>

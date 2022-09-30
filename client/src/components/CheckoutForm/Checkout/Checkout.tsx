@@ -18,37 +18,92 @@ import PaymentForm from '../Payment/PaymentForm';
 
 import useStyles from './styles';
 import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
-import { useAppSelector } from '../../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import Address from '../Address';
+import { refreshCart } from '../../../redux/slices/cart';
+import { CheckoutCapture } from '@chec/commerce.js/types/checkout-capture';
+import { CheckoutCaptureResponse } from '@chec/commerce.js/types/checkout-capture-response';
+import Confirmation from './Confirmation';
+import { checkoutEnded, generateCheckoutToken } from '../../../redux/slices/checkout';
 
 const steps = ['Λογαριασμός', 'Διέυθυνση', 'Πληρωμή'];
 
-const Checkout = ({ order, onCaptureCheckout, error }: any) => {
-  const [activeStep, setActiveStep] = useState(0);
-  const [checkoutToken, setCheckoutToken] = useState<CheckoutToken | null>(null);
-  const [shippingData, setShippingData] = useState<any>({});
+type FormProps = {
+  activeStep: number;
+  next: (data: any) => void;
+  nextStep: () => void;
+  backStep: () => void;
+  handleCaptureCheckout: (checkoutTokenId: string, newOrder: CheckoutCapture) => void;
+  shippingData: any;
+};
+
+const Form = (props: FormProps): JSX.Element => {
+  const { activeStep, next, nextStep, backStep, handleCaptureCheckout, shippingData } = props;
   const classes = useStyles();
-  // const history = useHistory();
-  const navigate = useNavigate();
+  const checkoutToken = useAppSelector((state) => state.checkout.token);
+
+  if (checkoutToken === null) {
+    return (
+      <div className={classes.spinner}>
+        <CircularProgress />
+      </div>
+    );
+  }
+
+  switch (activeStep) {
+    case 0:
+      return <Account checkoutToken={checkoutToken} next={next} />;
+    case 1:
+      return <Address shippingData={shippingData} checkoutToken={checkoutToken} next={next} backStep={backStep} />;
+    case 2:
+      return (
+        <PaymentForm
+          shippingData={shippingData}
+          checkoutToken={checkoutToken}
+          nextStep={nextStep}
+          backStep={backStep}
+          onCaptureCheckout={handleCaptureCheckout}
+        />
+      );
+    default:
+      return <Typography>Unknown checkout step</Typography>;
+  }
+};
+
+const Checkout = () => {
+  const [activeStep, setActiveStep] = useState(0);
+  const [shippingData, setShippingData] = useState<any>({});
+  const [error, setErrorMessage] = useState('');
+  const [order, setOrder] = useState<CheckoutCaptureResponse | null>(null);
+
+  const classes = useStyles();
 
   const cart = useAppSelector((state) => state.cart.data);
+  const dispatch = useAppDispatch();
 
+  const handleCaptureCheckout = async (checkoutTokenId: string, newOrder: CheckoutCapture) => {
+    try {
+      const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
+
+      setOrder(incomingOrder);
+
+      dispatch(refreshCart() as any);
+    } catch (error) {
+      setErrorMessage('There was an error capturing checkout' + (error as any).data.error.message);
+    }
+  };
   if (!cart) return <div>No cart</div>;
 
   useEffect(() => {
-    const generateToken = async () => {
-      try {
-        const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
+    dispatch(generateCheckoutToken({ cartId: cart.id }));
+  }, []);
 
-        setCheckoutToken(token);
-      } catch (error) {
-        // (history as any).pushState('/');
-        navigate('/');
-      }
+  useEffect(() => {
+    return () => {
+      // console.log('cleaned up');
+      dispatch(checkoutEnded());
     };
-
-    generateToken();
-  }, [cart]);
+  }, []);
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -59,27 +114,6 @@ const Checkout = ({ order, onCaptureCheckout, error }: any) => {
     nextStep();
   };
 
-  const Confirmation = () =>
-    order.customer ? (
-      <>
-        <div>
-          <Typography variant="h5">
-            Σας ευχαριστούμε για την παραγγελία, {order.customer.firstname} {order.customer.lastname}
-          </Typography>
-          <Divider className={classes.divider} />
-          <Typography variant="subtitle2">Κωδικός παραγγελίας: {order.customer_reference}</Typography>
-        </div>
-        <br />
-        <Button component={Link} to="/" variant="outlined" type="button">
-          Πίσω στην αρχική
-        </Button>
-      </>
-    ) : (
-      <div className={classes.spinner}>
-        <CircularProgress />
-      </div>
-    );
-
   if (error) {
     <>
       <Typography variant="h5">Error: {error}</Typography>
@@ -89,27 +123,6 @@ const Checkout = ({ order, onCaptureCheckout, error }: any) => {
       </Button>
     </>;
   }
-
-  const Form = () =>
-    activeStep === 0 ? (
-      <Account checkoutToken={checkoutToken} next={next} />
-    ) : activeStep === 1 ? (
-      <Address
-        shippingData={shippingData}
-        checkoutToken={checkoutToken}
-        next={next}
-        backStep={backStep}
-        onCaptureCheckout={onCaptureCheckout}
-      />
-    ) : (
-      <PaymentForm
-        shippingData={shippingData}
-        checkoutToken={checkoutToken!}
-        nextStep={nextStep}
-        backStep={backStep}
-        onCaptureCheckout={onCaptureCheckout}
-      />
-    );
 
   return (
     <>
@@ -127,7 +140,18 @@ const Checkout = ({ order, onCaptureCheckout, error }: any) => {
               </Step>
             ))}
           </Stepper>
-          {activeStep === steps.length ? <Confirmation /> : checkoutToken && <Form />}
+          {activeStep === steps.length ? (
+            <Confirmation order={order} />
+          ) : (
+            <Form
+              activeStep={activeStep}
+              next={next}
+              nextStep={nextStep}
+              backStep={backStep}
+              shippingData={shippingData}
+              handleCaptureCheckout={handleCaptureCheckout}
+            />
+          )}
         </Paper>
       </main>
     </>

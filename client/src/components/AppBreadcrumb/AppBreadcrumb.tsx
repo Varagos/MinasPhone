@@ -15,7 +15,12 @@ const breadcrumbNameMap: any = {
 };
 
 const isSpecialLastPathName = (lastPathName: string) => {
-  return lastPathName.startsWith('prod_') || lastPathName === 'auth' || lastPathName === 'cart';
+  return (
+    lastPathName.startsWith('prod_') ||
+    lastPathName === 'auth' ||
+    lastPathName === 'cart' ||
+    lastPathName === 'checkout'
+  );
 };
 
 const LinkRouter = (props: any) => <Link {...props} component={RouterLink} />;
@@ -42,6 +47,9 @@ const AppBreadcrumb = () => {
 
     if (lastPathName === 'cart') {
       return 'Καλάθι';
+    }
+    if (lastPathName === 'checkout') {
+      return 'Ολοκλήρωση Παραγγελίας';
     }
     return lastPathName;
   };
@@ -81,12 +89,14 @@ const AppBreadcrumb = () => {
               You are here:
             // </Typography> */}
           {/* </Box> */}
-          <Breadcrumbs aria-label="breadcrumb" color="white" style={{ display: 'inline-block' }}>
-            <LinkRouter color="inherit" to="/">
-              Αρχική
-            </LinkRouter>
-            {listOfLinks}
-          </Breadcrumbs>
+          {lastPathName !== 'checkout' && (
+            <Breadcrumbs aria-label="breadcrumb" color="white" style={{ display: 'inline-block' }}>
+              <LinkRouter color="inherit" to="/">
+                Αρχική
+              </LinkRouter>
+              {listOfLinks}
+            </Breadcrumbs>
+          )}
         </Box>
       </Container>
     </div>

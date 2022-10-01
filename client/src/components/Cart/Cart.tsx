@@ -2,6 +2,7 @@ import { Container, Typography, Button, Grid, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { emptyCart } from '../../redux/slices/cart';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
+import Spinner from '../Spinner/Spinner';
 import CartItem from './CartItem/CartItem';
 import useStyles from './styles';
 
@@ -36,11 +37,15 @@ const Cart = () => {
   const FilledCart = () => (
     <Box mb={6}>
       <Grid container spacing={3}>
-        {cart.line_items.map((item) => (
-          <Grid item xs={12} sm={4} key={item.id}>
-            <CartItem item={item} />
-          </Grid>
-        ))}
+        {status === 'loading' ? (
+          <Spinner />
+        ) : (
+          cart.line_items.map((item) => (
+            <Grid item xs={12} sm={4} key={item.id}>
+              <CartItem item={item} />
+            </Grid>
+          ))
+        )}
       </Grid>
       <div className={classes.cardDetails}>
         <Typography variant="h4">Subtotal: {cart.subtotal.formatted_with_symbol}</Typography>

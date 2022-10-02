@@ -41,14 +41,14 @@ const Cart = () => {
           <Spinner />
         ) : (
           cart.line_items.map((item) => (
-            <Grid item xs={12} sm={4} key={item.id}>
+            <Grid item sm={12} key={item.id}>
               <CartItem item={item} />
             </Grid>
           ))
         )}
       </Grid>
       <div className={classes.cardDetails}>
-        <Typography variant="h4">Subtotal: {cart.subtotal.formatted_with_symbol}</Typography>
+        <Typography variant="h4">Σύνολο: {cart.subtotal.formatted_with_symbol}</Typography>
         <div>
           <Button
             className={classes.emptyButton}

@@ -1,6 +1,12 @@
-import { Typography, Button, Card, CardActions, CardContent, CardMedia } from '@mui/material';
+import { Typography, Button, Card, CardActions, CardContent, CardMedia, Box, IconButton } from '@mui/material';
 import { cartItemRemoved, cartUpdated, removeFromCart, updateCart } from '../../../redux/slices/cart';
 import { useAppDispatch } from '../../../redux/store';
+import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import useStyles from './styles';
 
@@ -24,35 +30,55 @@ const CartItem = ({ item }: CartItemProps) => {
   };
 
   return (
-    <Card sx={{ pt: 5 }}>
+    <Card sx={{ display: 'flex' }}>
       <CardMedia
+        component="img"
+        sx={{ width: 151, padding: 3 }}
         image={item.media.source}
-        className={classes.media}
-        sx={{
-          objectFit: 'contain',
-          width: 200,
-          height: 200,
-          mx: 'auto',
-        }}
+        alt="Live from space album cover"
       />
-      <CardContent className={classes.cardContent}>
-        <Typography variant="h4">{item.name}</Typography>
-        <Typography variant="h5">{item.line_total.formatted_with_symbol}</Typography>
-      </CardContent>
-      <CardActions className={classes.cartActions}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', flex: 3 }}>
+        <CardContent sx={{ flex: '1 0 auto' }}>
+          <Typography component="div" variant="h5">
+            {item.name}
+          </Typography>
+        </CardContent>
+      </Box>
+
+      <CardActions className={classes.cartActions} sx={{ flex: 2 }}>
         <div className={classes.buttons}>
-          <Button type="button" size="small" onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}>
-            -
-          </Button>
-          <Typography>{item.quantity}</Typography>
-          <Button type="button" size="small" onClick={() => onUpdateCartQty(item.id, item.quantity + 1)}>
-            +
-          </Button>
+          <IconButton aria-label="remove item" onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}>
+            <RemoveIcon />
+          </IconButton>
+          <Typography sx={{ mg: 2, px: 2 }}>{item.quantity}</Typography>
+
+          <IconButton aria-label="remove item" onClick={() => onUpdateCartQty(item.id, item.quantity + 1)}>
+            <AddIcon />
+          </IconButton>
         </div>
-        <Button variant="contained" type="button" color="secondary" onClick={() => handleRemoveFromCart(item.id)}>
-          Remove
-        </Button>
       </CardActions>
+      <Box
+        sx={{
+          flex: '1',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-evenly',
+          alignItems: 'center',
+        }}
+      >
+        <Typography variant="h5" align="center">
+          {item.line_total.formatted_with_symbol}
+        </Typography>
+
+        <IconButton
+          size="medium"
+          aria-label="remove item"
+          color="secondary"
+          onClick={() => handleRemoveFromCart(item.id)}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </Box>
     </Card>
   );
 };

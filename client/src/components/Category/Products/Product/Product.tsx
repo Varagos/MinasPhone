@@ -6,6 +6,9 @@ import StoreMallDirectoryTwoToneIcon from '@mui/icons-material/StoreMallDirector
 import { Product as ProductType } from '@chec/commerce.js/types/product';
 import { productSelected } from '../../../../redux/productSlice';
 import { addedToCart, addToCart } from '../../../../redux/slices/cart';
+import { fetchProducts } from '../../../../redux/slices/products';
+import { RttRounded } from '@mui/icons-material';
+import Spinner from '../../../Spinner/Spinner';
 
 const Product = () => {
   const dispatch = useAppDispatch();
@@ -15,11 +18,23 @@ const Product = () => {
   // console.log(productId);
   const allProducts = useAppSelector((state) => state.products.data);
   const product = useAppSelector((state) => state.product.data);
+  const productsStatus = useAppSelector((state) => state.products.status);
+
+  const onProductPageMount = async () => {
+    const product = allProducts.find((product) => product.id === productId);
+    if (!product) {
+      const products = await dispatch(fetchProducts()).unwrap();
+      const product = products.find((product) => product.id === productId);
+      if (product) dispatch(productSelected(product));
+      else console.log('Product not found');
+
+      return;
+    }
+    dispatch(productSelected(product));
+  };
 
   useEffect(() => {
-    const product = allProducts.find((product) => product.id === productId);
-    if (!product) return;
-    dispatch(productSelected(product));
+    onProductPageMount();
   }, []);
 
   const handleAddToCart = (id: string) => {
@@ -27,6 +42,7 @@ const Product = () => {
     dispatch(addToCart({ productId: id, quantity: 1 }));
   };
 
+  if (productsStatus === 'loading') return <Spinner />;
   if (!product) return <div style={{ minHeight: '70vh' }}>Error finding product</div>;
 
   return (

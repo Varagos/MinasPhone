@@ -9,6 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import useStyles from './styles';
+import { Link } from 'react-router-dom';
 
 type CartItemProps = {
   item: any;
@@ -41,6 +42,9 @@ const CartItem = ({ item }: CartItemProps) => {
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h5">
             {item.name}
+          </Typography>
+          <Typography component={Link} to={`/products/${item.product_id}`} variant="subtitle1" color="text.secondary">
+            Λεπτομέρειες
           </Typography>
         </CardContent>
       </Box>

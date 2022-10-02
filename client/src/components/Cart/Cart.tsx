@@ -83,7 +83,7 @@ const Cart = () => {
   if (!cart.line_items) return <div>"Loading..."</div>;
 
   return (
-    <Container sx={{ py: 2 }}>
+    <Container sx={{ pt: 2, pb: 20 }}>
       {/* <div className={classes.toolbar} /> */}
       <Typography className={classes.title} variant="h3" gutterBottom>
         Καλάθι Αγορών

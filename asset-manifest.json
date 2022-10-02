@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.js": "/minas-phone/static/js/main.2fb9e810.js",
+    "static/media/redmi note 9 pro-1920x800.jpg": "/minas-phone/static/media/redmi note 9 pro-1920x800.6290c1d9a494aee33015.jpg",
+    "static/media/poco_x3_banner_1-1920x800.jpg": "/minas-phone/static/media/poco_x3_banner_1-1920x800.3986099dfca4bc979ab9.jpg",
+    "static/media/tablet-category.jpg": "/minas-phone/static/media/tablet-category.dd1adac45ab0b9aad2df.jpg",
+    "static/media/undraw_empty_xct9.svg": "/minas-phone/static/media/undraw_empty_xct9.d2b51ad26a6d0f07f58ac1477d7bcfb2.svg",
+    "static/media/smartwatch-category.jpg": "/minas-phone/static/media/smartwatch-category.48a3fd06059e6cdc97f4.jpg",
+    "static/media/undraw_phone_fix.svg": "/minas-phone/static/media/undraw_phone_fix.f40733f95dd27d9387ac78d03ea9ad9d.svg",
+    "static/media/cluster.svg": "/minas-phone/static/media/cluster.155eee9bae9158f960bbd13794646c40.svg",
+    "index.html": "/minas-phone/index.html",
+    "main.2fb9e810.js.map": "/minas-phone/static/js/main.2fb9e810.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.2fb9e810.js"
+  ]
+}

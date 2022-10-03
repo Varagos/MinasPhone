@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Container, Typography, Grid, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -7,41 +8,15 @@ import ProductCard from '../Category/Products/ProductCard/ProductCard';
 import PhoneFix from '../../assets/undraw_phone_fix.svg';
 import TabletCategory from '../../assets/tablet-category.jpg';
 import SmartWatchCategory from '../../assets/smartwatch-category.jpg';
-import PocoBanner from '../../assets/poco_x3_banner_1-1920x800.jpg';
-import RedMiBanner from '../../assets/redmi note 9 pro-1920x800.jpg';
-
-import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { useEffect } from 'react';
 import { fetchProducts } from '../../redux/slices/products';
+import SimpleSlider from './Slider/Slider';
 
 const Landing = () => {
   const recommendedProducts = useAppSelector((state) => state.products.data);
   const dispatch = useAppDispatch();
   const classes = useStyles();
-  const items = [
-    {
-      name: 'Random name #1',
-      description: 'Probably the most random then you have ever seen',
-      url: RedMiBanner, // 'https://www.globalphone.gr/image/cache/catalog/Banners/redmi%20note%209%20pro-1920x800.jpg',
-    },
-    {
-      name: 'Random name #2',
-      description: 'Hello world',
-      url: PocoBanner, //'https://www.globalphone.gr/image/cache/catalog/Pocophone%20X3/poco%20x3%20banner%201-1920x800.jpg',
-    },
-  ];
   // console.log('recommendedProducts:', recommendedProducts);
-
-  function Item({ item }: any) {
-    return (
-      <Link to="/products">
-        <div>
-          <img className={classes.media} src={item.url} alt="samsung phones"></img>
-        </div>
-      </Link>
-    );
-  }
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -52,11 +27,11 @@ const Landing = () => {
 
   return (
     <main className={classes.content}>
-      <Carousel>
+      {/* <Carousel>
         {items.map((item, index) => (
           <Item key={index} item={item} />
-        ))}
-      </Carousel>
+        ))} */}
+      <SimpleSlider />
       <section>
         <Container>
           <Box my={8}>

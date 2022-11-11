@@ -4,9 +4,9 @@ import EmailPassword from 'supertokens-node/recipe/emailpassword';
 
 export const supertokensInit = () => {
   // console.log(
-    'process.env.SUPER_TOKENS_CONNECTION_URI!',
-    process.env.SUPER_TOKENS_CONNECTION_URI!,
-  );
+  //   'process.env.SUPER_TOKENS_CONNECTION_URI!',
+  //   process.env.SUPER_TOKENS_CONNECTION_URI!,
+  // );
   supertokens.init({
     framework: 'express',
     supertokens: {

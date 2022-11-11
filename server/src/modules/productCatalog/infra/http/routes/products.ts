@@ -1,4 +1,5 @@
 import express from 'express';
+import { upload } from '../../../../../shared/infra/storage/multer';
 import { createProductController } from '../../../use-cases/products/CreateProduct';
 import { deleteProductController } from '../../../use-cases/products/DeleteProduct';
 import { getAllProductsController } from '../../../use-cases/products/GetAllProducts';
@@ -7,9 +8,9 @@ import { updateProductController } from '../../../use-cases/products/UpdateProdu
 
 const productRouter = express.Router();
 
-productRouter.post('/', (req, res) =>
-  createProductController.execute(req, res),
-);
+productRouter.post('/', upload.single('image'), (req, res) => {
+  return createProductController.execute(req, res);
+});
 
 productRouter.get('/', (req, res) =>
   getAllProductsController.execute(req, res),

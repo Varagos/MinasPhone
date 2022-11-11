@@ -19,6 +19,10 @@ export class UpdateProduct
   async execute(request: UpdateProductDTO) {
     try {
       const { id, ...props } = request;
+      // const product = await this.productRepo.getById(id);
+      // if (product === null) {
+      //   return left(new AppError.NotFoundError('Product not found'));
+      // }
       const productOrError = Product.create(props, new UniqueEntityID(id));
       if (productOrError.isFailure) {
         return left(productOrError);

@@ -3,6 +3,7 @@ import { IProductRepo } from '../productRepo';
 import { Product } from '../../domain/Product';
 import { ProductMap } from '../../mappers/ProductMap';
 import { ProductDetailsMap } from '../../mappers/ProductDetailsMap';
+import { Result } from '../../../../shared/core/Result';
 
 export class ProductRepo implements IProductRepo {
   private models: Record<string, any>;
@@ -19,6 +20,18 @@ export class ProductRepo implements IProductRepo {
     );
     return products;
   }
+
+  async getById(id: string): Promise<Product> {
+    const ProductModel = this.models.Product;
+    const rawProduct = await ProductModel.findOne({
+      where: {
+        id,
+      },
+    });
+    const product = ProductMap.toDomain(rawProduct);
+    return product;
+  }
+
   async getOneById(id: string): Promise<ProductDetails> {
     const ProductModel = this.models.Product;
     const rawProduct = await ProductModel.findOne({
@@ -35,8 +48,10 @@ export class ProductRepo implements IProductRepo {
 
     try {
       await ProductModel.create(rawSequelizeProduct);
+      return Result.ok();
     } catch (err: any) {
-      throw new Error(err.toString());
+      const errorMessage = err?.errors?.[0].message;
+      return Result.fail(errorMessage ?? 'Error saving product');
     }
   }
 

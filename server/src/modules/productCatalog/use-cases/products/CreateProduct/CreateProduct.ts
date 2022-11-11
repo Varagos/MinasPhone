@@ -4,27 +4,38 @@ import { UseCase } from '../../../../../shared/core/UseCase';
 import { CreateProductDTO } from './CreateProductDTO';
 import { IProductRepo } from '../../../repos/productRepo';
 import { Product } from '../../../domain/Product';
+import { IImagesService } from '../../../infra/imagesFileSystem';
 
 type Response = Either<
-  AppError.UnexpectedError | Result<any> | any,
-  any | Result<void>
+  AppError.UnexpectedError | Result<Product>,
+  Result<string>
 >;
 
 export class CreateProduct
   implements UseCase<CreateProductDTO, Promise<Response>>
 {
-  constructor(private productRepo: IProductRepo) {}
+  constructor(
+    private productRepo: IProductRepo,
+    private imagesService: IImagesService,
+  ) {}
 
   async execute(request: CreateProductDTO) {
+    const mediaFileName = request.mediaFileName;
     try {
       const productOrError = Product.create(request);
       if (productOrError.isFailure) {
+        await this.imagesService.deleteImage(mediaFileName);
         return left(productOrError);
       }
       const product = productOrError.getValue();
-      await this.productRepo.save(product);
+      const result = await this.productRepo.save(product);
+      if (result.isFailure) {
+        await this.imagesService.deleteImage(mediaFileName);
+        return left(result);
+      }
       return right(Result.ok<string>(product.id.toString()));
     } catch (error: any) {
+      await this.imagesService.deleteImage(mediaFileName);
       return left(new AppError.UnexpectedError(error));
     }
   }

@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
+import multer from 'multer';
+import listEndpoints from 'express-list-endpoints';
 import supertokens from 'supertokens-node';
 import { middleware, errorHandler } from 'supertokens-node/framework/express';
 import { supertokensInit } from '../../../modules/users/super-tokens';
@@ -47,5 +49,6 @@ app.use(errorHandler());
 // app.use((err: unknown, req: Request, res: Response, next: NextFunction) => { /* ... */ });
 
 app.listen(port, () => {
-  // console.log(`Example app listening on port ${port}`);
+  console.log(`App listening on port ${port}`);
+  console.table(listEndpoints(app));
 });

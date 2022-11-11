@@ -14,8 +14,10 @@ export default (sequelize: Sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
       },
-      permalink: {
+      slug: {
         type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
       },
       name: {
         type: DataTypes.STRING,
@@ -26,9 +28,12 @@ export default (sequelize: Sequelize) => {
       quantity: {
         type: DataTypes.INTEGER,
       },
-      media: {
-        // type: DataTypes.STRING,
-        type: BLOB('long'),
+      // media: {
+      //   // type: DataTypes.STRING,
+      //   type: BLOB('long'),
+      // },
+      media_filename: {
+        type: DataTypes.STRING,
       },
       sku: {
         type: DataTypes.STRING,

@@ -1,4 +1,4 @@
-import * as express from 'express';
+import { Result } from '../../../../../shared/core/Result';
 import { BaseController } from '../../../../../shared/infra/http/models/BaseController';
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest';
 import { CreateProduct } from './CreateProduct';
@@ -13,33 +13,41 @@ export class CreateProductController extends BaseController {
   }
 
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
-    const dto: CreateProductDTO = {
-      active: req.body.active,
-      permalink: req.body.permalink,
-      name: req.body.name,
-      description: req.body.description,
-      quantity: req.body.quantity,
-      media: req.body.media,
-      sku: req.body.sku,
-      price: req.body.price,
-    };
-    // console.log({ dto });
-
     try {
-      // console.log({ dto });
+      if (!req.file) {
+        return this.clientError(res, 'Please upload a valid image');
+      }
+      // console.log(req.file);
+      const data = JSON.parse(req.body.data);
+      const { active, slug, name, description, quantity, sku, price } = data;
+      const dto: CreateProductDTO = {
+        active,
+        slug,
+        name,
+        description,
+        quantity,
+        mediaFileName: req.file.filename,
+        sku,
+        price,
+      };
       const result = await this.useCase.execute(dto);
-      // console.log({ result });
 
       if (result.isLeft()) {
         const error = result.value;
-
-        return this.fail(res, (error as any).getErrorValue().message);
-      } else {
-        const id = (result.value as any).getValue();
-        return this.ok(res, { id });
+        switch (error.constructor) {
+          case Result: {
+            // console.log('Result', error.getErrorValue());
+            return this.clientError(res, error.getErrorValue() as any);
+          }
+          default: {
+            return this.fail(res, (error as any).getErrorValue().message);
+          }
+        }
       }
+      const id = (result.value as any).getValue();
+      return this.ok(res, { id });
     } catch (err: any) {
-      // console.log({ err });
+      console.log({ err });
       return this.fail(res, err);
     }
   }

@@ -1,10 +1,11 @@
 export interface CreateProductDTO {
   active: boolean;
-  permalink: string;
+  slug: string;
   name: string;
   description: string;
   quantity: number;
-  media: string;
+  // media: string;
+  mediaFileName: string;
   sku: string;
   price: number;
 }

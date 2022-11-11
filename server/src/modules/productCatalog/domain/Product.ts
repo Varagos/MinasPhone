@@ -1,14 +1,15 @@
+import { Guard, IGuardArgument } from '../../../shared/core/Guard';
 import { Result } from '../../../shared/core/Result';
 import { AggregateRoot } from '../../../shared/domain/AggregateRoot';
 import { UniqueEntityID } from '../../../shared/domain/UniqueEntityID';
 
 interface ProductProps {
   active: boolean;
-  permalink: string;
+  slug: string;
   name: string;
   description: string;
   quantity: number;
-  media: string;
+  mediaFileName: string;
   sku: string;
   price: number;
 }
@@ -29,8 +30,8 @@ export class Product extends AggregateRoot<ProductProps> {
     return this.props.name;
   }
 
-  get permalink(): string {
-    return this.props.permalink;
+  get slug(): string {
+    return this.props.slug;
   }
 
   get description(): string {
@@ -41,8 +42,8 @@ export class Product extends AggregateRoot<ProductProps> {
     return this.props.quantity;
   }
 
-  get media(): string {
-    return this.props.media;
+  get mediaFileName(): string {
+    return this.props.mediaFileName;
   }
 
   get sku(): string {
@@ -57,16 +58,25 @@ export class Product extends AggregateRoot<ProductProps> {
     props: ProductProps,
     id?: UniqueEntityID,
   ): Result<Product> {
-    // TODO validations
+    const guardArgs: IGuardArgument[] = [
+      { argument: props.slug, argumentName: 'slug' },
+      { argument: props.name, argumentName: 'name' },
+      { argument: props.price, argumentName: 'price' },
+    ];
+
+    const guardResult = Guard.againstNullOrUndefinedBulk(guardArgs);
+    if (guardResult.isFailure) {
+      return Result.fail<Product>(guardResult.getErrorValue());
+    }
 
     const isNewProduct = !!id === false;
     const defaultProps = {
       active: props.active ?? true,
-      permalink: props.permalink,
+      slug: props.slug,
       name: props.name,
       description: props.description,
       quantity: props.quantity,
-      media: props.media,
+      mediaFileName: props.mediaFileName,
       sku: props.sku,
       price: props.price,
     };

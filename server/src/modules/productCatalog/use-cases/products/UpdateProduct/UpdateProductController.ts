@@ -15,11 +15,11 @@ export class UpdateProductController extends BaseController {
     const dto: UpdateProductDTO = {
       id: req.params.id,
       active: req.body.active,
-      permalink: req.body.permalink,
+      slug: req.body.slug,
       name: req.body.name,
       description: req.body.description,
       quantity: req.body.quantity,
-      media: req.body.media,
+      mediaFileName: req.body.media,
       sku: req.body.sku,
       price: req.body.price,
     };

@@ -9,10 +9,10 @@ export class ProductMap implements Mapper<Product> {
       id: product.id.toString(),
       name: product.name,
       active: product.active,
-      permalink: product.permalink,
+      slug: product.slug,
       description: product.description,
       quantity: product.quantity,
-      media: product.media,
+      media_filename: product.mediaFileName,
       sku: product.sku,
       price: product.price,
     };
@@ -23,17 +23,17 @@ export class ProductMap implements Mapper<Product> {
       {
         name: raw.name,
         active: raw.active,
-        permalink: raw.permalink,
+        slug: raw.slug,
         description: raw.description,
         quantity: raw.quantity,
-        media: raw.media,
+        mediaFileName: raw.media_filename,
         sku: raw.sku,
         price: raw.price,
       },
       new UniqueEntityID(raw.id),
     );
 
-    productOrError.isFailure && // console.log(productOrError.getErrorValue());
+    productOrError.isFailure && console.log(productOrError.getErrorValue());
 
     return productOrError.getValue();
   }

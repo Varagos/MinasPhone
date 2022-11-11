@@ -11,7 +11,7 @@ export class CategoryDetailsMap implements Mapper<CategoryDetails> {
       parent_id: raw.parent_id,
     });
 
-    categoryOrError.isFailure && // console.log(categoryOrError.getErrorValue());
+    categoryOrError.isFailure && console.log(categoryOrError.getErrorValue());
 
     return categoryOrError.getValue();
   }

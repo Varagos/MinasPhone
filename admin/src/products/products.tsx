@@ -79,14 +79,18 @@ export const ProductCreate = () => (
   <Create>
     <SimpleForm>
       <BooleanInput source="active" defaultValue={true} />
-      <TextInput source="slug" />
+      {/* <TextInput source="slug" /> */}
       <TextInput source="name" />
       <TextInput source="description" />
       <NumberInput source="quantity" />
-      <ImageInput source="media" label="Related pictures" accept="image/*">
-        <ImageField source="src" title="title" />
+
+      <ImageInput source="media" label={labels[Language].image} accept="image/*" multiple={false}>
+        <ImageField
+          source="src"
+          title="title"
+          sx={{ '& img': { maxWidth: 400, maxHeight: 400, objectFit: 'contain' } }}
+        />
       </ImageInput>
-      {/* <TextInput source="media" /> */}
       <TextInput source="sku" />
       <NumberInput source="price" />
     </SimpleForm>

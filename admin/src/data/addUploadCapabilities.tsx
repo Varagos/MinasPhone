@@ -1,4 +1,5 @@
 import { DataProvider, fetchUtils } from 'react-admin';
+import { nanoid } from 'nanoid';
 
 // const apiUrl = 'https://my.api.com/';
 const apiUrl = 'http://localhost:8080/api/v1';
@@ -14,22 +15,34 @@ const httpClient = fetchUtils.fetchJson;
  */
 const myDataProvider = (dataProvider: DataProvider): DataProvider => ({
   ...dataProvider,
+
+  create: (resource, params) => {
+    if (resource !== 'products') {
+      if (resource === 'categories') {
+        const categorySlug = `cat_${nanoid(10)}`;
+        params.data = { ...params.data, slug: categorySlug };
+      }
+      // fallback to the default implementation
+      return dataProvider.create(resource, params);
+    }
+
+    const slug = `prod_${nanoid(10)}`; //=> "V1StGXR8_Z5jdHi6B-myT"
+    const formData = buildFormData(params.data, { slug });
+    return httpClient(`${apiUrl}/${resource}`, {
+      method: 'POST',
+      body: formData,
+    }).then(({ json }) => ({
+      data: { ...params.data, id: json.id },
+    }));
+  },
+
   update: (resource, params) => {
     if (resource !== 'products') {
       // fallback to the default implementation
       return dataProvider.update(resource, params);
     }
 
-    console.log('media', params.data.media);
-    const isNewFile = params.data.media && params.data.media.rawFile instanceof File;
-    let formData = new FormData();
-    const { media, mediaFileName, ...rest } = params.data;
-
-    const stringifiedBody = JSON.stringify(rest);
-    if (isNewFile) {
-      formData.append('image', params.data.media.rawFile);
-    }
-    formData.append('data', stringifiedBody);
+    const formData = buildFormData(params.data);
 
     return httpClient(`${apiUrl}/${resource}/${params.id}`, {
       method: 'PUT',
@@ -37,5 +50,24 @@ const myDataProvider = (dataProvider: DataProvider): DataProvider => ({
     }).then(({ json }) => ({ data: json }));
   },
 });
+
+const buildFormData = (data: any, additionalData?: { [key: string]: any }): FormData => {
+  // console.log('media', params.data.media);
+  const isNewFile = data.media && data.media.rawFile instanceof File;
+  let formData = new FormData();
+  const { media, mediaFileName, ...rest } = data;
+
+  if (additionalData) {
+    Object.keys(additionalData).forEach((key) => {
+      rest[key] = additionalData[key];
+    });
+  }
+  const stringifiedBody = JSON.stringify(rest);
+  if (isNewFile) {
+    formData.append('image', data.media.rawFile);
+  }
+  formData.append('data', stringifiedBody);
+  return formData;
+};
 
 export default myDataProvider;

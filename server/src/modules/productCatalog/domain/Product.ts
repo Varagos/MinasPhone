@@ -1,18 +1,17 @@
-import { type } from 'os';
 import { Guard, IGuardArgument } from '../../../shared/core/Guard';
 import { Result } from '../../../shared/core/Result';
 import { AggregateRoot } from '../../../shared/domain/AggregateRoot';
 import { UniqueEntityID } from '../../../shared/domain/UniqueEntityID';
 
 interface ProductProps {
-  active: boolean;
-  slug: string;
   name: string;
   description: string;
+  slug: string;
+  price: number;
   quantity: number;
+  active: boolean;
   mediaFileName: string;
   sku: string;
-  price: number;
 }
 
 export class Product extends AggregateRoot<ProductProps> {
@@ -94,10 +93,10 @@ export class Product extends AggregateRoot<ProductProps> {
     // TODO Validate props
 
     for (const [key, value] of Object.entries(propsWithValues)) {
-      // const typedKey = key as keyof ProductProps;
-      (this.props as any)[key as keyof ProductProps] = value;
+      const typedKey = key as keyof ProductProps;
+      (this.props as any)[typedKey] = value;
     }
-    console.log('this.props', this.props);
+    // console.log('this.props', this.props);
 
     return Result.ok<void>();
   }

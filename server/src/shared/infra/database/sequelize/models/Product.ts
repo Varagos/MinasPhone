@@ -1,4 +1,4 @@
-import { BLOB, DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 
 export default (sequelize: Sequelize) => {
   const Product = sequelize.define(
@@ -41,23 +41,28 @@ export default (sequelize: Sequelize) => {
       price: {
         type: DataTypes.FLOAT,
       },
-      //   extra_fields: any[];
-      //   variant_groups: ProductVariantGroup[];
-      //   categories: Array<{
-      //     id: string;
-      //     slug: string;
-      //     name: string;
-      //   }>;
-      //   assets: Asset[];
-      //   image: Asset | null;
-      //   attributes: ProductAttribute[];
-      //   related_products: any[];
+      // category_id: {
+      //   type: DataTypes.UUID,
+      //   allowNull: false,
+      //   references: {
+      //     model: 'category',
+      //     key: 'id',
+      //   },
+      // },
     },
     {
       tableName: 'products',
       timestamps: true,
     },
   );
+
+  (Product as any).associate = (models: any) => {
+    Product.belongsTo(models.Category, {
+      foreignKey: 'category_id',
+      as: 'category',
+    });
+  };
+
   return Product;
 };
 export interface Product {

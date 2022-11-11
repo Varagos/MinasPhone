@@ -26,5 +26,11 @@ export default (sequelize: Sequelize) => {
       timestamps: true,
     },
   );
+
+  (Category as any).associate = (models: any) => {
+    Category.hasMany(models.Product, {
+      foreignKey: 'category_id',
+    });
+  };
   return Category;
 };

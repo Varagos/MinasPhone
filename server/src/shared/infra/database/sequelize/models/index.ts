@@ -13,6 +13,12 @@ const createModels = () => {
   sequelize.sync({ alter: true }).then(() => {
     // console.log('All models were synchronized successfully.');
   });
+
+  Object.keys(models).forEach((modelName) => {
+    if (models[modelName].associate) {
+      models[modelName].associate(models);
+    }
+  });
   // console.log({ models });
   return models;
 };

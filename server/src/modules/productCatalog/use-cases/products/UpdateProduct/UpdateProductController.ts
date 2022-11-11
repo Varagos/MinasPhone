@@ -12,17 +12,33 @@ export class UpdateProductController extends BaseController {
   }
 
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
+    const data = JSON.parse(req.body.data);
+    const id = req.params.id;
+    const { active, slug, name, description, quantity, sku, price } = data;
+    let { mediaFileName } = data;
+
+    let newImageUploaded = false;
+    if (req.file !== undefined) {
+      // new image was uploaded
+      // will need to save the new mediaFileName
+      mediaFileName = req.file.filename;
+      newImageUploaded = true;
+      // TODO mark that a new image was uploaded
+      // TODO delete the old image,in useCase
+    }
     const dto: UpdateProductDTO = {
-      id: req.params.id,
-      active: req.body.active,
-      slug: req.body.slug,
-      name: req.body.name,
-      description: req.body.description,
-      quantity: req.body.quantity,
-      mediaFileName: req.body.media,
-      sku: req.body.sku,
-      price: req.body.price,
+      id,
+      active,
+      slug,
+      name,
+      description,
+      quantity,
+      mediaFileName,
+      sku,
+      price,
+      newImageUploaded,
     };
+    // TODO Clean undefined values from dto
 
     try {
       // console.log({ dto });

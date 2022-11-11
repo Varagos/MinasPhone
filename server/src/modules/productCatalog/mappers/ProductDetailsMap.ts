@@ -7,11 +7,11 @@ export class ProductDetailsMap implements Mapper<ProductDetails> {
     const productOrError = ProductDetails.create({
       id: raw.id,
       active: raw.active,
-      permalink: raw.permalink,
+      slug: raw.slug,
       name: raw.name,
       description: raw.description,
       quantity: raw.quantity,
-      media: raw.media,
+      mediaFileName: raw.media_filename,
       sku: raw.sku,
       price: raw.price,
     });
@@ -25,11 +25,11 @@ export class ProductDetailsMap implements Mapper<ProductDetails> {
     return {
       id: productDetails.id,
       active: productDetails.active,
-      permalink: productDetails.permalink,
+      slug: productDetails.slug,
       name: productDetails.name,
       description: productDetails.description,
       quantity: productDetails.quantity,
-      media: productDetails.media,
+      mediaFileName: 'http://localhost:8080/' + productDetails.mediaFileName,
       sku: productDetails.sku,
       price: productDetails.price,
     };

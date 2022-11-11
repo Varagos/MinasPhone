@@ -24,9 +24,17 @@ const dataProvider: DataProvider = {
 
   getOne: (resource, params) =>
     httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => {
-      // // console.log('getOne', json);
+      console.log('getOne', json);
+      const getOneData = Object.values(json)[0] as any;
+      if (resource === 'products') {
+        const { mediaFileName } = getOneData;
+        getOneData.media = {
+          title: 'cat.png',
+          src: mediaFileName,
+        };
+      }
       return {
-        data: Object.values(json)[0] as any,
+        data: getOneData,
       };
     }),
 

@@ -1,5 +1,8 @@
-import { DataProvider } from 'react-admin';
+import { DataProvider, fetchUtils } from 'react-admin';
 
+// const apiUrl = 'https://my.api.com/';
+const apiUrl = 'http://localhost:8080/api/v1';
+const httpClient = fetchUtils.fetchJson;
 // https://stackoverflow.com/questions/4083702/posting-a-file-and-associated-data-to-a-restful-webservice-preferably-as-json
 // https://stackoverflow.com/questions/59267434/multi-part-form-data-in-react-admin
 /**
@@ -12,50 +15,27 @@ import { DataProvider } from 'react-admin';
 const myDataProvider = (dataProvider: DataProvider): DataProvider => ({
   ...dataProvider,
   update: (resource, params) => {
-    if (resource !== 'posts') {
+    if (resource !== 'products') {
       // fallback to the default implementation
       return dataProvider.update(resource, params);
     }
 
-    /**
-     * For posts update only, convert uploaded image in base 64 and attach it to
-     * the `picture` sent property, with `src` and `title` attributes.
-     */
+    console.log('media', params.data.media);
+    const isNewFile = params.data.media && params.data.media.rawFile instanceof File;
+    let formData = new FormData();
+    const { media, mediaFileName, ...rest } = params.data;
 
-    // Freshly dropped pictures are File objects and must be converted to base64 strings
-    const newPictures = params.data.pictures.filter((p: any) => p.rawFile instanceof File);
-    const formerPictures = params.data.pictures.filter((p: any) => !(p.rawFile instanceof File));
+    const stringifiedBody = JSON.stringify(rest);
+    if (isNewFile) {
+      formData.append('image', params.data.media.rawFile);
+    }
+    formData.append('data', stringifiedBody);
 
-    return Promise.all(newPictures.map(convertFileToBase64))
-      .then((base64Pictures) =>
-        base64Pictures.map((picture64) => ({
-          src: picture64,
-          title: `${params.data.title}`,
-        }))
-      )
-      .then((transformedNewPictures) =>
-        dataProvider.update(resource, {
-          data: {
-            ...params.data,
-            pictures: [...transformedNewPictures, ...formerPictures],
-          },
-        } as any)
-      );
+    return httpClient(`${apiUrl}/${resource}/${params.id}`, {
+      method: 'PUT',
+      body: formData,
+    }).then(({ json }) => ({ data: json }));
   },
 });
-
-/**
- * Convert a `File` object returned by the upload input into a base 64 string.
- * That's not the most optimized way to store images in production, but it's
- * enough to illustrate the idea of data provider decoration.
- */
-const convertFileToBase64 = (file: any) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-
-    reader.readAsDataURL(file.rawFile);
-  });
 
 export default myDataProvider;

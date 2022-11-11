@@ -1,3 +1,4 @@
+import { type } from 'os';
 import { Guard, IGuardArgument } from '../../../shared/core/Guard';
 import { Result } from '../../../shared/core/Result';
 import { AggregateRoot } from '../../../shared/domain/AggregateRoot';
@@ -86,5 +87,30 @@ export class Product extends AggregateRoot<ProductProps> {
       // domain event
     }
     return Result.ok<Product>(product);
+  }
+
+  updateProps(props: Partial<ProductProps>): Result<void> {
+    const propsWithValues = this.removeUndefinedProps(props);
+    // TODO Validate props
+
+    for (const [key, value] of Object.entries(propsWithValues)) {
+      // const typedKey = key as keyof ProductProps;
+      (this.props as any)[key as keyof ProductProps] = value;
+    }
+    console.log('this.props', this.props);
+
+    return Result.ok<void>();
+  }
+
+  private removeUndefinedProps(
+    props: Record<string, unknown>,
+  ): Partial<ProductProps> {
+    const propsCopy = { ...props };
+    for (const propName in propsCopy) {
+      if (props[propName] === undefined) {
+        delete props[propName];
+      }
+    }
+    return propsCopy;
   }
 }

@@ -8,4 +8,5 @@ export interface UpdateProductDTO {
   mediaFileName: string;
   sku: string;
   price: number;
+  newImageUploaded: boolean;
 }

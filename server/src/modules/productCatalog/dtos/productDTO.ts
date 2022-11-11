@@ -1,11 +1,11 @@
 export interface ProductDTO {
   id: string;
   active: boolean;
-  permalink: string;
+  slug: string;
   name: string;
   description: string;
   quantity: number;
-  media: string;
+  mediaFileName: string;
   sku: string;
   price: number;
 }

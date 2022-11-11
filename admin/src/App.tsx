@@ -11,12 +11,13 @@ import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import dataProvider from './data/dataProvider';
 import { UserList } from './users/users';
 import { CategoryCreate, CategoryEdit, CategoryList } from './categories/categories';
+import myDataProvider from './data/addUploadCapabilities';
 
 // const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
 
 const App = () => (
   //   <Admin dashboard={Dashboard} authProvider={authProvider} dataProvider={dataProvider}>
-  <Admin dashboard={Dashboard} authProvider={authProvider} dataProvider={dataProvider}>
+  <Admin dashboard={Dashboard} authProvider={authProvider} dataProvider={myDataProvider(dataProvider)}>
     <Resource name="users" list={UserList} icon={UserIcon} />
     <Resource name="categories" list={CategoryList} icon={CategoryIcon} edit={CategoryEdit} create={CategoryCreate} />
     <Resource name="products" list={ProductList} icon={InventoryIcon} edit={ProductEdit} create={ProductCreate} />

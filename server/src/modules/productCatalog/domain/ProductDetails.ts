@@ -3,11 +3,11 @@ import { Result } from '../../../shared/core/Result';
 interface ProductDetailsProps {
   id: string;
   active: boolean;
-  permalink: string;
+  slug: string;
   name: string;
   description: string;
   quantity: number;
-  media: string;
+  mediaFileName: string;
   sku: string;
   price: number;
 }
@@ -34,8 +34,8 @@ export class ProductDetails {
     return this.props.name;
   }
 
-  get permalink(): string {
-    return this.props.permalink;
+  get slug(): string {
+    return this.props.slug;
   }
 
   get description(): string {
@@ -46,8 +46,8 @@ export class ProductDetails {
     return this.props.quantity;
   }
 
-  get media(): string {
-    return this.props.media;
+  get mediaFileName(): string {
+    return this.props.mediaFileName;
   }
 
   get sku(): string {

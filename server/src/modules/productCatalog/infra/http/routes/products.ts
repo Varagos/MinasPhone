@@ -20,7 +20,7 @@ productRouter.get('/:id', (req, res) =>
   getOneProductController.execute(req, res),
 );
 
-productRouter.put('/:id', (req, res) =>
+productRouter.put('/:id', upload.single('image'), (req, res) =>
   updateProductController.execute(req, res),
 );
 

@@ -5,6 +5,7 @@ import { UpdateProductDTO } from './UpdateProductDTO';
 import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
 import { Product } from '../../../domain/Product';
 import { IProductRepo } from '../../../repos/productRepo';
+import { IImagesService } from '../../../infra/imagesFileSystem';
 
 type Response = Either<
   AppError.UnexpectedError | Result<any> | any,
@@ -14,20 +15,26 @@ type Response = Either<
 export class UpdateProduct
   implements UseCase<UpdateProductDTO, Promise<Response>>
 {
-  constructor(private productRepo: IProductRepo) {}
+  constructor(
+    private productRepo: IProductRepo,
+    private imagesService: IImagesService,
+  ) {}
 
   async execute(request: UpdateProductDTO) {
     try {
-      const { id, ...props } = request;
-      // const product = await this.productRepo.getById(id);
-      // if (product === null) {
-      //   return left(new AppError.NotFoundError('Product not found'));
-      // }
-      const productOrError = Product.create(props, new UniqueEntityID(id));
-      if (productOrError.isFailure) {
-        return left(productOrError);
+      const { id, newImageUploaded, ...props } = request;
+      const product = await this.productRepo.getById(id);
+      if (product === null) {
+        return left(new AppError.NotFoundError('Product not found'));
       }
-      const product = productOrError.getValue();
+      if (newImageUploaded) {
+        // TODO delete the old image
+        await this.imagesService.deleteImage(product.mediaFileName);
+      }
+      const updateRes = product.updateProps(props);
+      if (updateRes.isFailure) {
+        return left(updateRes);
+      }
       await this.productRepo.update(product);
       return right(Result.ok<void>());
     } catch (error: any) {

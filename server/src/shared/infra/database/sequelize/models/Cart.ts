@@ -16,5 +16,16 @@ export default (sequelize: Sequelize) => {
       timestamps: true,
     },
   );
+
+  (Cart as any).associate = (models: any) => {
+    Cart.hasMany(models.CartItem, {
+      foreignKey: 'cart_id',
+    });
+
+    Cart.belongsTo(models.User, {
+      foreignKey: 'user_id',
+      as: 'user',
+    });
+  };
   return Cart;
 };

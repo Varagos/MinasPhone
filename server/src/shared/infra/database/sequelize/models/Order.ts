@@ -1,8 +1,8 @@
 import { DataTypes, Sequelize } from 'sequelize';
 
 export default (sequelize: Sequelize) => {
-  const User = sequelize.define(
-    'User',
+  const Order = sequelize.define(
+    'Order',
     {
       id: {
         type: DataTypes.UUID,
@@ -10,28 +10,30 @@ export default (sequelize: Sequelize) => {
         allowNull: false,
         primaryKey: true,
       },
-      firstName: {
-        type: DataTypes.STRING,
+      total: {
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
-      },
-      lastName: {
-        type: DataTypes.STRING,
+
+        validate: {
+          min: 0,
+        },
       },
     },
     {
-      tableName: 'users',
+      tableName: 'orders',
       timestamps: true,
     },
   );
 
-  (User as any).associate = (models: any) => {
-    User.hasMany(models.Order, {
-      foreignKey: 'user_id',
+  (Order as any).associate = (models: any) => {
+    Order.hasMany(models.OrderItem, {
+      foreignKey: 'order_id',
     });
 
-    User.hasOne(models.Cart, {
+    Order.belongsTo(models.User, {
       foreignKey: 'user_id',
+      as: 'user',
     });
   };
-  return User;
+  return Order;
 };

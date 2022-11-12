@@ -39,7 +39,7 @@ export default (sequelize: Sequelize) => {
         type: DataTypes.STRING,
       },
       price: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10, 2),
       },
       // category_id: {
       //   type: DataTypes.UUID,
@@ -60,6 +60,14 @@ export default (sequelize: Sequelize) => {
     Product.belongsTo(models.Category, {
       foreignKey: 'category_id',
       as: 'category',
+    });
+
+    Product.hasMany(models.CartItem, {
+      foreignKey: 'product_id',
+    });
+
+    Product.hasMany(models.OrderItem, {
+      foreignKey: 'product_id',
     });
   };
 

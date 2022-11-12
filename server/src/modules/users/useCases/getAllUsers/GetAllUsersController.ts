@@ -19,6 +19,7 @@ export class GetAllUsersController extends BaseController {
     try {
       //   const { username, password, email } = req.body;
       const users = await this.authProvider.getUsers();
+      console.log({ users });
 
       return this.ok(res, { users });
     } catch (err: any) {

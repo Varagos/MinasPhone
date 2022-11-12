@@ -2,15 +2,10 @@ import { AppError } from '../../../../../shared/core/AppError';
 import { Either, left, Result, right } from '../../../../../shared/core/Result';
 import { UseCase } from '../../../../../shared/core/UseCase';
 import { UpdateProductDTO } from './UpdateProductDTO';
-import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
-import { Product } from '../../../domain/Product';
 import { IProductRepo } from '../../../repos/productRepo';
 import { IImagesService } from '../../../infra/imagesFileSystem';
 
-type Response = Either<
-  AppError.UnexpectedError | Result<any> | any,
-  any | Result<void>
->;
+type Response = Either<AppError.UnexpectedError | Result<any>, Result<void>>;
 
 export class UpdateProduct
   implements UseCase<UpdateProductDTO, Promise<Response>>

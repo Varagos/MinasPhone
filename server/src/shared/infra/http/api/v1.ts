@@ -1,6 +1,6 @@
 import express from 'express';
-import { categoryRouter } from '../../../../modules/productCatalog/infra/http/routes/category';
-import { productRouter } from '../../../../modules/productCatalog/infra/http/routes/products';
+import { categoryRouter } from '../../../../modules/sales/productCatalog/infra/http/routes/category';
+import { productRouter } from '../../../../modules/sales/productCatalog/infra/http/routes/products';
 import { cartRouter } from '../../../../modules/sales/cart/infra/http/routes/cart';
 import { userRouter } from '../../../../modules/users/infra/http/routes';
 

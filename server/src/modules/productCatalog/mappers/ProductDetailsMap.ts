@@ -14,6 +14,7 @@ export class ProductDetailsMap implements Mapper<ProductDetails> {
       mediaFileName: raw.media_filename,
       sku: raw.sku,
       price: raw.price,
+      categoryId: raw.category_id,
     });
 
     productOrError.isFailure && console.log(productOrError.getErrorValue());
@@ -32,6 +33,7 @@ export class ProductDetailsMap implements Mapper<ProductDetails> {
       mediaFileName: 'http://localhost:8080/' + productDetails.mediaFileName,
       sku: productDetails.sku,
       price: productDetails.price,
+      categoryId: productDetails.categoryId,
     };
   }
 }

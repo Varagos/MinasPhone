@@ -12,6 +12,10 @@ import {
   Create,
   ImageInput,
   ImageField,
+  ReferenceField,
+  ReferenceInput,
+  SelectInput,
+  ChipField,
 } from 'react-admin';
 
 const Language: 'GR' | 'EN' = 'GR';
@@ -26,6 +30,7 @@ const labels = {
     available: 'Διαθέσιμο',
     createdAt: 'Δημιουργήθηκε',
     updatedAt: 'Ενημερώθηκε',
+    category: 'Κατηγορία',
   },
 };
 
@@ -34,13 +39,16 @@ export const ProductList = () => (
     <Datagrid rowClick="edit">
       <TextField source="slug" label={labels[Language].slug} />
       {/* <TextField source="id" /> */}
-      <BooleanField source="active" label={labels[Language].available} />
       <TextField source="name" label={labels[Language].name} />
       <TextField source="description" label={labels[Language].description} />
+      <ReferenceField label={labels[Language].category} source="categoryId" reference="categories">
+        <ChipField source="name" />
+      </ReferenceField>
+      <NumberField source="price" label="Τιμή" />
       <NumberField source="quantity" label={labels[Language].quantity} />
+      <BooleanField source="active" label={labels[Language].available} />
       {/* <TextField source="media" />
       <TextField source="sku" /> */}
-      <NumberField source="price" label="Τιμή" />
     </Datagrid>
   </List>
 );
@@ -54,13 +62,9 @@ export const ProductEdit = () => (
       <TextInput source="name" label={labels[Language].name} />
       <TextInput source="description" label={labels[Language].description} />
       <NumberInput source="quantity" label={labels[Language].quantity} />
-      {/* <TextInput source="media" /> */}
-      {/* <ImageField source="media" title="title" /> */}
-      {/* <ImageField
-        source="mediaFileName"
-        sx={{ '& img': { maxWidth: 400, maxHeight: 400, objectFit: 'contain' } }}
-        label={labels[Language].image}
-      /> */}
+      <ReferenceInput source="categoryId" reference="categories">
+        <SelectInput optionText="name" label={labels[Language].category} />
+      </ReferenceInput>
 
       <ImageInput source="media" label={labels[Language].image} accept="image/*" multiple={false}>
         <ImageField
@@ -82,6 +86,10 @@ export const ProductCreate = () => (
       {/* <TextInput source="slug" /> */}
       <TextInput source="name" />
       <TextInput source="description" />
+      <ReferenceInput source="categoryId" reference="categories">
+        <SelectInput optionText="name" label={labels[Language].category} />
+      </ReferenceInput>
+
       <NumberInput source="quantity" />
 
       <ImageInput source="media" label={labels[Language].image} accept="image/*" multiple={false}>

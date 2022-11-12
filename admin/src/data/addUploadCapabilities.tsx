@@ -25,6 +25,7 @@ const myDataProvider = (dataProvider: DataProvider): DataProvider => ({
       // fallback to the default implementation
       return dataProvider.create(resource, params);
     }
+    // console.log('product Props', params.data);
 
     const slug = `prod_${nanoid(10)}`; //=> "V1StGXR8_Z5jdHi6B-myT"
     const formData = buildFormData(params.data, { slug });

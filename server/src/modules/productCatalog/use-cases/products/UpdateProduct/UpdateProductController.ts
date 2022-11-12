@@ -14,18 +14,24 @@ export class UpdateProductController extends BaseController {
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
     const data = JSON.parse(req.body.data);
     const id = req.params.id;
-    const { active, slug, name, description, quantity, sku, price } = data;
     let { mediaFileName } = data;
 
     let newImageUploaded = false;
     if (req.file !== undefined) {
-      // new image was uploaded
-      // will need to save the new mediaFileName
       mediaFileName = req.file.filename;
       newImageUploaded = true;
-      // TODO mark that a new image was uploaded
-      // TODO delete the old image,in useCase
     }
+
+    const {
+      active,
+      slug,
+      name,
+      description,
+      quantity,
+      sku,
+      price,
+      categoryId,
+    } = data;
     const dto: UpdateProductDTO = {
       id,
       active,
@@ -36,9 +42,9 @@ export class UpdateProductController extends BaseController {
       mediaFileName,
       sku,
       price,
+      categoryId,
       newImageUploaded,
     };
-    // TODO Clean undefined values from dto
 
     try {
       // console.log({ dto });
@@ -48,7 +54,7 @@ export class UpdateProductController extends BaseController {
       if (result.isLeft()) {
         const error = result.value;
 
-        return this.fail(res, (error as any).getErrorValue().message);
+        return this.fail(res, (error.getErrorValue() as any).message);
       } else {
         return this.ok(res);
       }

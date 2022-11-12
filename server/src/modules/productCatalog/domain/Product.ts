@@ -12,6 +12,7 @@ interface ProductProps {
   active: boolean;
   mediaFileName: string;
   sku: string;
+  categoryId: string;
 }
 
 export class Product extends AggregateRoot<ProductProps> {
@@ -54,6 +55,10 @@ export class Product extends AggregateRoot<ProductProps> {
     return this.props.price;
   }
 
+  get categoryId(): string {
+    return this.props.categoryId;
+  }
+
   public static create(
     props: ProductProps,
     id?: UniqueEntityID,
@@ -79,6 +84,7 @@ export class Product extends AggregateRoot<ProductProps> {
       mediaFileName: props.mediaFileName,
       sku: props.sku,
       price: props.price,
+      categoryId: props.categoryId,
     };
     const product = new Product(defaultProps, id);
 

@@ -8,4 +8,5 @@ export interface CreateProductDTO {
   mediaFileName: string;
   sku: string;
   price: number;
+  categoryId: string;
 }

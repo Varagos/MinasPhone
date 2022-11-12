@@ -19,7 +19,16 @@ export class CreateProductController extends BaseController {
       }
       // console.log(req.file);
       const data = JSON.parse(req.body.data);
-      const { active, slug, name, description, quantity, sku, price } = data;
+      const {
+        active,
+        slug,
+        name,
+        description,
+        quantity,
+        sku,
+        price,
+        categoryId,
+      } = data;
       const dto: CreateProductDTO = {
         active,
         slug,
@@ -29,7 +38,9 @@ export class CreateProductController extends BaseController {
         mediaFileName: req.file.filename,
         sku,
         price,
+        categoryId,
       };
+      console.log('dto', dto);
       const result = await this.useCase.execute(dto);
 
       if (result.isLeft()) {

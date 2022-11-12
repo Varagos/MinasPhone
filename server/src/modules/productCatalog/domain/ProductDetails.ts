@@ -10,6 +10,7 @@ interface ProductDetailsProps {
   mediaFileName: string;
   sku: string;
   price: number;
+  categoryId: string;
 }
 
 /**
@@ -56,6 +57,10 @@ export class ProductDetails {
 
   get price(): number {
     return this.props.price;
+  }
+
+  get categoryId(): string {
+    return this.props.categoryId;
   }
 
   public static create(props: ProductDetailsProps): Result<ProductDetails> {

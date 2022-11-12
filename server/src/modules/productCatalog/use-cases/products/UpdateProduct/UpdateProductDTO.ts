@@ -9,4 +9,5 @@ export interface UpdateProductDTO {
   sku: string;
   price: number;
   newImageUploaded: boolean;
+  categoryId: string;
 }

@@ -5,7 +5,7 @@ import { CartItem } from './item/CartItem';
 import { ProductId } from './item/ProductId';
 
 interface CartProps {
-  items: CartItem[];
+  lineItems: CartItem[];
 }
 
 export class Cart extends AggregateRoot<CartProps> {
@@ -17,12 +17,12 @@ export class Cart extends AggregateRoot<CartProps> {
     return this._id;
   }
 
-  get items(): CartItem[] {
-    return this.props.items;
+  get lineItems(): CartItem[] {
+    return this.props.lineItems;
   }
 
   get hasItems(): boolean {
-    return this.props.items.length > 0;
+    return this.props.lineItems.length > 0;
   }
 
   public static create(props: CartProps, id?: UniqueEntityID): Result<Cart> {
@@ -30,7 +30,7 @@ export class Cart extends AggregateRoot<CartProps> {
 
     const isNewCart = !!id === false;
     const defaultProps = {
-      items: props.items,
+      lineItems: props.lineItems,
     };
     const cart = new Cart(defaultProps, id);
 
@@ -41,24 +41,24 @@ export class Cart extends AggregateRoot<CartProps> {
   }
 
   public add(toAdd: CartItem): Result<void> {
-    const existingItem = this.props.items.find(
+    const existingItem = this.props.lineItems.find(
       (item) => item.productId === toAdd.productId,
     );
     if (existingItem) {
       existingItem.quantity.add(toAdd.quantity);
     } else {
-      this.props.items.push(toAdd);
+      this.props.lineItems.push(toAdd);
     }
     return Result.ok<void>();
   }
 
   public remove(productId: ProductId): void {
-    this.props.items = this.props.items.filter(
+    this.props.lineItems = this.props.lineItems.filter(
       (item) => item.productId !== productId,
     );
   }
 
   public empty(): void {
-    this.props.items = [];
+    this.props.lineItems = [];
   }
 }

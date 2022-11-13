@@ -4,8 +4,9 @@ import { AppError } from '../../../../../shared/core/AppError';
 import { Either, Result, right } from '../../../../../shared/core/Result';
 import { UseCase } from '../../../../../shared/core/UseCase';
 import { ICartRepo } from '../../repositories/cartRepo';
+import { Cart } from '../../domain/Cart';
 
-type Response = Either<AppError.UnexpectedError, Result<CartDetails>>;
+type Response = Either<AppError.UnexpectedError | Result<any>, CartDetails>;
 
 /**
  * When you first call the method retrieve() using GET v1/carts, it will automatically create a cart for you if a cart does not exist yet
@@ -13,13 +14,28 @@ type Response = Either<AppError.UnexpectedError, Result<CartDetails>>;
  */
 
 export class RetrieveCart
-  implements UseCase<{ id: string }, Promise<Response>>
+  implements UseCase<{ id?: string }, Promise<Response>>
 {
   constructor(private cartRepo: ICartRepo) {}
-  async execute({ id }: { id: string }): Promise<Response> {
+  async execute({ id }: { id?: string }): Promise<Response> {
     try {
+      if (!id) {
+        // create a new cart
+        const cart = Cart.create({ lineItems: [] });
+        if (cart.isFailure) {
+          return left(cart);
+        }
+        await this.cartRepo.save(cart.getValue());
+        const cartId = cart.getValue().id.toString();
+        const cartDetails = CartDetails.create({
+          id: cartId,
+          lineItems: [],
+        });
+        return right(cartDetails.getValue());
+      }
+
       const cartDetails = await this.cartRepo.retrieveDetails(id);
-      return right(Result.ok(cartDetails));
+      return right(cartDetails);
     } catch (err: any) {
       return left(new AppError.UnexpectedError(err));
     }

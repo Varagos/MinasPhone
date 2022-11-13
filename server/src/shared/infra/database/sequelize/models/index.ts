@@ -16,8 +16,8 @@ const createModels = () => {
   models.OrderItem = createOrderItem(sequelize);
   models.Cart = createCart(sequelize);
   models.CartItem = createCartItem(sequelize);
-  sequelize.sync({ alter: true, force: true }).then(() => {
-    // console.log('All models were synchronized successfully.');
+  sequelize.sync({ alter: true }).then(() => {
+    console.log('All models were synchronized successfully.');
   });
 
   Object.keys(models).forEach((modelName) => {

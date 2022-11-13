@@ -2,7 +2,7 @@ import { Result } from '../../../../shared/core/Result';
 
 interface CategoryDetailsProps {
   id: string;
-  items: {
+  lineItems: {
     productId: string;
     title: string;
     unitPrice: number;
@@ -26,7 +26,7 @@ export class CartDetails {
   }
 
   get items() {
-    return this.props.items;
+    return this.props.lineItems;
   }
 
   public static create(props: CategoryDetailsProps): Result<CartDetails> {

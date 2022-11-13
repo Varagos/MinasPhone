@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
-import multer from 'multer';
+import cookieParser from 'cookie-parser';
 import listEndpoints from 'express-list-endpoints';
 import supertokens from 'supertokens-node';
 import { middleware, errorHandler } from 'supertokens-node/framework/express';
@@ -17,6 +17,7 @@ const port = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(express.static('images'));
 app.use(

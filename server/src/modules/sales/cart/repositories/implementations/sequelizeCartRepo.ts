@@ -1,6 +1,8 @@
 import { ICartRepo } from '../cartRepo';
 import { Cart } from '../../domain/Cart';
 import { CartDetails } from '../../domain/CartDetails';
+import { CartMap } from '../../mappers/CartMap';
+import { CartDetailsMap } from '../../mappers/CartDetailsMap';
 
 export class CartRepo implements ICartRepo {
   private models: Record<string, any>;
@@ -8,6 +10,13 @@ export class CartRepo implements ICartRepo {
   constructor(models: Record<string, any>) {
     this.models = models;
   }
+
+  async save(cart: Cart): Promise<void> {
+    const CartModel = this.models.Cart;
+    const mappedCart = CartMap.toPersistence(cart);
+    return CartModel.create(mappedCart);
+  }
+
   retrieveByUser(userId: string): Promise<Cart> {
     throw new Error('Method not implemented.');
   }
@@ -17,8 +26,15 @@ export class CartRepo implements ICartRepo {
   retrieve(userId: string): Promise<Cart> {
     throw new Error('Method not implemented.');
   }
-  retrieveDetails(userId: string): Promise<CartDetails> {
-    throw new Error('Method not implemented.');
+  async retrieveDetails(cartId: string): Promise<CartDetails> {
+    const CartModel = this.models.Cart;
+    const rawProduct = await CartModel.findOne({
+      where: {
+        id: cartId,
+      },
+    });
+    const product = CartDetailsMap.toDomain(rawProduct);
+    return product;
   }
 
   // async getAll(): Promise<CategoryDetails[]> {

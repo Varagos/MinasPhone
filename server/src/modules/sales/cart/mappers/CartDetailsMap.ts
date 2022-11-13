@@ -6,7 +6,7 @@ export class CartDetailsMap implements Mapper<CartDetails> {
   public static toDomain(raw: any): CartDetails {
     const cartOrError = CartDetails.create({
       id: raw.id,
-      items: raw.items,
+      lineItems: raw.items,
     });
 
     cartOrError.isFailure && console.log(cartOrError.getErrorValue());

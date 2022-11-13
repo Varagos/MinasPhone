@@ -35,3 +35,7 @@ This is a domain element but have to be implemented by the project needs - by AP
 # Shopping cart expiry
 
 A cron job removes shopping carts after 1 week of idleness. In the future a redis could be used instead for carts.
+
+### TODO - Roadmap
+
+- Retrieve cart use-Case, fetch with associated line items, save with associated items

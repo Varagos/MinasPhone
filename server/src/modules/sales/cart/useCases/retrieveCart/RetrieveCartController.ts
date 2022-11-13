@@ -4,6 +4,7 @@ import { CartDetailsMap } from './../../mappers/CartDetailsMap';
 import { RetrieveCart } from './RetriveCart';
 import { RetrieveCartResponseDTO } from './retrieveCartResponseDTO';
 
+const CART_LIFE_TIME = 1000 * 60 * 60 * 24 * 30; // 30 days
 export class RetrieveCartController extends BaseController {
   private useCase: RetrieveCart;
 
@@ -14,7 +15,8 @@ export class RetrieveCartController extends BaseController {
 
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
     try {
-      const dto = { id: req.params.id };
+      const cartId = req.cookies.cart_id;
+      const dto = { id: cartId };
       const result = await this.useCase.execute(dto);
       // console.log({ result });
 
@@ -22,12 +24,16 @@ export class RetrieveCartController extends BaseController {
         const error = result.value;
 
         return this.fail(res, (error as any).getErrorValue().message);
-      } else {
-        const cartDetails = result.value.getValue();
-        return this.ok<RetrieveCartResponseDTO>(res, {
-          cart: CartDetailsMap.toDTO(cartDetails),
-        });
       }
+
+      const cartDetails = result.value;
+      res.cookie('cart_id', cartDetails.id, {
+        maxAge: CART_LIFE_TIME,
+        // httpOnly: true,
+      });
+      return this.ok<RetrieveCartResponseDTO>(res, {
+        cart: CartDetailsMap.toDTO(cartDetails),
+      });
     } catch (err: any) {
       // console.log({ err });
       return this.fail(res, err);

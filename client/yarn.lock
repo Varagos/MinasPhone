@@ -5606,7 +5606,7 @@ is-stream@^2.0.0:
   resolved "https://registry.yarnpkg.com/is-stream/-/is-stream-2.0.1.tgz#fac1e3d53b97ad5a9d0ae9cef2389f5810a5c077"
   integrity sha512-hFoiJiTl63nn+kstHGBtewWSKnQLpyb155KHheA1l39uvtO9nWIop1p3udqPcUd/xbF1VLMO4n7OI6p7RbngDg==
 
-is-string@^1.0.4, is-string@^1.0.5, is-string@^1.0.7:
+is-string@^1.0.5, is-string@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/is-string/-/is-string-1.0.7.tgz#0dd12bf2006f255bb58f695110eff7491eebc0fd"
   integrity sha512-tE2UXzivje6ofPW7l23cjDOMa09gb7xlAqG6jG5ej6uPV32TlWP3NKPigtaGeHNu9fohccRYvIiZMfOOnOYUtg==
@@ -6573,11 +6573,6 @@ lodash.merge@^4.6.2:
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
-lodash.once@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
-  integrity sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==
-
 lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
@@ -6760,28 +6755,12 @@ minimist@^1.2.0, minimist@^1.2.6:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz#8637a5b759ea0d6e98702cfb3a9283323c93af44"
   integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
 
-mkdirp@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
-  integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
-
 mkdirp@~0.5.1:
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.6.tgz#7def03d2432dcae4ba1d611445c48396062255f6"
   integrity sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==
   dependencies:
     minimist "^1.2.6"
-
-mocha-multi@1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/mocha-multi/-/mocha-multi-1.1.6.tgz#f9386098038b75eabf53e40061f420ddad89c3b2"
-  integrity sha512-hMVmd9C1h4PEiFNwHxn8aa5/EgGLg0UswdOrlrq1Y8ieKmot8hZLYaiESIgg/He3E4oxwaXPWT1V1PJ0qNJlUQ==
-  dependencies:
-    debug "^4.1.1"
-    is-string "^1.0.4"
-    lodash.once "^4.1.1"
-    mkdirp "^1.0.4"
-    object-assign "^4.1.1"
 
 ms@2.0.0:
   version "2.0.0"
@@ -8116,10 +8095,10 @@ react-select@5.2.1:
     prop-types "^15.6.0"
     react-transition-group "^4.3.0"
 
-react-shadow@19.0.2:
-  version "19.0.2"
-  resolved "https://registry.yarnpkg.com/react-shadow/-/react-shadow-19.0.2.tgz#af2594efe467ffc8d24789022280a5d2f6fae9cb"
-  integrity sha512-v0XXiMwIDgnvtT1DX4DU7VRgJO1k1nItDuedvWAWMhHaahagcJti4ffliwdBGRb9O77TFUz0nNKPzNxQQ9y1Ow==
+react-shadow@19.0.3:
+  version "19.0.3"
+  resolved "https://registry.yarnpkg.com/react-shadow/-/react-shadow-19.0.3.tgz#4fa00f10cb1dfe2edd296684ff9807eef440ebb7"
+  integrity sha512-B1DoQC/rOyOjDdpgC1bd7nfhrYEF9ukV/vz8HcKaFTNmUkUmFnQCp4NHgEPxDfe3HJ1Mdr5ePzu+ZYAOvX6bNg==
   dependencies:
     humps "^2.0.1"
     react-use "^15.3.3"
@@ -8999,31 +8978,38 @@ stylis@^4.0.6:
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.1.2.tgz#870b3c1c2275f51b702bb3da9e94eedad87bba41"
   integrity sha512-Nn2CCrG2ZaFziDxaZPN43CXqn+j7tcdjPFCkRBkFue8QYXC2HdEwnw5TCBo4yQZ2WxKYeSi0fdoOrtEqgDrXbA==
 
-supertokens-auth-react@^0.20.4:
-  version "0.20.5"
-  resolved "https://registry.yarnpkg.com/supertokens-auth-react/-/supertokens-auth-react-0.20.5.tgz#98169639bc4ed560760018632a074813f73b4f9e"
-  integrity sha512-Nt5dr/fvjmCjtEeTCzuUkRYNRA9WhAZkPGvGID0MmORjrm0uz5q55my+X+47LdGivsrL9wgMskIn3la5gro5Rw==
+supertokens-auth-react@^0.27.1:
+  version "0.27.1"
+  resolved "https://registry.yarnpkg.com/supertokens-auth-react/-/supertokens-auth-react-0.27.1.tgz#608bcfbaa1a241f7d2e89f35100eddedae83538c"
+  integrity sha512-g4a8idSPF1Fa7mN5u0QTNlIHor/1OwRhgKd3IXgEZoDngmm0wDEii97JDTHUr8gGhFBp0pi/UtGka/UQ6MTdFg==
   dependencies:
     "@emotion/react" "^11.4.1"
     chroma-js "2.1.2"
     libphonenumber-js "1.9.43"
-    mocha-multi "1.1.6"
     prop-types "^15.7.2"
     react-phone-number-input "3.1.41"
     react-select "5.2.1"
-    react-shadow "19.0.2"
+    react-shadow "19.0.3"
     supertokens-js-override "^0.0.4"
-    supertokens-website "^10.1.0"
+    supertokens-web-js "^0.3.0"
 
-supertokens-js-override@^0.0.4:
+supertokens-js-override@0.0.4, supertokens-js-override@^0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/supertokens-js-override/-/supertokens-js-override-0.0.4.tgz#9af583fbc5e1f0195dbb358c4fcf75f44c76dc09"
   integrity sha512-r0JFBjkMIdep3Lbk3JA+MpnpuOtw4RSyrlRAbrzMcxwiYco3GFWl/daimQZ5b1forOiUODpOlXbSOljP/oyurg==
 
-supertokens-website@^10.1.0:
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/supertokens-website/-/supertokens-website-10.1.0.tgz#927c65e942116a3484148dd324ed3efb8240e9ef"
-  integrity sha512-otLABiurUiR+inYBj43s3Kn87+EeEMz+OsNYYVWRr5YbgqrsMzxwEuG6+V5NPGUFfe72W6VybKqoeW0EUaUYPA==
+supertokens-web-js@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/supertokens-web-js/-/supertokens-web-js-0.3.0.tgz#0549588d294e941ca7465ea7bbfbb235a4792b14"
+  integrity sha512-OWQt+KCzNrssmBOoMRDdQZ3TGM00HO98i0eQDANJKJbNOaJ+I80mCNV3i8dWLqO1AOClzPAt5oLJNimPjCn9TA==
+  dependencies:
+    supertokens-js-override "0.0.4"
+    supertokens-website "^14.0.0"
+
+supertokens-website@^14.0.0:
+  version "14.0.2"
+  resolved "https://registry.yarnpkg.com/supertokens-website/-/supertokens-website-14.0.2.tgz#153e0b27d699154cdf560f236e44edde55908bb6"
+  integrity sha512-zCHRGF8P1lDnSezIsfdh2LqepBX/7/KfQoYJc0m3zzDGKCYdL9KluNwgowgL8lD7dknQjLRq7L9Fn7lTjNf6BQ==
   dependencies:
     browser-tabs-lock "^1.2.14"
     supertokens-js-override "^0.0.4"

@@ -48,6 +48,10 @@ export class DomainEvents {
     return found;
   }
 
+  /**
+   * The method called by the infrastructure to dispatch all domain events
+   * for all aggregates that have created domain events and have been marked
+   */
   public static dispatchEventsForAggregate(id: UniqueEntityID): void {
     const aggregate = this.findMarkedAggregateByID(id);
 
@@ -58,8 +62,8 @@ export class DomainEvents {
     }
   }
 
-  public static register(
-    callback: (event: IDomainEvent) => void,
+  public static register<IEvent extends IDomainEvent>(
+    callback: (event: IEvent) => void,
     eventClassName: string,
   ): void {
     if (

@@ -10,12 +10,18 @@ export default (sequelize: Sequelize) => {
         allowNull: false,
         primaryKey: true,
       },
-      firstName: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      lastName: {
+      first_name: {
         type: DataTypes.STRING,
+      },
+      last_name: {
+        type: DataTypes.STRING,
+      },
+      joined_at: {
+        type: DataTypes.DATE,
       },
     },
     {

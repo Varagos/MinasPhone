@@ -1,13 +1,13 @@
-import { IAuthProvider } from './../../services/authProvider';
+import { IAuthProvider } from '../../services/authProvider';
 import * as express from 'express';
 import { BaseController } from '../../../../shared/infra/http/models/BaseController';
-import { IUserRepo } from '../../repos/implementations/userRepo';
+import { IAuthService } from '../../repositories/userRepo';
 
 export class GetAllUsersController extends BaseController {
-  private userRepo: IUserRepo;
+  private userRepo: IAuthService;
   private authProvider: IAuthProvider;
 
-  constructor(userRepo: IUserRepo, authProvider: IAuthProvider) {
+  constructor(userRepo: IAuthService, authProvider: IAuthProvider) {
     super();
     this.userRepo = userRepo;
     this.authProvider = authProvider;

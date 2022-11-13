@@ -1,6 +1,8 @@
 import supertokens from 'supertokens-node';
 import Session from 'supertokens-node/recipe/session';
 import EmailPassword from 'supertokens-node/recipe/emailpassword';
+import { CreateUserDTO } from './useCases/createUser/CreateUserDTO';
+import { createUserUseCase } from './useCases/createUser';
 
 export const supertokensInit = () => {
   // console.log(
@@ -34,6 +36,39 @@ export const supertokensInit = () => {
               id: 'lastName',
             },
           ],
+        },
+        override: {
+          apis: (originalImplementation) => {
+            return {
+              ...originalImplementation,
+              signUpPOST: async function (input) {
+                if (originalImplementation.signUpPOST === undefined) {
+                  throw Error('Should never come here');
+                }
+
+                // First we call the original implementation of signUpPOST.
+                const response = await originalImplementation.signUpPOST(input);
+
+                // Post sign up response, we check if it was successful
+                if (response.status === 'OK') {
+                  const { id, email, timeJoined } = response.user;
+
+                  // // These are the input form fields values that the user used while signing up
+                  const formFields = input.formFields;
+                  // post sign up logic
+                  const dto: CreateUserDTO = {
+                    id,
+                    email,
+                    firstName: formFields[2].value,
+                    lastName: formFields[3].value,
+                    timeJoined,
+                  };
+                  await createUserUseCase.execute(dto);
+                }
+                return response;
+              },
+            };
+          },
         },
       }), // initializes signin / sign up features
       Session.init({

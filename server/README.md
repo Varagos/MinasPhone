@@ -6,6 +6,14 @@
 $ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=bestPassword42 -d mysql:8.0
 ```
 
+## Supertokens auth
+
+```bash
+docker run -p 3567:3567 -d registry.supertokens.io/supertokens/supertokens-postgresql
+# or
+docker compose up
+```
+
 ### Stock is not reduced when an item is added to the cart
 
 This is designed by choice since

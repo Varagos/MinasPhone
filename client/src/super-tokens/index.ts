@@ -32,8 +32,8 @@ export default function init() {
     appInfo: {
       // learn more about this on https://supertokens.com/docs/emailpassword/appinfo
       appName: 'MinasPhone',
-      apiDomain: 'http://localhost:8080',
-      websiteDomain: 'http://localhost:3000',
+      apiDomain: process.env.REACT_APP_API_BASE_URL ?? 'http://localhost:8080',
+      websiteDomain: process.env.REACT_APP_WEB_URL ?? 'http://localhost:3000',
       apiBasePath: '/auth',
       websiteBasePath: '/auth',
     },

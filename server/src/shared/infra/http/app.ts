@@ -6,8 +6,8 @@ import multer from 'multer';
 import listEndpoints from 'express-list-endpoints';
 import supertokens from 'supertokens-node';
 import { middleware, errorHandler } from 'supertokens-node/framework/express';
-import { supertokensInit } from '../../../modules/users/super-tokens';
-import { userRouter } from '../../../modules/users/infra/http/routes';
+import { supertokensInit } from '../../../modules/auth/super-tokens';
+import { userRouter } from '../../../modules/auth/infra/http/routes';
 import { v1Router } from './api/v1';
 
 supertokensInit();
@@ -21,7 +21,7 @@ app.use(morgan('dev'));
 app.use(express.static('images'));
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'http://localhost:3001'],
     allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
     credentials: true,
   }),

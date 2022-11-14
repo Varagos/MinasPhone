@@ -1,8 +1,8 @@
 import { UserEmail } from './userEmail';
 import { UserId } from './userId';
-import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID';
-import { Result } from '../../../../shared/core/Result';
-import { AggregateRoot } from '../../../../shared/domain/AggregateRoot';
+import { UniqueEntityID } from '@shared/domain/UniqueEntityID';
+import { Result } from '@shared/core/Result';
+import { AggregateRoot } from '@shared/domain/AggregateRoot';
 
 interface UserProps {
   email: UserEmail;

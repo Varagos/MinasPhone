@@ -1,6 +1,6 @@
-import { Result } from '../../../../shared/core/Result';
-import { AggregateRoot } from '../../../../shared/domain/AggregateRoot';
-import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID';
+import { Result } from '@shared/core/Result';
+import { AggregateRoot } from '@shared/domain/AggregateRoot';
+import { UniqueEntityID } from '@shared/domain/UniqueEntityID';
 
 interface CategoryProps {
   slug: string;

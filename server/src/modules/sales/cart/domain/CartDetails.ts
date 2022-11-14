@@ -1,4 +1,4 @@
-import { Result } from '../../../../shared/core/Result';
+import { Result } from '@shared/core/Result';
 
 interface CategoryDetailsProps {
   id: string;

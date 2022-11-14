@@ -1,7 +1,7 @@
-import { Guard, IGuardArgument } from '../../../../shared/core/Guard';
-import { Result } from '../../../../shared/core/Result';
-import { AggregateRoot } from '../../../../shared/domain/AggregateRoot';
-import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID';
+import { Guard, IGuardArgument } from '@shared/core/Guard';
+import { Result } from '@shared/core/Result';
+import { AggregateRoot } from '@shared/domain/AggregateRoot';
+import { UniqueEntityID } from '@shared/domain/UniqueEntityID';
 
 interface ProductProps {
   name: string;

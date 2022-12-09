@@ -1,7 +1,7 @@
-import { UpdateCart } from './UpdateCart';
-import { BaseController } from '../../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest';
-import { UpdateCartDTO } from './UpdateCartDTO';
+import { UpdateCart } from './UpdateCart.js';
+import { BaseController } from '../../../../../shared/infra/http/models/BaseController.js';
+import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
+import { UpdateCartDTO } from './UpdateCartDTO.js';
 
 export class UpdateCartController extends BaseController {
   private useCase: UpdateCart;

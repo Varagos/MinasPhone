@@ -1,6 +1,7 @@
-import './shared/infra/http/app';
+import './shared/infra/http/app.js';
 
-import './shared/infra/database/sequelize';
+import './shared/infra/database/sequelize/index.js';
 
 // Subscriptions
-import './modules/sales/user/subscriptions';
+import './modules/sales/user/subscriptions/index.js';
+console.log('wtf');

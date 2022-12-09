@@ -1,10 +1,10 @@
-import { CartDetails } from '../../domain/CartDetails';
-import { left } from '../../../../../shared/core/Result';
-import { AppError } from '../../../../../shared/core/AppError';
-import { Either, Result, right } from '../../../../../shared/core/Result';
-import { UseCase } from '../../../../../shared/core/UseCase';
-import { ICartRepo } from '../../repositories/cartRepo';
-import { Cart } from '../../domain/Cart';
+import { CartDetails } from '../../domain/CartDetails.js';
+import { left } from '../../../../../shared/core/Result.js';
+import { AppError } from '../../../../../shared/core/AppError.js';
+import { Either, Result, right } from '../../../../../shared/core/Result.js';
+import { UseCase } from '../../../../../shared/core/UseCase.js';
+import { ICartRepo } from '../../repositories/cartRepo.js';
+import { Cart } from '../../domain/Cart.js';
 
 type Response = Either<AppError.UnexpectedError | Result<any>, CartDetails>;
 

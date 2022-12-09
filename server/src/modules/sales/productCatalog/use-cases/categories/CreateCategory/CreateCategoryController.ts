@@ -1,8 +1,8 @@
-import { CreateCategory } from './CreateCategory';
+import { CreateCategory } from './CreateCategory.js';
 import * as express from 'express';
-import { BaseController } from '../../../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest';
-import { CreateCategoryDTO } from './CreateCategoryDTO';
+import { BaseController } from '../../../../../../shared/infra/http/models/BaseController.js';
+import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest.js';
+import { CreateCategoryDTO } from './CreateCategoryDTO.js';
 
 export class CreateCategoryController extends BaseController {
   private useCase: CreateCategory;

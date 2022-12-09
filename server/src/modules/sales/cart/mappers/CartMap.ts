@@ -1,10 +1,10 @@
-import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID';
-import { Mapper } from '../../../../shared/infra/Mapper';
-import { Money } from '../../../common/primitives/Money';
-import { Quantity } from '../../../common/primitives/Quantity';
-import { Cart } from '../domain/Cart';
-import { CartItem } from '../domain/item/CartItem';
-import { ProductId } from '../domain/item/ProductId';
+import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
+import { Mapper } from '../../../../shared/infra/Mapper.js';
+import { Money } from '../../../common/primitives/Money.js';
+import { Quantity } from '../../../common/primitives/Quantity.js';
+import { Cart } from '../domain/Cart.js';
+import { CartItem } from '../domain/item/CartItem.js';
+import { ProductId } from '../domain/item/ProductId.js';
 
 export class CartMap implements Mapper<Cart> {
   public static toPersistence(cart: Cart): any {

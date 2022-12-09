@@ -1,6 +1,6 @@
-import { Result } from '../../../../shared/core/Result';
-import { Product } from '../domain/Product';
-import { ProductDetails } from '../domain/ProductDetails';
+import { Result } from '../../../../shared/core/Result.js';
+import { Product } from '../domain/Product.js';
+import { ProductDetails } from '../domain/ProductDetails.js';
 
 export interface IProductRepo {
   getAll(): Promise<ProductDetails[]>;

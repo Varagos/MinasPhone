@@ -1,8 +1,8 @@
 import supertokens from 'supertokens-node';
 import Session from 'supertokens-node/recipe/session';
 import EmailPassword from 'supertokens-node/recipe/emailpassword';
-import { CreateUserDTO } from './useCases/createUser/CreateUserDTO';
-import { createUserUseCase } from './useCases/createUser';
+import { CreateUserDTO } from './useCases/createUser/CreateUserDTO.js';
+import { createUserUseCase } from './useCases/createUser/index.js';
 
 export const supertokensInit = () => {
   // console.log(

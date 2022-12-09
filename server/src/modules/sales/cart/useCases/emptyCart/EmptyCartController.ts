@@ -1,7 +1,8 @@
-import { EmptyCart } from './EmptyCart';
-import { BaseController } from '../../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest';
-import { EmptyCartDTO } from './EmptyCartDTO';
+import { EmptyCart } from './EmptyCart.js';
+
+import { BaseController } from '../../../../../shared/infra/http/models/BaseController.js';
+import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
+import { EmptyCartDTO } from './EmptyCartDTO.js';
 
 export class EmptyCartController extends BaseController {
   constructor(private useCase: EmptyCart) {

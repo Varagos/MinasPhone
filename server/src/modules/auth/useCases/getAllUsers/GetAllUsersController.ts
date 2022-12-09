@@ -1,7 +1,7 @@
-import { IAuthProvider } from '../../services/authProvider';
+import { IAuthProvider } from '../../services/authProvider.js';
 import * as express from 'express';
-import { BaseController } from '../../../../shared/infra/http/models/BaseController';
-import { IAuthService } from '../../repositories/userRepo';
+import { BaseController } from '../../../../shared/infra/http/models/BaseController.js';
+import { IAuthService } from '../../repositories/userRepo.js';
 
 export class GetAllUsersController extends BaseController {
   private userRepo: IAuthService;

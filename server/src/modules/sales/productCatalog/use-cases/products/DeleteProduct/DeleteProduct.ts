@@ -1,14 +1,14 @@
-import { IProductRepo } from '../../../repos/productRepo';
-import { AppError } from '../../../../../../shared/core/AppError';
+import { IProductRepo } from '../../../repos/productRepo.js';
+import { AppError } from '../../../../../../shared/core/AppError.js';
 import {
   Either,
   left,
   Result,
   right,
-} from '../../../../../../shared/core/Result';
-import { UseCase } from '../../../../../../shared/core/UseCase';
-import { DeleteProductDTO } from './DeleteProductDTO';
-import { IImagesService } from '../../../infra/imagesFileSystem';
+} from '../../../../../../shared/core/Result.js';
+import { UseCase } from '../../../../../../shared/core/UseCase.js';
+import { DeleteProductDTO } from './DeleteProductDTO.js';
+import { IImagesService } from '../../../infra/imagesFileSystem/index.js';
 
 type Response = Either<
   AppError.UnexpectedError | Result<any> | any,

@@ -1,15 +1,15 @@
-import { Category } from '../../../domain/Category';
-import { AppError } from '../../../../../../shared/core/AppError';
+import { Category } from '../../../domain/Category.js';
+import { AppError } from '../../../../../../shared/core/AppError.js';
 import {
   Either,
   left,
   Result,
   right,
-} from '../../../../../../shared/core/Result';
-import { CategoryDetails } from '../../../domain/CategoryDetails';
-import { UseCase } from '../../../../../../shared/core/UseCase';
-import { CreateCategoryDTO } from './CreateCategoryDTO';
-import { ICategoryRepo } from '../../../repos/categoryRepo';
+} from '../../../../../../shared/core/Result.js';
+import { CategoryDetails } from '../../../domain/CategoryDetails.js';
+import { UseCase } from '../../../../../../shared/core/UseCase.js';
+import { CreateCategoryDTO } from './CreateCategoryDTO.js';
+import { ICategoryRepo } from '../../../repos/categoryRepo.js';
 
 type Response = Either<
   AppError.UnexpectedError | Result<any> | any,

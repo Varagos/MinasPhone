@@ -1,6 +1,6 @@
-import { GetOneProduct } from './GetOneProduct';
-import { productRepo } from '../../../repos';
-import { GetOneProductController } from './GetOneProductController';
+import { GetOneProduct } from './GetOneProduct.js';
+import { productRepo } from '../../../repos/index.js';
+import { GetOneProductController } from './GetOneProductController.js';
 
 const getOneProduct = new GetOneProduct(productRepo);
 const getOneProductController = new GetOneProductController(getOneProduct);

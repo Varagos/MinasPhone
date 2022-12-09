@@ -1,6 +1,6 @@
 import { join } from 'path';
 import fs from 'fs';
-import { IImagesService } from '.';
+import { IImagesService } from './index.js';
 
 export class ServerFileSystem implements IImagesService {
   private static instance: ServerFileSystem;

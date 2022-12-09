@@ -1,8 +1,8 @@
-import { DeleteCategory } from './DeleteCategory';
+import { DeleteCategory } from './DeleteCategory.js';
 import * as express from 'express';
-import { BaseController } from '../../../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest';
-import { DeleteCategoryDTO } from './DeleteCategoryDTO';
+import { BaseController } from '../../../../../../shared/infra/http/models/BaseController.js';
+import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest.js';
+import { DeleteCategoryDTO } from './DeleteCategoryDTO.js';
 
 export class DeleteCategoryController extends BaseController {
   private useCase: DeleteCategory;

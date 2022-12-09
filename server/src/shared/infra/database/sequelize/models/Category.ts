@@ -1,24 +1,26 @@
-import { DataTypes, Sequelize } from 'sequelize';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import { Sequelize, Sequelize } from 'sequelize';
 
 export default (sequelize: Sequelize) => {
   const Category = sequelize.define(
     'Category',
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
       slug: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       name: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
       },
       parent_id: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
       },
     },
     {

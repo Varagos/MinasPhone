@@ -1,6 +1,6 @@
-import { BaseDomainError } from './BaseDomainError';
-import { Result } from './Result';
-import { UseCaseError } from './UseCaseError';
+import { BaseDomainError } from './BaseDomainError.js';
+import { Result } from './Result.js';
+import { UseCaseError } from './UseCaseError.js';
 
 export namespace DomainError {
   export class IllegalArgumentException extends Result<BaseDomainError> {

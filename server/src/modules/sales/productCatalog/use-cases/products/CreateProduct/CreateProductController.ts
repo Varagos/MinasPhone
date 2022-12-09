@@ -1,8 +1,8 @@
-import { Result } from '../../../../../../shared/core/Result';
-import { BaseController } from '../../../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest';
-import { CreateProduct } from './CreateProduct';
-import { CreateProductDTO } from './CreateProductDTO';
+import { Result } from '../../../../../../shared/core/Result.js';
+import { BaseController } from '../../../../../../shared/infra/http/models/BaseController.js';
+import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest.js';
+import { CreateProduct } from './CreateProduct.js';
+import { CreateProductDTO } from './CreateProductDTO.js';
 
 export class CreateProductController extends BaseController {
   private useCase: CreateProduct;

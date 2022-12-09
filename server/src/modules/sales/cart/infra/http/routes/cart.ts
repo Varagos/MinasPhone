@@ -1,10 +1,10 @@
 import express from 'express';
-import { retrieveCartController } from '../../../useCases/retrieveCart';
-import { addToCartController } from '../../../useCases/addToCart';
-import { updateCartController } from '../../../useCases/updateCart';
-import { removeFromCartController } from '../../../useCases/removeFromCart';
-import { deleteCartController } from '../../../useCases/deleteCart';
-import { emptyCartController } from '../../../useCases/emptyCart';
+import { retrieveCartController } from '../../../useCases/retrieveCart/index.js';
+import { addToCartController } from '../../../useCases/addToCart/index.js';
+import { updateCartController } from '../../../useCases/updateCart/index.js';
+import { removeFromCartController } from '../../../useCases/removeFromCart/index.js';
+import { deleteCartController } from '../../../useCases/deleteCart/index.js';
+import { emptyCartController } from '../../../useCases/emptyCart/index.js';
 
 const cartRouter = express.Router();
 

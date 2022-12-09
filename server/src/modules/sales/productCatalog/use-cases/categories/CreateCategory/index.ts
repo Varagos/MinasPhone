@@ -1,6 +1,6 @@
-import { CreateCategory } from './CreateCategory';
-import { categoryRepo } from '../../../repos';
-import { CreateCategoryController } from './CreateCategoryController';
+import { CreateCategory } from './CreateCategory.js';
+import { categoryRepo } from '../../../repos/index.js';
+import { CreateCategoryController } from './CreateCategoryController.js';
 
 const createCategory = new CreateCategory(categoryRepo);
 const createCategoryController = new CreateCategoryController(createCategory);

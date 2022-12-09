@@ -1,8 +1,8 @@
-import { GetAllProducts } from './GetAllProducts';
-import { BaseController } from '../../../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest';
-import { GetAllProductsResponseDTO } from './GetAllProductsResponseDTO';
-import { ProductDetailsMap } from '../../../mappers/ProductDetailsMap';
+import { GetAllProducts } from './GetAllProducts.js';
+import { BaseController } from '../../../../../../shared/infra/http/models/BaseController.js';
+import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest.js';
+import { GetAllProductsResponseDTO } from './GetAllProductsResponseDTO.js';
+import { ProductDetailsMap } from '../../../mappers/ProductDetailsMap.js';
 
 export class GetAllProductsController extends BaseController {
   private useCase: GetAllProducts;

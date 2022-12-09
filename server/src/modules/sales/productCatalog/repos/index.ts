@@ -1,6 +1,6 @@
-import models from '../../../../shared/infra/database/sequelize/models';
-import { CategoryRepo } from './implementations/sequelizeCategoryRepo';
-import { ProductRepo } from './implementations/sequelizeProductRepo';
+import models from '../../../../shared/infra/database/sequelize/models/index.js';
+import { CategoryRepo } from './implementations/sequelizeCategoryRepo.js';
+import { ProductRepo } from './implementations/sequelizeProductRepo.js';
 
 // // console.log({ models });
 const categoryRepo = new CategoryRepo(models);

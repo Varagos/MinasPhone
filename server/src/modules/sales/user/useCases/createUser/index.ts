@@ -1,5 +1,5 @@
-import { userRepo } from '../../repositories';
-import { CreateUser } from './CreateUser';
+import { userRepo } from '../../repositories/index.js';
+import { CreateUser } from './CreateUser.js';
 
 export const createUser = new CreateUser(userRepo);
 

@@ -1,6 +1,6 @@
-import { DeleteCategory } from './DeleteCategory';
-import { categoryRepo } from '../../../repos';
-import { DeleteCategoryController } from './DeleteCategoryController';
+import { DeleteCategory } from './DeleteCategory.js';
+import { categoryRepo } from '../../../repos/index.js';
+import { DeleteCategoryController } from './DeleteCategoryController.js';
 
 const deleteCategory = new DeleteCategory(categoryRepo);
 const deleteCategoryController = new DeleteCategoryController(deleteCategory);

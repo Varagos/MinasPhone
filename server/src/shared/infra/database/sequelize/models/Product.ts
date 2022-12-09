@@ -1,48 +1,48 @@
-import { DataTypes, Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize';
 
 export default (sequelize: Sequelize) => {
   const Product = sequelize.define(
     'Product',
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
       active: {
-        type: DataTypes.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
       slug: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         unique: true,
         allowNull: false,
       },
       name: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
       },
       description: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
       },
       quantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       // media: {
-      //   // type: DataTypes.STRING,
+      //   // type: Sequelize.STRING,
       //   type: BLOB('long'),
       // },
       media_filename: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
       },
       sku: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
       },
       price: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
       },
       // category_id: {
-      //   type: DataTypes.UUID,
+      //   type: Sequelize.UUID,
       //   allowNull: false,
       //   references: {
       //     model: 'category',

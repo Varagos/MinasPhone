@@ -1,10 +1,10 @@
 import express from 'express';
-import { upload } from '../../../../../../shared/infra/storage/multer';
-import { createProductController } from '../../../use-cases/products/CreateProduct';
-import { deleteProductController } from '../../../use-cases/products/DeleteProduct';
-import { getAllProductsController } from '../../../use-cases/products/GetAllProducts';
-import { getOneProductController } from '../../../use-cases/products/GetOneProduct';
-import { updateProductController } from '../../../use-cases/products/UpdateProduct';
+import { upload } from '../../../../../../shared/infra/storage/multer.js';
+import { createProductController } from '../../../use-cases/products/CreateProduct/index.js';
+import { deleteProductController } from '../../../use-cases/products/DeleteProduct/index.js';
+import { getAllProductsController } from '../../../use-cases/products/GetAllProducts/index.js';
+import { getOneProductController } from '../../../use-cases/products/GetOneProduct/index.js';
+import { updateProductController } from '../../../use-cases/products/UpdateProduct/index.js';
 
 const productRouter = express.Router();
 

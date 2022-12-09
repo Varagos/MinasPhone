@@ -1,8 +1,8 @@
-import { UserEmail } from './userEmail';
-import { UserId } from './userId';
-import { UniqueEntityID } from '@shared/domain/UniqueEntityID';
-import { Result } from '@shared/core/Result';
-import { AggregateRoot } from '@shared/domain/AggregateRoot';
+import { Result } from '../../../../shared/core/Result.js';
+import { AggregateRoot } from '../../../../shared/domain/AggregateRoot.js';
+import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
+import { UserEmail } from './userEmail.js';
+import { UserId } from './userId.js';
 
 interface UserProps {
   email: UserEmail;

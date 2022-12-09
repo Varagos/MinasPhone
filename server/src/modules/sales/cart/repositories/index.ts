@@ -1,6 +1,6 @@
-import models from '../../../../shared/infra/database/sequelize/models';
-import { ICartRepo } from './cartRepo';
-import { CartRepo } from './implementations/sequelizeCartRepo';
+import models from '../../../../shared/infra/database/sequelize/models/index.js';
+import { ICartRepo } from './cartRepo.js';
+import { CartRepo } from './implementations/sequelizeCartRepo.js';
 
 // // console.log({ models });
 const cartRepo: ICartRepo = new CartRepo(models);

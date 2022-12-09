@@ -1,6 +1,6 @@
-import { Result } from '../../../../../shared/core/Result';
-import { Entity } from '../../../../../shared/domain/Entity';
-import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
+import { Result } from '../../../../../shared/core/Result.js';
+import { Entity } from '../../../../../shared/domain/Entity.js';
+import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID.js';
 
 export class ProductId extends Entity<any> {
   get id(): UniqueEntityID {

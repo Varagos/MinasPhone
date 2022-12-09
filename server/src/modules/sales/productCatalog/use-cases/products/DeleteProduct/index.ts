@@ -1,7 +1,7 @@
-import { DeleteProduct } from './DeleteProduct';
-import { productRepo } from '../../../repos';
-import { DeleteProductController } from './DeleteProductController';
-import { imagesService } from '../../../infra/imagesFileSystem';
+import { DeleteProduct } from './DeleteProduct.js';
+import { productRepo } from '../../../repos/index.js';
+import { DeleteProductController } from './DeleteProductController.js';
+import { imagesService } from '../../../infra/imagesFileSystem/index.js';
 
 const deleteProduct = new DeleteProduct(productRepo, imagesService);
 const deleteProductController = new DeleteProductController(deleteProduct);

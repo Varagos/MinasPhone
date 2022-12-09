@@ -1,9 +1,9 @@
-import { left } from '../../../../../../shared/core/Result';
-import { AppError } from '../../../../../../shared/core/AppError';
-import { Either, Result, right } from '../../../../../../shared/core/Result';
-import { UseCase } from '../../../../../../shared/core/UseCase';
-import { IProductRepo } from '../../../repos/productRepo';
-import { ProductDetails } from '../../../domain/ProductDetails';
+import { left } from '../../../../../../shared/core/Result.js';
+import { AppError } from '../../../../../../shared/core/AppError.js';
+import { Either, Result, right } from '../../../../../../shared/core/Result.js';
+import { UseCase } from '../../../../../../shared/core/UseCase.js';
+import { IProductRepo } from '../../../repos/productRepo.js';
+import { ProductDetails } from '../../../domain/ProductDetails.js';
 
 type Response = Either<AppError.UnexpectedError, Result<ProductDetails[]>>;
 

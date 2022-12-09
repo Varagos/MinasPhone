@@ -1,8 +1,9 @@
-import { ICartRepo } from '../cartRepo';
-import { Cart } from '../../domain/Cart';
-import { CartDetails } from '../../domain/CartDetails';
-import { CartMap } from '../../mappers/CartMap';
-import { CartDetailsMap } from '../../mappers/CartDetailsMap';
+import { ICartRepo } from '../cartRepo.js';
+import { Cart } from '../../domain/Cart.js';
+import { CartDetails } from '../../domain/CartDetails.js';
+import { CartMap } from '../../mappers/CartMap.js';
+
+import { CartDetailsMap } from '../../mappers/CartDetailsMap.js';
 
 export class CartRepo implements ICartRepo {
   private models: Record<string, any>;

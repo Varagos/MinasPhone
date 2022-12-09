@@ -1,7 +1,7 @@
-import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID';
-import { Mapper } from '../../../../shared/infra/Mapper';
-import { Category } from '../domain/Category';
-import { Product } from '../domain/Product';
+import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
+import { Mapper } from '../../../../shared/infra/Mapper.js';
+import { Category } from '../domain/Category.js';
+import { Product } from '../domain/Product.js';
 
 export class ProductMap implements Mapper<Product> {
   public static toPersistence(product: Product): any {

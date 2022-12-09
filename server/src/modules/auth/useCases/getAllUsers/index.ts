@@ -1,5 +1,5 @@
-import { GetAllUsersController } from './GetAllUsersController';
-import { SuperTokens } from '../../services/super-tokens/SuperTokens';
+import { GetAllUsersController } from './GetAllUsersController.js';
+import { SuperTokens } from '../../services/super-tokens/SuperTokens.js';
 const userRepo = {
   a: 'a',
 } as any;

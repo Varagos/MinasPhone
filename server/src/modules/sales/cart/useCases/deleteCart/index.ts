@@ -1,6 +1,6 @@
-import { DeleteCart } from './DeleteCart';
-import { DeleteCartController } from './DeleteCartController';
-import { cartRepo } from '../../repositories';
+import { DeleteCart } from './DeleteCart.js';
+import { DeleteCartController } from './DeleteCartController.js';
+import { cartRepo } from '../../repositories/index.js';
 
 const deleteCart = new DeleteCart(cartRepo);
 const deleteCartController = new DeleteCartController(deleteCart);

@@ -1,6 +1,6 @@
-import { ProductDetails } from '../domain/ProductDetails';
-import { Mapper } from '../../../../shared/infra/Mapper';
-import { ProductDTO } from '../dtos/productDTO';
+import { ProductDetails } from '../domain/ProductDetails.js';
+import { Mapper } from '../../../../shared/infra/Mapper.js';
+import { ProductDTO } from '../dtos/productDTO.js';
 
 export class ProductDetailsMap implements Mapper<ProductDetails> {
   public static toDomain(raw: any): ProductDetails {

@@ -1,5 +1,5 @@
-import { Cart } from '../domain/Cart';
-import { CartDetails } from '../domain/CartDetails';
+import { Cart } from '../domain/Cart.js';
+import { CartDetails } from '../domain/CartDetails.js';
 
 export interface ICartRepo {
   retrieve(cartId: string): Promise<Cart>;

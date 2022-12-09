@@ -1,8 +1,8 @@
-import { CreateUserDTO } from './../../../auth/useCases/createUser/CreateUserDTO';
-import { DomainEvents } from '../../../../shared/domain/events/DomainEvents';
-import { IHandle } from '../../../../shared/domain/events/IHandle';
-import { UserCreated } from '../../../auth/domain/events/UserCreated';
-import { CreateUser } from '../useCases/createUser/CreateUser';
+import { CreateUserDTO } from './../../../auth/useCases/createUser/CreateUserDTO.js';
+import { DomainEvents } from '../../../../shared/domain/events/DomainEvents.js';
+import { IHandle } from '../../../../shared/domain/events/IHandle.js';
+import { UserCreated } from '../../../auth/domain/events/UserCreated.js';
+import { CreateUser } from '../useCases/createUser/CreateUser.js';
 
 export class AfterUserCreated implements IHandle<UserCreated> {
   private createUser: CreateUser;

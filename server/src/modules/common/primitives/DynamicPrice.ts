@@ -1,6 +1,6 @@
 // <?php
 
-import { Money } from './Money';
+import { Money } from './Money.js';
 /**
  * Dynamic Prices
  * Prices are not stored in the Cart itself but are loaded on demand.

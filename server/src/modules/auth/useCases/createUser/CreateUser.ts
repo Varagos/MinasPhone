@@ -1,11 +1,10 @@
-import { AppError } from '../../../../shared/core/AppError';
-import { Either, left, Result, right } from '../../../../shared/core/Result';
-import { UseCase } from '../../../../shared/core/UseCase';
-import { DomainEvents } from '../../../../shared/domain/events/DomainEvents';
-import { User } from '../../domain/user';
-import { UserEmail } from '../../domain/userEmail';
-import { IUserRepo } from '../../repositories/userRepo';
-import { CreateUserDTO } from './CreateUserDTO';
+import { AppError } from '../../../../shared/core/AppError.js';
+import { Either, left, Result, right } from '../../../../shared/core/Result.js';
+import { UseCase } from '../../../../shared/core/UseCase.js';
+import { DomainEvents } from '../../../../shared/domain/events/DomainEvents.js';
+import { User } from '../../domain/user.js';
+import { UserEmail } from '../../domain/userEmail.js';
+import { CreateUserDTO } from './CreateUserDTO.js';
 
 type Response = Either<AppError.UnexpectedError | Result<any>, Result<void>>;
 

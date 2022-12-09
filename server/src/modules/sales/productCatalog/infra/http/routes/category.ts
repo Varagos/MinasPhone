@@ -1,9 +1,9 @@
 import express from 'express';
-import { createCategoryController } from '../../../use-cases/categories/CreateCategory';
-import { deleteCategoryController } from '../../../use-cases/categories/DeleteCategory';
-import { getAllCategoriesController } from '../../../use-cases/categories/GetAllCategories';
-import { getOneCategoryController } from '../../../use-cases/categories/GetOneCategory';
-import { updateCategoryController } from '../../../use-cases/categories/UpdateCategory';
+import { createCategoryController } from '../../../use-cases/categories/CreateCategory/index.js';
+import { deleteCategoryController } from '../../../use-cases/categories/DeleteCategory/index.js';
+import { getAllCategoriesController } from '../../../use-cases/categories/GetAllCategories/index.js';
+import { getOneCategoryController } from '../../../use-cases/categories/GetOneCategory/index.js';
+import { updateCategoryController } from '../../../use-cases/categories/UpdateCategory/index.js';
 
 const categoryRouter = express.Router();
 

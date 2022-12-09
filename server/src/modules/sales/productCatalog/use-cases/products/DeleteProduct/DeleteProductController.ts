@@ -1,7 +1,7 @@
-import { DeleteProduct } from './DeleteProduct';
-import { BaseController } from '../../../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest';
-import { DeleteProductDTO } from './DeleteProductDTO';
+import { DeleteProduct } from './DeleteProduct.js';
+import { BaseController } from '../../../../../../shared/infra/http/models/BaseController.js';
+import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest.js';
+import { DeleteProductDTO } from './DeleteProductDTO.js';
 
 export class DeleteProductController extends BaseController {
   private useCase: DeleteProduct;

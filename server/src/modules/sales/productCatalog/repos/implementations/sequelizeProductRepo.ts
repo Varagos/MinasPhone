@@ -1,9 +1,9 @@
-import { ProductDetails } from '../../domain/ProductDetails';
-import { IProductRepo } from '../productRepo';
-import { Product } from '../../domain/Product';
-import { ProductMap } from '../../mappers/ProductMap';
-import { ProductDetailsMap } from '../../mappers/ProductDetailsMap';
-import { Result } from '../../../../../shared/core/Result';
+import { ProductDetails } from '../../domain/ProductDetails.js';
+import { IProductRepo } from '../productRepo.js';
+import { Product } from '../../domain/Product.js';
+import { ProductMap } from '../../mappers/ProductMap.js';
+import { ProductDetailsMap } from '../../mappers/ProductDetailsMap.js';
+import { Result } from '../../../../../shared/core/Result.js';
 
 export class ProductRepo implements IProductRepo {
   private models: Record<string, any>;

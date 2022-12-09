@@ -1,6 +1,6 @@
-import { RefreshCart } from './RefreshCart';
-import { RefreshCartController } from './RefreshCartController';
-import { cartRepo } from '../../repositories';
+import { RefreshCart } from './RefreshCart.js';
+import { RefreshCartController } from './RefreshCartController.js';
+import { cartRepo } from '../../repositories/index.js';
 
 const refreshCart = new RefreshCart(cartRepo);
 const refreshCartController = new RefreshCartController(refreshCart);

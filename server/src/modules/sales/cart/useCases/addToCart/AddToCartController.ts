@@ -1,7 +1,7 @@
-import { AddToCart } from './AddToCart';
-import { BaseController } from '../../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest';
-import { AddToCartDTO } from './AddToCartDTO';
+import { AddToCart } from './AddToCart.js';
+import { BaseController } from '../../../../../shared/infra/http/models/BaseController.js';
+import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
+import { AddToCartDTO } from './AddToCartDTO.js';
 
 export class AddToCartController extends BaseController {
   private useCase: AddToCart;

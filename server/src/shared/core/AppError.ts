@@ -1,5 +1,5 @@
-import { Result } from './Result';
-import { UseCaseError } from './UseCaseError';
+import { Result } from './Result.js';
+import { UseCaseError } from './UseCaseError.js';
 
 export namespace AppError {
   export class UnexpectedError extends Result<UseCaseError> {

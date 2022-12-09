@@ -1,9 +1,9 @@
-import { UserEmail } from './userEmail';
-import { UserId } from './userId';
-import { UniqueEntityID } from '@shared/domain/UniqueEntityID';
-import { Result } from '@shared/core/Result';
-import { AggregateRoot } from '@shared/domain/AggregateRoot';
-import { UserCreated } from './events/UserCreated';
+import { UserEmail } from './userEmail.js';
+import { UserId } from './userId.js';
+import { UserCreated } from './events/UserCreated.js';
+import { AggregateRoot } from '../../../shared/domain/AggregateRoot.js';
+import { UniqueEntityID } from '../../../shared/domain/UniqueEntityID.js';
+import { Result } from '../../../shared/core/Result.js';
 
 interface UserProps {
   email: UserEmail;

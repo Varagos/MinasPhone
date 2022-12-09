@@ -1,4 +1,4 @@
-import { User } from '../domain/user';
+import { User } from '../domain/user.js';
 
 export interface IAuthService {
   //   exists(userEmail: UserEmail): Promise<boolean>;

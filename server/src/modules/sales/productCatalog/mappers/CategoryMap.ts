@@ -1,6 +1,6 @@
-import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID';
-import { Mapper } from '../../../../shared/infra/Mapper';
-import { Category } from '../domain/Category';
+import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
+import { Mapper } from '../../../../shared/infra/Mapper.js';
+import { Category } from '../domain/Category.js';
 
 export class CategoryMap implements Mapper<Category> {
   public static toPersistence(category: Category): any {

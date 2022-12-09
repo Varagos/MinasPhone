@@ -1,6 +1,6 @@
-import { IDomainEvent } from '@shared/domain/events/IDomainEvent';
-import { UniqueEntityID } from '@shared/domain/UniqueEntityID';
-import { User } from '../user';
+import { IDomainEvent } from '../../../../shared/domain/events/IDomainEvent.js';
+import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
+import { User } from '../user.js';
 
 export class UserCreated implements IDomainEvent {
   public dateTimeOccurred: Date;

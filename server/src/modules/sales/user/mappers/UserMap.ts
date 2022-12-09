@@ -1,7 +1,7 @@
-import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID';
-import { Mapper } from '../../../../shared/infra/Mapper';
-import { User } from '../domain/user';
-import { UserEmail } from '../domain/userEmail';
+import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
+import { Mapper } from '../../../../shared/infra/Mapper.js';
+import { User } from '../domain/user.js';
+import { UserEmail } from '../domain/userEmail.js';
 
 export class UserMap implements Mapper<User> {
   public static toPersistence(user: User): any {

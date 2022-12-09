@@ -1,8 +1,13 @@
-import { AppError } from '../../../../../shared/core/AppError';
-import { Either, left, Result, right } from '../../../../../shared/core/Result';
-import { UseCase } from '../../../../../shared/core/UseCase';
-import { RefreshCartDTO } from './RefreshCartDTO';
-import { ICartRepo } from '../../repositories/cartRepo';
+import { AppError } from '../../../../../shared/core/AppError.js';
+import {
+  Either,
+  left,
+  Result,
+  right,
+} from '../../../../../shared/core/Result.js';
+import { UseCase } from '../../../../../shared/core/UseCase.js';
+import { RefreshCartDTO } from './RefreshCartDTO.js';
+import { ICartRepo } from '../../repositories/cartRepo.js';
 
 type Response = Either<AppError.UnexpectedError | Result<any>, Result<void>>;
 

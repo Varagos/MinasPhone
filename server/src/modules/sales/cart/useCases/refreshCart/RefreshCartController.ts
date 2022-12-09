@@ -1,7 +1,7 @@
-import { RefreshCart } from './RefreshCart';
-import { BaseController } from '../../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest';
-import { RefreshCartDTO } from './RefreshCartDTO';
+import { RefreshCart } from './RefreshCart.js';
+import { BaseController } from '../../../../../shared/infra/http/models/BaseController.js';
+import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
+import { RefreshCartDTO } from './RefreshCartDTO.js';
 
 export class RefreshCartController extends BaseController {
   private useCase: RefreshCart;

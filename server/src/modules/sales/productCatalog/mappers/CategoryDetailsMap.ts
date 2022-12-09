@@ -1,6 +1,6 @@
-import { CategoryDetails } from '../domain/CategoryDetails';
-import { Mapper } from '../../../../shared/infra/Mapper';
-import { CategoryDTO } from '../dtos/categoryDTO';
+import { CategoryDetails } from '../domain/CategoryDetails.js';
+import { Mapper } from '../../../../shared/infra/Mapper.js';
+import { CategoryDTO } from '../dtos/categoryDTO.js';
 
 export class CategoryDetailsMap implements Mapper<CategoryDetails> {
   public static toDomain(raw: any): CategoryDetails {

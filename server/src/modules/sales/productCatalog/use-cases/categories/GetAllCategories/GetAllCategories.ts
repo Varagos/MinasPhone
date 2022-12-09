@@ -1,9 +1,9 @@
-import { left } from '../../../../../../shared/core/Result';
-import { ICategoryRepo } from '../../../repos/categoryRepo';
-import { CategoryDetails } from '../../../domain/CategoryDetails';
-import { AppError } from '../../../../../../shared/core/AppError';
-import { Either, Result, right } from '../../../../../../shared/core/Result';
-import { UseCase } from '../../../../../../shared/core/UseCase';
+import { left } from '../../../../../../shared/core/Result.js';
+import { ICategoryRepo } from '../../../repos/categoryRepo.js';
+import { CategoryDetails } from '../../../domain/CategoryDetails.js';
+import { AppError } from '../../../../../../shared/core/AppError.js';
+import { Either, Result, right } from '../../../../../../shared/core/Result.js';
+import { UseCase } from '../../../../../../shared/core/UseCase.js';
 
 type Response = Either<AppError.UnexpectedError, Result<CategoryDetails[]>>;
 

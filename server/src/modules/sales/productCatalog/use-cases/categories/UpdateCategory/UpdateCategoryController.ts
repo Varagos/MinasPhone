@@ -1,8 +1,7 @@
-import { UpdateCategory } from './UpdateCategory';
-import * as express from 'express';
-import { BaseController } from '../../../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest';
-import { UpdateCategoryDTO } from './UpdateCategoryDTO';
+import { UpdateCategory } from './UpdateCategory.js';
+import { BaseController } from '../../../../../../shared/infra/http/models/BaseController.js';
+import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest.js';
+import { UpdateCategoryDTO } from './UpdateCategoryDTO.js';
 
 export class UpdateCategoryController extends BaseController {
   private useCase: UpdateCategory;

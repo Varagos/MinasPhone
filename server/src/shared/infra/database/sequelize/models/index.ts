@@ -1,11 +1,11 @@
-import { connection as sequelize } from '../config';
-import createUser from './User';
-import createProduct from './Product';
-import createCategory from './Category';
-import createOrder from './Order';
-import createOrderItem from './OrderItem';
-import createCart from './Cart';
-import createCartItem from './CartItem';
+import { connection as sequelize } from '../config.js';
+import createUser from './User.js';
+import createProduct from './Product.js';
+import createCategory from './Category.js';
+import createOrder from './Order.js';
+import createOrderItem from './OrderItem.js';
+import createCart from './Cart.js';
+import createCartItem from './CartItem.js';
 
 const createModels = () => {
   const models: Record<string, any> = {};

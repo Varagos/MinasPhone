@@ -1,7 +1,7 @@
-import { UpdateProduct } from './UpdateProduct';
-import { productRepo } from '../../../repos';
-import { UpdateProductController } from './UpdateProductController';
-import { imagesService } from '../../../infra/imagesFileSystem';
+import { imagesService } from '../../../infra/imagesFileSystem/index.js';
+import { productRepo } from '../../../repos/index.js';
+import { UpdateProduct } from './UpdateProduct.js';
+import { UpdateProductController } from './UpdateProductController.js';
 
 const updateProduct = new UpdateProduct(productRepo, imagesService);
 const updateProductController = new UpdateProductController(updateProduct);

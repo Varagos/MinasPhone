@@ -1,5 +1,5 @@
 import { getUsersNewestFirst } from 'supertokens-node';
-import { IAuthProvider } from '../authProvider';
+import { IAuthProvider } from '../authProvider.js';
 
 export class SuperTokens implements IAuthProvider {
   async getUsers() {

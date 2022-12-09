@@ -1,6 +1,6 @@
-import { IDomainEvent } from './IDomainEvent';
-import { AggregateRoot } from '../AggregateRoot';
-import { UniqueEntityID } from '../UniqueEntityID';
+import { AggregateRoot } from '../AggregateRoot.js';
+import { UniqueEntityID } from '../UniqueEntityID.js';
+import { IDomainEvent } from './IDomainEvent.js';
 
 export class DomainEvents {
   private static handlersMap: Record<string, any> = {};

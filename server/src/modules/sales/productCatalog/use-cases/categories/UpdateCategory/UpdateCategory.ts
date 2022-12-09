@@ -1,16 +1,15 @@
-import { Category } from '../../../domain/Category';
-import { AppError } from '../../../../../../shared/core/AppError';
+import { Category } from '../../../domain/Category.js';
+import { AppError } from '../../../../../../shared/core/AppError.js';
 import {
   Either,
   left,
   Result,
   right,
-} from '../../../../../../shared/core/Result';
-import { CategoryDetails } from '../../../domain/CategoryDetails';
-import { UseCase } from '../../../../../../shared/core/UseCase';
-import { UpdateCategoryDTO } from './UpdateCategoryDTO';
-import { ICategoryRepo } from '../../../repos/categoryRepo';
-import { UniqueEntityID } from '../../../../../../shared/domain/UniqueEntityID';
+} from '../../../../../../shared/core/Result.js';
+import { UseCase } from '../../../../../../shared/core/UseCase.js';
+import { UpdateCategoryDTO } from './UpdateCategoryDTO.js';
+import { ICategoryRepo } from '../../../repos/categoryRepo.js';
+import { UniqueEntityID } from '../../../../../../shared/domain/UniqueEntityID.js';
 
 type Response = Either<
   AppError.UnexpectedError | Result<any> | any,

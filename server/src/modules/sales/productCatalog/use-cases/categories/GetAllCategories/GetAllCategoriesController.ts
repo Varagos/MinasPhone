@@ -1,9 +1,9 @@
-import { CategoryDetailsMap } from '../../../mappers/CategoryDetailsMap';
+import { CategoryDetailsMap } from '../../../mappers/CategoryDetailsMap.js';
 import * as express from 'express';
-import { BaseController } from '../../../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest';
-import { GetAllCategories } from './GetAllCategories';
-import { GetAllCategoriesResponseDTO } from './GetAllCategoriesResponseDTO';
+import { BaseController } from '../../../../../../shared/infra/http/models/BaseController.js';
+import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest.js';
+import { GetAllCategories } from './GetAllCategories.js';
+import { GetAllCategoriesResponseDTO } from './GetAllCategoriesResponseDTO.js';
 
 export class GetAllCategoriesController extends BaseController {
   private useCase: GetAllCategories;

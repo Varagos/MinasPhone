@@ -1,5 +1,5 @@
-import { Category } from '../domain/Category';
-import { CategoryDetails } from '../domain/CategoryDetails';
+import { Category } from '../domain/Category.js';
+import { CategoryDetails } from '../domain/CategoryDetails.js';
 
 export interface ICategoryRepo {
   getAll(): Promise<CategoryDetails[]>;

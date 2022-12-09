@@ -1,7 +1,7 @@
-import { RemoveFromCart } from './RemoveFromCart';
-import { BaseController } from '../../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest';
-import { RemoveFromCartDTO } from './RemoveFromCartDTO';
+import { RemoveFromCart } from './RemoveFromCart.js';
+import { BaseController } from '../../../../../shared/infra/http/models/BaseController.js';
+import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
+import { RemoveFromCartDTO } from './RemoveFromCartDTO.js';
 
 export class RemoveFromCartController extends BaseController {
   private useCase: RemoveFromCart;

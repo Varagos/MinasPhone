@@ -1,10 +1,10 @@
-import { CategoryDetails } from '../../domain/CategoryDetails';
-import { CategoryMap } from '../../mappers/CategoryMap';
-import { Category } from '../../domain/Category';
-import { ICategoryRepo } from '../categoryRepo';
+import { CategoryDetails } from '../../domain/CategoryDetails.js';
+import { CategoryMap } from '../../mappers/CategoryMap.js';
+import { Category } from '../../domain/Category.js';
+import { ICategoryRepo } from '../categoryRepo.js';
 import { Model } from 'sequelize';
-import { CategoryDetailsMap } from '../../mappers/CategoryDetailsMap';
-import { Identifier } from '../../../../../shared/domain/Identifier';
+import { CategoryDetailsMap } from '../../mappers/CategoryDetailsMap.js';
+import { Identifier } from '../../../../../shared/domain/Identifier.js';
 
 export class CategoryRepo implements ICategoryRepo {
   private models: Record<string, any>;

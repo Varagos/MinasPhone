@@ -1,9 +1,9 @@
-import { Result } from '../../../../../shared/core/Result';
-import { UseCase } from '../../../../../shared/core/UseCase';
-import { User } from '../../domain/user';
-import { UserEmail } from '../../domain/userEmail';
-import { IUserRepo } from '../../repositories/userRepo';
-import { CreateUserDTO } from './CreateUserDTO';
+import { Result } from '../../../../../shared/core/Result.js';
+import { UseCase } from '../../../../../shared/core/UseCase.js';
+import { User } from '../../domain/user.js';
+import { UserEmail } from '../../domain/userEmail.js';
+import { IUserRepo } from '../../repositories/userRepo.js';
+import { CreateUserDTO } from './CreateUserDTO.js';
 
 type Response = Result<void>;
 

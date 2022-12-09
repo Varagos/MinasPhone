@@ -1,9 +1,9 @@
-import { Result } from '../../../../../shared/core/Result';
-import { AggregateRoot } from '../../../../../shared/domain/AggregateRoot';
-import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
-import { Money } from '../../../../common/primitives/Money';
-import { Quantity } from '../../../../common/primitives/Quantity';
-import { ProductId } from './ProductId';
+import { Result } from '../../../../../shared/core/Result.js';
+import { AggregateRoot } from '../../../../../shared/domain/AggregateRoot.js';
+import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID.js';
+import { Money } from '../../../../common/primitives/Money.js';
+import { Quantity } from '../../../../common/primitives/Quantity.js';
+import { ProductId } from './ProductId.js';
 
 interface CartItemProps {
   productId: ProductId;

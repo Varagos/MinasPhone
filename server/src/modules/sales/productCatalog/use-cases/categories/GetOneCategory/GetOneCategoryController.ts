@@ -1,8 +1,8 @@
-import { CategoryDetailsMap } from '../../../mappers/CategoryDetailsMap';
-import { BaseController } from '../../../../../../shared/infra/http/models/BaseController';
-import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest';
-import { GetOneCategory } from './GetOneCategory';
-import { GetOneCategoryResponseDTO } from './GetOneCategoryResponseDTO';
+import { CategoryDetailsMap } from '../../../mappers/CategoryDetailsMap.js';
+import { BaseController } from '../../../../../../shared/infra/http/models/BaseController.js';
+import { DecodedExpressRequest } from '../../../../../../shared/infra/http/models/decodedRequest.js';
+import { GetOneCategory } from './GetOneCategory.js';
+import { GetOneCategoryResponseDTO } from './GetOneCategoryResponseDTO.js';
 
 export class GetOneCategoryController extends BaseController {
   private useCase: GetOneCategory;

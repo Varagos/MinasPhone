@@ -1,6 +1,6 @@
-import { Guard } from '../../../shared/core/Guard';
-import { Result } from '../../../shared/core/Result';
-import { ValueObject } from '../../../shared/domain/ValueObject';
+import { Guard } from '../../../shared/core/Guard.js';
+import { Result } from '../../../shared/core/Result.js';
+import { ValueObject } from '../../../shared/domain/ValueObject.js';
 
 interface QuantityProps {
   value: number;

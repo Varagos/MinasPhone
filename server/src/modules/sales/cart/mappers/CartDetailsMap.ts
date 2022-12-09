@@ -1,6 +1,7 @@
-import { Mapper } from '../../../../shared/infra/Mapper';
-import { CartDTO } from '../dtos/cartDTO';
-import { CartDetails } from './../domain/CartDetails';
+import { Mapper } from '../../../../shared/infra/Mapper.js';
+
+import { CartDTO } from '../dtos/cartDTO.js';
+import { CartDetails } from './../domain/CartDetails.js';
 
 export class CartDetailsMap implements Mapper<CartDetails> {
   public static toDomain(raw: any): CartDetails {

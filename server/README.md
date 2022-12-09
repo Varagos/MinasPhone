@@ -39,3 +39,7 @@ A cron job removes shopping carts after 1 week of idleness. In the future a redi
 ### TODO - Roadmap
 
 - Retrieve cart use-Case, fetch with associated line items, save with associated items
+
+## Pm2
+
+https://stackoverflow.com/questions/56566580/run-typescript-application-with-pm2

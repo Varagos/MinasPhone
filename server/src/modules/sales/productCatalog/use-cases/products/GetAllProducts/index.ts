@@ -1,6 +1,6 @@
-import { GetAllProducts } from './GetAllProducts';
-import { productRepo } from '../../../repos';
-import { GetAllProductsController } from './GetAllProductsController';
+import { GetAllProducts } from './GetAllProducts.js';
+import { productRepo } from '../../../repos/index.js';
+import { GetAllProductsController } from './GetAllProductsController.js';
 
 const getAllProducts = new GetAllProducts(productRepo);
 const getAllProductsController = new GetAllProductsController(getAllProducts);

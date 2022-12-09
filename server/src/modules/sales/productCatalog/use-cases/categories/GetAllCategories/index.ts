@@ -1,6 +1,6 @@
-import { GetAllCategories } from './GetAllCategories';
-import { categoryRepo } from '../../../repos';
-import { GetAllCategoriesController } from './GetAllCategoriesController';
+import { GetAllCategories } from './GetAllCategories.js';
+import { categoryRepo } from '../../../repos/index.js';
+import { GetAllCategoriesController } from './GetAllCategoriesController.js';
 
 const getAllCategories = new GetAllCategories(categoryRepo);
 const getAllCategoriesController = new GetAllCategoriesController(

@@ -1,9 +1,8 @@
-import { Result } from '@shared/core/Result';
-// import { AggregateRoot } from '../../../../shared/domain/AggregateRoot';
-import { AggregateRoot } from '@shared/domain/AggregateRoot';
-import { UniqueEntityID } from '@shared/domain/UniqueEntityID';
-import { CartItem } from './item/CartItem';
-import { ProductId } from './item/ProductId';
+import { Result } from '../../../../shared/core/Result.js';
+import { AggregateRoot } from '../../../../shared/domain/AggregateRoot.js';
+import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
+import { CartItem } from './item/CartItem.js';
+import { ProductId } from './item/ProductId.js';
 
 interface CartProps {
   lineItems: CartItem[];

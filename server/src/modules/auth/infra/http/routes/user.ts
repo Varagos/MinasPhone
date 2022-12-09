@@ -1,4 +1,4 @@
-import { getAllUsersController } from '../../../useCases/getAllUsers';
+import { getAllUsersController } from '../../../useCases/getAllUsers/index.js';
 import express from 'express';
 
 const userRouter = express.Router();

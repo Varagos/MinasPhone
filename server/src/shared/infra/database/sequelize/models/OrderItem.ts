@@ -1,17 +1,19 @@
-import { DataTypes, Sequelize } from 'sequelize';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import { Sequelize, Sequelize } from 'sequelize';
 
 export default (sequelize: Sequelize) => {
   const OrderItem = sequelize.define(
     'OrderItem',
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
       quantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
 
         validate: {

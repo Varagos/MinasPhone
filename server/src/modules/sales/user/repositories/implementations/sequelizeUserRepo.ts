@@ -1,6 +1,6 @@
-import { UserMap } from '../../mappers/UserMap';
-import { User } from '../../domain/user';
-import { IUserRepo } from '../userRepo';
+import { UserMap } from '../../mappers/UserMap.js';
+import { User } from '../../domain/user.js';
+import { IUserRepo } from '../userRepo.js';
 
 export class UserRepo implements IUserRepo {
   private models: Record<string, any>;

@@ -1,4 +1,4 @@
-import { UniqueEntityID } from '../UniqueEntityID';
+import { UniqueEntityID } from '../UniqueEntityID.js';
 
 /**
  *  describes the contract for a domain event

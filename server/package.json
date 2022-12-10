@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "start:dev": "./node_modules/.bin/env-cmd -f .env.dev nodemon --watch './**/*.ts' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' src/index.ts"
+    "start:dev": "./node_modules/.bin/env-cmd -f .env.dev nodemon"
   },
   "husky": {
     "hooks": {

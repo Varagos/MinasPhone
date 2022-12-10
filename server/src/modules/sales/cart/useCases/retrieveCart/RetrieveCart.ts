@@ -5,6 +5,7 @@ import { Either, Result, right } from '../../../../../shared/core/Result.js';
 import { UseCase } from '../../../../../shared/core/UseCase.js';
 import { ICartRepo } from '../../repositories/cartRepo.js';
 import { Cart } from '../../domain/Cart.js';
+import { isNothing } from '../../../../../shared/core/Maybe.js';
 
 type Response = Either<AppError.UnexpectedError | Result<any>, CartDetails>;
 
@@ -35,6 +36,9 @@ export class RetrieveCart
       }
 
       const cartDetails = await this.cartRepo.retrieveDetails(id);
+      if (isNothing(cartDetails)) {
+        return left(new AppError.NotFoundError('Cart not found'));
+      }
       return right(cartDetails);
     } catch (err: any) {
       return left(new AppError.UnexpectedError(err));

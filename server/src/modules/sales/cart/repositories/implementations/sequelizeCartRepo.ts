@@ -4,6 +4,7 @@ import { CartDetails } from '../../domain/CartDetails.js';
 import { CartMap } from '../../mappers/CartMap.js';
 
 import { CartDetailsMap } from '../../mappers/CartDetailsMap.js';
+import { Maybe, nothing } from '../../../../../shared/core/Maybe.js';
 
 export class CartRepo implements ICartRepo {
   private models: Record<string, any>;
@@ -27,13 +28,16 @@ export class CartRepo implements ICartRepo {
   retrieve(userId: string): Promise<Cart> {
     throw new Error('Method not implemented.');
   }
-  async retrieveDetails(cartId: string): Promise<CartDetails> {
+  async retrieveDetails(cartId: string): Promise<Maybe<CartDetails>> {
     const CartModel = this.models.Cart;
     const rawProduct = await CartModel.findOne({
       where: {
         id: cartId,
       },
     });
+    if (!rawProduct) {
+      return nothing;
+    }
     const product = CartDetailsMap.toDomain(rawProduct);
     return product;
   }

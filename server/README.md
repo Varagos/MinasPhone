@@ -40,6 +40,8 @@ A cron job removes shopping carts after 1 week of idleness. In the future a redi
 
 - Retrieve cart use-Case, fetch with associated line items, save with associated items
 
-## Pm2
+## REST Client
 
-https://stackoverflow.com/questions/56566580/run-typescript-application-with-pm2
+https://stackoverflow.com/questions/3508338/what-is-the-boundary-in-multipart-form-data
+
+https://stackoverflow.com/questions/61473990/how-to-post-an-image-with-form-data-in-rest-client-for-vscode

@@ -1,3 +1,4 @@
+import { AppError } from '../../../../../shared/core/AppError.js';
 import { BaseController } from '../../../../../shared/infra/http/models/BaseController.js';
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
 import { CartDetailsMap } from './../../mappers/CartDetailsMap.js';
@@ -17,13 +18,19 @@ export class RetrieveCartController extends BaseController {
     try {
       const cartId = req.cookies.cart_id;
       const dto = { id: cartId };
+      console.table(dto);
       const result = await this.useCase.execute(dto);
       // console.log({ result });
 
       if (result.isLeft()) {
         const error = result.value;
 
-        return this.fail(res, (error as any).getErrorValue().message);
+        switch (error.constructor) {
+          case AppError.NotFoundError:
+            return this.notFound(res, error.getErrorValue().message);
+          default:
+            return this.fail(res, (error as any).getErrorValue().message);
+        }
       }
 
       const cartDetails = result.value;

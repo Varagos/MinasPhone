@@ -35,7 +35,7 @@ export class UpdateProduct
       if (updateRes.isFailure) {
         return left(updateRes);
       }
-      await this.productRepo.update(product);
+      await this.productRepo.save(product);
       return right(Result.ok<void>());
     } catch (error: any) {
       return left(new AppError.UnexpectedError(error));

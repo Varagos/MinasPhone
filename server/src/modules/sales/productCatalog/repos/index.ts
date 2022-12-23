@@ -1,9 +1,8 @@
-import models from '../../../../shared/infra/database/sequelize/models/index.js';
-import { CategoryRepo } from './implementations/sequelizeCategoryRepo.js';
-import { ProductRepo } from './implementations/sequelizeProductRepo.js';
+import { REPOSITORIES } from '../../../../shared/infra/database/typeorm/index.js';
+import { CategoryRepo } from './implementations/categoryRepo.js';
+import { ProductRepo } from './implementations/productRepo.js';
 
-// // console.log({ models });
-const categoryRepo = new CategoryRepo(models);
-const productRepo = new ProductRepo(models);
+const categoryRepo = new CategoryRepo(REPOSITORIES.CATEGORY);
+const productRepo = new ProductRepo(REPOSITORIES.PRODUCT);
 
 export { categoryRepo, productRepo };

@@ -4,82 +4,73 @@ import { Product } from '../../domain/Product.js';
 import { ProductMap } from '../../mappers/ProductMap.js';
 import { ProductDetailsMap } from '../../mappers/ProductDetailsMap.js';
 import { Result } from '../../../../../shared/core/Result.js';
+import { Repository } from 'typeorm';
+import { Product as PersistenceProduct } from '../../../../../shared/infra/database/typeorm/models/index.js';
 
 export class ProductRepo implements IProductRepo {
-  private models: Record<string, any>;
-
-  constructor(models: Record<string, any>) {
-    this.models = models;
-  }
+  constructor(private repo: Repository<PersistenceProduct>) {}
 
   async getAll(): Promise<ProductDetails[]> {
-    const ProductModel = this.models.Product;
-    const rawProducts = await ProductModel.findAll();
-    const products = rawProducts.map((prod: any) =>
+    const rawProducts = await this.repo.find({
+      relations: {
+        category: true,
+      },
+    });
+    const products = rawProducts.map((prod) =>
       ProductDetailsMap.toDomain(prod),
     );
     return products;
   }
 
   async getById(id: string): Promise<Product> {
-    const ProductModel = this.models.Product;
-    const rawProduct = await ProductModel.findOne({
+    const rawProduct = await this.repo.findOne({
       where: {
         id,
       },
+      relations: {
+        category: true,
+      },
     });
+    // TODO - handle not found
+    if (!rawProduct) throw new Error('Product not found');
+
     const product = ProductMap.toDomain(rawProduct);
     return product;
   }
 
   async getOneById(id: string): Promise<ProductDetails> {
-    const ProductModel = this.models.Product;
-    const rawProduct = await ProductModel.findOne({
+    const rawProduct = await this.repo.findOne({
       where: {
         id,
       },
+      relations: {
+        category: true,
+      },
     });
+    // TODO - handle not found
+    if (!rawProduct) throw new Error('Product not found');
     const product = ProductDetailsMap.toDomain(rawProduct);
     return product;
   }
-  async save(product: Product): Promise<any> {
-    const ProductModel = this.models.Product;
-    const rawSequelizeProduct = ProductMap.toPersistence(product);
+  async save(product: Product): Promise<Result<any>> {
+    const rawProduct = ProductMap.toPersistence(product);
+    console.log('before create', product);
+    const productModel = this.repo.create(rawProduct);
 
     try {
-      await ProductModel.create(rawSequelizeProduct);
+      console.log('Saving product', productModel);
+      await this.repo.save(productModel);
       return Result.ok();
     } catch (err: any) {
       const errorMessage = err?.errors?.[0].message;
+      console.error('Error saving product', err);
       return Result.fail(errorMessage ?? 'Error saving product');
     }
   }
 
-  async update(product: Product): Promise<any> {
-    const ProductModel = this.models.Product;
-    const rawSequelizeProduct = ProductMap.toPersistence(product);
-
-    const { id, ...rest } = rawSequelizeProduct;
-    try {
-      await ProductModel.update(rest, {
-        where: {
-          id,
-        },
-      });
-    } catch (err: any) {
-      throw new Error(err.toString());
-    }
-  }
-
   async delete(id: string): Promise<void> {
-    const ProductModel = this.models.Product;
-
     try {
-      await ProductModel.destroy({
-        where: {
-          id,
-        },
-      });
+      await this.repo.delete(id);
     } catch (err: any) {
       throw new Error(err.toString());
     }

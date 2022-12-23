@@ -29,7 +29,7 @@ export class UpdateCategory
         return left(categoryOrError);
       }
       const category = categoryOrError.getValue();
-      await this.categoryRepo.update(category);
+      await this.categoryRepo.save(category);
       return right(Result.ok<void>());
     } catch (error: any) {
       return left(new AppError.UnexpectedError(error));

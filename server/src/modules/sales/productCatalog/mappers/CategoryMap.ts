@@ -1,17 +1,17 @@
+import { DeepPartial } from 'typeorm';
 import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
+import { Category as PersistenceCategory } from '../../../../shared/infra/database/typeorm/models/index.js';
 import { Mapper } from '../../../../shared/infra/Mapper.js';
 import { Category } from '../domain/Category.js';
 
 export class CategoryMap implements Mapper<Category> {
-  public static toPersistence(category: Category): any {
+  public static toPersistence(
+    category: Category,
+  ): DeepPartial<PersistenceCategory> {
     return {
       id: category.id.toString(),
       slug: category.slug,
       name: category.name,
-      //   parent_id: comment.parentCommentId
-      //     ? comment.parentCommentId.id.toString()
-      //     : null,
-      parent_id: null,
     };
   }
 

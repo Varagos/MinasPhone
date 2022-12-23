@@ -23,7 +23,7 @@ This is designed by choice since
   customers. (since fair deal of shopping carts remain unfulfilled)
 
 Two customers can still add the same item even though there's only one item left. This will cause an error for one of the two customers if they both decide to proceed
-with the order. Reserving the items when put into cart, would be appropriate in large inventory ecommerce site, and small shopping cart ttl.
+with the order. Reserving the items when put into cart, would be appropriate in a large inventory ecommerce site, and small shopping cart ttl.
 
 ## Dynamic Prices
 

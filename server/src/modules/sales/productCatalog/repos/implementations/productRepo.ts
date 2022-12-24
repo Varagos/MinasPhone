@@ -54,17 +54,14 @@ export class ProductRepo implements IProductRepo {
   }
   async save(product: Product): Promise<Result<any>> {
     const rawProduct = ProductMap.toPersistence(product);
-    console.log('before create', product);
     const productModel = this.repo.create(rawProduct);
 
     try {
-      console.log('Saving product', productModel);
       await this.repo.save(productModel);
       return Result.ok();
     } catch (err: any) {
-      const errorMessage = err?.errors?.[0].message;
       console.error('Error saving product', err);
-      return Result.fail(errorMessage ?? 'Error saving product');
+      return Result.fail(err?.message ?? 'Error saving product');
     }
   }
 

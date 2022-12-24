@@ -5,18 +5,17 @@ import { CartMap } from '../../mappers/CartMap.js';
 
 import { CartDetailsMap } from '../../mappers/CartDetailsMap.js';
 import { Maybe, nothing } from '../../../../../shared/core/Maybe.js';
+import { Repository } from 'typeorm';
+import { Cart as PersistenceCart } from '../../../../../shared/infra/database/typeorm/models/index.js';
 
 export class CartRepo implements ICartRepo {
-  private models: Record<string, any>;
-
-  constructor(models: Record<string, any>) {
-    this.models = models;
-  }
+  constructor(private repo: Repository<PersistenceCart>) {}
 
   async save(cart: Cart): Promise<void> {
-    const CartModel = this.models.Cart;
     const mappedCart = CartMap.toPersistence(cart);
-    return CartModel.create(mappedCart);
+    const cartModel = this.repo.create(mappedCart);
+
+    await this.repo.save(cartModel);
   }
 
   retrieveByUser(userId: string): Promise<Cart> {
@@ -25,14 +24,34 @@ export class CartRepo implements ICartRepo {
   retrieveDetailsByUser(userId: string): Promise<CartDetails> {
     throw new Error('Method not implemented.');
   }
-  retrieve(userId: string): Promise<Cart> {
-    throw new Error('Method not implemented.');
-  }
-  async retrieveDetails(cartId: string): Promise<Maybe<CartDetails>> {
-    const CartModel = this.models.Cart;
-    const rawProduct = await CartModel.findOne({
+  async retrieve(cartId: string): Promise<Maybe<Cart>> {
+    const rawCart = await this.repo.findOne({
       where: {
         id: cartId,
+      },
+      relations: {
+        user: true,
+        cartItems: {
+          product: true,
+        },
+      },
+    });
+    if (!rawCart) {
+      return nothing;
+    }
+    const cart = CartMap.toDomain(rawCart);
+    return cart;
+  }
+  async retrieveDetails(cartId: string): Promise<Maybe<CartDetails>> {
+    const rawProduct = await this.repo.findOne({
+      where: {
+        id: cartId,
+      },
+      relations: {
+        user: true,
+        cartItems: {
+          product: true,
+        },
       },
     });
     if (!rawProduct) {

@@ -1,6 +1,9 @@
 import { Result } from '../../../../shared/core/Result.js';
 import { AggregateRoot } from '../../../../shared/domain/AggregateRoot.js';
 import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
+import { Money } from '../../../common/primitives/Money.js';
+import { Quantity } from '../../../common/primitives/Quantity.js';
+import { Product } from '../../productCatalog/domain/Product.js';
 import { CartItem } from './item/CartItem.js';
 import { ProductId } from './item/ProductId.js';
 
@@ -40,7 +43,18 @@ export class Cart extends AggregateRoot<CartProps> {
     return Result.ok<Cart>(cart);
   }
 
-  public add(toAdd: CartItem): Result<void> {
+  public add(product: Product, quantity: number): Result<void> {
+    const lineItemOrError = CartItem.create({
+      productId: ProductId.create(product.id).getValue(),
+      title: product.name,
+      unitPrice: Money.create({ value: product.price }).getValue(),
+      quantity: Quantity.create({ value: quantity }).getValue(),
+    });
+    if (lineItemOrError.isFailure) {
+      return Result.fail(lineItemOrError.getErrorValue() as any);
+    }
+    const toAdd = lineItemOrError.getValue();
+
     const existingItem = this.props.lineItems.find(
       (item) => item.productId === toAdd.productId,
     );

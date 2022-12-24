@@ -17,7 +17,9 @@ export class Order {
   @Column()
   total: number;
 
-  @OneToMany(() => OrderItem, (orderItem) => orderItem.order)
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.order, {
+    cascade: true, // When order is saved, linked orderItems will be saved as well
+  })
   orderItems: Relation<OrderItem[]>;
 
   @ManyToOne(() => User, (user) => user.orders)

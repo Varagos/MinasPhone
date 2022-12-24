@@ -20,7 +20,7 @@ export class Product extends AggregateRoot<ProductProps> {
     super(props, id);
   }
 
-  get id(): any {
+  get id(): UniqueEntityID {
     return this._id;
   }
 

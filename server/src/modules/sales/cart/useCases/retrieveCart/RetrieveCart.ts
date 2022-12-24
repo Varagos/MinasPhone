@@ -4,10 +4,16 @@ import { AppError } from '../../../../../shared/core/AppError.js';
 import { Either, Result, right } from '../../../../../shared/core/Result.js';
 import { UseCase } from '../../../../../shared/core/UseCase.js';
 import { ICartRepo } from '../../repositories/cartRepo.js';
-import { Cart } from '../../domain/Cart.js';
 import { isNothing } from '../../../../../shared/core/Maybe.js';
+import { RetrieveCartErrors } from './Errors.js';
 
-type Response = Either<AppError.UnexpectedError | Result<any>, CartDetails>;
+type Response = Either<
+  | AppError.UnexpectedError
+  | Result<any>
+  | RetrieveCartErrors.CartDoesNotExist
+  | RetrieveCartErrors.CartIdNotProvided,
+  CartDetails
+>;
 
 /**
  * When you first call the method retrieve() using GET v1/carts, it will automatically create a cart for you if a cart does not exist yet
@@ -21,24 +27,14 @@ export class RetrieveCart
   async execute({ id }: { id?: string }): Promise<Response> {
     try {
       if (!id) {
-        // create a new cart
-        const cart = Cart.create({ lineItems: [] });
-        if (cart.isFailure) {
-          return left(cart);
-        }
-        await this.cartRepo.save(cart.getValue());
-        const cartId = cart.getValue().id.toString();
-        const cartDetails = CartDetails.create({
-          id: cartId,
-          lineItems: [],
-        });
-        return right(cartDetails.getValue());
+        return left(new RetrieveCartErrors.CartIdNotProvided());
       }
 
       const cartDetails = await this.cartRepo.retrieveDetails(id);
       if (isNothing(cartDetails)) {
-        return left(new AppError.NotFoundError('Cart not found'));
+        return left(new RetrieveCartErrors.CartDoesNotExist());
       }
+      // Check cart life time, if it is expired, delete the cart and return the appropriate error
       return right(cartDetails);
     } catch (err: any) {
       return left(new AppError.UnexpectedError(err));

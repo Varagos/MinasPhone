@@ -5,6 +5,7 @@ import {
   OneToOne,
   PrimaryColumn,
   Relation,
+  UpdateDateColumn,
 } from 'typeorm';
 import { CartItem } from './CartItem.js';
 import { User } from './User.js';
@@ -14,7 +15,12 @@ export class Cart {
   @PrimaryColumn()
   id: string;
 
-  @OneToMany(() => CartItem, (cartItem) => cartItem.cart)
+  @UpdateDateColumn()
+  updatedDate: Date;
+
+  @OneToMany(() => CartItem, (cartItem) => cartItem.cart, {
+    cascade: true, // When cart is saved, linked cartItems will be saved as well
+  })
   cartItems: Relation<CartItem[]>;
 
   @OneToOne(() => User, (user) => user.cart)

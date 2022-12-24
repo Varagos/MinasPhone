@@ -5,10 +5,12 @@ import { updateCartController } from '../../../useCases/updateCart/index.js';
 import { removeFromCartController } from '../../../useCases/removeFromCart/index.js';
 import { deleteCartController } from '../../../useCases/deleteCart/index.js';
 import { emptyCartController } from '../../../useCases/emptyCart/index.js';
+import { createCartController } from '../../../useCases/createCart/index.js';
 
 const cartRouter = express.Router();
 
 cartRouter.get('/', (req, res) => retrieveCartController.execute(req, res));
+cartRouter.post('/', (req, res) => createCartController.execute(req, res));
 
 cartRouter.post('/:id', (req, res) => addToCartController.execute(req, res));
 

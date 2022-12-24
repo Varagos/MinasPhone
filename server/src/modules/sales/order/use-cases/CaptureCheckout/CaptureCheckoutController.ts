@@ -3,6 +3,7 @@ import { BaseController } from '../../../../../shared/infra/http/models/BaseCont
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
 import { CaptureCheckout } from './CaptureCheckout.js';
 import { CaptureCheckoutDTO } from './CaptureCheckoutDTO.js';
+import { CaptureCheckoutErrors } from './Errors.js';
 
 export class CaptureCheckoutController extends BaseController {
   private useCase: CaptureCheckout;
@@ -16,6 +17,11 @@ export class CaptureCheckoutController extends BaseController {
     try {
       const dto: CaptureCheckoutDTO = {
         cartId: req.params.cart_id,
+
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        phone: req.body.phone,
       };
       console.log('dto', dto);
       const result = await this.useCase.execute(dto);
@@ -24,11 +30,17 @@ export class CaptureCheckoutController extends BaseController {
         const error = result.value;
         console.log('Result', error.getErrorValue());
         switch (error.constructor) {
-          case Result: {
-            return this.clientError(res, error.getErrorValue() as any);
+          case CaptureCheckoutErrors.CartNotFound: {
+            return this.notFound(res, error.getErrorValue().message);
+          }
+          case CaptureCheckoutErrors.CartIsEmpty: {
+            return this.clientError(res, error.getErrorValue().message);
+          }
+          case CaptureCheckoutErrors.FailedToCreateOrder: {
+            return this.fail(res, error.getErrorValue().message);
           }
           default: {
-            return this.fail(res, (error as any).getErrorValue().message);
+            return this.fail(res, error.getErrorValue().message);
           }
         }
       }

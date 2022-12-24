@@ -44,6 +44,10 @@ export class OrderItem extends AggregateRoot<CartItemProps> {
     return this.props.quantity;
   }
 
+  get unitPrice(): Money {
+    return this.props.unitPrice;
+  }
+
   get total(): Money {
     return this.props.unitPrice.multi(this.props.quantity.value);
   }

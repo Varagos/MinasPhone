@@ -6,4 +6,4 @@ import './shared/infra/database/typeorm/index.js';
 
 // Subscriptions
 import './modules/sales/user/subscriptions/index.js';
-console.log('wtf');
+import './modules/customerManagement/notifications/subscribers/index.js';

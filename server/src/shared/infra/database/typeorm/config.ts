@@ -8,6 +8,7 @@ import {
   Product,
   User,
 } from './models/index.js';
+import { OrderContactInfo } from './models/OrderContactInfo.js';
 
 export const AppDataSource = new DataSource({
   type: 'sqlite',
@@ -15,7 +16,16 @@ export const AppDataSource = new DataSource({
   database: 'database.sqlite',
   synchronize: true,
   logging: false,
-  entities: [User, Product, Category, OrderItem, Order, CartItem, Cart], //Product, Category, Order, OrderItem, Cart, CartItem],
+  entities: [
+    User,
+    Product,
+    Category,
+    OrderItem,
+    Order,
+    OrderContactInfo,
+    CartItem,
+    Cart,
+  ],
   migrations: [],
   subscribers: [],
 });

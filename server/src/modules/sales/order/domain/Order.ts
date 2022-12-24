@@ -4,12 +4,12 @@ import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
 import { Money } from '../../../common/primitives/Money.js';
 import { OrderItem } from './item/OrderItem.js';
 
-interface CartProps {
+interface OrderProps {
   items: OrderItem[];
 }
 
-export class Order extends AggregateRoot<CartProps> {
-  private constructor(props: CartProps, id?: UniqueEntityID) {
+export class Order extends AggregateRoot<OrderProps> {
+  private constructor(props: OrderProps, id?: UniqueEntityID) {
     super(props, id);
   }
 
@@ -21,7 +21,7 @@ export class Order extends AggregateRoot<CartProps> {
     return this.props.items;
   }
 
-  public static create(props: CartProps, id?: UniqueEntityID): Result<Order> {
+  public static create(props: OrderProps, id?: UniqueEntityID): Result<Order> {
     // TODO validations
 
     const isNewOrder = !!id === false;

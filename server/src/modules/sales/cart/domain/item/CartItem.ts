@@ -57,4 +57,8 @@ export class CartItem extends AggregateRoot<CartItemProps> {
   public total(): Money {
     return this.props.unitPrice.multi(this.props.quantity.value);
   }
+
+  public updateQuantity(quantity: Quantity): void {
+    this.props.quantity = quantity;
+  }
 }

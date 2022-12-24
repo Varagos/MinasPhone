@@ -18,4 +18,5 @@ export const REPOSITORIES = {
   ORDER_ITEM: AppDataSource.getRepository(OrderItem),
   CART: AppDataSource.getRepository(Cart),
   CART_ITEM: AppDataSource.getRepository(CartItem),
+  TRANSACTIONAL_ENTITY_MANAGER: AppDataSource.manager,
 };

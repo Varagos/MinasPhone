@@ -2,6 +2,7 @@ import { RemoveFromCart } from './RemoveFromCart.js';
 import { BaseController } from '../../../../../shared/infra/http/models/BaseController.js';
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
 import { RemoveFromCartDTO } from './RemoveFromCartDTO.js';
+import { RemoveFromCartErrors } from './Errors.js';
 
 export class RemoveFromCartController extends BaseController {
   private useCase: RemoveFromCart;
@@ -12,12 +13,10 @@ export class RemoveFromCartController extends BaseController {
   }
 
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
-    const { id: cartId } = req.params;
-    const { productId, quantity } = req.body;
+    const { id: cartId, line_item_id: lineItemId } = req.params;
     const dto: RemoveFromCartDTO = {
       cartId,
-      productId,
-      quantity,
+      lineItemId,
     };
 
     try {
@@ -25,11 +24,14 @@ export class RemoveFromCartController extends BaseController {
 
       if (result.isLeft()) {
         const error = result.value;
-
-        return this.fail(res, (error.getErrorValue() as any).message);
-      } else {
-        return this.ok(res);
+        switch (error.constructor) {
+          case RemoveFromCartErrors.LineItemNotFoundError:
+            return this.notFound(res, error.getErrorValue().message);
+          default:
+            return this.fail(res, (error.getErrorValue() as any).message);
+        }
       }
+      return this.ok(res);
     } catch (err: any) {
       // console.log({ err });
       return this.fail(res, err);

@@ -10,6 +10,9 @@ export class OrderItem {
   @Column()
   quantity: number;
 
+  @Column()
+  unitPrice: number;
+
   @ManyToOne(() => Product, (product) => product.orderItems, {
     onDelete: 'NO ACTION',
   })

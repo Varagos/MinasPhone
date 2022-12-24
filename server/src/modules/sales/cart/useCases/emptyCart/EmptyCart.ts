@@ -8,6 +8,7 @@ import {
 import { UseCase } from '../../../../../shared/core/UseCase.js';
 import { EmptyCartDTO } from './EmptyCartDTO.js';
 import { ICartRepo } from '../../repositories/cartRepo.js';
+import { isNothing } from '../../../../../shared/core/Maybe.js';
 
 type Response = Either<AppError.UnexpectedError | Result<any>, Result<void>>;
 
@@ -21,9 +22,11 @@ export class EmptyCart implements UseCase<EmptyCartDTO, Promise<Response>> {
     try {
       const { cartId } = request;
       const cart = await this.cartRepo.retrieve(cartId);
-      if (cart === null) {
+      if (isNothing(cart)) {
         return left(new AppError.NotFoundError('Cart not found'));
       }
+      cart.empty();
+      await this.cartRepo.save(cart);
       return right(Result.ok<void>());
     } catch (error: any) {
       return left(new AppError.UnexpectedError(error));

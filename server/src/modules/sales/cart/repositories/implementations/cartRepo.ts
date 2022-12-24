@@ -61,64 +61,37 @@ export class CartRepo implements ICartRepo {
     return product;
   }
 
-  // async getAll(): Promise<CategoryDetails[]> {
-  //   const CategoryModel = this.models.Category;
-  //   const rawCategories = await CategoryModel.findAll();
-  //   const categories = rawCategories.map((cat: any) =>
-  //     CategoryDetailsMap.toDomain(cat),
-  //   );
-  //   return categories;
-  // }
+  async exists(id: string): Promise<boolean> {
+    const findResult = await this.repo.findOne({
+      where: {
+        id,
+      },
+    });
+    return !!findResult;
+  }
 
-  // async getOneById(id: string): Promise<CategoryDetails> {
-  //   const CategoryModel = this.models.Category;
-  //   const rawCategory = await CategoryModel.findOne({
-  //     where: {
-  //       id,
-  //     },
-  //   });
-  //   const category = CategoryDetailsMap.toDomain(rawCategory);
-  //   return category;
-  // }
+  async delete(id: string): Promise<void> {
+    // return this.transactionalEntityManager.transaction(
+    //   async (transactionalEntityManager) => {
+    //     const cart = await transactionalEntityManager.findOneBy(
+    //       PersistenceCart,
+    //       {
+    //         id,
+    //       },
+    //     );
 
-  // async save(category: Category): Promise<any> {
-  //   const CategoryModel = this.models.Category;
-  //   const rawSequelizeCategory = CategoryMap.toPersistence(category);
+    //     if (!cart) {
+    //       return;
+    //     }
 
-  //   try {
-  //     await CategoryModel.create(rawSequelizeCategory);
-  //   } catch (err: any) {
-  //     throw new Error(err.toString());
-  //   }
-  // }
+    //     await transactionalEntityManager.remove(
+    //       PersistenceCartItem,
+    //       cart.cartItems,
+    //     );
 
-  // async update(category: Category): Promise<any> {
-  //   const CategoryModel = this.models.Category;
-  //   const rawSequelizeCategory = CategoryMap.toPersistence(category);
-
-  //   const { id, ...rest } = rawSequelizeCategory;
-  //   try {
-  //     await CategoryModel.update(rest, {
-  //       where: {
-  //         id,
-  //       },
-  //     });
-  //   } catch (err: any) {
-  //     throw new Error(err.toString());
-  //   }
-  // }
-
-  // async delete(id: string): Promise<void> {
-  //   const CategoryModel = this.models.Category;
-
-  //   try {
-  //     await CategoryModel.destroy({
-  //       where: {
-  //         id,
-  //       },
-  //     });
-  //   } catch (err: any) {
-  //     throw new Error(err.toString());
-  //   }
-  // }
+    //     await transactionalEntityManager.remove(PersistenceCart, cart);
+    //   },
+    // );
+    await this.repo.delete(id);
+  }
 }

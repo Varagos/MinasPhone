@@ -1,11 +1,19 @@
 import { Result } from '../../../../../shared/core/Result.js';
 import { UseCaseError } from '../../../../../shared/core/UseCaseError.js';
 
-export namespace AddToCartCartErrors {
+export namespace AddToCartErrors {
   export class CartIdNotProvided extends Result<UseCaseError> {
     constructor() {
       super(false, {
         message: `The cart id is undefined.`,
+      } as UseCaseError);
+    }
+  }
+
+  export class FailedToCreateCartItems extends Result<UseCaseError> {
+    constructor(productId: string) {
+      super(false, {
+        message: `Failed to create cart item for ${productId}.`,
       } as UseCaseError);
     }
   }
@@ -26,7 +34,7 @@ export namespace AddToCartCartErrors {
     }
   }
 
-  export class CartDoesNotExist extends Result<UseCaseError> {
+  export class CartNotFound extends Result<UseCaseError> {
     constructor() {
       super(false, {
         message: `The cart does not exist.`,

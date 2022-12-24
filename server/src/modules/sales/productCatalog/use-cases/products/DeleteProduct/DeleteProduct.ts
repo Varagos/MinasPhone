@@ -9,6 +9,7 @@ import {
 import { UseCase } from '../../../../../../shared/core/UseCase.js';
 import { DeleteProductDTO } from './DeleteProductDTO.js';
 import { IImagesService } from '../../../infra/imagesFileSystem/index.js';
+import { isNothing } from '../../../../../../shared/core/Maybe.js';
 
 type Response = Either<
   AppError.UnexpectedError | Result<any> | any,
@@ -26,7 +27,7 @@ export class DeleteProduct
   async execute(request: DeleteProductDTO) {
     try {
       const product = await this.productRepo.getById(request.id);
-      if (product === null) {
+      if (isNothing(product)) {
         return left(new AppError.NotFoundError('Product not found'));
       }
       // TODO Make transactional

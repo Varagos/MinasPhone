@@ -6,6 +6,7 @@ import { ProductDetailsMap } from '../../mappers/ProductDetailsMap.js';
 import { Result } from '../../../../../shared/core/Result.js';
 import { Repository } from 'typeorm';
 import { Product as PersistenceProduct } from '../../../../../shared/infra/database/typeorm/models/index.js';
+import { Maybe, nothing } from '../../../../../shared/core/Maybe.js';
 
 export class ProductRepo implements IProductRepo {
   constructor(private repo: Repository<PersistenceProduct>) {}
@@ -22,7 +23,7 @@ export class ProductRepo implements IProductRepo {
     return products;
   }
 
-  async getById(id: string): Promise<Product> {
+  async getById(id: string): Promise<Maybe<Product>> {
     const rawProduct = await this.repo.findOne({
       where: {
         id,
@@ -31,8 +32,7 @@ export class ProductRepo implements IProductRepo {
         category: true,
       },
     });
-    // TODO - handle not found
-    if (!rawProduct) throw new Error('Product not found');
+    if (!rawProduct) return nothing;
 
     const product = ProductMap.toDomain(rawProduct);
     return product;

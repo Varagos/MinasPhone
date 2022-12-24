@@ -1,5 +1,6 @@
-import { Result } from '../../../../shared/core/Result.js';
+import { Either, left, Result, right } from '../../../../shared/core/Result.js';
 import { AggregateRoot } from '../../../../shared/domain/AggregateRoot.js';
+import { Identifier } from '../../../../shared/domain/Identifier.js';
 import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
 import { Money } from '../../../common/primitives/Money.js';
 import { Quantity } from '../../../common/primitives/Quantity.js';
@@ -66,10 +67,44 @@ export class Cart extends AggregateRoot<CartProps> {
     return Result.ok<void>();
   }
 
-  public remove(productId: ProductId): void {
-    this.props.lineItems = this.props.lineItems.filter(
-      (item) => item.productId !== productId,
+  public remove(
+    lineItemId: UniqueEntityID,
+  ): Either<Result<string>, Result<void>> {
+    const exists = this.props.lineItems.some((item) =>
+      item.id.equals(lineItemId),
     );
+    if (!exists) {
+      return left(Result.fail('Line item not found'));
+    }
+
+    this.props.lineItems = this.props.lineItems.filter(
+      (item) => !item.id.equals(lineItemId),
+    );
+    return right(Result.ok());
+  }
+
+  public updateQuantity(
+    lineItemId: UniqueEntityID,
+    quantity: number,
+  ): Either<Result<string>, Result<void>> {
+    if (quantity < 1) {
+      return left(Result.fail('Quantity must be greater than zero'));
+    }
+
+    if (quantity === 0) {
+      return this.remove(lineItemId);
+    }
+
+    const lineItem = this.props.lineItems.find((item) =>
+      item.id.equals(lineItemId),
+    );
+
+    if (!lineItem) {
+      return left(Result.fail('Line item not found'));
+    }
+
+    lineItem.updateQuantity(Quantity.create({ value: quantity }).getValue());
+    return right(Result.ok());
   }
 
   public empty(): void {

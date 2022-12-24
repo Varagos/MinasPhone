@@ -1,6 +1,7 @@
 import { Result } from '../../../../shared/core/Result.js';
 
 interface OrderDetailsProps {
+  id: string;
   items: {
     productId: string;
     unitPrice: number;
@@ -17,6 +18,10 @@ export class OrderDetails {
 
   private constructor(props: OrderDetailsProps) {
     this.props = props;
+  }
+
+  get id() {
+    return this.props.id;
   }
 
   get items() {

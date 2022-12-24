@@ -20,10 +20,11 @@ export class DeleteCart implements UseCase<DeleteCartDTO, Promise<Response>> {
   async execute(request: DeleteCartDTO) {
     try {
       const { cartId } = request;
-      const cart = await this.cartRepo.retrieve(cartId);
-      if (cart === null) {
+      const cartExists = await this.cartRepo.exists(cartId);
+      if (!cartExists) {
         return left(new AppError.NotFoundError('Cart not found'));
       }
+      await this.cartRepo.delete(cartId);
       return right(Result.ok<void>());
     } catch (error: any) {
       return left(new AppError.UnexpectedError(error));

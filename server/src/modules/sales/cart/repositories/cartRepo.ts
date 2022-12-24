@@ -10,5 +10,6 @@ export interface ICartRepo {
   save(cart: Cart): Promise<void>;
   // save(category: Category): Promise<void>;
   // update(category: Category): Promise<void>;
-  // delete(id: string): Promise<void>;
+  exists(id: string): Promise<boolean>;
+  delete(id: string): Promise<void>;
 }

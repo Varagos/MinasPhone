@@ -8,15 +8,15 @@ import {
 import { UseCase } from '../../../../../shared/core/UseCase.js';
 import { AddToCartDTO } from './AddToCartDTO.js';
 import { ICartRepo } from '../../repositories/cartRepo.js';
-import { AddToCartCartErrors } from './Errors.js';
+import { AddToCartErrors } from './Errors.js';
 import { IProductRepo } from '../../../productCatalog/repos/productRepo.js';
 import { isNothing } from '../../../../../shared/core/Maybe.js';
 
 type Response = Either<
   | AppError.UnexpectedError
-  | AddToCartCartErrors.CartDoesNotExist
-  | AddToCartCartErrors.ProductNotFound
-  | Result<any>,
+  | AddToCartErrors.CartNotFound
+  | AddToCartErrors.ProductNotFound
+  | AddToCartErrors.ProductQuantityExceedsAvailableQuantity,
   Result<void>
 >;
 
@@ -28,16 +28,16 @@ export class AddToCart implements UseCase<AddToCartDTO, Promise<Response>> {
       const { cartId } = request;
       const cart = await this.cartRepo.retrieve(cartId);
       if (isNothing(cart)) {
-        return left(new AddToCartCartErrors.CartDoesNotExist());
+        return left(new AddToCartErrors.CartNotFound());
       }
       const { productId, quantity } = request;
       const product = await this.productRepo.getById(productId);
-      if (product === null) {
-        return left(new AddToCartCartErrors.ProductNotFound());
+      if (isNothing(product)) {
+        return left(new AddToCartErrors.ProductNotFound());
       }
       if (quantity > product.quantity) {
         return left(
-          new AddToCartCartErrors.ProductQuantityExceedsAvailableQuantity(
+          new AddToCartErrors.ProductQuantityExceedsAvailableQuantity(
             product.quantity,
             quantity,
           ),
@@ -45,7 +45,7 @@ export class AddToCart implements UseCase<AddToCartDTO, Promise<Response>> {
       }
       const addResultOrError = cart.add(product, quantity);
       if (addResultOrError.isFailure) {
-        return left(addResultOrError);
+        return left(new AddToCartErrors.FailedToCreateCartItems(productId));
       }
       await this.cartRepo.save(cart);
       return right(Result.ok<void>());

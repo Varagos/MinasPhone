@@ -7,6 +7,7 @@ import {
 } from '../../../../../shared/core/Result.js';
 import { UseCase } from '../../../../../shared/core/UseCase.js';
 import { Order } from '../../domain/Order.js';
+import { OrderService } from '../../domain/services/orderService.js';
 import { IOrderRepo } from '../../repos/orderRepo.js';
 import { CaptureCheckoutDTO } from './CaptureCheckoutDTO.js';
 
@@ -20,14 +21,13 @@ export class CaptureCheckout
 {
   constructor(
     private orderRepo: IOrderRepo,
-    private orderCartDomainService: any,
+    private orderService: OrderService,
   ) {}
 
   async execute(request: CaptureCheckoutDTO) {
     try {
       const { cartId } = request;
-      const orderOrError =
-        this.orderCartDomainService.createOrderFromCartId(cartId);
+      const orderOrError = this.orderService.captureOder(cartId);
       if (orderOrError.isFailure) {
         return left(orderOrError);
       }

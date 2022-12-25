@@ -1,5 +1,6 @@
 import { Result } from '../../../../shared/core/Result.js';
 import { AggregateRoot } from '../../../../shared/domain/AggregateRoot.js';
+import { NanoID } from '../../../../shared/domain/NanoID.js';
 import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
 import { OrderStatusType } from '../../../../shared/infra/database/typeorm/models/Order.js';
 import { Money } from '../../../common/primitives/Money.js';
@@ -21,7 +22,7 @@ interface OrderProps {
 }
 
 export class Order extends AggregateRoot<OrderProps> {
-  private constructor(props: OrderProps, id?: UniqueEntityID) {
+  private constructor(props: OrderProps, id?: NanoID) {
     super(props, id);
   }
 
@@ -41,10 +42,7 @@ export class Order extends AggregateRoot<OrderProps> {
     return this.props.contactInfo;
   }
 
-  public static create(
-    props: OrderCreateParams,
-    id?: UniqueEntityID,
-  ): Result<Order> {
+  public static create(props: OrderCreateParams, id?: NanoID): Result<Order> {
     // TODO validations
 
     const contact = OrderContactInfo.create(props.contactInfo);
@@ -54,7 +52,7 @@ export class Order extends AggregateRoot<OrderProps> {
       status: props.status,
       contactInfo: contact.getValue(),
     };
-    const order = new Order(defaultProps, id);
+    const order = new Order(defaultProps, id ?? new NanoID());
 
     if (isNewOrder) {
       // domain event

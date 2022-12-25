@@ -50,7 +50,7 @@ export class EmailService implements IEmailService {
       html: this.emailTemplate({
         order_id: order.id.toString(),
         total: order.total().value,
-        orderItems: [...orderItems, ...orderItems],
+        orderItems,
       }),
     };
   };

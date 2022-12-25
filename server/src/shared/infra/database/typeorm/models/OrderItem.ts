@@ -4,7 +4,7 @@ import { Product } from './Product.js';
 
 @Entity('order_items')
 export class OrderItem {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'uuid' })
   id: string;
 
   @Column()

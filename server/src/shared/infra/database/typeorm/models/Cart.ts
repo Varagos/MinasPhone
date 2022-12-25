@@ -12,7 +12,7 @@ import { User } from './User.js';
 
 @Entity('carts')
 export class Cart {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'uuid' })
   id: string;
 
   @UpdateDateColumn()

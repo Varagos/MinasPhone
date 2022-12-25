@@ -1,14 +1,17 @@
 import {
   AfterInsert,
   Column,
+  CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
   OneToOne,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   Relation,
+  UpdateDateColumn,
 } from 'typeorm';
 import { DomainEvents } from '../../../../domain/events/DomainEvents.js';
+import { NanoID } from '../../../../domain/NanoID.js';
 import { UniqueEntityID } from '../../../../domain/UniqueEntityID.js';
 import { OrderContactInfo } from './OrderContactInfo.js';
 import { OrderItem } from './OrderItem.js';
@@ -26,7 +29,12 @@ export type OrderStatusType = 'Pending' | 'Completed' | 'Cancelled';
 
 @Entity('orders')
 export class Order {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
+  pk: number;
+
+  @Column({
+    unique: true,
+  })
   id: string;
 
   @Column()
@@ -38,6 +46,12 @@ export class Order {
     default: 'Pending',
   })
   status: OrderStatusType;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.order, {
     cascade: true, // When order is saved, linked orderItems will be saved as well
@@ -52,7 +66,7 @@ export class Order {
 
   @AfterInsert()
   dispatchAggregateEvents() {
-    const aggregateId = new UniqueEntityID(this.id);
+    const aggregateId = new NanoID(this.id);
     DomainEvents.dispatchEventsForAggregate(aggregateId);
   }
 }

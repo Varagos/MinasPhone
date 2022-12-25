@@ -18,10 +18,10 @@ const myDataProvider = (dataProvider: DataProvider): DataProvider => ({
 
   create: (resource, params) => {
     if (resource !== 'products') {
-      if (resource === 'categories') {
-        const categorySlug = `cat_${nanoid(10)}`;
-        params.data = { ...params.data, slug: categorySlug };
-      }
+      // if (resource === 'categories') {
+      //   const categorySlug = `cat_${nanoid(10)}`;
+      //   params.data = { ...params.data, slug: categorySlug };
+      // }
       // fallback to the default implementation
       return dataProvider.create(resource, params);
     }

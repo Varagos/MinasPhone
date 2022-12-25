@@ -3,10 +3,12 @@ import { Product } from './Product.js';
 
 @Entity('categories')
 export class Category {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'uuid' })
   id: string;
 
-  @Column()
+  @Column({
+    unique: true,
+  })
   slug: string;
 
   @Column()

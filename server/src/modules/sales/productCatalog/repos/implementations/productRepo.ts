@@ -10,6 +10,23 @@ import { Maybe, nothing } from '../../../../../shared/core/Maybe.js';
 
 export class ProductRepo implements IProductRepo {
   constructor(private repo: Repository<PersistenceProduct>) {}
+  async getAllByCategorySlug(slug: string): Promise<ProductDetails[]> {
+    const rawProducts = await this.repo.find({
+      where: {
+        category: {
+          slug,
+        },
+      },
+      relations: {
+        category: true,
+      },
+    });
+
+    const products = rawProducts.map((prod) =>
+      ProductDetailsMap.toDomain(prod),
+    );
+    return products;
+  }
 
   async getAll(): Promise<ProductDetails[]> {
     const rawProducts = await this.repo.find({

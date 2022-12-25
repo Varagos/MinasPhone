@@ -12,7 +12,7 @@ import { OrderItem } from './OrderItem.js';
 
 @Entity('products')
 export class Product {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'uuid' })
   id: string;
 
   @Column()

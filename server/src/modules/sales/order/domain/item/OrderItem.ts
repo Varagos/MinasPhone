@@ -7,7 +7,9 @@ import { ProductId } from './ProductId.js';
 
 interface CartItemProps {
   productId: ProductId;
+  productName: string;
   quantity: Quantity;
+  productMediaFileName: string;
   unitPrice: Money;
 }
 
@@ -26,6 +28,8 @@ export class OrderItem extends AggregateRoot<CartItemProps> {
     const defaultProps = {
       productId: props.productId,
       quantity: props.quantity,
+      productName: props.productName,
+      productMediaFileName: props.productMediaFileName,
       unitPrice: props.unitPrice,
     };
     const category = new OrderItem(defaultProps, id);
@@ -42,6 +46,14 @@ export class OrderItem extends AggregateRoot<CartItemProps> {
 
   get quantity(): Quantity {
     return this.props.quantity;
+  }
+
+  get productName(): string {
+    return this.props.productName;
+  }
+
+  get productImage(): string {
+    return this.props.productMediaFileName;
   }
 
   get unitPrice(): Money {

@@ -13,6 +13,8 @@ interface ProductProps {
   mediaFileName: string;
   sku: string;
   categoryId: string;
+
+  // mediaUrl?: string;
 }
 
 export class Product extends AggregateRoot<ProductProps> {
@@ -58,6 +60,10 @@ export class Product extends AggregateRoot<ProductProps> {
   get categoryId(): string {
     return this.props.categoryId;
   }
+
+  // get mediaUrl(): string | undefined {
+  //   return this.props.mediaUrl;
+  // }
 
   public static create(
     props: ProductProps,

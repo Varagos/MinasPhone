@@ -10,6 +10,7 @@ interface CartItemProps {
   title: string;
   unitPrice: Money;
   quantity: Quantity;
+  productMediaFileName: string;
 }
 
 export class CartItem extends AggregateRoot<CartItemProps> {
@@ -29,6 +30,7 @@ export class CartItem extends AggregateRoot<CartItemProps> {
       title: props.title,
       unitPrice: props.unitPrice,
       quantity: props.quantity,
+      productMediaFileName: props.productMediaFileName,
     };
     const category = new CartItem(defaultProps, id);
 
@@ -52,6 +54,10 @@ export class CartItem extends AggregateRoot<CartItemProps> {
 
   get quantity(): Quantity {
     return this.props.quantity;
+  }
+
+  get productMediaFileName(): string {
+    return this.props.productMediaFileName;
   }
 
   public total(): Money {

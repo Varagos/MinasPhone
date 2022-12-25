@@ -50,6 +50,7 @@ export class Cart extends AggregateRoot<CartProps> {
       title: product.name,
       unitPrice: Money.create({ value: product.price }).getValue(),
       quantity: Quantity.create({ value: quantity }).getValue(),
+      productMediaFileName: product.mediaFileName,
     });
     if (lineItemOrError.isFailure) {
       return Result.fail(lineItemOrError.getErrorValue() as any);

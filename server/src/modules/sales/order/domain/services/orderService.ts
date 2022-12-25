@@ -27,6 +27,8 @@ export class OrderService {
         productId,
         quantity,
         unitPrice,
+        productName: cartLineItem.title,
+        productMediaFileName: cartLineItem.productMediaFileName,
       });
       if (orderItemOrError.isFailure) {
         throw new Error('OrderItem creation failed');

@@ -42,9 +42,11 @@ export class OrderMap implements Mapper<Order> {
         {
           quantity: Quantity.create({ value: item.quantity }).getValue(),
           unitPrice: Money.create({ value: item.unitPrice }).getValue(),
+          productName: item.product.name,
           productId: ProductId.create(
             new UniqueEntityID(item.product.id),
           ).getValue(),
+          productMediaFileName: item.product.mediaFilename,
         },
         new UniqueEntityID(item.id),
       ).getValue(),

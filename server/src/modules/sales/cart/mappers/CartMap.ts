@@ -37,6 +37,7 @@ export class CartMap implements Mapper<Cart> {
           quantity: Quantity.create({ value: item.quantity }).getValue(),
           title: item.product.name,
           unitPrice: Money.create({ value: item.product.price }).getValue(),
+          productMediaFileName: item.product.mediaFilename,
         },
         new UniqueEntityID(item.id),
       ).getValue(),

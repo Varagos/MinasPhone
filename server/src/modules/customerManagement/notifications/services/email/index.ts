@@ -33,14 +33,25 @@ export class EmailService implements IEmailService {
     }
   }
 
-  private msg = (to: string, order: Order) => ({
-    to,
-    from: 'mark.girgis13@gmail.com', // Change to your verified sender
-    subject: 'Sending with SendGrid is Fun',
-    text: 'and easy to do anywhere, even with Node.js',
-    //   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-    html: this.emailTemplate({
-      order_id: order.id.toString(),
-    }),
-  });
+  private msg = (to: string, order: Order) => {
+    const orderItems = order.items.map((item) => ({
+      name: item.productName,
+      quantity: item.quantity.value,
+      unitPrice: item.unitPrice.value,
+      productImage: 'https://picsum.photos/200',
+    }));
+
+    return {
+      to,
+      from: 'mark.girgis13@gmail.com', // Change to your verified sender
+      subject: 'Παραγγελία - Minas Phone',
+      text: 'Λάβαμε την παραγγελία σας',
+      //   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+      html: this.emailTemplate({
+        order_id: order.id.toString(),
+        total: order.total().value,
+        orderItems: [...orderItems, ...orderItems],
+      }),
+    };
+  };
 }

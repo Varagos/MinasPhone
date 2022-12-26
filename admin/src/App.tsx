@@ -12,6 +12,7 @@ import dataProvider from './data/dataProvider';
 import { UserList } from './users/users';
 import { CategoryCreate, CategoryEdit, CategoryList } from './categories/categories';
 import myDataProvider from './data/addUploadCapabilities';
+import { OrderEdit, OrderList } from './orders/orders';
 
 // const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
 
@@ -21,6 +22,7 @@ const App = () => (
     <Resource name="users" list={UserList} icon={UserIcon} />
     <Resource name="categories" list={CategoryList} icon={CategoryIcon} edit={CategoryEdit} create={CategoryCreate} />
     <Resource name="products" list={ProductList} icon={InventoryIcon} edit={ProductEdit} create={ProductCreate} />
+    <Resource name="orders" list={OrderList} icon={ReceiptLongIcon} edit={OrderEdit} />
     {/* <Resource name="categories" list={ListGuesser} /> */}
   </Admin>
 );

@@ -15,6 +15,6 @@ v1Router.use('/users', userRouter);
 v1Router.use('/categories', categoryRouter);
 v1Router.use('/products', productRouter);
 v1Router.use('/carts', cartRouter);
-v1Router.use('/checkout', checkoutRouter);
+v1Router.use('/orders', checkoutRouter);
 
 export { v1Router };

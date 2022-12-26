@@ -30,6 +30,19 @@ export class GetOrderList
         if (!allowedFields.includes(sortByField))
           return left(new GetOrderListErrors.InvalidSortByField(sortByField));
       }
+
+      if (request.filter) {
+        const allowedFields = ['id', 'createdAt', 'updatedAt'];
+        const filterFields = Object.keys(request.filter);
+
+        const unacceptableFields = filterFields.filter(
+          (field) => !allowedFields.includes(field),
+        );
+        if (unacceptableFields.length > 0)
+          return left(
+            new GetOrderListErrors.InvalidFilterFields(...unacceptableFields),
+          );
+      }
       const products = await this.orderRepo.getAll(request);
       return right(Result.ok(products));
     } catch (err: any) {

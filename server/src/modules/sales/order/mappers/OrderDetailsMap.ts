@@ -12,6 +12,7 @@ export class OrderDetailsMap implements Mapper<OrderDetails> {
         unitPrice: item.product.price,
         quantity: item.quantity,
       })),
+      status: raw.status,
       firstName: raw.contactInfo.firstName,
       lastName: raw.contactInfo.lastName,
       email: raw.contactInfo.email,
@@ -27,6 +28,7 @@ export class OrderDetailsMap implements Mapper<OrderDetails> {
     return {
       id: orderDetails.id,
       items: orderDetails.items,
+      status: orderDetails.status,
       firstName: orderDetails.firstName,
       lastName: orderDetails.lastName,
       email: orderDetails.email,

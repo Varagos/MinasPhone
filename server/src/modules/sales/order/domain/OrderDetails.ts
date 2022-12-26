@@ -1,4 +1,5 @@
 import { Result } from '../../../../shared/core/Result.js';
+import { OrderStatusType } from '../../../../shared/infra/database/typeorm/models/Order.js';
 
 interface OrderDetailsProps {
   id: string;
@@ -7,6 +8,7 @@ interface OrderDetailsProps {
     unitPrice: number;
     quantity: number;
   }[];
+  status: OrderStatusType;
 
   firstName: string;
   lastName: string;
@@ -35,6 +37,10 @@ export class OrderDetails {
 
   public static create(props: OrderDetailsProps): Result<OrderDetails> {
     return Result.ok<OrderDetails>(new OrderDetails(props));
+  }
+
+  get status() {
+    return this.props.status;
   }
 
   get firstName() {

@@ -10,10 +10,10 @@ export namespace GetOrderListErrors {
     }
   }
 
-  export class InvalidFilterField extends Result<UseCaseError> {
-    constructor(field: string) {
+  export class InvalidFilterFields extends Result<UseCaseError> {
+    constructor(...fields: string[]) {
       super(false, {
-        message: `The field ${field} is not a valid field to filter by.`,
+        message: `The field ${fields} is not a valid field to filter by.`,
       } as UseCaseError);
     }
   }

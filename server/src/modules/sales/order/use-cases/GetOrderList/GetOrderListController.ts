@@ -28,6 +28,7 @@ export class GetOrderListController extends BaseController {
         const error = result.value;
         switch (error.constructor) {
           case GetOrderListErrors.InvalidSortByField:
+          case GetOrderListErrors.InvalidFilterFields:
             return this.clientError(res, error.getErrorValue().message);
           default:
             return this.fail(res, error.getErrorValue().message);

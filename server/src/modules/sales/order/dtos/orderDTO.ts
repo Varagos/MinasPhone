@@ -1,3 +1,5 @@
+import { OrderStatusType } from '../../../../shared/infra/database/typeorm/models/Order.js';
+
 export interface OrderDTO {
   id: string;
   items: {
@@ -5,6 +7,7 @@ export interface OrderDTO {
     unitPrice: number;
     quantity: number;
   }[];
+  status: OrderStatusType;
   firstName: string;
   lastName: string;
   email: string;

@@ -5,12 +5,12 @@ import { getOrderListController } from '../../../use-cases/GetOrderList/index.js
 
 const checkoutRouter = express.Router();
 
-checkoutRouter.post('/:cart_id', (req, res) => {
+checkoutRouter.post('/checkout/:cart_id', (req, res) => {
   return captureCheckoutController.execute(req, res);
 });
 
 checkoutRouter.get(
-  '/orders',
+  '/',
   query('sort')
     .optional()
     .custom((value) => {

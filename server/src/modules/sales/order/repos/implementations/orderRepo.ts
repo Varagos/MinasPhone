@@ -1,21 +1,41 @@
 import { IOrderRepo } from '../orderRepo.js';
 import { OrderMap } from '../../mappers/OrderMap.js';
 import { OrderDetailsMap } from '../../mappers/OrderDetailsMap.js';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 import { Order as PersistenceOrder } from '../../../../../shared/infra/database/typeorm/models/index.js';
 import { Maybe, nothing } from '../../../../../shared/core/Maybe.js';
 import { OrderDetails } from '../../domain/OrderDetails.js';
 import { Order } from '../../domain/Order.js';
+import { GetListRequestDTO } from '../../../../../shared/infra/http/models/GetListParams.js';
 
 export class OrderRepo implements IOrderRepo {
   constructor(private repo: Repository<PersistenceOrder>) {}
 
-  async getAll(): Promise<OrderDetails[]> {
-    const rawOrder = await this.repo.find({
+  async getAll(params: GetListRequestDTO): Promise<OrderDetails[]> {
+    const sortField = params.sort?.[0];
+    const options: FindManyOptions<PersistenceOrder> = {
       relations: {
-        orderItems: true,
+        orderItems: {
+          product: true,
+        },
+        contactInfo: true,
       },
-    });
+    };
+    if (sortField) {
+      options.order = { [sortField]: params.sort?.[1] };
+    }
+
+    if (params.range) {
+      const page = params.range[0] + 1;
+      const perPage = params.range[1] + 1;
+      options.skip = (page - 1) * perPage;
+      options.take = perPage;
+    }
+    // if (params.filter) {
+    //   options.where = {
+    //     ...params.filter,
+    //   };
+    const rawOrder = await this.repo.find(options);
     const orders = rawOrder.map((prod) => OrderDetailsMap.toDomain(prod));
     return orders;
   }

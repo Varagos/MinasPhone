@@ -16,10 +16,10 @@ export class Product {
   id: string;
 
   @Column()
-  active: boolean;
+  slug: string;
 
   @Column()
-  slug: string;
+  active: boolean;
 
   @Column()
   name: string;

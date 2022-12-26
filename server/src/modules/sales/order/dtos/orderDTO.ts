@@ -5,4 +5,8 @@ export interface OrderDTO {
     unitPrice: number;
     quantity: number;
   }[];
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
 }

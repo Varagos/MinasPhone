@@ -163,9 +163,15 @@ export interface IProductsService {
   fetchItemById(productId: string): Promise<Product>;
 }
 
-const productsService: IProductsService = new ProductsService();
+const services: { [env: string]: () => any } = {
+  mock: () => new MockProductsService(),
+  commercejs: () => new CommerceJSProductsService(commerce),
+  server: () => new ProductsService(),
+};
 
-// const productsService: IProductsService =
-//   process.env.REACT_APP_ENVIRONMENT === 'mock' ? new MockProductsService() : new CommerceJSProductsService(commerce);
+const productsService: IProductsService = new ProductsService();
+// const productsService: IProductsService = process.env.REACT_APP_ENVIRONMENT
+//   ? services[process.env.REACT_APP_ENVIRONMENT]()
+//   : new MockProductsService();
 
 export { productsService };

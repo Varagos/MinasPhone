@@ -12,6 +12,10 @@ export class OrderDetailsMap implements Mapper<OrderDetails> {
         unitPrice: item.product.price,
         quantity: item.quantity,
       })),
+      firstName: raw.contactInfo.firstName,
+      lastName: raw.contactInfo.lastName,
+      email: raw.contactInfo.email,
+      phone: raw.contactInfo.phone,
     });
 
     orderOrError.isFailure && console.log(orderOrError.getErrorValue());
@@ -23,6 +27,10 @@ export class OrderDetailsMap implements Mapper<OrderDetails> {
     return {
       id: orderDetails.id,
       items: orderDetails.items,
+      firstName: orderDetails.firstName,
+      lastName: orderDetails.lastName,
+      email: orderDetails.email,
+      phone: orderDetails.phone,
     };
   }
 }

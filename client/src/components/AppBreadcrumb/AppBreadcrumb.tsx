@@ -15,7 +15,9 @@ const breadcrumbNameMap: any = {
 };
 
 const isSpecialLastPathName = (lastPathName: string) => {
+  const isUuId = lastPathName.length === 36;
   return (
+    isUuId ||
     lastPathName.startsWith('prod_') ||
     lastPathName === 'auth' ||
     lastPathName === 'cart' ||
@@ -37,8 +39,10 @@ const AppBreadcrumb = () => {
   if (!pathNames.length) {
     return <> </>;
   }
+
   const getNameForIdPathNames = (lastPathName: string) => {
-    if (lastPathName.startsWith('prod_')) {
+    const isUuId = lastPathName.length === 36;
+    if (lastPathName.startsWith('prod_') || isUuId) {
       return currentProductName;
     }
     if (lastPathName === 'auth') {
@@ -84,11 +88,6 @@ const AppBreadcrumb = () => {
           {isSpecialLastPathName(lastPathName) ? getNameForIdPathNames(lastPathName) : capitalizeFirst(lastPathName)}
         </Typography>
         <Box my={2}>
-          {/* <Box mr={2} style={{ display: 'inline-block' }}> */}
-          {/* <Typography variant="body2" style={{ display: 'inline-block' }}>
-              You are here:
-            // </Typography> */}
-          {/* </Box> */}
           {lastPathName !== 'checkout' && (
             <Breadcrumbs aria-label="breadcrumb" color="white" style={{ display: 'inline-block' }}>
               <LinkRouter color="inherit" to="/">

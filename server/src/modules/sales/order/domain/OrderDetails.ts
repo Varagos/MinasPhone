@@ -7,6 +7,11 @@ interface OrderDetailsProps {
     unitPrice: number;
     quantity: number;
   }[];
+
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
 }
 
 /**
@@ -30,5 +35,21 @@ export class OrderDetails {
 
   public static create(props: OrderDetailsProps): Result<OrderDetails> {
     return Result.ok<OrderDetails>(new OrderDetails(props));
+  }
+
+  get firstName() {
+    return this.props.firstName;
+  }
+
+  get lastName() {
+    return this.props.lastName;
+  }
+
+  get email() {
+    return this.props.email;
+  }
+
+  get phone() {
+    return this.props.phone;
   }
 }

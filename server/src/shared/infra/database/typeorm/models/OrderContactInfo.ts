@@ -20,8 +20,10 @@ You can still get the current information from the customer record to populate t
 
 @Entity('order_contact_info')
 export class OrderContactInfo {
+  // @PrimaryGeneratedColumn()
+  // id: number;
   @PrimaryColumn()
-  id: string;
+  orderPk: number;
 
   @Column()
   firstName: string;

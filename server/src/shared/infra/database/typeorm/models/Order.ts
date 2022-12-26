@@ -58,7 +58,9 @@ export class Order {
   })
   orderItems: Relation<OrderItem[]>;
 
-  @OneToOne(() => OrderContactInfo, (contactInfo) => contactInfo.order)
+  @OneToOne(() => OrderContactInfo, (contactInfo) => contactInfo.order, {
+    cascade: true,
+  })
   contactInfo: Relation<OrderContactInfo>;
 
   @ManyToOne(() => User, (user) => user.orders)

@@ -17,6 +17,7 @@ import {
   SelectInput,
   ChipField,
 } from 'react-admin';
+import { RichTextInput } from 'ra-input-rich-text';
 
 const Language: 'GR' | 'EN' = 'GR';
 const labels = {
@@ -34,13 +35,18 @@ const labels = {
   },
 };
 
+const convertStringToNumber = (value: string) => {
+  const float = parseFloat(value);
+  return isNaN(float) ? null : float;
+};
+
 export const ProductList = () => (
   <List>
     <Datagrid rowClick="edit">
       <TextField source="slug" label={labels[Language].slug} />
       {/* <TextField source="id" /> */}
       <TextField source="name" label={labels[Language].name} />
-      <TextField source="description" label={labels[Language].description} />
+      {/* <TextField source="description" label={labels[Language].description} /> */}
       <ReferenceField label={labels[Language].category} source="categoryId" reference="categories">
         <ChipField source="name" />
       </ReferenceField>
@@ -60,12 +66,11 @@ export const ProductEdit = () => (
       <TextInput source="slug" disabled label={labels[Language].slug} />
       <BooleanInput source="active" label={labels[Language].available} />
       <TextInput source="name" label={labels[Language].name} />
-      <TextInput source="description" label={labels[Language].description} />
+      <RichTextInput source="description" label={labels[Language].description} />
       <NumberInput source="quantity" label={labels[Language].quantity} />
       <ReferenceInput source="categoryId" reference="categories">
         <SelectInput optionText="name" label={labels[Language].category} />
       </ReferenceInput>
-
       <ImageInput source="media" label={labels[Language].image} accept="image/*" multiple={false}>
         <ImageField
           source="src"
@@ -74,7 +79,8 @@ export const ProductEdit = () => (
         />
       </ImageInput>
       <TextInput source="sku" />
-      <NumberInput source="price" />
+      {/* <NumberInput source="price" /> */}
+      <TextInput label={labels[Language].price} source="price" type="number" parse={convertStringToNumber} />,
     </SimpleForm>
   </Edit>
 );
@@ -89,9 +95,7 @@ export const ProductCreate = () => (
       <ReferenceInput source="categoryId" reference="categories">
         <SelectInput optionText="name" label={labels[Language].category} />
       </ReferenceInput>
-
       <NumberInput source="quantity" />
-
       <ImageInput source="media" label={labels[Language].image} accept="image/*" multiple={false}>
         <ImageField
           source="src"
@@ -100,7 +104,8 @@ export const ProductCreate = () => (
         />
       </ImageInput>
       <TextInput source="sku" />
-      <NumberInput source="price" />
+      {/* <NumberInput source="price" /> */}
+      <TextInput label={labels[Language].price} source="price" type="number" parse={convertStringToNumber} />,
     </SimpleForm>
   </Create>
 );

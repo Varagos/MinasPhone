@@ -7,6 +7,7 @@ import { PaginationMeta } from '..';
 import { commerce } from '../../components/lib/commerce';
 import CommerceJSProductsService from './commercejs';
 import MockProductsService from './mock';
+import ProductsService from './server';
 
 export interface Product {
   id: string;
@@ -162,7 +163,9 @@ export interface IProductsService {
   fetchItemById(productId: string): Promise<Product>;
 }
 
-const productsService: IProductsService =
-  process.env.REACT_APP_ENVIRONMENT === 'mock' ? new MockProductsService() : new CommerceJSProductsService(commerce);
+const productsService: IProductsService = new ProductsService();
+
+// const productsService: IProductsService =
+//   process.env.REACT_APP_ENVIRONMENT === 'mock' ? new MockProductsService() : new CommerceJSProductsService(commerce);
 
 export { productsService };

@@ -1,7 +1,6 @@
 import queryString from 'query-string';
 
-const apiUrl = 'https://my.api.com/';
-
+const apiUrl = (process.env.REACT_APP_API_BASE_URL ?? 'http://localhost:8080') + '/api/v1';
 type GetListParams = {
   pagination: {
     page: number;
@@ -32,7 +31,7 @@ export class DataProvider {
 
     const response = await fetch(url);
     const data = await response.json();
-    return data;
+    return { data };
     // return httpClient(url).then(({ headers, json }) => ({
     //   data: json,
     //   total: parseInt(headers.get('content-range').split('/').pop(), 10),

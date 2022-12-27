@@ -1,4 +1,6 @@
 import express from 'express';
+import { validationResult } from 'express-validator';
+import { queryFilterMiddleware } from '../../../../../../shared/infra/http/utils/SchemaValidators.js';
 import { upload } from '../../../../../../shared/infra/storage/multer.js';
 import { createProductController } from '../../../use-cases/products/CreateProduct/index.js';
 import { deleteProductController } from '../../../use-cases/products/DeleteProduct/index.js';
@@ -13,7 +15,11 @@ productRouter.post('/', upload.single('image'), (req, res) => {
   return createProductController.execute(req, res);
 });
 
-productRouter.get('/', (req, res) => {
+productRouter.get('/', queryFilterMiddleware(), (req: any, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   if (req.query.filter) {
     return getProductsByFilter.execute(req, res);
   }

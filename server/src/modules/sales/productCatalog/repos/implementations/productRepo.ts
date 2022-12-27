@@ -4,9 +4,10 @@ import { Product } from '../../domain/Product.js';
 import { ProductMap } from '../../mappers/ProductMap.js';
 import { ProductDetailsMap } from '../../mappers/ProductDetailsMap.js';
 import { Result } from '../../../../../shared/core/Result.js';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 import { Product as PersistenceProduct } from '../../../../../shared/infra/database/typeorm/models/index.js';
 import { Maybe, nothing } from '../../../../../shared/core/Maybe.js';
+import { GetListRequestDTO } from '../../../../../shared/infra/http/models/GetListParams.js';
 
 export class ProductRepo implements IProductRepo {
   constructor(private repo: Repository<PersistenceProduct>) {}
@@ -28,12 +29,30 @@ export class ProductRepo implements IProductRepo {
     return products;
   }
 
-  async getAll(): Promise<ProductDetails[]> {
-    const rawProducts = await this.repo.find({
+  async getAll(params: GetListRequestDTO): Promise<ProductDetails[]> {
+    const sortField = params.sort?.[0];
+    const options: FindManyOptions<PersistenceProduct> = {
       relations: {
         category: true,
       },
-    });
+    };
+    if (sortField) {
+      options.order = { [sortField]: params.sort?.[1] };
+    }
+
+    if (params.range) {
+      const page = params.range[0] + 1;
+      const perPage = params.range[1] + 1;
+      options.skip = (page - 1) * perPage;
+      options.take = perPage;
+    }
+    if (params.filter) {
+      options.where = {
+        ...options.where,
+        ...params.filter,
+      };
+    }
+    const rawProducts = await this.repo.find(options);
     const products = rawProducts.map((prod) =>
       ProductDetailsMap.toDomain(prod),
     );

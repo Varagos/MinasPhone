@@ -10,6 +10,7 @@ import {
   ChipField,
   ImageField,
   useTranslate,
+  Pagination,
 } from 'react-admin';
 
 const Language: 'GR' | 'EN' = 'GR';
@@ -28,12 +29,14 @@ const labels = {
   },
 };
 
-export const ImageList = () => {
+type ProductListProps = {
+  actions: JSX.Element;
+};
+export const ImageList = ({ actions }: ProductListProps) => {
   const translate = useTranslate();
   return (
-    <List>
+    <List pagination={<Pagination rowsPerPageOptions={[12, 24, 48, 72]} />} actions={actions}>
       <Datagrid rowClick="edit">
-        {/* <TextField source="id" /> */}
         <ImageField
           sx={{ '& img': { maxWidth: 100, maxHeight: 100, objectFit: 'contain' } }}
           source="mediaFileName"
@@ -60,8 +63,6 @@ export const ImageList = () => {
         />
         <NumberField source="quantity" label={translate('resources.products.fields.quantity')} />
         <BooleanField source="active" label={labels[Language].available} />
-        {/* <TextField source="media" />
-      <TextField source="sku" /> */}
       </Datagrid>
     </List>
   );

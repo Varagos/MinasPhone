@@ -15,11 +15,11 @@ export class GetByCategorySlugController extends BaseController {
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
     try {
       const filter = req.query.filter;
-      if (typeof filter !== 'string' || !this.isJsonString(filter)) {
-        return this.clientError(res, 'Invalid filter');
-      }
-      const { category_slug: slug } = JSON.parse(filter);
-      const result = await this.useCase.execute({ slug });
+
+      const dto = {
+        filter,
+      } as any;
+      const result = await this.useCase.execute(dto);
       // console.log({ result });
 
       if (result.isLeft()) {

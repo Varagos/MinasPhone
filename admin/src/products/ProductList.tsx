@@ -1,68 +1,74 @@
-import React from 'react';
-
+import * as React from 'react';
+import { Box, Chip, useMediaQuery, Theme } from '@mui/material';
 import {
-  BooleanField,
-  Datagrid,
-  List,
-  NumberField,
-  TextField,
-  ReferenceField,
-  ChipField,
-  ImageField,
+  CreateButton,
+  ExportButton,
+  FilterButton,
+  FilterForm,
+  FilterContext,
+  InputProps,
+  ListBase,
+  NumberInput,
+  Pagination,
+  ReferenceInput,
+  SearchInput,
+  SelectInput,
+  Title,
+  TopToolbar,
   useTranslate,
+  useGetResourceLabel,
 } from 'react-admin';
 
-const Language: 'GR' | 'EN' = 'GR';
-const labels = {
-  GR: {
-    slug: 'Κωδικός',
-    name: 'Όνομα',
-    description: 'Περιγραφή',
-    price: 'Τιμή',
-    quantity: 'Ποσότητα',
-    image: 'Εικόνα',
-    available: 'Διαθέσιμο',
-    createdAt: 'Δημιουργήθηκε',
-    updatedAt: 'Ενημερώθηκε',
-    category: 'Κατηγορία',
-  },
-};
+import { ImageList } from './GridList';
+import Aside from './Aside';
 
-export const ProductList = () => {
-  const translate = useTranslate();
+const ProductList = () => {
+  const getResourceLabel = useGetResourceLabel();
+  const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
   return (
-    <List>
-      <Datagrid rowClick="edit">
-        {/* <TextField source="id" /> */}
-        <ImageField
-          sx={{ '& img': { maxWidth: 100, maxHeight: 100, objectFit: 'contain' } }}
-          source="mediaFileName"
-          label="Image"
-          sortable={false}
-        />
-
-        <TextField source="slug" label={labels[Language].slug} />
-        <TextField source="name" label={translate('resources.products.fields.name')} />
-        <ReferenceField
-          label={translate('resources.products.fields.category')}
-          source="categoryId"
-          reference="categories"
-        >
-          <ChipField source="name" />
-        </ReferenceField>
-        <NumberField
-          source="price"
-          label={translate('resources.products.fields.price')}
-          options={{
-            style: 'currency',
-            currency: 'EUR',
-          }}
-        />
-        <NumberField source="quantity" label={translate('resources.products.fields.quantity')} />
-        <BooleanField source="active" label={labels[Language].available} />
-        {/* <TextField source="media" />
-      <TextField source="sku" /> */}
-      </Datagrid>
-    </List>
+    <ListBase perPage={24} sort={{ field: 'reference', order: 'ASC' }}>
+      <Title defaultTitle={getResourceLabel('products', 2)} />
+      <FilterContext.Provider value={productFilters}>
+        {isSmall && (
+          <Box m={1}>
+            <FilterForm />
+          </Box>
+        )}
+      </FilterContext.Provider>
+      <Box display="flex">
+        <Aside />
+        <Box width={isSmall ? 'auto' : 'calc(100% - 16em)'}>
+          <ImageList actions={<ListActions isSmall={isSmall} />} />
+        </Box>
+      </Box>
+    </ListBase>
   );
 };
+
+const QuickFilter = ({ label }: InputProps) => {
+  const translate = useTranslate();
+  return <Chip sx={{ mb: 1 }} label={translate(label as string)} />;
+};
+
+export const productFilters = [
+  <SearchInput source="q" alwaysOn />,
+  <ReferenceInput source="category_id" reference="categories" sort={{ field: 'id', order: 'ASC' }}>
+    <SelectInput source="name" />
+  </ReferenceInput>,
+  <NumberInput source="width_gte" />,
+  <NumberInput source="width_lte" />,
+  <NumberInput source="height_gte" />,
+  <NumberInput source="height_lte" />,
+  <QuickFilter label="resources.products.fields.stock_lte" source="stock_lte" defaultValue={10} />,
+];
+
+const ListActions = ({ isSmall }: any) => (
+  <TopToolbar sx={{ minHeight: { sm: 56 } }}>
+    {isSmall && <FilterButton />}
+    {/* <SortButton fields={['reference', 'sales', 'stock']} /> */}
+    <CreateButton />
+    <ExportButton />
+  </TopToolbar>
+);
+
+export default ProductList;

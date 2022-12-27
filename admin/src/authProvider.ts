@@ -1,5 +1,5 @@
 import { AuthProvider } from 'react-admin';
-// in src/authProvider.js
+
 const authProvider: AuthProvider = {
   // called when the user attempts to log in
   login: ({ username }) => {

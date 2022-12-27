@@ -28,7 +28,7 @@ const Aside = () => {
         <FilterLiveSearch />
 
         <SavedQueriesList />
-
+        {/* Value, is that is merged in the filter */}
         <FilterList label="resources.products.filters.sales" icon={<AttachMoneyIcon />}>
           <FilterListItem
             label="resources.products.filters.best_sellers"

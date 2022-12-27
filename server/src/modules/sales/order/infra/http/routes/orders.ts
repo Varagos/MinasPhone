@@ -1,5 +1,10 @@
 import express from 'express';
-import { body, query, validationResult } from 'express-validator';
+import { validationResult } from 'express-validator';
+import {
+  queryFilterMiddleware,
+  queryRangeMiddleware,
+  querySortMiddleware,
+} from '../../../../../../shared/infra/http/utils/SchemaValidators.js';
 import { captureCheckoutController } from '../../../use-cases/CaptureCheckout/index.js';
 import { getOneOrderController } from '../../../use-cases/GetOneOrder/index.js';
 import { getOrderListController } from '../../../use-cases/GetOrderList/index.js';
@@ -17,45 +22,9 @@ checkoutRouter.get('/:order_id', (req, res) => {
 
 checkoutRouter.get(
   '/',
-  query('sort')
-    .optional()
-    .custom((value) => {
-      const sort = JSON.parse(value);
-      if (sort.length !== 2) {
-        return Promise.reject('Sort must be an array of 2 elements');
-      }
-      if (typeof sort[0] !== 'string') {
-        return Promise.reject('Sort field must be a string');
-      }
-      if (!['ASC', 'DESC'].includes(sort[1])) {
-        return Promise.reject('Sort order must be ASC or DESC');
-      }
-      return Promise.resolve();
-    })
-    .customSanitizer((value) => {
-      return JSON.parse(value);
-    }),
-  query('range')
-    .optional()
-    .custom((value) => {
-      const range = JSON.parse(value);
-      if (range.length !== 2) {
-        return Promise.reject('Range must be an array of 2 elements');
-      }
-      if (typeof range[0] !== 'number' || typeof range[1] !== 'number') {
-        return Promise.reject('Range must be an array of 2 numbers');
-      }
-      return Promise.resolve();
-    })
-    .customSanitizer((value) => {
-      return JSON.parse(value);
-    }),
-  query('filter')
-    .optional()
-    .isJSON()
-    .customSanitizer((value) => {
-      return JSON.parse(value);
-    }),
+  querySortMiddleware(),
+  queryRangeMiddleware(),
+  queryFilterMiddleware(),
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -66,7 +35,7 @@ checkoutRouter.get(
 );
 
 checkoutRouter.put('/:order_id', (req, res) => {
-return updateOrderStatusController.execute(req, res);
-})
+  return updateOrderStatusController.execute(req, res);
+});
 
 export { checkoutRouter };

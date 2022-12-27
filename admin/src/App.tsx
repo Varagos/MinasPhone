@@ -7,6 +7,7 @@ import UserIcon from '@mui/icons-material/Group';
 import Dashboard from './Dashboard';
 import authProvider from './authProvider';
 import { Layout } from './layout';
+import Login from './pages/Login';
 import englishMessages from './i18n/en';
 
 import dataProvider from './data/dataProvider';
@@ -25,24 +26,25 @@ const i18nProvider = polyglotI18nProvider((locale) => {
   return englishMessages;
 }, 'en');
 
-// const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
-
-const App = () => (
-  <Admin
-    dashboard={Dashboard}
-    authProvider={authProvider}
-    dataProvider={myDataProvider(dataProvider)}
-    layout={Layout}
-    i18nProvider={i18nProvider}
-  >
-    <CustomRoutes>
-      <Route path="/configuration" element={<Configuration />} />
-    </CustomRoutes>
-    <Resource name="users" {...users} icon={UserIcon} />
-    <Resource name="categories" {...categories} />
-    <Resource name="products" {...products} />
-    <Resource name="orders" {...orders} />
-  </Admin>
-);
+const App = () => {
+  return (
+    <Admin
+      dashboard={Dashboard}
+      authProvider={authProvider}
+      dataProvider={myDataProvider(dataProvider)}
+      layout={Layout}
+      loginPage={Login}
+      i18nProvider={i18nProvider}
+    >
+      <CustomRoutes>
+        <Route path="/configuration" element={<Configuration />} />
+      </CustomRoutes>
+      <Resource name="users" {...users} icon={UserIcon} />
+      <Resource name="categories" {...categories} />
+      <Resource name="products" {...products} />
+      <Resource name="orders" {...orders} />
+    </Admin>
+  );
+};
 
 export default App;

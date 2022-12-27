@@ -4,6 +4,7 @@ import {
   JoinColumn,
   OneToOne,
   PrimaryColumn,
+  PrimaryGeneratedColumn,
   Relation,
 } from 'typeorm';
 import { Order } from './Order.js';
@@ -20,10 +21,8 @@ You can still get the current information from the customer record to populate t
 
 @Entity('order_contact_info')
 export class OrderContactInfo {
-  // @PrimaryGeneratedColumn()
-  // id: number;
-  @PrimaryColumn()
-  orderPk: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   firstName: string;
@@ -38,6 +37,6 @@ export class OrderContactInfo {
   phone: string;
 
   @OneToOne(() => Order, (order) => order.contactInfo)
-  @JoinColumn()
+  @JoinColumn({ name: 'order_id' })
   order: Relation<Order>;
 }

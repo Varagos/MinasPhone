@@ -25,7 +25,8 @@ import { User } from './User.js';
 // Confirmed - Awaiting shipment
 // Shipped
 // Cancelled
-export type OrderStatusType = 'Pending' | 'Completed' | 'Cancelled';
+export const OrderStatusArr = ['Pending', 'Completed', 'Cancelled'] as const;
+export type OrderStatusType = typeof OrderStatusArr[number];
 
 @Entity('orders')
 export class Order {
@@ -37,7 +38,7 @@ export class Order {
   })
   id: string;
 
-  @Column()
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   total: number;
 
   @Column({

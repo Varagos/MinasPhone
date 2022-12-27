@@ -10,6 +10,7 @@ import { OrderItem } from '../domain/item/OrderItem.js';
 import { Quantity } from '../../../common/primitives/Quantity.js';
 import { ProductId } from '../domain/item/ProductId.js';
 import { Money } from '../../../common/primitives/Money.js';
+import { OrderStatus } from '../domain/OrderStatus.js';
 
 export class OrderMap implements Mapper<Order> {
   public static toPersistence(order: Order): DeepPartial<PersistenceOrder> {
@@ -17,6 +18,7 @@ export class OrderMap implements Mapper<Order> {
       order.items.map((item) => ({
         id: item.id.toString(),
         quantity: item.quantity.value,
+        name: item.productName,
         unitPrice: item.unitPrice.value,
         product: {
           id: item.productId.id.toString(),
@@ -26,7 +28,7 @@ export class OrderMap implements Mapper<Order> {
       id: order.id.toString(),
       total: order.total().value,
       orderItems: persistenceOrderItems,
-      status: order.status,
+      status: order.status?.value,
       contactInfo: {
         firstName: order.contactInfo.firstName,
         lastName: order.contactInfo.lastName,
@@ -42,7 +44,7 @@ export class OrderMap implements Mapper<Order> {
         {
           quantity: Quantity.create({ value: item.quantity }).getValue(),
           unitPrice: Money.create({ value: item.unitPrice }).getValue(),
-          productName: item.product.name,
+          productName: item.name,
           productId: ProductId.create(
             new UniqueEntityID(item.product.id),
           ).getValue(),
@@ -56,7 +58,7 @@ export class OrderMap implements Mapper<Order> {
       {
         items: orderItems,
         contactInfo: raw.contactInfo,
-        status: raw.status,
+        status: OrderStatus.create(raw.status).getValue(),
       },
       new UniqueEntityID(raw.id),
     );

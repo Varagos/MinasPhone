@@ -7,13 +7,16 @@ interface OrderDetailsProps {
     productId: string;
     unitPrice: number;
     quantity: number;
+    productName: string;
   }[];
   status: OrderStatusType;
+  total: number;
 
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
+  date: Date;
 }
 
 /**
@@ -43,6 +46,10 @@ export class OrderDetails {
     return this.props.status;
   }
 
+  get total() {
+    return this.props.total;
+  }
+
   get firstName() {
     return this.props.firstName;
   }
@@ -57,5 +64,9 @@ export class OrderDetails {
 
   get phone() {
     return this.props.phone;
+  }
+
+  get date() {
+    return this.props.date;
   }
 }

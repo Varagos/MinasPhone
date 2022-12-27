@@ -8,9 +8,12 @@ export class OrderItem {
   id: string;
 
   @Column()
-  quantity: number;
+  name: string;
 
   @Column()
+  quantity: number;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   unitPrice: number;
 
   @ManyToOne(() => Product, (product) => product.orderItems, {

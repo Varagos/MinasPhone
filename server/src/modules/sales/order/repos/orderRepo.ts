@@ -6,7 +6,8 @@ import { OrderDetails } from '../domain/OrderDetails.js';
 export interface IOrderRepo {
   getAll(params: GetListRequestDTO): Promise<OrderDetails[]>;
   getById(id: string): Promise<Maybe<Order>>;
-  getOneById(id: string): Promise<OrderDetails>;
+  getOneById(id: string): Promise<Maybe<OrderDetails>>;
   save(order: Order): Promise<void>;
+  updateStatus(order: Order): Promise<void>;
   delete(id: string): Promise<void>;
 }

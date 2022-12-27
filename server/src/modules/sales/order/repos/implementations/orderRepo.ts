@@ -31,12 +31,16 @@ export class OrderRepo implements IOrderRepo {
       options.skip = (page - 1) * perPage;
       options.take = perPage;
     }
-    // if (params.filter) {
-    //   options.where = {
-    //     ...params.filter,
-    //   };
+    if (params.filter) {
+      options.where = {
+        ...options.where,
+        ...params.filter,
+      };
+    }
     const rawOrder = await this.repo.find(options);
     const orders = rawOrder.map((prod) => OrderDetailsMap.toDomain(prod));
+    // console.log('Options: ', options);
+    // console.log('Orders: ', orders);
     return orders;
   }
 
@@ -46,7 +50,10 @@ export class OrderRepo implements IOrderRepo {
         id,
       },
       relations: {
-        orderItems: true,
+        orderItems: {
+          product: true,
+        },
+        contactInfo: true,
       },
     });
     if (!rawOrder) return nothing;
@@ -55,24 +62,34 @@ export class OrderRepo implements IOrderRepo {
     return order;
   }
 
-  async getOneById(id: string): Promise<OrderDetails> {
+  async getOneById(id: string): Promise<Maybe<OrderDetails>> {
     const rawOrder = await this.repo.findOne({
       where: {
         id,
       },
       relations: {
-        orderItems: true,
+        orderItems: {
+          product: true,
+        },
+        contactInfo: true,
       },
     });
-    // TODO: Handle error
-    if (!rawOrder) throw new Error('Order not found');
+    if (!rawOrder) return nothing;
     return OrderDetailsMap.toDomain(rawOrder);
   }
+
   async save(order: Order): Promise<void> {
     const rawOrder = OrderMap.toPersistence(order);
     const orderModel = this.repo.create(rawOrder);
 
     await this.repo.save(orderModel);
+  }
+
+  async updateStatus(order: Order): Promise<void> {
+    await this.repo.update(
+      { id: order.id.toString() },
+      { status: order.status?.value },
+    );
   }
 
   async delete(id: string): Promise<void> {

@@ -1,23 +1,23 @@
 import { Result } from '../../../../shared/core/Result.js';
 import { AggregateRoot } from '../../../../shared/domain/AggregateRoot.js';
 import { NanoID } from '../../../../shared/domain/NanoID.js';
-import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
 import { OrderStatusType } from '../../../../shared/infra/database/typeorm/models/Order.js';
 import { Money } from '../../../common/primitives/Money.js';
 import { OrderContactInfo, OrderContactInfoProps } from './ContactInfo.js';
 import { OrderCreatedEvent } from './events/OrderCreated.js';
 import { OrderItem } from './item/OrderItem.js';
+import { OrderStatus } from './OrderStatus.js';
 
 interface OrderCreateParams {
   items: OrderItem[];
-  status?: OrderStatusType;
+  status?: OrderStatus;
   contactInfo: OrderContactInfoProps;
 }
 
 // OrderStatusType
 interface OrderProps {
   items: OrderItem[];
-  status?: OrderStatusType;
+  status?: OrderStatus;
   contactInfo: OrderContactInfo;
 }
 
@@ -34,7 +34,7 @@ export class Order extends AggregateRoot<OrderProps> {
     return this.props.items;
   }
 
-  get status(): OrderStatusType | undefined {
+  get status(): OrderStatus | undefined {
     return this.props.status;
   }
 
@@ -66,5 +66,9 @@ export class Order extends AggregateRoot<OrderProps> {
       (total, item) => total.add(item.total),
       Money.ZERO,
     );
+  }
+
+  public updateStatus(status: OrderStatus): void {
+    this.props.status = status;
   }
 }

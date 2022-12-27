@@ -32,7 +32,7 @@ export class GetOrderList
       }
 
       if (request.filter) {
-        const allowedFields = ['id', 'createdAt', 'updatedAt'];
+        const allowedFields = ['id', 'createdAt', 'updatedAt', 'status'];
         const filterFields = Object.keys(request.filter);
 
         const unacceptableFields = filterFields.filter(

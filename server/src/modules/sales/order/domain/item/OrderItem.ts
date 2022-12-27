@@ -5,7 +5,7 @@ import { Money } from '../../../../common/primitives/Money.js';
 import { Quantity } from '../../../../common/primitives/Quantity.js';
 import { ProductId } from './ProductId.js';
 
-interface CartItemProps {
+interface OrderItemProps {
   productId: ProductId;
   productName: string;
   quantity: Quantity;
@@ -13,13 +13,13 @@ interface CartItemProps {
   unitPrice: Money;
 }
 
-export class OrderItem extends AggregateRoot<CartItemProps> {
-  private constructor(props: CartItemProps, id?: UniqueEntityID) {
+export class OrderItem extends AggregateRoot<OrderItemProps> {
+  private constructor(props: OrderItemProps, id?: UniqueEntityID) {
     super(props, id);
   }
 
   public static create(
-    props: CartItemProps,
+    props: OrderItemProps,
     id?: UniqueEntityID,
   ): Result<OrderItem> {
     // TODO validations

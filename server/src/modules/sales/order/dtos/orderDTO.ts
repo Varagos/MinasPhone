@@ -6,10 +6,13 @@ export interface OrderDTO {
     productId: string;
     unitPrice: number;
     quantity: number;
+    productName: string;
   }[];
   status: OrderStatusType;
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
+  total: number;
+  date: Date;
 }

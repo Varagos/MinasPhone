@@ -44,6 +44,9 @@ export class Cart extends AggregateRoot<CartProps> {
     return Result.ok<Cart>(cart);
   }
 
+  /**
+   *  TODO check that it doesn't create a new cart item if the product is already in the cart
+   */
   public add(product: Product, quantity: number): Result<void> {
     const lineItemOrError = CartItem.create({
       productId: ProductId.create(product.id).getValue(),

@@ -10,12 +10,12 @@ import { Layout } from './layout';
 import englishMessages from './i18n/en';
 
 import dataProvider from './data/dataProvider';
-import { UserList } from './users/users';
 import myDataProvider from './data/addUploadCapabilities';
 
 import orders from './orders';
 import products from './products';
 import categories from './categories';
+import users from './users';
 import Configuration from './configuration/Configuration';
 
 const i18nProvider = polyglotI18nProvider((locale) => {
@@ -38,7 +38,7 @@ const App = () => (
     <CustomRoutes>
       <Route path="/configuration" element={<Configuration />} />
     </CustomRoutes>
-    <Resource name="users" list={UserList} icon={UserIcon} />
+    <Resource name="users" {...users} icon={UserIcon} />
     <Resource name="categories" {...categories} />
     <Resource name="products" {...products} />
     <Resource name="orders" {...orders} />

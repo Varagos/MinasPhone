@@ -20,8 +20,9 @@ export class GetAllUsersController extends BaseController {
       //   const { username, password, email } = req.body;
       const users = await this.authProvider.getUsers();
       console.log({ users });
+      const userValues = users.map((user: any) => user.user);
 
-      return this.ok(res, { users });
+      return this.ok(res, userValues);
     } catch (err: any) {
       return this.fail(res, err.toString());
     }

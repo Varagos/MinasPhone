@@ -26,9 +26,11 @@ export class GetOrderList
       const sortByField = request.sort?.[0];
 
       if (sortByField) {
-        const allowedFields = ['id', 'createdAt', 'updatedAt'];
-        if (!allowedFields.includes(sortByField))
+        const allowedFields = ['id', 'date', 'total'];
+        if (!allowedFields.includes(sortByField)) {
           return left(new GetOrderListErrors.InvalidSortByField(sortByField));
+        }
+        if (sortByField === 'date') request.sort![0] = 'createdAt';
       }
 
       if (request.filter) {

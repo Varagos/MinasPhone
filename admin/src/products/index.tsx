@@ -1,6 +1,9 @@
-import { ProductCreate, ProductEdit, ProductList } from './products';
+import { ProductCreate } from './ProductCreate';
 
 import InventoryIcon from '@mui/icons-material/Inventory';
+// import { ProductList } from './ProductList';
+import { ProductEdit } from './ProductEdit';
+import ProductList from './newProductList';
 
 const resource = {
   list: ProductList,

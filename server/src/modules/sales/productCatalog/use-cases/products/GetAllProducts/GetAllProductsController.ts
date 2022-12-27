@@ -23,11 +23,10 @@ export class GetAllProductsController extends BaseController {
         return this.fail(res, (error as any).getErrorValue().message);
       } else {
         const productDetails = result.value.getValue();
-        return this.ok<GetAllProductsResponseDTO>(res, {
-          products: productDetails.map((prod: any) =>
-            ProductDetailsMap.toDTO(prod),
-          ),
-        });
+        return this.ok<GetAllProductsResponseDTO>(
+          res,
+          productDetails.map((prod: any) => ProductDetailsMap.toDTO(prod)),
+        );
       }
     } catch (err: any) {
       // console.log({ err });

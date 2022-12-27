@@ -28,9 +28,10 @@ export class GetByCategorySlugController extends BaseController {
         return this.fail(res, (error as any).getErrorValue().message);
       } else {
         const productDetails = result.value.getValue();
-        return this.ok<GetByCategorySlugResponseDTO>(res, {
-          products: productDetails.map((prod) => ProductDetailsMap.toDTO(prod)),
-        });
+        return this.ok<GetByCategorySlugResponseDTO>(
+          res,
+          productDetails.map((prod) => ProductDetailsMap.toDTO(prod)),
+        );
       }
     } catch (err: any) {
       // console.log({ err });

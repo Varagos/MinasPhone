@@ -35,9 +35,10 @@ export class GetOrderListController extends BaseController {
         }
       }
       const orderDetail = result.value.getValue();
-      return this.ok<GetOrderListResponseDTO>(res, {
-        orders: orderDetail.map((order) => OrderDetailsMap.toDTO(order)),
-      });
+      return this.ok<GetOrderListResponseDTO>(
+        res,
+        orderDetail.map((order) => OrderDetailsMap.toDTO(order)),
+      );
     } catch (err: any) {
       // console.log({ err });
       return this.fail(res, err);

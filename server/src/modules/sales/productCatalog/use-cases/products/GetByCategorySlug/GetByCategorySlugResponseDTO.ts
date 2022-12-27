@@ -1,5 +1,3 @@
 import { ProductDTO } from '../../../dtos/productDTO.js';
 
-export interface GetByCategorySlugResponseDTO {
-  products: ProductDTO[];
-}
+export type GetByCategorySlugResponseDTO = ProductDTO[];

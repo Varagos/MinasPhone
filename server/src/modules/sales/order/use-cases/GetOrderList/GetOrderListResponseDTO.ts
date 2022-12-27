@@ -1,5 +1,6 @@
 import { OrderDTO } from '../../dtos/orderDTO.js';
 
-export interface GetOrderListResponseDTO {
-  orders: OrderDTO[];
-}
+export type GetOrderListResponseDTO = OrderDTO[];
+// {
+//   orders: OrderDTO[];
+// }

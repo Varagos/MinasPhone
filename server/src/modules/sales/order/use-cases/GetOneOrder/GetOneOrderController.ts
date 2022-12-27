@@ -29,9 +29,10 @@ export class GetOneOrderController extends BaseController {
         }
       }
       const orderDetails = result.value.getValue();
-      return this.ok<GetOneOrderResponseDTO>(res, {
-        order: OrderDetailsMap.toDTO(orderDetails),
-      });
+      return this.ok<GetOneOrderResponseDTO>(
+        res,
+        OrderDetailsMap.toDTO(orderDetails),
+      );
     } catch (err: any) {
       // console.log({ err });
       return this.fail(res, err);

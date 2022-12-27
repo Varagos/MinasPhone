@@ -46,7 +46,7 @@ const customGreeMessages: TranslationMessages = {
         birthday: 'Γενέθλια',
         city: 'Πόλη',
         stateAbbr: 'Περιοχή',
-        commands: 'Παραγγελία',
+        orders: 'Παραγγελία',
         first_name: 'Όνομα',
         first_seen: 'Πρώτη επίσκεψη',
         groups: 'Ομάδες',
@@ -79,7 +79,7 @@ const customGreeMessages: TranslationMessages = {
         address: 'Adresse',
         stats: 'Statistiques',
         history: 'Historique',
-        password: 'Mot de passe',
+        password: 'M/ot de passe',
         change_password: 'Changer le mot de passe',
       },
       page: {
@@ -89,23 +89,23 @@ const customGreeMessages: TranslationMessages = {
         password_mismatch: 'La confirmation du mot de passe est différent du mot de passe.',
       },
     },
-    commands: {
-      name: 'Commande |||| Commandes',
-      amount: '1 commande |||| %{smart_count} commandes',
-      title: 'Commande n°%{reference}',
+    orders: {
+      name: 'Παραγγελία |||| Παραγγελίες',
+      amount: '1 παραγγελία |||| %{smart_count} παραγγελίες',
+      title: 'Παραγελλία n°%{reference}',
       fields: {
         basket: {
           delivery: 'Frais de livraison',
           reference: 'Référence',
           quantity: 'Quantité',
-          sum: 'Sous-total',
+          sum: 'Πλήθος',
           tax_rate: 'TVA',
           taxes: 'TVA',
-          total: 'Total',
-          unit_price: 'P.U.',
+          total: 'Σύνολο',
+          unit_price: 'Τ.Μ.',
         },
         address: 'Adresse',
-        customer_id: 'Client',
+        customer_id: 'Πελάτης',
         date_gte: 'Emises depuis',
         date_lte: 'Emises avant',
         nb_items: 'Nb articles',
@@ -119,7 +119,7 @@ const customGreeMessages: TranslationMessages = {
         customer: 'Client',
         shipping_address: 'Adresse de livraison',
         items: 'Articles',
-        total: 'Total',
+        total: 'Σύνολο',
       },
     },
     invoices: {
@@ -138,7 +138,7 @@ const customGreeMessages: TranslationMessages = {
       },
     },
     products: {
-      name: 'Poster |||| Posters',
+      name: 'Προϊόν |||| Προϊόντα',
       fields: {
         category_id: 'Catégorie',
         height_gte: 'Hauteur mini',
@@ -176,10 +176,10 @@ const customGreeMessages: TranslationMessages = {
       },
     },
     categories: {
-      name: 'Catégorie |||| Catégories',
+      name: 'Κατηρορία |||| Κατηγορίες',
       fields: {
-        name: 'Nom',
-        products: 'Produits',
+        name: 'Όνομα',
+        products: 'Προϊόντα',
       },
     },
     reviews: {

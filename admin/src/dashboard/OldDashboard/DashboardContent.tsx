@@ -7,12 +7,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { usePermissions } from 'react-admin';
+import Orders from './Orders';
+import Deposits from './Deposits';
+import Chart from './Chart';
 
 function Copyright(props: any) {
   return (
@@ -29,7 +29,7 @@ function Copyright(props: any) {
 
 const mdTheme = createTheme();
 
-function DashboardContent() {
+export function DashboardContent() {
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -87,15 +87,3 @@ function DashboardContent() {
     </ThemeProvider>
   );
 }
-
-export default () => {
-  return (
-    <>
-      <Card sx={{ mt: 2 }}>
-        <CardHeader title="Dashboard" />
-        <CardContent>Lorem ipsum sic dolor amet...</CardContent>
-      </Card>
-      <DashboardContent />
-    </>
-  );
-};

@@ -1,22 +1,6 @@
 version: '3'
 
 services:
-  api:
-    container_name: api
-    restart: always
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    env_file: .env.dev
-    environment:
-      - PORT=${PORT}
-    ports:
-      - 8080:8080
-    depends_on:
-      - supertokens
-    volumes:
-      - .:/usr/src/app
-
   db:
     image: 'postgres:latest'
     environment:

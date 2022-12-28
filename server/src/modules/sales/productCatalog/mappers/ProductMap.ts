@@ -33,7 +33,7 @@ export class ProductMap implements Mapper<Product> {
         mediaFileName: raw.mediaFilename,
         sku: raw.sku,
         price: raw.price,
-        categoryId: raw.category.id,
+        categoryId: raw.category?.id,
       },
       new UniqueEntityID(raw.id),
     );

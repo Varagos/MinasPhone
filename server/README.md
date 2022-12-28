@@ -36,12 +36,12 @@ This is a domain element but have to be implemented by the project needs - by AP
 
 A cron job removes shopping carts after 1 week of idleness. In the future a redis could be used instead for carts.
 
-### TODO - Roadmap
+# Dockerize
 
-- Retrieve cart use-Case, fetch with associated line items, save with associated items
+```bash
+# Dev build
+docker build -t varagos/mp-api-dev -f Dockerfile.dev .
 
-## REST Client
-
-https://stackoverflow.com/questions/3508338/what-is-the-boundary-in-multipart-form-data
-
-https://stackoverflow.com/questions/61473990/how-to-post-an-image-with-form-data-in-rest-client-for-vscode
+# Prod build
+docker build -t varagos/mp-api .
+```

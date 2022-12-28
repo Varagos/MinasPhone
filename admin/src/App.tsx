@@ -7,7 +7,8 @@ import UserIcon from '@mui/icons-material/Group';
 // Init SuperTokens
 import './pages/Login/superTokensInit';
 
-import Dashboard from './Dashboard';
+// import Dashboard from './Dashboard';
+import { Dashboard } from './dashboard';
 import authProvider from './authProvider';
 import { Layout } from './layout';
 import { Login } from './pages';

@@ -39,7 +39,9 @@ export class Product {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 
-  @ManyToOne(() => Category, (category) => category.products)
+  @ManyToOne(() => Category, (category) => category.products, {
+    onDelete: 'SET NULL',
+  })
   category: Relation<Category>;
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.product)

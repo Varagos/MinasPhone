@@ -15,7 +15,7 @@ export class ProductDetailsMap implements Mapper<ProductDetails> {
       mediaFileName: raw.mediaFilename,
       sku: raw.sku,
       price: raw.price,
-      categoryId: raw.category.id,
+      categoryId: raw.category?.id,
     });
 
     productOrError.isFailure && console.log(productOrError.getErrorValue());

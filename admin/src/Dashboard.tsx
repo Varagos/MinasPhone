@@ -1,4 +1,3 @@
-// in src/Dashboard.js
 import * as React from 'react';
 import { Card, CardContent, CardHeader, CardMedia } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -13,6 +12,7 @@ import Deposits from './Deposits';
 import Orders from './Orders';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
+import { usePermissions } from 'react-admin';
 
 function Copyright(props: any) {
   return (
@@ -88,12 +88,14 @@ function DashboardContent() {
   );
 }
 
-export default () => (
-  <>
-    <Card sx={{ mt: 2 }}>
-      <CardHeader title="Dashboard" />
-      <CardContent>Lorem ipsum sic dolor amet...</CardContent>
-    </Card>
-    <DashboardContent />
-  </>
-);
+export default () => {
+  return (
+    <>
+      <Card sx={{ mt: 2 }}>
+        <CardHeader title="Dashboard" />
+        <CardContent>Lorem ipsum sic dolor amet...</CardContent>
+      </Card>
+      <DashboardContent />
+    </>
+  );
+};

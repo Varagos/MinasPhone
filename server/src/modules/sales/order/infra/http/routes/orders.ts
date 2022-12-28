@@ -1,5 +1,6 @@
 import express from 'express';
 import { validationResult } from 'express-validator';
+import { middleware } from '../../../../../../shared/infra/http/index.js';
 import {
   queryFilterMiddleware,
   queryRangeMiddleware,
@@ -22,6 +23,7 @@ checkoutRouter.get('/:order_id', (req, res) => {
 
 checkoutRouter.get(
   '/',
+  middleware.ensureAdmin(),
   querySortMiddleware(),
   queryRangeMiddleware(),
   queryFilterMiddleware(),
@@ -34,7 +36,7 @@ checkoutRouter.get(
   },
 );
 
-checkoutRouter.put('/:order_id', (req, res) => {
+checkoutRouter.put('/:order_id', middleware.ensureAdmin(), (req, res) => {
   return updateOrderStatusController.execute(req, res);
 });
 

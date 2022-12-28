@@ -7,8 +7,8 @@ import { Result } from '../../../shared/core/Result.js';
 
 interface UserProps {
   email: UserEmail;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   joinedAt: number;
 }
 
@@ -21,10 +21,10 @@ export class User extends AggregateRoot<UserProps> {
     return this.props.email;
   }
 
-  get firstName(): string {
+  get firstName(): string | undefined {
     return this.props.firstName;
   }
-  get lastName(): string {
+  get lastName(): string | undefined {
     return this.props.lastName;
   }
 

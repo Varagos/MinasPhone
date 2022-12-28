@@ -1,5 +1,6 @@
 import express from 'express';
 import { validationResult } from 'express-validator';
+import { middleware } from '../../../../../../shared/infra/http/index.js';
 import { queryFilterMiddleware } from '../../../../../../shared/infra/http/utils/SchemaValidators.js';
 import { upload } from '../../../../../../shared/infra/storage/multer.js';
 import { createProductController } from '../../../use-cases/products/CreateProduct/index.js';
@@ -11,9 +12,14 @@ import { updateProductController } from '../../../use-cases/products/UpdateProdu
 
 const productRouter = express.Router();
 
-productRouter.post('/', upload.single('image'), (req, res) => {
-  return createProductController.execute(req, res);
-});
+productRouter.post(
+  '/',
+  middleware.ensureAdmin(),
+  upload.single('image'),
+  (req, res) => {
+    return createProductController.execute(req, res);
+  },
+);
 
 productRouter.get('/', queryFilterMiddleware(), (req: any, res) => {
   const errors = validationResult(req);
@@ -31,11 +37,14 @@ productRouter.get('/:id', (req, res) =>
   getOneProductController.execute(req, res),
 );
 
-productRouter.put('/:id', upload.single('image'), (req, res) =>
-  updateProductController.execute(req, res),
+productRouter.put(
+  '/:id',
+  middleware.ensureAdmin(),
+  upload.single('image'),
+  (req, res) => updateProductController.execute(req, res),
 );
 
-productRouter.delete('/:id', (req, res) =>
+productRouter.delete('/:id', middleware.ensureAdmin(), (req, res) =>
   deleteProductController.execute(req, res),
 );
 

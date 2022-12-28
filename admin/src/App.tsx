@@ -4,10 +4,13 @@ import { Admin, Resource, CustomRoutes } from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import UserIcon from '@mui/icons-material/Group';
 
+// Init SuperTokens
+import './pages/Login/superTokensInit';
+
 import Dashboard from './Dashboard';
 import authProvider from './authProvider';
 import { Layout } from './layout';
-import Login from './pages/Login';
+import { Login } from './pages';
 import englishMessages from './i18n/en';
 
 import dataProvider from './data/dataProvider';
@@ -29,12 +32,14 @@ const i18nProvider = polyglotI18nProvider((locale) => {
 const App = () => {
   return (
     <Admin
+      title="Minas Phone Admin"
       dashboard={Dashboard}
       authProvider={authProvider}
       dataProvider={myDataProvider(dataProvider)}
       layout={Layout}
       loginPage={Login}
       i18nProvider={i18nProvider}
+      requireAuth
     >
       <CustomRoutes>
         <Route path="/configuration" element={<Configuration />} />

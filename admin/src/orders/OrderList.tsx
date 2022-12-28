@@ -81,7 +81,13 @@ const TabbedDatagrid = () => {
 
   return (
     <Fragment>
-      <Tabs variant="fullWidth" centered value={filterValues.status} indicatorColor="primary" onChange={handleChange}>
+      <Tabs
+        variant="fullWidth"
+        centered
+        value={filterValues.status ?? 'Pending'}
+        indicatorColor="primary"
+        onChange={handleChange}
+      >
         {tabs.map((choice) => (
           <Tab
             key={choice.id}

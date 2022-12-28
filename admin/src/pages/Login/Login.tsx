@@ -3,23 +3,10 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 
-import SuperTokens from 'supertokens-web-js';
-import Session from 'supertokens-web-js/recipe/session';
-import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword';
-
 import { Avatar, Button, Card, CardActions, CircularProgress } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
 import { Form, required, TextInput, useTranslate, useLogin, useNotify } from 'react-admin';
 import Box from '@mui/material/Box';
-
-SuperTokens.init({
-  appInfo: {
-    apiDomain: 'http://localhost:8080',
-    apiBasePath: '/auth',
-    appName: '...',
-  },
-  recipeList: [Session.init(), ThirdPartyEmailPassword.init()],
-});
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -58,8 +45,8 @@ const Login = () => {
           minHeight: '100vh',
           alignItems: 'center',
           justifyContent: 'flex-start',
-          background: 'url(https://placeimg.com/1600/900/nature)',
-          //   background: 'url(https://source.unsplash.com/random/1600x900)',
+          // background: 'url(https://placeimg.com/1600/900/nature)',
+          background: 'url(https://source.unsplash.com/random/1600x900)',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
         }}

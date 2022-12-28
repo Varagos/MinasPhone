@@ -27,8 +27,8 @@ export class AfterUserCreated implements IHandle<UserCreated> {
       const dto: CreateUserDTO = {
         id: user.id.toString(),
         email: user.email.value,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        firstName: user.firstName!,
+        lastName: user.lastName!,
         timeJoined: user.joinedAt,
       };
       console.log('dto', dto);

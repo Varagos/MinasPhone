@@ -1,8 +1,14 @@
 import supertokens from 'supertokens-node';
 import Session from 'supertokens-node/recipe/session';
 import EmailPassword from 'supertokens-node/recipe/emailpassword';
-import { CreateUserDTO } from './useCases/createUser/CreateUserDTO.js';
-import { createUserUseCase } from './useCases/createUser/index.js';
+import UserRoles from 'supertokens-node/recipe/userroles';
+
+import Dashboard from 'supertokens-node/recipe/dashboard';
+import { CreateUserDTO } from '../../useCases/createUser/CreateUserDTO.js';
+import { createUserUseCase } from '../../useCases/createUser/index.js';
+import { Roles, UserRolesService } from './roles/index.js';
+
+const adminEmails = ['mark.girgis13@gmail.com'];
 
 export const supertokensInit = () => {
   // console.log(
@@ -53,6 +59,12 @@ export const supertokensInit = () => {
                 if (response.status === 'OK') {
                   const { id, email, timeJoined } = response.user;
 
+                  let role = Roles.Customer; // TODO: fetch role based on userId
+                  if (adminEmails.includes(email)) {
+                    role = Roles.Admin;
+                  }
+                  await UserRolesService.addRoleToUser(id, role);
+
                   // // These are the input form fields values that the user used while signing up
                   const formFields = input.formFields;
                   // post sign up logic
@@ -71,7 +83,8 @@ export const supertokensInit = () => {
           },
         },
       }), // initializes signin / sign up features
-      Session.init({
+      /**
+       * {
         override: {
           functions: (originalImplementation) => {
             return {
@@ -100,7 +113,17 @@ export const supertokensInit = () => {
             };
           },
         },
+      }
+       */
+      Session.init(),
+      Dashboard.init({
+        apiKey: process.env.SUPER_TOKENS_API_KEY!,
       }),
+      UserRoles.init(),
     ],
   });
+
+  // Create roles
+  UserRolesService.createRole(Roles.Customer, []);
+  UserRolesService.createRole(Roles.Admin, []);
 };

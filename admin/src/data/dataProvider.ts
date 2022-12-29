@@ -1,8 +1,8 @@
 import { DataProvider, fetchUtils } from 'react-admin';
 import { stringify } from 'query-string';
+import { apiBaseUrl } from '../config';
 
-// const apiUrl = 'https://my.api.com/';
-const apiUrl = 'http://localhost:8080/api/v1';
+const apiUrl = `${apiBaseUrl}/api/v1`;
 const httpClient = fetchUtils.fetchJson;
 
 const dataProvider: DataProvider = {

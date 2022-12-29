@@ -1,7 +1,8 @@
 import { DataProvider, fetchUtils } from 'react-admin';
 import { nanoid } from 'nanoid';
+import { apiBaseUrl } from '../config';
 
-const apiUrl = 'http://localhost:8080/api/v1';
+const apiUrl = `${apiBaseUrl}/api/v1`;
 const httpClient = fetchUtils.fetchJson;
 // https://stackoverflow.com/questions/4083702/posting-a-file-and-associated-data-to-a-restful-webservice-preferably-as-json
 // https://stackoverflow.com/questions/59267434/multi-part-form-data-in-react-admin

@@ -1,16 +1,13 @@
-import { IAuthProvider } from '../../services/authProvider.js';
+import { IAuthService } from '../../services/authProvider.js';
 import * as express from 'express';
 import { BaseController } from '../../../../shared/infra/http/models/BaseController.js';
-import { IAuthService } from '../../repositories/userRepo.js';
 
 export class GetAllUsersController extends BaseController {
-  private userRepo: IAuthService;
-  private authProvider: IAuthProvider;
+  private authService: IAuthService;
 
-  constructor(userRepo: IAuthService, authProvider: IAuthProvider) {
+  constructor(authProvider: IAuthService) {
     super();
-    this.userRepo = userRepo;
-    this.authProvider = authProvider;
+    this.authService = authProvider;
   }
   protected async executeImpl(
     req: express.Request,
@@ -18,10 +15,11 @@ export class GetAllUsersController extends BaseController {
   ): Promise<any> {
     try {
       //   const { username, password, email } = req.body;
-      const users = await this.authProvider.getUsers();
+      const users = await this.authService.getUsers();
       console.log({ users });
+      const userValues = users.map((user: any) => user.user);
 
-      return this.ok(res, { users });
+      return this.ok(res, userValues);
     } catch (err: any) {
       return this.fail(res, err.toString());
     }

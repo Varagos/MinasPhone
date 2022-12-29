@@ -83,7 +83,7 @@ Every product needs good product page-quality images. These images (usually 640 
             </Box>
 
             <Box ml={4}>
-              <Typography style={{ marginRight: 'auto', color: '#69b67c' }} variant="h6">
+              <Typography style={{ marginRight: 'auto', color: '#69b67c' }} variant="h6" noWrap>
                 {product.price.formatted_with_symbol}
               </Typography>
             </Box>

@@ -24,9 +24,10 @@ export class GetOneCategoryController extends BaseController {
         return this.fail(res, (error as any).getErrorValue().message);
       } else {
         const categoryDetails = result.value.getValue();
-        return this.ok<GetOneCategoryResponseDTO>(res, {
-          category: CategoryDetailsMap.toDTO(categoryDetails),
-        });
+        return this.ok<GetOneCategoryResponseDTO>(
+          res,
+          CategoryDetailsMap.toDTO(categoryDetails),
+        );
       }
     } catch (err: any) {
       // console.log({ err });

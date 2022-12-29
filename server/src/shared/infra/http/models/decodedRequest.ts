@@ -1,7 +1,9 @@
 import express from 'express';
 // import { JWTClaims } from "../../../domain/jwt";
 type JWTClaims = {
-  user: 'hi';
+  user: {
+    id: string;
+  };
 };
 
 export interface DecodedExpressRequest extends express.Request {

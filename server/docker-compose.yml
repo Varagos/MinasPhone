@@ -1,12 +1,32 @@
 version: '3'
 
 services:
+  api:
+    container_name: api
+    # restart: on-failure:5
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env.production
+    ports:
+      - 8080:8080
+    networks:
+      - app_network
+    depends_on:
+      - supertokens
+    volumes:
+      - type: bind
+        source: ./database.sqlite
+        target: /usr/app/database.sqlite
+      - ./images:/usr/app/images
+
   db:
     image: 'postgres:latest'
     environment:
-      POSTGRES_USER: supertokens_user
-      POSTGRES_PASSWORD: somePassword
-      POSTGRES_DB: supertokens
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - 5432:5432
     networks:
@@ -25,7 +45,7 @@ services:
     ports:
       - 3567:3567
     environment:
-      POSTGRESQL_CONNECTION_URI: 'postgresql://supertokens_user:somePassword@db:5432/supertokens'
+      POSTGRESQL_CONNECTION_URI: 'postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}'
     networks:
       - app_network
     restart: unless-stopped

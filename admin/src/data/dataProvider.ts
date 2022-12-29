@@ -16,16 +16,20 @@ const dataProvider: DataProvider = {
     };
     const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
-    return httpClient(url).then(({ headers, json }) => ({
-      data: json[resource].map((item: any) => (resource === 'users' ? item.user : item)),
-      total: json[resource].length,
-    }));
+    return httpClient(url).then(({ headers, json }) => {
+      const rangeHeader = headers.get('content-range');
+      return {
+        data: json,
+        total: rangeHeader ? parseInt(rangeHeader.split('/')?.pop()!, 10) : json.length,
+      };
+    });
   },
 
   getOne: (resource, params) =>
     httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => {
       console.log('getOne', json);
-      const getOneData = Object.values(json)[0] as any;
+      // const getOneData = Object.values(json)[0] as any;
+      const getOneData = json;
       if (resource === 'products') {
         const { mediaFileName } = getOneData;
         getOneData.media = {
@@ -43,7 +47,7 @@ const dataProvider: DataProvider = {
       filter: JSON.stringify({ id: params.ids }),
     };
     const url = `${apiUrl}/${resource}?${stringify(query)}`;
-    return httpClient(url).then(({ json }) => ({ data: json[resource] }));
+    return httpClient(url).then(({ json }) => ({ data: json }));
   },
 
   getManyReference: (resource, params) => {
@@ -69,7 +73,7 @@ const dataProvider: DataProvider = {
     httpClient(`${apiUrl}/${resource}/${params.id}`, {
       method: 'PUT',
       body: JSON.stringify(params.data),
-    }).then(({ json }) => ({ data: json })),
+    }).then(({ json }) => ({ data: { id: params.id, ...(params.data as any) } })),
 
   updateMany: (resource, params) => {
     const query = {

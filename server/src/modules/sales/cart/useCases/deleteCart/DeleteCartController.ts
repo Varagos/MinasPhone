@@ -2,6 +2,7 @@ import { DeleteCart } from './DeleteCart.js';
 import { BaseController } from '../../../../../shared/infra/http/models/BaseController.js';
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
 import { DeleteCartDTO } from './DeleteCartDTO.js';
+import { AppError } from '../../../../../shared/core/AppError.js';
 
 export class DeleteCartController extends BaseController {
   constructor(private useCase: DeleteCart) {
@@ -10,11 +11,8 @@ export class DeleteCartController extends BaseController {
 
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
     const { id: cartId } = req.params;
-    const { productId, quantity } = req.body;
     const dto: DeleteCartDTO = {
       cartId,
-      productId,
-      quantity,
     };
 
     try {
@@ -22,11 +20,14 @@ export class DeleteCartController extends BaseController {
 
       if (result.isLeft()) {
         const error = result.value;
-
-        return this.fail(res, (error.getErrorValue() as any).message);
-      } else {
-        return this.ok(res);
+        switch (error.constructor) {
+          case AppError.NotFoundError:
+            return this.notFound(res, error.getErrorValue().message);
+          default:
+            return this.fail(res, (error.getErrorValue() as any).message);
+        }
       }
+      return this.ok(res);
     } catch (err: any) {
       // console.log({ err });
       return this.fail(res, err);

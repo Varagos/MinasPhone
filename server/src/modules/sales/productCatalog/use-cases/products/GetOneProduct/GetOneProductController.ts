@@ -24,9 +24,10 @@ export class GetOneProductController extends BaseController {
         return this.fail(res, (error as any).getErrorValue().message);
       } else {
         const productDetails = result.value.getValue();
-        return this.ok<GetOneProductResponseDTO>(res, {
-          product: ProductDetailsMap.toDTO(productDetails),
-        });
+        return this.ok<GetOneProductResponseDTO>(
+          res,
+          ProductDetailsMap.toDTO(productDetails),
+        );
       }
     } catch (err: any) {
       // console.log({ err });

@@ -1,7 +1,6 @@
 import { DataProvider, fetchUtils } from 'react-admin';
 import { nanoid } from 'nanoid';
 
-// const apiUrl = 'https://my.api.com/';
 const apiUrl = 'http://localhost:8080/api/v1';
 const httpClient = fetchUtils.fetchJson;
 // https://stackoverflow.com/questions/4083702/posting-a-file-and-associated-data-to-a-restful-webservice-preferably-as-json
@@ -18,14 +17,9 @@ const myDataProvider = (dataProvider: DataProvider): DataProvider => ({
 
   create: (resource, params) => {
     if (resource !== 'products') {
-      if (resource === 'categories') {
-        const categorySlug = `cat_${nanoid(10)}`;
-        params.data = { ...params.data, slug: categorySlug };
-      }
       // fallback to the default implementation
       return dataProvider.create(resource, params);
     }
-    // console.log('product Props', params.data);
 
     const slug = `prod_${nanoid(10)}`; //=> "V1StGXR8_Z5jdHi6B-myT"
     const formData = buildFormData(params.data, { slug });
@@ -48,7 +42,7 @@ const myDataProvider = (dataProvider: DataProvider): DataProvider => ({
     return httpClient(`${apiUrl}/${resource}/${params.id}`, {
       method: 'PUT',
       body: formData,
-    }).then(({ json }) => ({ data: json }));
+    }).then(({ json }) => ({ data: { ...(params.data as any), id: params.id } }));
   },
 });
 

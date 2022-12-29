@@ -1,10 +1,12 @@
 import { BaseController } from '../../../../../shared/infra/http/models/BaseController.js';
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
 import { CartDetailsMap } from './../../mappers/CartDetailsMap.js';
+import { RetrieveCartErrors } from './Errors.js';
 import { RetrieveCart } from './RetrieveCart.js';
 import { RetrieveCartResponseDTO } from './retrieveCartResponseDTO.js';
 
-const CART_LIFE_TIME = 1000 * 60 * 60 * 24 * 30; // 30 days
+const CART_LIFE_TIME = 1000 * 60 * 60 * 24 * 7; // 7 days
+const CART_ID_COOKIE_NAME = 'cart_id';
 export class RetrieveCartController extends BaseController {
   private useCase: RetrieveCart;
 
@@ -15,19 +17,28 @@ export class RetrieveCartController extends BaseController {
 
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
     try {
-      const cartId = req.cookies.cart_id;
+      const cartId = req.cookies[CART_ID_COOKIE_NAME];
       const dto = { id: cartId };
+      console.table(dto);
       const result = await this.useCase.execute(dto);
       // console.log({ result });
 
       if (result.isLeft()) {
         const error = result.value;
+        res.clearCookie(CART_ID_COOKIE_NAME);
 
-        return this.fail(res, (error as any).getErrorValue().message);
+        switch (error.constructor) {
+          case RetrieveCartErrors.CartIdNotProvided:
+            return this.notFound(res, error.getErrorValue().message);
+          case RetrieveCartErrors.CartDoesNotExist:
+            return this.notFound(res, error.getErrorValue().message);
+          default:
+            return this.fail(res, (error as any).getErrorValue().message);
+        }
       }
 
       const cartDetails = result.value;
-      res.cookie('cart_id', cartDetails.id, {
+      res.cookie(CART_ID_COOKIE_NAME, cartDetails.id, {
         maxAge: CART_LIFE_TIME,
         // httpOnly: true,
       });

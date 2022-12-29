@@ -30,6 +30,7 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.27.2",
     "env-cmd": "^10.1.0",
+    "query-string": "^8.1.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-hook-form": "^7.36.1",

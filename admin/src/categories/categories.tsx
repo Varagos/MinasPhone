@@ -40,7 +40,7 @@ export const CategoryEdit = () => (
 export const CategoryCreate = () => (
   <Create>
     <SimpleForm>
-      {/* <TextInput source="slug" /> */}
+      <TextInput source="slug" />
       <TextInput source="name" />
       <ReferenceInput source="parent_id" reference="categories" allowEmpty>
         <SelectInput optionText="name" />

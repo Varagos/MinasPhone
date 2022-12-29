@@ -3,6 +3,7 @@ import { EmptyCart } from './EmptyCart.js';
 import { BaseController } from '../../../../../shared/infra/http/models/BaseController.js';
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
 import { EmptyCartDTO } from './EmptyCartDTO.js';
+import { AppError } from '../../../../../shared/core/AppError.js';
 
 export class EmptyCartController extends BaseController {
   constructor(private useCase: EmptyCart) {
@@ -20,11 +21,14 @@ export class EmptyCartController extends BaseController {
 
       if (result.isLeft()) {
         const error = result.value;
-
-        return this.fail(res, (error.getErrorValue() as any).message);
-      } else {
-        return this.ok(res);
+        switch (error.constructor) {
+          case AppError.NotFoundError:
+            return this.notFound(res, error.getErrorValue().message);
+          default:
+            return this.fail(res, (error.getErrorValue() as any).message);
+        }
       }
+      return this.ok(res);
     } catch (err: any) {
       // console.log({ err });
       return this.fail(res, err);

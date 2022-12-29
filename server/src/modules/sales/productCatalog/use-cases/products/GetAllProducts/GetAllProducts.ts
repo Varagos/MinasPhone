@@ -15,7 +15,7 @@ export class GetAllProducts implements UseCase<void, Promise<Response>> {
   }
   async execute(): Promise<Response> {
     try {
-      const products = await this.productRepo.getAll();
+      const products = await this.productRepo.getAll({});
       return right(Result.ok(products));
     } catch (err: any) {
       return left(new AppError.UnexpectedError(err));

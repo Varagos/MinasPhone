@@ -1,5 +1,5 @@
 export interface UpdateCartDTO {
   cartId: string;
-  cartItemId: string;
+  lineItemId: string;
   quantity: number;
 }

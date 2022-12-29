@@ -1,0 +1,10 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "minas phone dev",
+      "database": "${workspaceFolder:MinasPhone}/server/database.sqlite"
+    }
+  ]
+}

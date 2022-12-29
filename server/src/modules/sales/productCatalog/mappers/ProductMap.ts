@@ -1,10 +1,13 @@
 import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
 import { Mapper } from '../../../../shared/infra/Mapper.js';
-import { Category } from '../domain/Category.js';
 import { Product } from '../domain/Product.js';
+import { Product as PersistenceProduct } from '../../../../shared/infra/database/typeorm/models/index.js';
+import { DeepPartial } from 'typeorm';
 
 export class ProductMap implements Mapper<Product> {
-  public static toPersistence(product: Product): any {
+  public static toPersistence(
+    product: Product,
+  ): DeepPartial<PersistenceProduct> {
     return {
       id: product.id.toString(),
       name: product.name,
@@ -12,14 +15,14 @@ export class ProductMap implements Mapper<Product> {
       slug: product.slug,
       description: product.description,
       quantity: product.quantity,
-      media_filename: product.mediaFileName,
+      mediaFilename: product.mediaFileName,
       sku: product.sku,
       price: product.price,
-      category_id: product.categoryId,
+      category: { id: product.categoryId },
     };
   }
 
-  public static toDomain(raw: any): Product {
+  public static toDomain(raw: PersistenceProduct): Product {
     const productOrError = Product.create(
       {
         name: raw.name,
@@ -27,10 +30,10 @@ export class ProductMap implements Mapper<Product> {
         slug: raw.slug,
         description: raw.description,
         quantity: raw.quantity,
-        mediaFileName: raw.media_filename,
+        mediaFileName: raw.mediaFilename,
         sku: raw.sku,
         price: raw.price,
-        categoryId: raw.category_id,
+        categoryId: raw.category?.id,
       },
       new UniqueEntityID(raw.id),
     );

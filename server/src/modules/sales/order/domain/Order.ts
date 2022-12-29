@@ -1,15 +1,28 @@
 import { Result } from '../../../../shared/core/Result.js';
 import { AggregateRoot } from '../../../../shared/domain/AggregateRoot.js';
-import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID.js';
+import { NanoID } from '../../../../shared/domain/NanoID.js';
+import { OrderStatusType } from '../../../../shared/infra/database/typeorm/models/Order.js';
 import { Money } from '../../../common/primitives/Money.js';
+import { OrderContactInfo, OrderContactInfoProps } from './ContactInfo.js';
+import { OrderCreatedEvent } from './events/OrderCreated.js';
 import { OrderItem } from './item/OrderItem.js';
+import { OrderStatus } from './OrderStatus.js';
 
-interface CartProps {
+interface OrderCreateParams {
   items: OrderItem[];
+  status?: OrderStatus;
+  contactInfo: OrderContactInfoProps;
 }
 
-export class Order extends AggregateRoot<CartProps> {
-  private constructor(props: CartProps, id?: UniqueEntityID) {
+// OrderStatusType
+interface OrderProps {
+  items: OrderItem[];
+  status?: OrderStatus;
+  contactInfo: OrderContactInfo;
+}
+
+export class Order extends AggregateRoot<OrderProps> {
+  private constructor(props: OrderProps, id?: NanoID) {
     super(props, id);
   }
 
@@ -21,17 +34,29 @@ export class Order extends AggregateRoot<CartProps> {
     return this.props.items;
   }
 
-  public static create(props: CartProps, id?: UniqueEntityID): Result<Order> {
+  get status(): OrderStatus | undefined {
+    return this.props.status;
+  }
+
+  get contactInfo(): OrderContactInfo {
+    return this.props.contactInfo;
+  }
+
+  public static create(props: OrderCreateParams, id?: NanoID): Result<Order> {
     // TODO validations
 
+    const contact = OrderContactInfo.create(props.contactInfo);
     const isNewOrder = !!id === false;
-    const defaultProps = {
+    const defaultProps: OrderProps = {
       items: props.items,
+      status: props.status,
+      contactInfo: contact.getValue(),
     };
-    const order = new Order(defaultProps, id);
+    const order = new Order(defaultProps, id ?? new NanoID());
 
     if (isNewOrder) {
       // domain event
+      order.addDomainEvent(new OrderCreatedEvent(order));
     }
     return Result.ok<Order>(order);
   }
@@ -41,5 +66,9 @@ export class Order extends AggregateRoot<CartProps> {
       (total, item) => total.add(item.total),
       Money.ZERO,
     );
+  }
+
+  public updateStatus(status: OrderStatus): void {
+    this.props.status = status;
   }
 }

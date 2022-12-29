@@ -1,9 +1,10 @@
 import { ProductDetails } from '../domain/ProductDetails.js';
 import { Mapper } from '../../../../shared/infra/Mapper.js';
 import { ProductDTO } from '../dtos/productDTO.js';
+import { Product as PersistenceProduct } from '../../../../shared/infra/database/typeorm/models/index.js';
 
 export class ProductDetailsMap implements Mapper<ProductDetails> {
-  public static toDomain(raw: any): ProductDetails {
+  public static toDomain(raw: PersistenceProduct): ProductDetails {
     const productOrError = ProductDetails.create({
       id: raw.id,
       active: raw.active,
@@ -11,10 +12,10 @@ export class ProductDetailsMap implements Mapper<ProductDetails> {
       name: raw.name,
       description: raw.description,
       quantity: raw.quantity,
-      mediaFileName: raw.media_filename,
+      mediaFileName: raw.mediaFilename,
       sku: raw.sku,
       price: raw.price,
-      categoryId: raw.category_id,
+      categoryId: raw.category?.id,
     });
 
     productOrError.isFailure && console.log(productOrError.getErrorValue());
@@ -30,7 +31,9 @@ export class ProductDetailsMap implements Mapper<ProductDetails> {
       name: productDetails.name,
       description: productDetails.description,
       quantity: productDetails.quantity,
-      mediaFileName: 'http://localhost:8080/' + productDetails.mediaFileName,
+      mediaFileName:
+        (process.env.SERVER_URL ?? 'http://localhost:8080/') +
+        productDetails.mediaFileName,
       sku: productDetails.sku,
       price: productDetails.price,
       categoryId: productDetails.categoryId,

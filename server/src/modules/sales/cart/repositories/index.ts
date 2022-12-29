@@ -1,8 +1,8 @@
-import models from '../../../../shared/infra/database/sequelize/models/index.js';
+import { REPOSITORIES } from '../../../../shared/infra/database/typeorm/index.js';
 import { ICartRepo } from './cartRepo.js';
-import { CartRepo } from './implementations/sequelizeCartRepo.js';
+import { CartRepo } from './implementations/cartRepo.js';
 
 // // console.log({ models });
-const cartRepo: ICartRepo = new CartRepo(models);
+const cartRepo: ICartRepo = new CartRepo(REPOSITORIES.CART);
 
 export { cartRepo };

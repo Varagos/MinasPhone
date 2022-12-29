@@ -24,11 +24,10 @@ export class GetAllCategoriesController extends BaseController {
         return this.fail(res, (error as any).getErrorValue().message);
       } else {
         const categoryDetails = result.value.getValue();
-        return this.ok<GetAllCategoriesResponseDTO>(res, {
-          categories: categoryDetails.map((cat: any) =>
-            CategoryDetailsMap.toDTO(cat),
-          ),
-        });
+        return this.ok<GetAllCategoriesResponseDTO>(
+          res,
+          categoryDetails.map((cat: any) => CategoryDetailsMap.toDTO(cat)),
+        );
       }
     } catch (err: any) {
       // console.log({ err });

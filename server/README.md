@@ -23,7 +23,7 @@ This is designed by choice since
   customers. (since fair deal of shopping carts remain unfulfilled)
 
 Two customers can still add the same item even though there's only one item left. This will cause an error for one of the two customers if they both decide to proceed
-with the order. Reserving the items when put into cart, would be appropriate in large inventory ecommerce site, and small shopping cart ttl.
+with the order. Reserving the items when put into cart, would be appropriate in a large inventory ecommerce site, and small shopping cart ttl.
 
 ## Dynamic Prices
 
@@ -36,10 +36,28 @@ This is a domain element but have to be implemented by the project needs - by AP
 
 A cron job removes shopping carts after 1 week of idleness. In the future a redis could be used instead for carts.
 
-### TODO - Roadmap
+# Dockerize
 
-- Retrieve cart use-Case, fetch with associated line items, save with associated items
+```bash
+docker-compose rm -f
+docker-compose pull
+docker-compose up --build -d
 
-## Pm2
+# Dev build
+docker build -t varagos/mp-api-dev -f Dockerfile.dev .
 
-https://stackoverflow.com/questions/56566580/run-typescript-application-with-pm2
+# Prod build
+docker build -t varagos/mp-api .
+
+# Run a docker
+We have multi-stage build in our Dockerfile
+
+docker exec -it container-id sh # or /bin/sh
+
+docker run --name=mp-api-dev -p 8080:8080 \
+--mount type=bind,source=$(pwd)/database.sqlite,target=/usr/app/database.sqlite \
+--net supertokens_app_network \
+varagos/mp-api-dev
+
+
+```

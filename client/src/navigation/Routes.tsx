@@ -8,9 +8,6 @@ import ProductPage from '../components/Category/Products/Product/Product';
 import { fetchCart } from '../redux/slices/cart';
 import { getSuperTokensRoutesForReactRouterDom } from 'supertokens-auth-react';
 import * as reactRouterDom from 'react-router-dom';
-import { EmailPasswordAuth } from 'supertokens-auth-react/recipe/emailpassword';
-import AdminDashboard from '../components/admin-dashboard/AdminDashboard';
-import { RequireAdminAuth } from '../components/auth-guards/RequireAdmin';
 import UserTerms from '../components/Information/UserTerms';
 import { Container } from '@mui/material';
 import Categories from '../components/Categories/Categories';
@@ -40,17 +37,6 @@ const AppRoutes = () => {
             <Route path="/products/:product_id" element={<ProductPage />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
             <Route path="/checkout" element={<Checkout />}></Route>
-            <Route
-              path="/dashboard"
-              element={
-                <RequireAdminAuth>
-                  <EmailPasswordAuth>
-                    {/*Components that require to be protected by authentication*/}
-                    <AdminDashboard />
-                  </EmailPasswordAuth>
-                </RequireAdminAuth>
-              }
-            />
             <Route path="/information/user-terms" element={<UserTerms />} />
             {/* <Route exact path="/register">
             <Register />

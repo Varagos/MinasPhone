@@ -14,6 +14,7 @@ export class CreateProductController extends BaseController {
 
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
     try {
+      console.log('Creating a new product');
       if (!req.file) {
         return this.clientError(res, 'Please upload a valid image');
       }
@@ -45,9 +46,9 @@ export class CreateProductController extends BaseController {
 
       if (result.isLeft()) {
         const error = result.value;
+        console.log('Result', error.getErrorValue());
         switch (error.constructor) {
           case Result: {
-            // console.log('Result', error.getErrorValue());
             return this.clientError(res, error.getErrorValue() as any);
           }
           default: {

@@ -1,8 +1,8 @@
 import UserRoles, {
   UserRoleClaim,
   PermissionClaim,
-} from 'supertokens-node/recipe/userroles';
-import { SessionContainer } from 'supertokens-node/recipe/session';
+} from 'supertokens-node/recipe/userroles/index.js';
+import { SessionContainer } from 'supertokens-node/recipe/session/index.js';
 
 export enum Roles {
   Customer = 'customer',

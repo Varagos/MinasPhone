@@ -3,11 +3,11 @@ version: '3'
 services:
   api:
     container_name: api
-    restart: always
+    # restart: on-failure:5
     build:
       context: .
       dockerfile: Dockerfile
-    # env_file: .docker.dev.env
+    env_file: .docker.dev.env
     ports:
       - 8080:8080
     networks:
@@ -17,8 +17,8 @@ services:
     volumes:
       - type: bind
         source: ./database.sqlite
-        target: /usr/src/app/database.sqlite
-      - ./images:/usr/src/app/images
+        target: /usr/app/database.sqlite
+      - ./images:/usr/app/images
 
   db:
     image: 'postgres:latest'

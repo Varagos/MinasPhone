@@ -1,9 +1,9 @@
 import supertokens from 'supertokens-node';
-import Session from 'supertokens-node/recipe/session';
-import EmailPassword from 'supertokens-node/recipe/emailpassword';
-import UserRoles from 'supertokens-node/recipe/userroles';
+import Session from 'supertokens-node/recipe/session/index.js';
+import EmailPassword from 'supertokens-node/recipe/emailpassword/index.js';
+import UserRoles from 'supertokens-node/recipe/userroles/index.js';
 
-import Dashboard from 'supertokens-node/recipe/dashboard';
+import Dashboard from 'supertokens-node/recipe/dashboard/index.js';
 import { CreateUserDTO } from '../../useCases/createUser/CreateUserDTO.js';
 import { createUserUseCase } from '../../useCases/createUser/index.js';
 import { Roles, UserRolesService } from './roles/index.js';

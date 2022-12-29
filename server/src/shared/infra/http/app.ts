@@ -5,7 +5,10 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import listEndpoints from 'express-list-endpoints';
 import supertokens from 'supertokens-node';
-import { middleware, errorHandler } from 'supertokens-node/framework/express';
+import {
+  middleware,
+  errorHandler,
+} from 'supertokens-node/framework/express/index.js';
 import { supertokensInit } from '../../../modules/auth/services/super-tokens/super-tokens-init.js';
 import { v1Router } from './api/v1.js';
 

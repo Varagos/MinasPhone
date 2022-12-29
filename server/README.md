@@ -39,6 +39,10 @@ A cron job removes shopping carts after 1 week of idleness. In the future a redi
 # Dockerize
 
 ```bash
+docker-compose rm -f
+docker-compose pull
+docker-compose up --build -d
+
 # Dev build
 docker build -t varagos/mp-api-dev -f Dockerfile.dev .
 
@@ -46,16 +50,12 @@ docker build -t varagos/mp-api-dev -f Dockerfile.dev .
 docker build -t varagos/mp-api .
 
 # Run a docker
+We have multi-stage build in our Dockerfile
 
-
-docker run -p 8080:8080 -d -v database.sqlite:/usr/src/app varagos/mp-api-dev
-
-docker run --name=mp-api -p 8080:8080 -v database.sqlite:/usr/src/app varagos/mp-api-dev
-
-docker exec -it mp-server-api /bin/sh
+docker exec -it container-id sh # or /bin/sh
 
 docker run --name=mp-api-dev -p 8080:8080 \
---mount type=bind,source=$(pwd)/database.sqlite,target=/usr/src/app/database.sqlite \
+--mount type=bind,source=$(pwd)/database.sqlite,target=/usr/app/database.sqlite \
 --net supertokens_app_network \
 varagos/mp-api-dev
 

@@ -1,8 +1,8 @@
 import { deleteUser, getUsersNewestFirst } from 'supertokens-node';
 import { IAuthService } from '../authProvider.js';
-import { verifySession } from 'supertokens-node/recipe/session/framework/express';
-import UserRoles from 'supertokens-node/recipe/userroles';
-import EmailPassword from 'supertokens-node/recipe/emailpassword';
+import { verifySession } from 'supertokens-node/recipe/session/framework/express/index.js';
+import UserRoles from 'supertokens-node/recipe/userroles/index.js';
+import EmailPassword from 'supertokens-node/recipe/emailpassword/index.js';
 
 import { Roles, UserRolesService } from './roles/index.js';
 import { User } from '../../domain/user.js';

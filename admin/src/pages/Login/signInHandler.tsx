@@ -57,7 +57,7 @@ async function signInClicked(email: string, password: string): Promise<SignInRes
     if (err.isSuperTokensGeneralError === true) {
       // this may be a custom error message sent from the API by you.
       message = err.message;
-      window.alert(err.message);
+      // window.alert(err.message);
     } else {
       message = 'Oops! Something went wrong.';
       window.alert('Oops! Something went wrong.');

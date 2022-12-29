@@ -6,16 +6,19 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: Dockerfile.dev
-    env_file: .env.dev
-    environment:
-      - PORT=${PORT}
+      dockerfile: Dockerfile
+    # env_file: .docker.dev.env
     ports:
       - 8080:8080
+    networks:
+      - app_network
     depends_on:
       - supertokens
     volumes:
-      - .:/usr/src/app
+      - type: bind
+        source: ./database.sqlite
+        target: /usr/src/app/database.sqlite
+      - ./images:/usr/src/app/images
 
   db:
     image: 'postgres:latest'

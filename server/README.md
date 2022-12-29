@@ -44,4 +44,20 @@ docker build -t varagos/mp-api-dev -f Dockerfile.dev .
 
 # Prod build
 docker build -t varagos/mp-api .
+
+# Run a docker
+
+
+docker run -p 8080:8080 -d -v database.sqlite:/usr/src/app varagos/mp-api-dev
+
+docker run --name=mp-api -p 8080:8080 -v database.sqlite:/usr/src/app varagos/mp-api-dev
+
+docker exec -it mp-server-api /bin/sh
+
+docker run --name=mp-api-dev -p 8080:8080 \
+--mount type=bind,source=$(pwd)/database.sqlite,target=/usr/src/app/database.sqlite \
+--net supertokens_app_network \
+varagos/mp-api-dev
+
+
 ```

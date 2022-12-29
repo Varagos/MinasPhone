@@ -11,6 +11,7 @@
     "lint-and-fix": "eslint . --ext .ts --fix",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "start:dev": "./node_modules/.bin/env-cmd -f .env.dev nodemon",
+    "start:dev:docker": "./node_modules/.bin/env-cmd -f .docker.dev.env nodemon",
     "test": "jest --watchAll",
     "test:swc": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
   },

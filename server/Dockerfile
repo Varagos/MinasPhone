@@ -1,17 +1,11 @@
-FROM node:12.17.0-alpine
-WORKDIR /usr
-COPY package.json ./
-COPY tsconfig.json ./
+# Installs Node.js image
+FROM node:16.13.1-alpine3.14
+WORKDIR /usr/src/app
+COPY ["package.json", "tsconfig.json", "nodemon.json", ".docker.dev.env", "./"]
+COPY templates ./templates
+# Copies everything in the src directory to WORKDIR/src
 COPY src ./src
 RUN ls -a
 RUN npm install
-RUN npm run build
-## this is stage two , where the app actually runs
-FROM node:12.17.0-alpine
-WORKDIR /usr
-COPY package.json ./
-RUN npm install --only=production
-COPY --from=0 /usr/dist .
-RUN npm install pm2 -g
-EXPOSE 80
-CMD ["pm2-runtime","index.js"]
+# EXPOSE 8080
+CMD ["npm","run","start:dev:docker"]

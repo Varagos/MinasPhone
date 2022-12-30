@@ -84,10 +84,14 @@ services:
     command: certonly --webroot --webroot-path=/var/www/html --email ${EMAIL} --agree-tos --no-eff-email --staging -d ${API_DOMAIN} -d ${API_WWW_DOMAIN}
 
 volumes:
-  cerbot-etc:
-  cerbot-var:
+  certbot-etc:
+  certbot-var:
   web-root:
     driver: local
+    driver_opts:
+      type: none
+      device: /home/${SERVER_USER}/${PROJECT_DIR}/views/
+      o: bind
 
 networks:
   app_network:

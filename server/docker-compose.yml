@@ -81,7 +81,7 @@ services:
       - web-root:/var/www/html
     depends_on:
       - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email ${EMAIL} --agree-tos --no-eff-email --staging -d ${API_DOMAIN} -d ${API_WWW_DOMAIN}
+    command: certonly --webroot --webroot-path=/var/www/html --email ${EMAIL} --agree-tos --no-eff-email --force-renewal -d ${API_DOMAIN} -d ${API_WWW_DOMAIN}
 
 volumes:
   certbot-etc:

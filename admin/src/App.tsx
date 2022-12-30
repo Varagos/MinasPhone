@@ -22,6 +22,7 @@ import products from './products';
 import categories from './categories';
 import users from './users';
 import Configuration from './configuration/Configuration';
+import { apiBaseUrl } from './config';
 
 const i18nProvider = polyglotI18nProvider((locale) => {
   if (locale === 'gr') {
@@ -29,6 +30,7 @@ const i18nProvider = polyglotI18nProvider((locale) => {
   }
   return englishMessages;
 }, 'en');
+console.log(apiBaseUrl)
 
 const App = () => {
   return (

@@ -9,8 +9,8 @@ services:
       context: .
       dockerfile: Dockerfile
     env_file: .env.production
-    ports:
-      - 80:8080
+    # ports:
+    #   - 80:8080
     networks:
       - app_network
     depends_on:

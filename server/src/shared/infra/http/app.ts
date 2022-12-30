@@ -14,11 +14,25 @@ import { v1Router } from './api/v1.js';
 
 supertokensInit();
 
+const allowedOrigins = [
+	'http://localhost:3000', 
+	'http://localhost:3001',
+	'http://admin.minasphone.gr',
+	'http://www.admin.minasphone.gr',
+	'http://minasphone.gr',
+	'http://www.minasphone.gr',
+	'https://admin.minasphone.gr',
+	'https://www.admin.minasphone.gr',
+	'https://minasphone.gr',
+	'https://www.minasphone.gr'
+]
+
+
 const app = express();
 const port = process.env.PORT || 8080;
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    origin: allowedOrigins,
     allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
     credentials: true,
   }),

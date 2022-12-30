@@ -4,13 +4,13 @@ services:
   api:
     container_name: api
     # restart: on-failure:5
-    restart: always
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile
     env_file: .env.production
     ports:
-      - 8080:8080
+      - 80:8080
     networks:
       - app_network
     depends_on:
@@ -55,6 +55,39 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  webserver:
+    image: nginx:mainline-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      - web-root:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - api
+    networks:
+      - app_network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - webserver
+    command: certonly --webroot --webroot-path=/var/www/html --email ${EMAIL} --agree-tos --no-eff-email --staging -d ${API_DOMAIN} -d ${API_WWW_DOMAIN}
+
+volumes:
+  cerbot-etc:
+  cerbot-var:
+  web-root:
+    driver: local
 
 networks:
   app_network:

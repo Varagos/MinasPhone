@@ -6,4 +6,6 @@ export interface CartDTO {
     unitPrice: number;
     quantity: number;
   }[];
+  createdAt?: number;
+  updatedAt?: number;
 }

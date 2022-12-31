@@ -1,4 +1,4 @@
-import { IProductsService, Product } from '../index';
+import { IProductsService, Price, Product } from '../index';
 import { DataProvider } from '../../httpClient';
 // {
 //     "id": "9329960b-e9eb-4e81-a8b2-cbb4d40bf477",
@@ -12,13 +12,34 @@ import { DataProvider } from '../../httpClient';
 //     "price": 550,
 //     "categoryId": "f5404118-a0c6-44ca-bbc2-57e45be477f1"
 // }
+type ProductDTO = {
+  id: string;
+  active: boolean;
+  slug: string;
+  name: string;
+  description: string;
+  quantity: number;
+  mediaFileName: string;
+  sku: string;
+  price: number;
+  categoryId: string;
+};
 const formatPrice = (price: number) => {
   return Number(price).toFixed(2);
 };
+
+export const rawPriceToFormatted = (price: number): Price => {
+  const formattedPrice = formatPrice(price);
+  return {
+    raw: price,
+    formatted: formattedPrice,
+    formatted_with_symbol: `${formattedPrice} €`,
+    formatted_with_code: `${formattedPrice} EUR`,
+  };
+};
 class ProductMapper {
-  static mapToProduct = (product: any): Partial<Product> => {
-    const formattedPrice = formatPrice(product.price);
-    return {
+  static mapToProduct = (product: ProductDTO): Product => {
+    const result: Partial<Product> = {
       id: product.id,
       active: product.active,
       // slug: product.slug,
@@ -33,12 +54,7 @@ class ProductMapper {
         source: product.mediaFileName,
       },
       sku: product.sku,
-      price: {
-        raw: product.price,
-        formatted: formattedPrice,
-        formatted_with_symbol: `${formattedPrice} €`,
-        formatted_with_code: `${formattedPrice} EUR`,
-      },
+      price: rawPriceToFormatted(product.price),
       categories: [
         {
           id: product.categoryId,
@@ -47,11 +63,12 @@ class ProductMapper {
         },
       ],
     };
+    return result as Product;
   };
 }
 
 class ProductsService implements IProductsService {
-  private dataProvider = new DataProvider('products');
+  private dataProvider = new DataProvider<ProductDTO>('products');
 
   async fetchAll(): Promise<Product[]> {
     const result = await this.dataProvider.getList({
@@ -66,8 +83,8 @@ class ProductsService implements IProductsService {
       filter: {},
     });
     const { data } = result;
-    console.log('fetchAll', data, typeof data.products[0].price);
-    return data.products.map((x: any) => ProductMapper.mapToProduct(x));
+    console.log('fetchAll', data, typeof data[0].price);
+    return data.map((x: any) => ProductMapper.mapToProduct(x));
   }
 
   async fetchAllByCategorySlug(categorySlug: string): Promise<Product[]> {
@@ -86,7 +103,7 @@ class ProductsService implements IProductsService {
     });
     const { data } = result;
     console.log('fetchAllByCategorySlug', data);
-    return data.products.map((x: any) => ProductMapper.mapToProduct(x));
+    return data.map((x: any) => ProductMapper.mapToProduct(x));
   }
 
   async fetchItemById(productId: string): Promise<Product> {

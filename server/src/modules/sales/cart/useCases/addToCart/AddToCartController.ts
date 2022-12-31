@@ -3,6 +3,7 @@ import { BaseController } from '../../../../../shared/infra/http/models/BaseCont
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
 import { AddToCartDTO } from './AddToCartDTO.js';
 import { AddToCartErrors as AddToCartErrors } from './Errors.js';
+import { CART_ID_COOKIE_NAME } from '../../config.js';
 
 export class AddToCartController extends BaseController {
   private useCase: AddToCart;
@@ -13,7 +14,8 @@ export class AddToCartController extends BaseController {
   }
 
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
-    const { id: cartId } = req.params;
+    const cartId = req.cookies[CART_ID_COOKIE_NAME];
+    if (!cartId) return this.clientError(res, 'Cart not found');
     const { productId, quantity } = req.body;
     const dto: AddToCartDTO = {
       cartId,

@@ -4,6 +4,7 @@ import { BaseController } from '../../../../../shared/infra/http/models/BaseCont
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
 import { EmptyCartDTO } from './EmptyCartDTO.js';
 import { AppError } from '../../../../../shared/core/AppError.js';
+import { CART_ID_COOKIE_NAME } from '../../config.js';
 
 export class EmptyCartController extends BaseController {
   constructor(private useCase: EmptyCart) {
@@ -11,7 +12,8 @@ export class EmptyCartController extends BaseController {
   }
 
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
-    const { id: cartId } = req.params;
+    const cartId = req.cookies[CART_ID_COOKIE_NAME];
+    if (!cartId) return this.clientError(res, 'Cart not found');
     const dto: EmptyCartDTO = {
       cartId,
     };

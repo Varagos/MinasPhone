@@ -20,13 +20,13 @@ class CommerceJSCartService implements ICartService {
     return structuredClone(cart);
   }
 
-  async removeFromCart(productId: string): Promise<Cart> {
-    const { cart } = await this.client.cart.remove(productId);
+  async removeFromCart(lineItemId: string): Promise<Cart> {
+    const { cart } = await this.client.cart.remove(lineItemId);
     return structuredClone(cart);
   }
 
-  async updateItem(productId: string, quantity: number): Promise<Cart> {
-    const { cart } = await this.client.cart.update(productId, { quantity });
+  async updateItem(lineItemId: string, quantity: number): Promise<Cart> {
+    const { cart } = await this.client.cart.update(lineItemId, { quantity });
     return structuredClone(cart);
   }
 

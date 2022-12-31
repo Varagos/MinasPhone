@@ -3,6 +3,7 @@ import { BaseController } from '../../../../../shared/infra/http/models/BaseCont
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
 import { DeleteCartDTO } from './DeleteCartDTO.js';
 import { AppError } from '../../../../../shared/core/AppError.js';
+import { CART_ID_COOKIE_NAME } from '../../config.js';
 
 export class DeleteCartController extends BaseController {
   constructor(private useCase: DeleteCart) {
@@ -10,7 +11,9 @@ export class DeleteCartController extends BaseController {
   }
 
   async executeImpl(req: DecodedExpressRequest, res: any): Promise<any> {
-    const { id: cartId } = req.params;
+    const cartId = req.cookies[CART_ID_COOKIE_NAME];
+    if (!cartId) return this.clientError(res, 'Cart not found');
+
     const dto: DeleteCartDTO = {
       cartId,
     };
@@ -27,6 +30,9 @@ export class DeleteCartController extends BaseController {
             return this.fail(res, (error.getErrorValue() as any).message);
         }
       }
+      res.clearCookie(CART_ID_COOKIE_NAME, {
+        httpOnly: true,
+      });
       return this.ok(res);
     } catch (err: any) {
       // console.log({ err });

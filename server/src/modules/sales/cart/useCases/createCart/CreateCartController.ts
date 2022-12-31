@@ -1,9 +1,9 @@
-import { AppError } from '../../../../../shared/core/AppError.js';
 import { BaseController } from '../../../../../shared/infra/http/models/BaseController.js';
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
+
+import { CART_ID_COOKIE_NAME, CART_LIFE_TIME } from '../../config.js';
 import { CreateCart } from './CreateCart.js';
 
-const CART_LIFE_TIME = 1000 * 60 * 60 * 24 * 30; // 30 days
 export class RetrieveCartController extends BaseController {
   private useCase: CreateCart;
 
@@ -20,17 +20,15 @@ export class RetrieveCartController extends BaseController {
         const error = result.value;
 
         switch (error.constructor) {
-          case AppError.NotFoundError:
-            return this.notFound(res, error.getErrorValue().message);
           default:
-            return this.fail(res, (error as any).getErrorValue().message);
+            return this.fail(res, error.getErrorValue().message);
         }
       }
 
       const cartId = result.value;
-      res.cookie('cart_id', cartId.toString(), {
+      res.cookie(CART_ID_COOKIE_NAME, cartId.toString(), {
         maxAge: CART_LIFE_TIME,
-        // httpOnly: true,
+        httpOnly: true,
       });
       return this.ok(res);
     } catch (err: any) {

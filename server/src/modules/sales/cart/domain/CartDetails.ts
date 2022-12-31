@@ -8,6 +8,8 @@ interface CategoryDetailsProps {
     unitPrice: number;
     quantity: number;
   }[];
+  createdAt?: number;
+  updatedAt?: number;
 }
 
 /**
@@ -27,6 +29,14 @@ export class CartDetails {
 
   get items() {
     return this.props.lineItems;
+  }
+
+  get createdAt() {
+    return this.props.createdAt;
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt;
   }
 
   public static create(props: CategoryDetailsProps): Result<CartDetails> {

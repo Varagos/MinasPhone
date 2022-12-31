@@ -1,4 +1,5 @@
 import {
+  CreateDateColumn,
   Entity,
   JoinColumn,
   OneToMany,
@@ -15,8 +16,11 @@ export class Cart {
   @PrimaryColumn({ type: 'uuid' })
   id: string;
 
+  @CreateDateColumn()
+  createdAt: Date;
+
   @UpdateDateColumn()
-  updatedDate: Date;
+  updatedAt: Date;
 
   @OneToMany(() => CartItem, (cartItem) => cartItem.cart, {
     cascade: true, // When cart is saved, linked cartItems will be saved as well

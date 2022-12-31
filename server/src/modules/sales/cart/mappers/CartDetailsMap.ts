@@ -15,6 +15,8 @@ export class CartDetailsMap implements Mapper<CartDetails> {
         title: item.product.name,
         unitPrice: item.product.price,
       })),
+      createdAt: raw.createdAt.getTime(),
+      updatedAt: raw.updatedAt.getTime(),
     });
 
     cartOrError.isFailure && console.log(cartOrError.getErrorValue());
@@ -26,6 +28,8 @@ export class CartDetailsMap implements Mapper<CartDetails> {
     return {
       id: cartDetails.id,
       items: cartDetails.items,
+      createdAt: cartDetails.createdAt,
+      updatedAt: cartDetails.updatedAt,
     };
   }
 }

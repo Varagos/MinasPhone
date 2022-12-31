@@ -4,6 +4,7 @@ import { CheckoutCaptureResponse } from '../../types/checkout-capture-response';
 import { CheckoutToken } from '../../types/checkout-token';
 import CommerceJSCheckoutService from './commercejs';
 import MockCheckoutService from './mock';
+import OrdersService from './server';
 // import Commerce = require('@chec/commerce.js');
 // import { Live } from '../types/live';
 // import { Price } from '../types/price';
@@ -151,7 +152,14 @@ export interface ICheckoutService {
   captureCheckout(checkoutTokenId: string, newOrder: CheckoutCapture): Promise<CheckoutCaptureResponse>;
 }
 
-const checkoutService: ICheckoutService =
-  process.env.REACT_APP_ENVIRONMENT === 'mock' ? new MockCheckoutService() : new CommerceJSCheckoutService(commerce);
+const services: { [env: string]: () => any } = {
+  mock: () => new MockCheckoutService(),
+  commercejs: () => new CommerceJSCheckoutService(commerce),
+  server: () => new OrdersService(),
+};
+
+const checkoutService: ICheckoutService = process.env.REACT_APP_ENVIRONMENT
+  ? services[process.env.REACT_APP_ENVIRONMENT]()
+  : new MockCheckoutService();
 
 export { checkoutService };

@@ -1,3 +1,4 @@
+import { SERVER_URL } from '../../../../../shared/config/index.js';
 import { Result } from '../../../../../shared/core/Result.js';
 import { AggregateRoot } from '../../../../../shared/domain/AggregateRoot.js';
 import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID.js';
@@ -57,9 +58,7 @@ export class OrderItem extends AggregateRoot<OrderItemProps> {
   }
 
   get productMediaSrc(): string {
-    return (
-      (process.env.SERVER_URL ?? 'http://localhost:8080/') + this.productImage
-    );
+    return SERVER_URL + this.productImage;
   }
 
   get unitPrice(): Money {

@@ -2,6 +2,7 @@ import { ProductDetails } from '../domain/ProductDetails.js';
 import { Mapper } from '../../../../shared/infra/Mapper.js';
 import { ProductDTO } from '../dtos/productDTO.js';
 import { Product as PersistenceProduct } from '../../../../shared/infra/database/typeorm/models/index.js';
+import { SERVER_URL } from '../../../../shared/config/index.js';
 
 export class ProductDetailsMap implements Mapper<ProductDetails> {
   public static toDomain(raw: PersistenceProduct): ProductDetails {
@@ -31,9 +32,7 @@ export class ProductDetailsMap implements Mapper<ProductDetails> {
       name: productDetails.name,
       description: productDetails.description,
       quantity: productDetails.quantity,
-      mediaFileName:
-        (process.env.SERVER_URL ?? 'http://localhost:8080/') +
-        productDetails.mediaFileName,
+      mediaFileName: SERVER_URL + productDetails.mediaFileName,
       sku: productDetails.sku,
       price: productDetails.price,
       categoryId: productDetails.categoryId,

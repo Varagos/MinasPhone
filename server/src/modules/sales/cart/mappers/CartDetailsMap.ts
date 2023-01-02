@@ -3,6 +3,7 @@ import { Mapper } from '../../../../shared/infra/Mapper.js';
 import { CartDTO } from '../dtos/cartDTO.js';
 import { CartDetails } from './../domain/CartDetails.js';
 import { Cart as PersistenceCart } from '../../../../shared/infra/database/typeorm/models/index.js';
+import { SERVER_URL } from '../../../../shared/config/index.js';
 
 export class CartDetailsMap implements Mapper<CartDetails> {
   public static toDomain(raw: PersistenceCart): CartDetails {
@@ -31,9 +32,7 @@ export class CartDetailsMap implements Mapper<CartDetails> {
       items: cartDetails.items.map((item) => ({
         ...item,
         media: {
-          src:
-            (process.env.SERVER_URL ?? 'http://localhost:8080/') +
-            item.mediaFileName,
+          src: SERVER_URL + item.mediaFileName,
         },
       })),
       createdAt: cartDetails.createdAt,

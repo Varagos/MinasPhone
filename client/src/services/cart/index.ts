@@ -3,6 +3,7 @@ import { Cart as CartType } from '../../types/cart';
 import { Asset, Price, productsService } from '../products';
 import CommerceJSCartService from './commercejs';
 import MockCartService from './mock';
+import CartService from './server';
 
 export interface SelectedVariant {
   group_id: string;
@@ -77,32 +78,23 @@ export interface EmptyResponse {
   cart: CartType;
 }
 
-// export class Cart {
-//   refresh(): Promise<CartType>;
-//   id(): string | null;
-//   request(endpoint?: string, method?: RequestMethod, data?: object, returnFullRequest?: boolean): Promise<any>;
-//   add(productId: string, quantity?: number, variantData?: object | string): Promise<AddUpdateResponse>;
-//   retrieve(cardId?: string): Promise<CartType>;
-//   checkQuantity(productId: string, quantity: number): Promise<boolean>;
-//   remove(lineId: string): Promise<RemoveResponse>;
-//   delete(): Promise<DeleteResponse>;
-//   update(lineId: string, data: object): Promise<AddUpdateResponse>;
-//   contents(): Promise<LineItem[]>;
-//   empty(): Promise<EmptyResponse>;
-// }
-
 export interface ICartService {
   fetch(): Promise<CartType>;
   addItemToCart(productId: string, quantity: number): Promise<CartType>;
   empty(): Promise<CartType>;
   removeFromCart(productId: string): Promise<CartType>;
-  updateItem(productId: string, quantity: number): Promise<CartType>;
+  updateItem(lineItemId: string, quantity: number): Promise<CartType>;
   refresh(): Promise<CartType>;
 }
 
-const cartService: ICartService =
-  process.env.REACT_APP_ENVIRONMENT === 'mock'
-    ? new MockCartService(productsService)
-    : new CommerceJSCartService(commerce);
+const services: { [env: string]: () => any } = {
+  mock: () => new MockCartService(productsService),
+  commercejs: () => new CommerceJSCartService(commerce),
+  server: () => new CartService(),
+};
+
+const cartService: ICartService = process.env.REACT_APP_ENVIRONMENT
+  ? services[process.env.REACT_APP_ENVIRONMENT]()
+  : new MockCartService(productsService);
 
 export { cartService };

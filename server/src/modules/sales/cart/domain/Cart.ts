@@ -10,6 +10,8 @@ import { ProductId } from './item/ProductId.js';
 
 interface CartProps {
   lineItems: CartItem[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class Cart extends AggregateRoot<CartProps> {
@@ -23,6 +25,14 @@ export class Cart extends AggregateRoot<CartProps> {
 
   get lineItems(): CartItem[] {
     return this.props.lineItems;
+  }
+
+  get createdAt(): Date | undefined {
+    return this.props.createdAt;
+  }
+
+  get updatedAt(): Date | undefined {
+    return this.props.updatedAt;
   }
 
   get hasItems(): boolean {
@@ -60,11 +70,11 @@ export class Cart extends AggregateRoot<CartProps> {
     }
     const toAdd = lineItemOrError.getValue();
 
-    const existingItem = this.props.lineItems.find(
-      (item) => item.productId === toAdd.productId,
+    const existingItem = this.props.lineItems.find((item) =>
+      item.productId.equals(toAdd.productId),
     );
     if (existingItem) {
-      existingItem.quantity.add(toAdd.quantity);
+      existingItem.updateQuantity(existingItem.quantity.add(toAdd.quantity));
     } else {
       this.props.lineItems.push(toAdd);
     }

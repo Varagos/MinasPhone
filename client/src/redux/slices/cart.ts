@@ -48,12 +48,12 @@ export const removeFromCart = createAsyncThunk<Cart, string, AsyncThunkConfig>(
   }
 );
 
-export const updateCart = createAsyncThunk<Cart, { productId: string; quantity: number }, AsyncThunkConfig>(
+export const updateCart = createAsyncThunk<Cart, { lineItemId: string; quantity: number }, AsyncThunkConfig>(
   actions.cart.UPDATE_ITEM,
   async (payload, thunkAPI) => {
-    const { productId, quantity } = payload;
+    const { lineItemId, quantity } = payload;
     const { cart: cartService } = thunkAPI.extra.services;
-    const cart = await cartService.updateItem(productId, quantity);
+    const cart = await cartService.updateItem(lineItemId, quantity);
     return cart;
   }
 );

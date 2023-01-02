@@ -20,6 +20,7 @@ export class UpdateCart implements UseCase<UpdateCartDTO, Promise<Response>> {
   async execute(request: UpdateCartDTO) {
     try {
       const { cartId, lineItemId, quantity } = request;
+
       const cart = await this.cartRepo.retrieve(cartId);
       if (isNothing(cart)) {
         return left(new AppError.NotFoundError('Cart not found'));

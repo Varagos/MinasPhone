@@ -46,6 +46,8 @@ export class CartMap implements Mapper<Cart> {
     const cartOrError = Cart.create(
       {
         lineItems,
+        createdAt: raw.createdAt,
+        updatedAt: raw.updatedAt,
       },
       new UniqueEntityID(raw.id),
     );

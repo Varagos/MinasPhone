@@ -54,11 +54,6 @@ We have multi-stage build in our Dockerfile
 
 docker exec -it container-id sh # or /bin/sh
 
-docker run --name=mp-api-dev -p 8080:8080 \
---mount type=bind,source=$(pwd)/database.sqlite,target=/usr/app/database.sqlite \
---net supertokens_app_network \
-varagos/mp-api-dev
-
 # Rebuild a service in docker compose
 docker compose up -d --no-deps --build --force-recreate <service_name>
 ```

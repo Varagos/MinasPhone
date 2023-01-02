@@ -169,9 +169,8 @@ const services: { [env: string]: () => any } = {
   server: () => new ProductsService(),
 };
 
-const productsService: IProductsService = new ProductsService();
-// const productsService: IProductsService = process.env.REACT_APP_ENVIRONMENT
-//   ? services[process.env.REACT_APP_ENVIRONMENT]()
-//   : new MockProductsService();
+const productsService: IProductsService = process.env.REACT_APP_ENVIRONMENT
+  ? services[process.env.REACT_APP_ENVIRONMENT]()
+  : new MockProductsService();
 
 export { productsService };

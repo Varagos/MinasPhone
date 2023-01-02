@@ -1,23 +1,19 @@
 import React from 'react';
-import {
-  Typography,
-  Button,
-  Divider,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-} from '@mui/material';
+import { Typography, Button, Divider, FormControl, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 
-import Review from './Review';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import Review from './components/Review';
+import { Controller, useForm } from 'react-hook-form';
+import { CheckoutToken } from '../../types/checkout-token';
 
 type AddressProps = {
-  checkoutToken: any;
+  checkoutToken: CheckoutToken;
   next: (data: any) => void;
   backStep: () => void;
   shippingData: any;
+};
+
+type FormValues = {
+  receiptMethod: 'store' | 'courier';
 };
 const Address = ({ checkoutToken, shippingData, backStep, next }: AddressProps) => {
   const { register, handleSubmit, control } = useForm();
@@ -28,9 +24,10 @@ const Address = ({ checkoutToken, shippingData, backStep, next }: AddressProps) 
   //   nextStep();
   // };
   const onSubmit = (data: any) => {
+    // console.log('Address data', data);
     next({
       ...shippingData,
-      ...data,
+      ...(data as FormValues),
     });
   };
 

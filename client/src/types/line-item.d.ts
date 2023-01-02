@@ -4,18 +4,18 @@ import { Variant } from './variant';
 import { Asset } from './asset';
 
 export interface LineItem {
-    id: string;
-    name: string;
-    quantity: number;
-    product_id: string;
-    product_name: string;
-    product_meta: any;
-    sku: string;
-    permalink: string;
-    media: any; // todo
-    selected_options: SelectedVariant[];
-    variant?: Variant;
-    price: Price;
-    line_total: Price;
-    image: Asset | null;
+  id: string;
+  name: string;
+  quantity: number;
+  product_id: string;
+  product_name: string;
+  product_meta: any;
+  sku: string;
+  permalink: string;
+  media: { source: string }; // todo
+  selected_options: SelectedVariant[];
+  variant?: Variant;
+  price: Price;
+  line_total: Price;
+  image: Asset | null;
 }

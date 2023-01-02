@@ -56,6 +56,12 @@ export class OrderItem extends AggregateRoot<OrderItemProps> {
     return this.props.productMediaFileName;
   }
 
+  get productMediaSrc(): string {
+    return (
+      (process.env.SERVER_URL ?? 'http://localhost:8080/') + this.productImage
+    );
+  }
+
   get unitPrice(): Money {
     return this.props.unitPrice;
   }

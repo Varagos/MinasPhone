@@ -27,7 +27,7 @@ const CartItem = ({ item }: CartItemProps) => {
 
   const onUpdateCartQty = async (lineItemId: string, quantity: number) => {
     dispatch(cartUpdated({ lineItemId, quantity }));
-    dispatch(updateCart({ productId: lineItemId, quantity }));
+    dispatch(updateCart({ lineItemId, quantity }));
   };
 
   return (

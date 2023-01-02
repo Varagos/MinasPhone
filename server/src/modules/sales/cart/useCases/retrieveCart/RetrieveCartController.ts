@@ -1,12 +1,11 @@
 import { BaseController } from '../../../../../shared/infra/http/models/BaseController.js';
 import { DecodedExpressRequest } from '../../../../../shared/infra/http/models/decodedRequest.js';
+import { CART_ID_COOKIE_NAME, CART_LIFE_TIME } from '../../config.js';
 import { CartDetailsMap } from './../../mappers/CartDetailsMap.js';
 import { RetrieveCartErrors } from './Errors.js';
 import { RetrieveCart } from './RetrieveCart.js';
 import { RetrieveCartResponseDTO } from './retrieveCartResponseDTO.js';
 
-const CART_LIFE_TIME = 1000 * 60 * 60 * 24 * 7; // 7 days
-const CART_ID_COOKIE_NAME = 'cart_id';
 export class RetrieveCartController extends BaseController {
   private useCase: RetrieveCart;
 
@@ -33,18 +32,19 @@ export class RetrieveCartController extends BaseController {
           case RetrieveCartErrors.CartDoesNotExist:
             return this.notFound(res, error.getErrorValue().message);
           default:
-            return this.fail(res, (error as any).getErrorValue().message);
+            return this.fail(res, error.getErrorValue().message);
         }
       }
 
       const cartDetails = result.value;
       res.cookie(CART_ID_COOKIE_NAME, cartDetails.id, {
         maxAge: CART_LIFE_TIME,
-        // httpOnly: true,
+        httpOnly: true,
       });
-      return this.ok<RetrieveCartResponseDTO>(res, {
-        cart: CartDetailsMap.toDTO(cartDetails),
-      });
+      return this.ok<RetrieveCartResponseDTO>(
+        res,
+        CartDetailsMap.toDTO(cartDetails),
+      );
     } catch (err: any) {
       // console.log({ err });
       return this.fail(res, err);

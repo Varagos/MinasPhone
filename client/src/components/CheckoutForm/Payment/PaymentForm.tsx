@@ -1,13 +1,15 @@
 import React from 'react';
 import { Typography, Button, Divider, Box, Tabs, Tab, Card, CardContent, CardActions } from '@mui/material';
-import { CardElement } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+// import { CardElement } from '@stripe/react-stripe-js';
+// import { loadStripe } from '@stripe/stripe-js';
 import PaymentsSharpIcon from '@mui/icons-material/PaymentsSharp';
 import CreditCardSharpIcon from '@mui/icons-material/CreditCardSharp';
 
-import Review from '../Review';
-import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
+import Review from '../components/Review';
 import CardPayment from './CardPayment';
+import { CheckoutToken } from '../../../types/checkout-token';
+import { CheckoutOrderInfo } from '../Checkout/Checkout';
+import { CheckoutCapture } from '../../../types/checkout-capture';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -43,26 +45,13 @@ function a11yProps(index: number) {
   };
 }
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY!);
+// const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY!);
 type PaymentFormProps = {
   checkoutToken: CheckoutToken;
-  shippingData: {
-    email: string;
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    receiptMethod: 'store' | 'courier';
-    shippingCountry: 'GR';
-    shippingOption: 'ship_L1vOoZqyWwRa8Z';
-    shippingSubdivision: 'GR-I';
-
-    address1?: string;
-    zip?: number;
-    city?: string;
-  };
+  shippingData: CheckoutOrderInfo;
   backStep: any;
   nextStep: any;
-  onCaptureCheckout: any;
+  onCaptureCheckout: (checkoutTokenId: string, newOrder: CheckoutCapture) => Promise<void>;
 };
 const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout, nextStep }: PaymentFormProps) => {
   const [value, setValue] = React.useState(0);
@@ -75,7 +64,7 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
     event.preventDefault();
 
     const orderData = {
-      line_items: checkoutToken.live.line_items,
+      line_items: checkoutToken.line_items,
       customer: {
         firstname: shippingData.firstName,
         lastname: shippingData.lastName,
@@ -84,10 +73,10 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
       },
       shipping: {
         name: 'Primary',
-        street: shippingData.address1 ?? 'Glyfada',
-        town_city: shippingData.city ?? 'athens',
+        street: shippingData.street ?? 'Glyfada',
+        town_city: shippingData.town_city ?? 'athens',
         county_state: shippingData.shippingSubdivision,
-        postal_zip_code: shippingData.zip ?? '19152',
+        postal_zip_code: shippingData.postal_zip_code ?? '19152',
         country: shippingData.shippingCountry,
       },
       fulfillment: { shipping_method: shippingData.shippingOption },

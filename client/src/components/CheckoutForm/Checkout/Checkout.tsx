@@ -1,30 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Paper,
-  Stepper,
-  Step,
-  StepLabel,
-  Typography,
-  CircularProgress,
-  Divider,
-  Button,
-  CssBaseline,
-} from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Button, CssBaseline } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-import { commerce } from '../../lib/commerce';
 import Account from '../Account';
 import PaymentForm from '../Payment/PaymentForm';
 
 import useStyles from './styles';
-import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
-import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import Address from '../Address';
 import { refreshCart } from '../../../redux/slices/cart';
-import { CheckoutCapture } from '@chec/commerce.js/types/checkout-capture';
-import { CheckoutCaptureResponse } from '@chec/commerce.js/types/checkout-capture-response';
 import Confirmation from './Confirmation';
 import { captureCheckoutOrder, checkoutEnded, generateCheckoutToken } from '../../../redux/slices/checkout';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import { CheckoutCapture } from '../../../types/checkout-capture';
 
 const steps = ['Λογαριασμός', 'Διέυθυνση', 'Πληρωμή'];
 
@@ -33,8 +20,23 @@ type FormProps = {
   next: (data: any) => void;
   nextStep: () => void;
   backStep: () => void;
-  handleCaptureCheckout: (checkoutTokenId: string, newOrder: CheckoutCapture) => void;
-  shippingData: any;
+  handleCaptureCheckout: (checkoutTokenId: string, newOrder: CheckoutCapture) => Promise<void>;
+  shippingData: Partial<CheckoutOrderInfo>;
+};
+
+export type CheckoutOrderInfo = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  shippingCountry: 'GR';
+  shippingSubdivision: string;
+  shippingOption: string;
+  receiptMethod: 'store' | 'courier';
+
+  street: string;
+  town_city: string;
+  postal_zip_code: string;
 };
 
 const Form = (props: FormProps): JSX.Element => {
@@ -52,13 +54,13 @@ const Form = (props: FormProps): JSX.Element => {
 
   switch (activeStep) {
     case 0:
-      return <Account checkoutToken={checkoutToken} next={next} />;
+      return <Account next={next} />;
     case 1:
       return <Address shippingData={shippingData} checkoutToken={checkoutToken} next={next} backStep={backStep} />;
     case 2:
       return (
         <PaymentForm
-          shippingData={shippingData}
+          shippingData={shippingData as CheckoutOrderInfo}
           checkoutToken={checkoutToken}
           nextStep={nextStep}
           backStep={backStep}
@@ -72,7 +74,7 @@ const Form = (props: FormProps): JSX.Element => {
 
 const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [shippingData, setShippingData] = useState<any>({});
+  const [shippingData, setShippingData] = useState<Partial<CheckoutOrderInfo>>({});
   const [error, setErrorMessage] = useState('');
 
   const classes = useStyles();
@@ -83,6 +85,7 @@ const Checkout = () => {
   const handleCaptureCheckout = async (checkoutTokenId: string, newOrder: CheckoutCapture) => {
     try {
       // const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
+      console.log('handling capture checkout', newOrder);
       await dispatch(captureCheckoutOrder({ checkoutTokenId: checkoutTokenId, newOrder })).unwrap();
 
       dispatch(refreshCart());
@@ -106,9 +109,9 @@ const Checkout = () => {
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
-  const next = (data: any) => {
+  const next = (data: Partial<CheckoutOrderInfo>) => {
     // console.log('NEXT function', data);
-    setShippingData(data);
+    setShippingData((currentOrderInfo) => ({ ...currentOrderInfo, ...data }));
     nextStep();
   };
 

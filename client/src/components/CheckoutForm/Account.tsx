@@ -3,9 +3,26 @@ import { Button, Grid, Typography } from '@mui/material';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
-import FormInput from './FormInput';
+import FormInput from './components/FormInput';
 
-const Account = ({ next }: any) => {
+type AccountProps = {
+  next: (data: AccountFormData & CommerceJsAddress) => void;
+};
+
+export type AccountFormData = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+};
+
+type CommerceJsAddress = {
+  shippingCountry: string;
+  shippingSubdivision: string;
+  shippingOption: string;
+};
+
+const Account = ({ next }: AccountProps) => {
   const methods = useForm();
   const { errors } = methods.formState;
 
@@ -21,9 +38,9 @@ const Account = ({ next }: any) => {
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit((data) => {
-            // // console.log(data, shippingCountry);
+            console.log(data);
             next({
-              ...data,
+              ...(data as AccountFormData),
               shippingCountry: 'GR',
               shippingSubdivision: 'GR-I',
               shippingOption: 'ship_L1vOoZqyWwRa8Z',

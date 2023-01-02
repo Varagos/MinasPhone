@@ -14,6 +14,7 @@ export class CartDetailsMap implements Mapper<CartDetails> {
         quantity: item.quantity,
         title: item.product.name,
         unitPrice: item.product.price,
+        mediaFileName: item.product.mediaFilename,
       })),
       createdAt: raw.createdAt.getTime(),
       updatedAt: raw.updatedAt.getTime(),
@@ -27,9 +28,17 @@ export class CartDetailsMap implements Mapper<CartDetails> {
   public static toDTO(cartDetails: CartDetails): CartDTO {
     return {
       id: cartDetails.id,
-      items: cartDetails.items,
+      items: cartDetails.items.map((item) => ({
+        ...item,
+        media: {
+          src:
+            (process.env.SERVER_URL ?? 'http://localhost:8080/') +
+            item.mediaFileName,
+        },
+      })),
       createdAt: cartDetails.createdAt,
       updatedAt: cartDetails.updatedAt,
+      subTotal: cartDetails.subTotal,
     };
   }
 }

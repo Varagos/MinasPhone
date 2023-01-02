@@ -78,20 +78,6 @@ export interface EmptyResponse {
   cart: CartType;
 }
 
-// export class Cart {
-//   refresh(): Promise<CartType>;
-//   id(): string | null;
-//   request(endpoint?: string, method?: RequestMethod, data?: object, returnFullRequest?: boolean): Promise<any>;
-//   add(productId: string, quantity?: number, variantData?: object | string): Promise<AddUpdateResponse>;
-//   retrieve(cardId?: string): Promise<CartType>;
-//   checkQuantity(productId: string, quantity: number): Promise<boolean>;
-//   remove(lineId: string): Promise<RemoveResponse>;
-//   delete(): Promise<DeleteResponse>;
-//   update(lineId: string, data: object): Promise<AddUpdateResponse>;
-//   contents(): Promise<LineItem[]>;
-//   empty(): Promise<EmptyResponse>;
-// }
-
 export interface ICartService {
   fetch(): Promise<CartType>;
   addItemToCart(productId: string, quantity: number): Promise<CartType>;

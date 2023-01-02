@@ -11,9 +11,13 @@ type CartDTO = {
     quantity: number;
     title: string;
     unitPrice: number;
+    media: {
+      src: string;
+    };
   }>;
   createdAt: number;
   updatedAt: number;
+  subTotal: number;
 };
 
 const mapCartDTOToCart = (cartDTO: CartDTO): Cart => {
@@ -26,7 +30,9 @@ const mapCartDTOToCart = (cartDTO: CartDTO): Cart => {
       name: item.title,
       product_name: item.title,
       price: rawPriceToFormatted(item.unitPrice),
-      media: 'todo' as any,
+      media: {
+        source: item.media.src,
+      },
       sku: 'todo' as any,
       line_total: rawPriceToFormatted(item.unitPrice * item.quantity), // check this
       selected_options: [],
@@ -39,7 +45,7 @@ const mapCartDTOToCart = (cartDTO: CartDTO): Cart => {
     expires: 'todo' as any,
     total_items: cartDTO.items.reduce((acc, item) => acc + item.quantity, 0),
     total_unique_items: cartDTO.items.length,
-    subtotal: 'todo' as any,
+    subtotal: rawPriceToFormatted(cartDTO.subTotal),
     currency: 'todo' as any,
     discount_code: 'todo' as any,
     hosted_checkout_url: 'todo' as any,
@@ -69,7 +75,7 @@ class CartService implements ICartService {
   }
 
   private async createCart(): Promise<Cart> {
-    return this.makeHttpRequest(this.apiBaseUrl, 'POST');
+    return this.makeHttpRequest(this.apiBaseUrl, 'POST', undefined, 'text');
   }
 
   async addItemToCart(productId: string, quantity: number): Promise<Cart> {
@@ -113,7 +119,7 @@ class CartService implements ICartService {
   }
 
   private async deleteCart() {
-    return this.makeHttpRequest(this.apiBaseUrl, 'DELETE');
+    return this.makeHttpRequest(this.apiBaseUrl, 'DELETE', undefined, 'text');
   }
 
   private makeHttpRequest = async (

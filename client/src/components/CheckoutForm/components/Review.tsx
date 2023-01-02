@@ -1,14 +1,19 @@
 import React from 'react';
 import { Typography, List, ListItem, ListItemText } from '@mui/material';
+import { CheckoutToken } from '../../../types/checkout-token';
 
-const Review = ({ checkoutToken }: any) => {
+type ReviewProps = {
+  checkoutToken: CheckoutToken;
+};
+
+const Review = ({ checkoutToken }: ReviewProps) => {
   return (
     <>
       <Typography variant="h6" gutterBottom>
         Ανακεφαλαίωση παραγγελίας
       </Typography>
       <List disablePadding>
-        {checkoutToken.live.line_items.map((product: any) => (
+        {checkoutToken.line_items.map((product: any) => (
           <ListItem style={{ padding: '10px 0' }} key={product.name}>
             <ListItemText primary={product.name} secondary={`Ποσότητα: ${product.quantity}`} />
             <Typography variant="body2">{product.line_total.formatted_with_symbol}</Typography>

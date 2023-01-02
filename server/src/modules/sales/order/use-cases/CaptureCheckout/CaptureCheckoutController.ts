@@ -40,6 +40,7 @@ export class CaptureCheckoutController extends BaseController {
             return this.fail(res, error.getErrorValue().message);
           }
           default: {
+            console.error({ error });
             return this.fail(res, error.getErrorValue().message);
           }
         }

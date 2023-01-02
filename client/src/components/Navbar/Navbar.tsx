@@ -42,8 +42,6 @@ const Navbar = () => {
     })();
   }, []);
 
-  // console.log('doesSessionExist', isLoggedIn);
-
   const cart = useAppSelector((state) => state.cart.data);
 
   const handleClickOpen = () => {
@@ -116,39 +114,19 @@ const Navbar = () => {
             <Button component={Link} to="/" sx={activeClass('/')}>
               ΑΡΧΙΚΗ
             </Button>
-            <Button
-              // className={activeClass('/category/smartphones')}
-              component={Link}
-              to="/category/smartphones"
-              sx={activeClass('/category/smartphones')}
-            >
+            <Button component={Link} to="/category/smartphones" sx={activeClass('/category/smartphones')}>
               ΚΙΝΗΤΑ
             </Button>
-            <Button
-              className={activeClass('/category/smartwatches')}
-              component={Link}
-              to="/category/smartwatches"
-              sx={activeClass('/category/smartwatches')}
-            >
+            <Button component={Link} to="/category/smartwatches" sx={activeClass('/category/smartwatches')}>
               SMARTWATCH
             </Button>
-            <Button
-              className={activeClass('/category/tablets')}
-              component={Link}
-              to="/category/tablets"
-              sx={activeClass('/category/tablets')}
-            >
+            <Button component={Link} to="/category/tablets" sx={activeClass('/category/tablets')}>
               TABLET
             </Button>
-            <Button
-              className={activeClass('/category/accessories')}
-              component={Link}
-              to="/category/accessories"
-              sx={activeClass('/category/accessories')}
-            >
+            <Button component={Link} to="/category/accessories" sx={activeClass('/category/accessories')}>
               ΑΞΕΣΟΥΑΡ
             </Button>
-            <Button className={activeClass('/products')} component={Link} to="/products" sx={activeClass('/products')}>
+            <Button component={Link} to="/products" sx={activeClass('/products')}>
               ΟΛΑ ΤΑ ΠΡΟΪΟΝΤΑ
             </Button>
           </Box>

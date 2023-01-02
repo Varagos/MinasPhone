@@ -38,12 +38,12 @@ export class EmailService implements IEmailService {
       name: item.productName,
       quantity: item.quantity.value,
       unitPrice: item.unitPrice.value,
-      productImage: 'https://picsum.photos/200',
+      productImage: item.productMediaSrc ?? 'https://picsum.photos/200',
     }));
 
     return {
       to,
-      from: 'mark.girgis13@gmail.com', // Change to your verified sender
+      from: 'minasphone@email.com', // Change to your verified sender
       subject: 'Παραγγελία - Minas Phone',
       text: 'Λάβαμε την παραγγελία σας',
       //   html: '<strong>and easy to do anywhere, even with Node.js</strong>',

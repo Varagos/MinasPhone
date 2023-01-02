@@ -10,7 +10,7 @@ export interface CheckoutCapture {
     firstname?: string;
     lastname?: string;
     email: string;
-    phone?: string;
+    phoneNumber: string;
     meta?: any;
   };
   shipping?: Partial<Address>;

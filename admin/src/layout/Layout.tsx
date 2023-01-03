@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Layout, LayoutProps, usePermissions } from 'react-admin';
+import { Layout, LayoutProps } from 'react-admin';
 import AppBar from './AppBar';
 import Menu from './Menu';
 

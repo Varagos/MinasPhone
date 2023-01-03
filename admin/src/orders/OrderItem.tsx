@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import { Link, useTranslate, useGetMany, useRecordContext } from 'react-admin';
+import { Link, useTranslate, useRecordContext } from 'react-admin';
 
 import { Order, OrderItem as OrderItemType } from '../types';
 import { TableCellRight } from './TableCellRight';

@@ -1,5 +1,4 @@
 import React, { useMemo, CSSProperties } from 'react';
-import { useGetList } from 'react-admin';
 import { useMediaQuery, Theme } from '@mui/material';
 import { subDays, startOfDay } from 'date-fns';
 

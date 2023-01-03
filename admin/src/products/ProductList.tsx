@@ -9,7 +9,6 @@ import {
   InputProps,
   ListBase,
   NumberInput,
-  Pagination,
   ReferenceInput,
   SearchInput,
   SelectInput,

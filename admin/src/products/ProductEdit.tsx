@@ -4,7 +4,6 @@ import {
   NumberInput,
   SimpleForm,
   TextInput,
-  Create,
   ImageInput,
   ImageField,
   ReferenceInput,

@@ -44,7 +44,7 @@ const Welcome = () => {
               },
             }}
           >
-            <Button variant="contained" href="https://google.com" startIcon={<HomeIcon />}>
+            <Button variant="contained" href="https://minasphone.gr" target="_blank" startIcon={<HomeIcon />}>
               {translate('pos.dashboard.welcome.ra_button')}
             </Button>
             <Button variant="contained" href="https://google.com" startIcon={<CodeIcon />}>

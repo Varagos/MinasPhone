@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { EmailField, FunctionField, NumberField, SimpleForm, TextInput } from 'react-admin';
+import { EmailField, FunctionField, NumberField } from 'react-admin';
 import {
   BooleanInput,
   DateField,

@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { ChipField, Datagrid, EditButton, EmailField, FunctionField, List, SelectField, TextField } from 'react-admin';
+import { Datagrid, FunctionField, List, TextField } from 'react-admin';
 import { Fragment, useCallback } from 'react';
-import { BooleanField, DateField, NumberField, ReferenceField, useGetList, useListContext } from 'react-admin';
+import { DateField, NumberField, useGetList, useListContext } from 'react-admin';
 import { useMediaQuery, Divider, Tabs, Tab, Theme } from '@mui/material';
-import MobileGrid from './MobileGrid';
 import NbItemsField from './NbItemsField';
 
 export const OrderList = () => (

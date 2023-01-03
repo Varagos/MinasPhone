@@ -57,3 +57,19 @@ docker exec -it container-id sh # or /bin/sh
 # Rebuild a service in docker compose
 docker compose up -d --no-deps --build --force-recreate <service_name>
 ```
+
+# Deployment
+
+### Manual Deployment
+
+```bash
+ssh -i <key> ubuntu@vm-public-address
+
+cd <server-path>
+git pull
+
+# Update any env vars if needed
+# Rebuild api service
+docker compose up --build --force-recreate --no-deps -d [<service_name>..]
+
+```

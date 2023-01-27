@@ -54,6 +54,10 @@ export class Cart extends AggregateRoot<CartProps> {
     return Result.ok<Cart>(cart);
   }
 
+  public static createEmpty(): Result<Cart> {
+    return this.create({ lineItems: [] });
+  }
+
   /**
    *  TODO check that it doesn't create a new cart item if the product is already in the cart
    */

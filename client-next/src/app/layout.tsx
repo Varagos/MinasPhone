@@ -26,11 +26,7 @@ function RootLayout({
           <body>
             <main>
               <Navbar />
-              <nav>
-                <Link href="/">Home</Link>
-                <Link href="/about">About</Link>
-              </nav>
-              {children}
+              <div style={{ minHeight: '80vh' }}>{children}</div>
             </main>
           </body>
         </ThemeProvider>

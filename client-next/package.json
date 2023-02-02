@@ -26,9 +26,12 @@
     "query-string": "^8.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1",
     "typescript": "4.9.4"
   },
   "devDependencies": {
-    "@types/chec__commerce.js": "^2.8.6"
+    "@types/chec__commerce.js": "^2.8.6",
+    "@types/react-slick": "^0.23.10"
   }
 }

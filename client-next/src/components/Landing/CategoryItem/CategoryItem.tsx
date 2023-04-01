@@ -10,7 +10,7 @@ const CategoryItem = ({ src, heading, dest }: any) => {
     <Grid container item xs={12} md={3} alignContent="center" justifyContent="center" className={styles.item}>
       <Link href={dest} style={{ height: '100%', textDecoration: 'none' }} passHref>
         <div className={styles.main}>
-          <Image src={src} fill={true} className={styles.bannerImg} alt="smartphones" />
+          <Image src={src} layout="fill" className={styles.bannerImg} alt="smartphones" />
           <div className={styles.bannerText} style={{ marginTop: 'auto' }}>
             <Typography variant="h6" align="center">
               {heading}

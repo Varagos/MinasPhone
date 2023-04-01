@@ -2,6 +2,11 @@
 const nextConfig = {
   experimental: {
     appDir: true,
+    modularizeImports: {
+      '@mui/material/?(((\\w*)?/?)*)': {
+        transform: '@mui/material/{{ matches.[1] }}/{{member}}',
+      },
+    },
   },
   images: {
     // Domains of images used

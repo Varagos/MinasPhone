@@ -12,50 +12,18 @@ import { PersonOutline, Phone, ShoppingCart, Menu as MenuIcon } from '@mui/icons
 import Image from 'next/image';
 import IconLinkButton from '../custom-components/IconLinkButton';
 import LinkButton from '../custom-components/LinkButton';
+import { useAppSelector } from '@/redux/store';
+import LogoutButton from './Logout/LogoutButton';
 
 const NewNavbar = () => {
-  //   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  //   const handleMenuClick = () => {
-  //     setIsMenuOpen(!isMenuOpen);
-  //   };
-
-  //   return (
-  //     <AppBar position="static">
-  //       <Toolbar>
-  //         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-  //           My Website
-  //         </Typography>
-  //         <Button color="inherit">Home</Button>
-  //         <Button color="inherit">About</Button>
-  //         <Button color="inherit" onClick={handleMenuClick}>
-  //           Menu
-  //         </Button>
-  //       </Toolbar>
-  //       {isMenuOpen && (
-  //         <div>
-  //           <Button color="inherit">Option 1</Button>
-  //           <Button color="inherit">Option 2</Button>
-  //           <Button color="inherit">Option 3</Button>
-  //         </div>
-  //       )}
-  //     </AppBar>
-  //   );
-
   const classes = useStyles();
   const router = useRouter();
   const currentPath = router.pathname;
 
   const [anchor, setAnchor] = useState(false);
-  // const [open, setOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  //   const authStatus = useAppSelector((state) => state.user.status);
-  //   const user = useAppSelector((state) => state.user.data);
-  // TMP
-  const user = {
-    role: 'admin',
-  };
-
+  const authStatus = useAppSelector((state) => state.user.status);
+  const user = useAppSelector((state) => state.user.data);
   //   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -72,15 +40,7 @@ const NewNavbar = () => {
     })();
   }, []);
 
-  //   const cart = useAppSelector((state) => state.cart.data);
-
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
+  const cart = useAppSelector((state) => state.cart.data);
 
   const toggleDrawer = (open: any) => (event: any) => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -165,7 +125,7 @@ const NewNavbar = () => {
                 {/* <AdminPanelSettingsIcon fontSize="medium" style={{ verticalAlign: 'bottom', paddingBottom: 1 }} /> */}
               </IconLinkButton>
             )}
-            {/* {authStatus === 'signedIn' && <LogoutButton />} */}
+            {authStatus === 'signedIn' && <LogoutButton />}
             {/* {authStatus === 'signedOut' && (
               <IconButton aria-label="Login user" color="inherit" component={Link} to="/auth">
                 <PersonOutline
@@ -176,13 +136,12 @@ const NewNavbar = () => {
               </IconButton>
             )} */}
           </div>
-          {/* <LoginForm open={open} handleClose={handleClose} /> */}
           {currentPath !== '/cart' && (
             <div>
-              <IconLinkButton href="/cart" aria-label="Show cart items" color="inherit">
-                {/* <Badge badgeContent={cart?.total_items} color="secondary">
-                  <ShoppingCart />
-                </Badge> */}
+              <IconLinkButton href="/cart" aria-label="Show cart items">
+                <Badge badgeContent={cart?.total_items} color="secondary">
+                  <ShoppingCart style={{ color: 'black' }} />
+                </Badge>
               </IconLinkButton>
             </div>
           )}

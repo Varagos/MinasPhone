@@ -4,12 +4,32 @@ import NextLink from 'next/link';
 
 type CustomIconButtonProps = {
   href: string;
+  underline?: string;
+  childrenStyle?: React.CSSProperties;
 } & IconButtonProps;
 
-const IconLinkButton: React.FC<CustomIconButtonProps> = ({ href, children, ...props }) => {
+const IconLinkButton: React.FC<CustomIconButtonProps> = ({
+  href,
+  children,
+  underline = 'none',
+  childrenStyle,
+  ...props
+}) => {
+  const linkStyle = { textDecoration: underline, color: 'inherit' };
+
   return (
     <NextLink href={href} passHref>
-      <IconButton {...props}>{children}</IconButton>
+      <IconButton style={linkStyle} {...props}>
+        {/* {children} */}
+        {React.Children.map(children, (child) => {
+          if (React.isValidElement(child)) {
+            return React.cloneElement(child, {
+              style: { ...child.props.style, ...childrenStyle },
+            });
+          }
+          return child;
+        })}
+      </IconButton>
     </NextLink>
   );
 };

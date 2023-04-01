@@ -12,7 +12,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <NewNavbar />
-        <Component {...pageProps} />
+        <main style={{ minHeight: '80vh' }}>
+          <Component {...pageProps} />
+        </main>
       </ThemeProvider>
     </Provider>
   );

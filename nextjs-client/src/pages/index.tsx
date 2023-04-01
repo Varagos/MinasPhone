@@ -1,11 +1,32 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from 'next/head';
+import Image from 'next/image';
+import { useEffect } from 'react';
+import { Container, Typography, Grid, Box } from '@mui/material';
 
-const inter = Inter({ subsets: ['latin'] })
+import useStyles from '@/components/Landing/styles';
+import CategoryItem from '@/components/Landing/CategoryItem/CategoryItem';
+import ProductCard from '@/components/Category/Products/ProductCard/ProductCard';
+import PhoneFix from '../../public/undraw_phone_fix.svg';
+import TabletCategory from '../../public/tablet-category.jpg';
+import SmartWatchCategory from '../../public/smartwatch-category.jpg';
+import PhonesCategory from '../../public/iphone-12-service.png';
+import AccessoriesCategory from '../../public/Hnet-com-image.png';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { fetchProducts } from '@/redux/slices/products';
+import SimpleSlider from '../components/Landing/Slider/Slider';
 
-export default function Home() {
+export default function Landing() {
+  const recommendedProducts = useAppSelector((state) => state.products.data);
+  const dispatch = useAppDispatch();
+  const classes = useStyles();
+  // console.log('recommendedProducts:', recommendedProducts);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(fetchProducts());
+  }, []);
+
+  const shuffled = structuredClone(recommendedProducts).sort(() => 0.5 - Math.random());
   return (
     <>
       <Head>
@@ -14,110 +35,92 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
+      <main className={classes.content}>
+        {/* <Carousel>
+        {items.map((item, index) => (
+          <Item key={index} item={item} />
+        ))} */}
+        <SimpleSlider />
+        <section>
+          <Container>
+            <Box my={8}>
+              <Typography variant="h4" align="center" gutterBottom>
+                <span className={classes.sectionTitle}>ΔΗΜΟΦΙΛΕΙΣ ΚΑΤΗΓΟΡΙΕΣ</span>
+              </Typography>
+            </Box>
+            <Grid container justifyContent="center" spacing={3}>
+              <CategoryItem
+                src={PhonesCategory} //"https://www.brokencare.in/images/iphone/iphone-12-service.png"
+                heading="SMARTPHONES"
+                dest="/category/smartphones"
               />
-            </a>
-          </div>
-        </div>
+              <CategoryItem src={TabletCategory} heading="TABLETS" dest="/category/tablets" />
+              <CategoryItem
+                src={AccessoriesCategory} //"https://i.ibb.co/R6vPgNz/Hnet-com-image.png"
+                heading="ACCESSORIES"
+                dest="/category/accessories"
+              />
+              <CategoryItem src={SmartWatchCategory} heading="SMARTWATCHES" dest="/category/smartwatches" />
+            </Grid>
+          </Container>
+        </section>
+        <section>
+          <Container>
+            <Box my={8}>
+              <Typography variant="h4" align="center" gutterBottom>
+                <span className={classes.sectionTitle}>ΠΡΟΤΕΙΝΟΥΜΕ</span>
+              </Typography>
+            </Box>
 
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
-        </div>
+            <Grid container justifyContent="center" spacing={2} alignItems="stretch">
+              {shuffled.slice(0, 4).map((product: any) => (
+                <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+                  <ProductCard product={product} />
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </section>
+        <section>
+          <Box py={16}>
+            <Typography variant="h4" align="center" gutterBottom>
+              <span className={classes.sectionTitle}>ΕΠΙΣΚΕΥΕΣ ΤΗΛΕΦΩΝΩΝ</span>
+            </Typography>
+            <Grid container justifyContent="center" spacing={3}>
+              <Grid container item xs={12} md={6} alignContent="center" justifyContent="center">
+                <Image src={PhoneFix} alt="phone repairs" style={{ width: '90%', height: 'auto' }} />
+              </Grid>
+              <Grid container item xs={12} md={6} alignContent="center" justifyContent="center">
+                <Container>
+                  <Typography variant="h6" align="left" gutterBottom>
+                    ΕΠΙΣΚΕΥΕΣ ΤΗΛΕΦΩΝΩΝ
+                  </Typography>
+                  <Typography>
+                    Σε μια εποχή όπου κυριαρχούν τα πανάκριβα smartphones με τις αμέτρητες λειτουργίες, το παραδοσιακό
+                    κλασικό κινητό τηλέφωνο καταφέρνει να διατηρεί την αξία του, κι αυτό δεν είναι καθόλου τυχαίο.
+                  </Typography>
+                  <Typography variant="h6" align="left" gutterBottom>
+                    Υψηλής ποιότητας ανταλλακτικά
+                  </Typography>
+                  <Typography>
+                    Χρησιμοποιούμε για την επισκευή κινητών πάντα τα καλύτερα ανταλλακτικά που υπάρχουν στην αγορά.
+                    Κριτήρια για την επιλογή τους, είναι η απόδοση και η αντοχή. Ο λόγος είναι πως επιθυμούμε σε κάθε
+                    μας επισκευή το καλύτερο δυνατό αποτέλεσμα και με διάρκεια στο χρόνο.
+                  </Typography>
 
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
+                  <Typography variant="h6" align="left" gutterBottom>
+                    Οικονομικές τιμές
+                  </Typography>
+                  <Typography>
+                    Τις ποιοτικές μας υπηρεσίες έχουμε φροντίσει και τις προσφέρουμε στις καλύτερες δυνατές τιμές της
+                    αγοράς. Στο κατάστημα μας πραγματοποιούμε τις πιο συμφέρουσες επισκευές κινητών τηλεφώνων.
+                  </Typography>
+                </Container>
+              </Grid>
+            </Grid>
+          </Box>
+        </section>
       </main>
     </>
-  )
+  );
 }

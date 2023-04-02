@@ -138,7 +138,6 @@ const Navbar = () => {
               </IconButton>
             )}
           </div>
-          {/* <LoginForm open={open} handleClose={handleClose} /> */}
           {location.pathname !== '/cart' && (
             <div>
               <IconButton component={Link} to="/cart" aria-label="Show cart items" color="inherit">

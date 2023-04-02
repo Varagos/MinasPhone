@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useAppDispatch } from '@/redux/store';
 import { addedToCart, addToCart } from '../../../../redux/slices/cart';
 import { useState } from 'react';
-import { Product } from '@/types/product';
+import { Product } from '@/services/products';
 
 type ProductProps = {
   product: Product;

@@ -1,6 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { stat } from 'fs';
-import { commerce } from '../../lib/commerce';
 import { Cart } from '../../types/cart';
 import actions from '../actions';
 import { AsyncThunkConfig } from '../store';
@@ -16,28 +14,35 @@ const initialState: ICartState = {
   error: '',
 };
 
-export const fetchCart = createAsyncThunk<Cart, void, AsyncThunkConfig>(actions.cart.FETCH, async (_, thunkAPI) => {
-  const { cart: cartService } = thunkAPI.extra.services;
-  const cart = await cartService.fetch();
-  return cart;
-});
-
-export const addToCart = createAsyncThunk<Cart, { productId: string; quantity: number }, AsyncThunkConfig>(
-  actions.cart.ADD_ITEM,
-  async (payload, thunkAPI) => {
-    const { productId, quantity } = payload;
-
+export const fetchCart = createAsyncThunk<Cart, void, AsyncThunkConfig>(
+  actions.cart.FETCH,
+  async (_, thunkAPI) => {
     const { cart: cartService } = thunkAPI.extra.services;
-    const cart = await cartService.addItemToCart(productId, quantity);
+    const cart = await cartService.fetch();
     return cart;
   }
 );
 
-export const emptyCart = createAsyncThunk<Cart, void, AsyncThunkConfig>(actions.cart.EMPTY, async (_, thunkAPI) => {
+export const addToCart = createAsyncThunk<
+  Cart,
+  { productId: string; quantity: number },
+  AsyncThunkConfig
+>(actions.cart.ADD_ITEM, async (payload, thunkAPI) => {
+  const { productId, quantity } = payload;
+
   const { cart: cartService } = thunkAPI.extra.services;
-  const cart = await cartService.empty();
+  const cart = await cartService.addItemToCart(productId, quantity);
   return cart;
 });
+
+export const emptyCart = createAsyncThunk<Cart, void, AsyncThunkConfig>(
+  actions.cart.EMPTY,
+  async (_, thunkAPI) => {
+    const { cart: cartService } = thunkAPI.extra.services;
+    const cart = await cartService.empty();
+    return cart;
+  }
+);
 
 export const removeFromCart = createAsyncThunk<Cart, string, AsyncThunkConfig>(
   actions.cart.REMOVE_ITEM,
@@ -48,24 +53,32 @@ export const removeFromCart = createAsyncThunk<Cart, string, AsyncThunkConfig>(
   }
 );
 
-export const updateCart = createAsyncThunk<Cart, { lineItemId: string; quantity: number }, AsyncThunkConfig>(
-  actions.cart.UPDATE_ITEM,
-  async (payload, thunkAPI) => {
-    const { lineItemId, quantity } = payload;
+export const updateCart = createAsyncThunk<
+  Cart,
+  { lineItemId: string; quantity: number },
+  AsyncThunkConfig
+>(actions.cart.UPDATE_ITEM, async (payload, thunkAPI) => {
+  const { lineItemId, quantity } = payload;
+  const { cart: cartService } = thunkAPI.extra.services;
+  const cart = await cartService.updateItem(lineItemId, quantity);
+  return cart;
+});
+
+export const refreshCart = createAsyncThunk<Cart, void, AsyncThunkConfig>(
+  actions.cart.REFRESH,
+  async (_, thunkAPI) => {
     const { cart: cartService } = thunkAPI.extra.services;
-    const cart = await cartService.updateItem(lineItemId, quantity);
+    const cart = await cartService.refresh();
     return cart;
   }
 );
 
-export const refreshCart = createAsyncThunk<Cart, void, AsyncThunkConfig>(actions.cart.REFRESH, async (_, thunkAPI) => {
-  const { cart: cartService } = thunkAPI.extra.services;
-  const cart = await cartService.refresh();
-  return cart;
-});
-
 const lineItemFromProduct = (productId: string, quantity: number) => {
-  const lineItem = { id: productId, productId: productId, quantity: quantity } as any;
+  const lineItem = {
+    id: productId,
+    productId: productId,
+    quantity: quantity,
+  } as any;
   return lineItem;
 };
 
@@ -73,7 +86,10 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addedToCart: (state, action: PayloadAction<{ productId: string; quantity: number }>) => {
+    addedToCart: (
+      state,
+      action: PayloadAction<{ productId: string; quantity: number }>
+    ) => {
       // TODO Update cart & line_item money
       console.log('addedToCart', action.payload);
       const { productId, quantity } = action.payload;
@@ -90,16 +106,23 @@ export const cartSlice = createSlice({
       if (!state.data?.line_items) state.data!.line_items = [];
       state.data.line_items.push(lineItem);
       state.data!.total_items++;
-      if (!state.data.line_items.some((item) => item.product_id === productId)) {
+      if (
+        !state.data.line_items.some((item) => item.product_id === productId)
+      ) {
         state.data!.total_unique_items++;
       }
     },
-    cartUpdated: (state, action: PayloadAction<{ lineItemId: string; quantity: number }>) => {
+    cartUpdated: (
+      state,
+      action: PayloadAction<{ lineItemId: string; quantity: number }>
+    ) => {
       // TODO Update cart & line_item money
       if (!state.data) return;
       const { lineItemId, quantity } = action.payload;
       console.log('lineItemId', lineItemId);
-      const lineItemIndex = state.data.line_items.findIndex((item) => item.id === lineItemId);
+      const lineItemIndex = state.data.line_items.findIndex(
+        (item) => item.id === lineItemId
+      );
       if (lineItemIndex < 0) throw new Error('Line item not found');
       const lineItem = state.data.line_items[lineItemIndex];
 
@@ -118,7 +141,9 @@ export const cartSlice = createSlice({
       // TODO Update cart & line_item money
       if (!state.data) return;
       const { lineItemId } = action.payload;
-      const lineItemIndex = state.data.line_items.findIndex((item) => item.id === lineItemId);
+      const lineItemIndex = state.data.line_items.findIndex(
+        (item) => item.id === lineItemId
+      );
 
       const lineItem = state.data.line_items[lineItemIndex];
       const quantity = lineItem.quantity;

@@ -1,9 +1,17 @@
 import { useState } from 'react';
-import { Box, Divider, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
+import {
+  Box,
+  Divider,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+} from '@mui/material';
 import HighlightOff from '@mui/icons-material/HighlightOff';
 import Slider from '@mui/material/Slider';
 import { Co2Sharp } from '@mui/icons-material';
+import { useRouter } from 'next/router';
 
 function valuetext(value: number) {
   return `${value}€`;
@@ -12,7 +20,7 @@ function valuetext(value: number) {
 const Filter = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  const { search, pathname } = useLocation();
+  const router = useRouter();
   // console.log('paramsss', search);
 
   const [value, setValue] = useState<number[]>([0, 200]);

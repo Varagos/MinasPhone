@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint . --ext .tsx,.ts",
+    "lint:fix": "eslint . --ext .tsx,.ts --fix",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@chec/commerce.js": "^2.8.0",
@@ -17,6 +19,8 @@
     "@mui/material": "^5.11.15",
     "@mui/styles": "^5.11.13",
     "@reduxjs/toolkit": "^1.9.3",
+    "@stripe/react-stripe-js": "^2.1.0",
+    "@stripe/stripe-js": "^1.52.0",
     "@types/node": "18.15.11",
     "@types/react": "18.0.31",
     "@types/react-dom": "18.0.11",
@@ -28,12 +32,16 @@
     "query-string": "^8.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7",
     "react-redux": "^8.0.5",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
     "typescript": "5.0.3"
   },
   "devDependencies": {
-    "@types/react-slick": "^0.23.10"
+    "@types/react-slick": "^0.23.10",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "prettier": "^2.8.7"
   }
 }

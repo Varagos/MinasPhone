@@ -4,7 +4,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/lib/theme';
 import NewNavbar from '@/components/Navbar/Navbar';
 import { Provider } from 'react-redux';
-import { store } from '../redux/store';
+import { store, useAppDispatch } from '../redux/store';
+import { useEffect } from 'react';
+import { fetchCategories } from '@/redux/slices/categories';
+import { fetchProducts } from '@/redux/slices/products';
+import { fetchCart } from '@/redux/slices/cart';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

@@ -50,7 +50,7 @@ export class FindCategoryByIdHttpController {
           }),
           slug: category.slug,
           name: category.name,
-          parentId: category.parent_id ?? undefined,
+          parentId: category.parent_id,
         };
       },
       Err: (error: Error) => {

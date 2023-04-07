@@ -9,6 +9,11 @@ import { CategoryRepositoryPort } from '@modules/product-catalog/domain/ports/ca
 import { CategoryEntity } from '@modules/product-catalog/domain/category.entity';
 import { CATEGORY_REPO } from '@modules/product-catalog/constants';
 
+export type CreateCategoryCommandResponse = Result<
+  AggregateID,
+  CategoryAlreadyExistsError
+>;
+
 @CommandHandler(CreateCategoryCommand)
 export class CreateCategoryCommandHandler implements ICommandHandler {
   constructor(

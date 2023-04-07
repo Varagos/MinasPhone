@@ -9,16 +9,24 @@ import { CATEGORY_REPO } from './constants';
 import { CategoryRepository } from './infra/database/category.repository';
 import { CqrsModule } from '@nestjs/cqrs';
 import { FindCategoryByIdHttpController } from './application/categories/queries/find-category-by-id/find-category-by-id.http.controller';
+import { CreateCategoryHttpController } from './application/categories/commands/create-category/create-category.http.controller';
+import { DeleteCategoryHttpController } from './application/categories/commands/delete-category/delete-category.http.controller';
+import { UpdateCategoryHttpController } from './application/categories/commands/update-category/update-category.http.controller';
+import { UpdateCategoryCommandHandler } from './application/categories/commands/update-category/update-category.handler';
 
 const httpControllers = [
   FindCategoriesHttpController,
   FindCategoryByIdHttpController,
+  CreateCategoryHttpController,
+  DeleteCategoryHttpController,
+  UpdateCategoryHttpController,
 ];
 
 const commandHandlers: Provider[] = [
   CreateCategoryCommandHandler,
   CreateCategoryCommandHandler,
   DeleteCategoryCommandHandler,
+  UpdateCategoryCommandHandler,
 ];
 
 const queryHandlers: Provider[] = [

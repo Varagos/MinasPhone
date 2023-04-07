@@ -57,7 +57,7 @@ export class FindCategoriesHttpController {
         }),
         slug: category.slug,
         name: category.name,
-        parentId: category.parent_id ?? undefined,
+        parentId: category.parent_id,
       })),
     });
   }

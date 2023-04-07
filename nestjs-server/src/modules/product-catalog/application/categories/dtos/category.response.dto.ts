@@ -17,5 +17,5 @@ export class CategoryResponseDto extends ResponseBase {
   @ApiProperty({
     description: 'Optional parent category id',
   })
-  parentId?: string;
+  parentId: string | null;
 }

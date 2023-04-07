@@ -39,7 +39,7 @@ export class CategoryMapper
       props: {
         name: record.name,
         slug: record.slug,
-        parentId: record.parent_id ?? undefined,
+        parentId: record.parent_id ?? null,
       },
     });
     return entity;

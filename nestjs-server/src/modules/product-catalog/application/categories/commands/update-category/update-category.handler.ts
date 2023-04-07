@@ -1,13 +1,22 @@
-import { NotFoundException } from '@libs/exceptions';
+import {
+  InternalServerErrorException,
+  NotFoundException,
+} from '@libs/exceptions';
 import { Inject } from '@nestjs/common';
 import { CommandHandler } from '@nestjs/cqrs';
 import { Err, Ok, Result } from 'oxide.ts';
 import { CATEGORY_REPO } from '@modules/product-catalog/constants';
 import { CategoryRepositoryPort } from '@modules/product-catalog/domain/ports/category.repository.port';
 import { UpdateCategoryCommand } from './update-category.command';
+import { ForeignKeyIntegrityConstraintViolationError } from 'slonik';
+
+export type UpdateCategoryCommandResponse = Result<
+  void,
+  NotFoundException | InternalServerErrorException
+>;
 
 @CommandHandler(UpdateCategoryCommand)
-export class DeleteCategoryCommandHandler {
+export class UpdateCategoryCommandHandler {
   constructor(
     @Inject(CATEGORY_REPO)
     private readonly categoryRepo: CategoryRepositoryPort,
@@ -15,7 +24,7 @@ export class DeleteCategoryCommandHandler {
 
   async execute(
     command: UpdateCategoryCommand,
-  ): Promise<Result<void, NotFoundException>> {
+  ): Promise<UpdateCategoryCommandResponse> {
     const found = await this.categoryRepo.findOneById(command.id);
 
     if (found.isNone()) {
@@ -27,11 +36,18 @@ export class DeleteCategoryCommandHandler {
       category.updateName(command.name);
     }
 
-    if (command.parentId !== undefined) {
+    if (command.parentId) {
       category.updateParentId(command.parentId);
     }
 
-    await this.categoryRepo.update(category);
-    return Ok(undefined);
+    try {
+      await this.categoryRepo.update(category);
+      return Ok(undefined);
+    } catch (error) {
+      if (error instanceof ForeignKeyIntegrityConstraintViolationError) {
+        return Err(new NotFoundException('Parent category not found'));
+      }
+      return Err(new InternalServerErrorException());
+    }
   }
 }

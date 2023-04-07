@@ -4,12 +4,12 @@ import { randomUUID } from 'crypto';
 interface CategoryProps {
   slug: string;
   name: string;
-  parentId?: string;
+  parentId: string | null;
 }
 interface CreateCategoryProps {
   slug: string;
   name: string;
-  parentId?: string;
+  parentId: string | null;
 }
 
 export class CategoryEntity extends AggregateRoot<CategoryProps> {

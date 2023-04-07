@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import supertokens from 'supertokens-node';
 import { AppModule } from './app.module';
 import { SupertokensExceptionFilter } from '@modules/customers/infra/services/super-tokens/auth.filter';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,6 +11,7 @@ async function bootstrap() {
     allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
     credentials: true,
   });
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalFilters(new SupertokensExceptionFilter());
   app.setGlobalPrefix('api', {
     exclude: ['auth'],

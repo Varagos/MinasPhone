@@ -27,7 +27,7 @@ export const categorySchema = z.object({
   // ),
   slug: z.string().min(1).max(255),
   name: z.string().min(1).max(255),
-  parent_id: z.string().uuid().nullable().optional(),
+  parent_id: z.string().uuid().nullable(),
 });
 
 export type CategoryModel = z.TypeOf<typeof categorySchema>;

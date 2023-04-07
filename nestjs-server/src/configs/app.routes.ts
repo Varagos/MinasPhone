@@ -17,6 +17,7 @@ export const routesV1 = {
     root: categoriesRoot,
     getOne: `/${categoriesRoot}/:id`,
     delete: `/${categoriesRoot}/:id`,
+    update: `/${categoriesRoot}/:id`,
   },
   user: {
     root: usersRoot,

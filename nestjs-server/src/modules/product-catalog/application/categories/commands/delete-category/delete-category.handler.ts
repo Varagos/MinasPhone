@@ -6,6 +6,8 @@ import { CATEGORY_REPO } from '@modules/product-catalog/constants';
 import { CategoryRepositoryPort } from '@modules/product-catalog/domain/ports/category.repository.port';
 import { DeleteCategoryCommand } from './delete-category.command';
 
+export type DeleteCategoryCommandResponse = Result<boolean, NotFoundException>;
+
 @CommandHandler(DeleteCategoryCommand)
 export class DeleteCategoryCommandHandler {
   constructor(

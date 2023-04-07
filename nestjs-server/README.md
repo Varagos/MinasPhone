@@ -73,3 +73,25 @@ Some potential bounded contexts/modules
 - Analytics: This bounded context would be responsible for tracking and analyzing user behavior and customer data, such as clickstream data, user demographics, and other analytics-related features.
 
 The cart can be seen as a part of the Order Management bounded context, as it is directly related to the order process. It involves adding products to a cart, updating the cart contents, and eventually checking out and placing an order. However, depending on the complexity of your application, the cart could potentially be treated as a separate bounded context on its own.
+
+### To create a users table using @slonik/migrator, you would need to follow these steps:
+
+Create a new SQL file in the migrations directory with a name that describes the action you want to perform. For example, 20220404123456*create_users_table.sql. The format of the filename should be <timestamp>*<description>.sql, where the timestamp is in the format YYYYMMDDHHmmss.
+
+In the SQL file, write the SQL statements to create the users table. For example:
+
+```sql
+Copy code
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL
+);
+```
+
+Run the migration:create script to create a new migration file in the migrations directory. The script should prompt you for a name for the migration file. Enter a name that describes the action you want to perform, such as "create_users_table".
+
+Run the migration:up script to apply the new migration and create the users table in the database. The up command applies all migrations that have not been applied yet.
+
+Note that you can also use the migration:down script to roll back a migration if necessary.

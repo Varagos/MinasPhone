@@ -1,4 +1,4 @@
-import { AggregateID, AggregateRoot } from '@libs/ddd/index.js';
+import { AggregateID, AggregateRoot } from '@libs/ddd/index';
 import { randomUUID } from 'crypto';
 
 interface CategoryProps {

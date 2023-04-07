@@ -2,8 +2,8 @@ import { NotFoundException } from '@libs/exceptions';
 import { Inject } from '@nestjs/common';
 import { CommandHandler } from '@nestjs/cqrs';
 import { Err, Ok, Result } from 'oxide.ts';
-import { CATEGORY_REPO } from '@modules/product-catalog/contants.js';
-import { CategoryRepositoryPort } from '@modules/product-catalog/domain/ports/category.repository.port.js';
+import { CATEGORY_REPO } from '@modules/product-catalog/constants';
+import { CategoryRepositoryPort } from '@modules/product-catalog/domain/ports/category.repository.port';
 import { UpdateCategoryCommand } from './update-category.command';
 
 @CommandHandler(UpdateCategoryCommand)

@@ -1,6 +1,6 @@
-import { ArgumentNotProvidedException } from '../exceptions';
+import { ArgumentNotProvidedException } from '../exceptions/index';
 import { Guard } from '../guard';
-import { convertPropsToObject } from '../utils';
+import { convertPropsToObject } from '../utils/index';
 
 /**
  * Domain Primitive is an object that contains only a single value

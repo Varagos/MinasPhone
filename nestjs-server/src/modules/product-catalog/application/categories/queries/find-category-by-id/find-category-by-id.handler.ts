@@ -5,12 +5,14 @@ import { DatabasePool, sql } from 'slonik';
 import {
   CategoryModel,
   categorySchema,
-} from '@modules/product-catalog/infra/database/category.repository.js';
-import { FindCategoryByIdQuery } from './find-category-by-id.query.js';
+} from '@modules/product-catalog/infra/database/category.repository';
+import { FindCategoryByIdQuery } from './find-category-by-id.query';
 import { NotFoundException } from '@libs/exceptions';
 
+export type FindCategoryByIdQueryResponse = Result<CategoryModel, Error>;
+
 @QueryHandler(FindCategoryByIdQuery)
-export class FindCategoriesQueryHandler implements IQueryHandler {
+export class FindCategoryByIdQueryHandler implements IQueryHandler {
   constructor(
     @InjectPool()
     private readonly pool: DatabasePool,
@@ -24,7 +26,7 @@ export class FindCategoriesQueryHandler implements IQueryHandler {
    */
   async execute(
     query: FindCategoryByIdQuery,
-  ): Promise<Result<CategoryModel, Error>> {
+  ): Promise<FindCategoryByIdQueryResponse> {
     /**
      * Constructing a query with Slonik.
      * More info: https://contra.com/p/AqZWWoUB-writing-composable-sql-using-java-script
@@ -33,7 +35,7 @@ export class FindCategoriesQueryHandler implements IQueryHandler {
          SELECT *
          FROM categories
          WHERE
-            ${`id = ${query.id}`}`;
+          id = ${query.id}`;
 
     const result = await this.pool.maybeOne(statement);
     if (!result) {

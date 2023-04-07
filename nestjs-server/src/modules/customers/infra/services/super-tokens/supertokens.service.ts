@@ -13,7 +13,7 @@ import EmailPassword from 'supertokens-node/recipe/emailpassword/index.js';
 import UserRoles from 'supertokens-node/recipe/userroles/index.js';
 
 import Dashboard from 'supertokens-node/recipe/dashboard/index.js';
-import { Roles, UserRolesService } from './roles/index.js';
+import { Roles, UserRolesService } from './roles/index';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
 const adminEmails = ['mark.girgis13@gmail.com'];

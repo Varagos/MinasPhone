@@ -1,13 +1,13 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { Ok, Result } from 'oxide.ts';
+import { Err, Ok, Result } from 'oxide.ts';
 import { InjectPool } from 'nestjs-slonik';
-import { DatabasePool, sql } from 'slonik';
-import { FindCategoriesQuery } from './find-categories.query.js';
-import { Paginated } from '@libs/ddd/index.js';
+import { DatabasePool, SchemaValidationError, sql } from 'slonik';
+import { FindCategoriesQuery } from './find-categories.query';
+import { Paginated } from '@libs/ddd/index';
 import {
   CategoryModel,
   categorySchema,
-} from '@modules/product-catalog/infra/database/category.repository.js';
+} from '@modules/product-catalog/infra/database/category.repository';
 
 @QueryHandler(FindCategoriesQuery)
 export class FindCategoriesQueryHandler implements IQueryHandler {
@@ -40,7 +40,6 @@ export class FindCategoriesQueryHandler implements IQueryHandler {
          OFFSET ${query.offset}`;
 
     const records = await this.pool.query(statement);
-
     return Ok(
       new Paginated({
         data: records.rows,

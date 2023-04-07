@@ -17,9 +17,17 @@ export const categorySchema = z.object({
   id: z.string().uuid(),
   created_at: z.preprocess((val: any) => new Date(val), z.date()),
   updated_at: z.preprocess((val: any) => new Date(val), z.date()),
+  // created_at: z.preprocess(
+  //   (val: any) => new Date(val),
+  //   z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/),
+  // ),
+  // updated_at: z.preprocess(
+  //   (val: any) => new Date(val),
+  //   z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/),
+  // ),
   slug: z.string().min(1).max(255),
   name: z.string().min(1).max(255),
-  parent_id: z.string().uuid().optional(),
+  parent_id: z.string().uuid().nullable().optional(),
 });
 
 export type CategoryModel = z.TypeOf<typeof categorySchema>;

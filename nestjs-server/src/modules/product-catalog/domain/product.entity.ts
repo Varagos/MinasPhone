@@ -1,5 +1,5 @@
-import { AggregateID, AggregateRoot } from '@libs/ddd/index.js';
-import { ArgumentOutOfRangeException } from '@libs/exceptions/exceptions.js';
+import { AggregateID, AggregateRoot } from '@libs/ddd/index';
+import { ArgumentOutOfRangeException } from '@libs/exceptions/exceptions';
 import { randomUUID } from 'crypto';
 
 interface ProductProps {

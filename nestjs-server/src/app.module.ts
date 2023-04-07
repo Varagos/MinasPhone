@@ -10,11 +10,29 @@ import { SuperTokensAuthModule } from './modules/customers/infra/services/super-
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { RequestContextModule } from 'nestjs-request-context';
 import { CqrsModule } from '@nestjs/cqrs';
+import { SlonikModule } from 'nestjs-slonik';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ContextInterceptor } from '@libs/application/context/ContextInterceptor';
+import { ExceptionInterceptor } from '@libs/application/interceptors/exception.interceptor';
+import { postgresConnectionUri } from '@config/database.config';
+const interceptors = [
+  {
+    provide: APP_INTERCEPTOR,
+    useClass: ContextInterceptor,
+  },
+  {
+    provide: APP_INTERCEPTOR,
+    useClass: ExceptionInterceptor,
+  },
+];
 @Module({
   imports: [
     EventEmitterModule.forRoot(),
     RequestContextModule,
     CqrsModule,
+    SlonikModule.forRoot({
+      connectionUri: postgresConnectionUri,
+    }),
 
     // Modules
     OrdersModule,
@@ -25,6 +43,6 @@ import { CqrsModule } from '@nestjs/cqrs';
     AnalyticsModule,
     SuperTokensAuthModule,
   ],
-  providers: [],
+  providers: [...interceptors],
 })
 export class AppModule {}

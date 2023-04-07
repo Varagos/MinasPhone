@@ -3,11 +3,11 @@ import { Err, Ok, Result } from 'oxide.ts';
 import { AggregateID } from '@libs/ddd';
 import { ConflictException } from '@libs/exceptions';
 import { Inject } from '@nestjs/common';
-import { CreateCategoryCommand } from './create-category.command.js';
-import { CATEGORY_REPO } from '@modules/product-catalog/contants.js';
-import { CategoryAlreadyExistsError } from '@modules/product-catalog/domain/category.errors.js';
-import { CategoryRepositoryPort } from '@modules/product-catalog/domain/ports/category.repository.port.js';
-import { CategoryEntity } from '@modules/product-catalog/domain/category.entity.js';
+import { CreateCategoryCommand } from './create-category.command';
+import { CategoryAlreadyExistsError } from '@modules/product-catalog/domain/category.errors';
+import { CategoryRepositoryPort } from '@modules/product-catalog/domain/ports/category.repository.port';
+import { CategoryEntity } from '@modules/product-catalog/domain/category.entity';
+import { CATEGORY_REPO } from '@modules/product-catalog/constants';
 
 @CommandHandler(CreateCategoryCommand)
 export class CreateCategoryCommandHandler implements ICommandHandler {

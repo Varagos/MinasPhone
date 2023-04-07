@@ -7,12 +7,12 @@ import {
 } from '@nestjs/common';
 
 import { AuthMiddleware } from './auth.middleware';
-import {
-  ConfigInjectionToken,
-  AuthModuleConfig,
-  UserRegisterEventTopicToken,
-} from './config.interface';
 import { SupertokensService } from './supertokens.service';
+import {
+  AuthModuleConfig,
+  ConfigInjectionToken,
+  UserRegisterEventTopicToken,
+} from './config.interface.js';
 
 @Module({
   providers: [],

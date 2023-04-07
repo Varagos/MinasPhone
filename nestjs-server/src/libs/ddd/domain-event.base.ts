@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { ArgumentNotProvidedException } from '../exceptions';
+import { ArgumentNotProvidedException } from '../exceptions/index';
 import { Guard } from '../guard';
 import { RequestContextService } from '@libs/application/context/AppRequestContext';
 

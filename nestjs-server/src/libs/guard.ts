@@ -52,4 +52,22 @@ export class Guard {
     }
     return false;
   }
+
+  static isBase64(str: string): boolean {
+    if (str === '' || str.trim() === '') {
+      return false;
+    }
+
+    try {
+      const decoded = atob(str);
+      const encoded = btoa(decoded);
+      return encoded === str;
+    } catch (e) {
+      return false;
+    }
+  }
+  static isAllowedMimeType(mimeType: string): boolean {
+    const allowedMimeTypes = ['image/png', 'image/jpeg'];
+    return allowedMimeTypes.includes(mimeType);
+  }
 }

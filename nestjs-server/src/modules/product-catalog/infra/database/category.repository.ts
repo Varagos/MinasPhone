@@ -17,14 +17,6 @@ export const categorySchema = z.object({
   id: z.string().uuid(),
   created_at: z.preprocess((val: any) => new Date(val), z.date()),
   updated_at: z.preprocess((val: any) => new Date(val), z.date()),
-  // created_at: z.preprocess(
-  //   (val: any) => new Date(val),
-  //   z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/),
-  // ),
-  // updated_at: z.preprocess(
-  //   (val: any) => new Date(val),
-  //   z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/),
-  // ),
   slug: z.string().min(1).max(255),
   name: z.string().min(1).max(255),
   parent_id: z.string().uuid().nullable(),
@@ -59,22 +51,4 @@ export class CategoryRepository
 
     return this.mapper.toDomain(category);
   }
-
-  //   async updateAddress(user: CategoryEntity): Promise<void> {
-  //     const address = user.getPropsCopy().address;
-  //     const statement = sql.type(categorySchema)`
-  //     UPDATE "users" SET
-  //     street = ${address.street}, country = ${address.country}, "postalCode" = ${address.postalCode}
-  //     WHERE id = ${user.id}`;
-
-  //     await this.writeQuery(statement, user);
-  //   }
-
-  //   async findOneByEmail(email: string): Promise<CategoryEntity> {
-  //     const user = await this.pool.one(
-  //       sql.type(categorySchema)`SELECT * FROM "users" WHERE email = ${email}`,
-  //     );
-
-  //     return this.mapper.toDomain(user);
-  //   }
 }

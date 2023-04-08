@@ -7,6 +7,7 @@
 const usersRoot = 'users';
 const walletsRoot = 'wallets';
 const categoriesRoot = 'categories';
+const productsRoot = 'products';
 
 // Api Versions
 const v1 = 'v1';
@@ -18,6 +19,9 @@ export const routesV1 = {
     getOne: `/${categoriesRoot}/:id`,
     delete: `/${categoriesRoot}/:id`,
     update: `/${categoriesRoot}/:id`,
+  },
+  product: {
+    root: productsRoot,
   },
   user: {
     root: usersRoot,

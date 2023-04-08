@@ -1,6 +1,6 @@
 import { AggregateID, AggregateRoot } from '@libs/ddd/index';
-import { ArgumentOutOfRangeException } from '@libs/exceptions/exceptions';
 import { randomUUID } from 'crypto';
+import { Image } from './value-objects/image.value-object';
 
 interface ProductProps {
   name: string;
@@ -9,11 +9,9 @@ interface ProductProps {
   price: number;
   quantity: number;
   active: boolean;
-  mediaFileName: string;
-  sku: string;
+  image: Image;
+  sku: string | null;
   categoryId: string;
-
-  // mediaUrl?: string;
 }
 interface CreateProductProps {
   name: string;
@@ -23,13 +21,13 @@ interface CreateProductProps {
   quantity: number;
   active: boolean;
   mediaFileName: string;
-  sku: string;
+  image: Image;
+  sku: string | null;
   categoryId: string;
-
   // mediaUrl?: string;
 }
 
-export class Product extends AggregateRoot<ProductProps> {
+export class ProductEntity extends AggregateRoot<ProductProps> {
   public readonly _id: AggregateID;
 
   get id(): AggregateID {
@@ -55,11 +53,11 @@ export class Product extends AggregateRoot<ProductProps> {
     return this.props.quantity;
   }
 
-  get mediaFileName(): string {
-    return this.props.mediaFileName;
+  get image(): Image {
+    return this.props.image;
   }
 
-  get sku(): string {
+  get sku(): string | null {
     return this.props.sku;
   }
 
@@ -75,7 +73,7 @@ export class Product extends AggregateRoot<ProductProps> {
   //   return this.props.mediaUrl;
   // }
 
-  public static create(props: CreateProductProps): Product {
+  public static create(props: CreateProductProps): ProductEntity {
     const id = randomUUID();
 
     const defaultProps = {
@@ -84,27 +82,16 @@ export class Product extends AggregateRoot<ProductProps> {
       name: props.name,
       description: props.description,
       quantity: props.quantity,
-      mediaFileName: props.mediaFileName,
+      image: props.image,
       sku: props.sku,
       price: props.price,
       categoryId: props.categoryId,
     };
-    const product = new Product({ props: defaultProps, id });
+    const product = new ProductEntity({ props: defaultProps, id });
 
     return product;
   }
 
-  private removeUndefinedProps(
-    props: Record<string, unknown>,
-  ): Partial<ProductProps> {
-    const propsCopy = { ...props };
-    for (const propName in propsCopy) {
-      if (props[propName] === undefined) {
-        delete props[propName];
-      }
-    }
-    return propsCopy;
-  }
   validate(): void {
     // const guardArgs: IGuardArgument[] = [
     //   { argument: this.props.slug, argumentName: 'slug' },

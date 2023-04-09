@@ -23,7 +23,7 @@ export const productSchema = z.object({
   price: z.number().min(0),
   quantity: z.number().min(0),
   active: z.boolean(),
-  image: z.string().min(1), // assuming you will store the image as a base64 string
+  image: z.instanceof(Buffer),
   sku: z.string().nullable(),
   category_id: z.string().uuid(),
 });

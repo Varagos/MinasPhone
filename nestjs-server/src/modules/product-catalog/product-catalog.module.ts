@@ -13,6 +13,10 @@ import { CreateCategoryHttpController } from './application/categories/commands/
 import { DeleteCategoryHttpController } from './application/categories/commands/delete-category/delete-category.http.controller';
 import { UpdateCategoryHttpController } from './application/categories/commands/update-category/update-category.http.controller';
 import { UpdateCategoryCommandHandler } from './application/categories/commands/update-category/update-category.handler';
+import { FindProductsQueryHandler } from './application/products/queries/find-products/find-products.handler';
+import { FindProductsHttpController } from './application/products/queries/find-products/find-products.http.controller';
+import { FindProductImageQueryHandler } from './application/products/queries/find-image/find-image.handler';
+import { FindProductImageHttpController } from './application/products/queries/find-image/find-image.http.controller';
 
 const httpControllers = [
   FindCategoriesHttpController,
@@ -20,6 +24,8 @@ const httpControllers = [
   CreateCategoryHttpController,
   DeleteCategoryHttpController,
   UpdateCategoryHttpController,
+  FindProductsHttpController,
+  FindProductImageHttpController,
 ];
 
 const commandHandlers: Provider[] = [
@@ -32,6 +38,8 @@ const commandHandlers: Provider[] = [
 const queryHandlers: Provider[] = [
   FindCategoriesQueryHandler,
   FindCategoryByIdQueryHandler,
+  FindProductsQueryHandler,
+  FindProductImageQueryHandler,
 ];
 
 const mappers: Provider[] = [CategoryMapper];

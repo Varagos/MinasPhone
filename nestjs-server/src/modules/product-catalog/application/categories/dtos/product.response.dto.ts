@@ -38,17 +38,17 @@ export class ProductResponseDto extends ResponseBase {
   })
   active: boolean;
 
-  @ApiProperty({
-    example: 'http://example.com/image.jpg',
-    description: "URL for the product's image",
-  })
-  imageUrl: string;
+  // @ApiProperty({
+  //   example: 'http://example.com/image.jpg',
+  //   description: "URL for the product's image",
+  // })
+  // imageUrl: string;
 
-  @ApiProperty({
-    example: 'image/jpeg',
-    description: "MIME type for the product's image",
-  })
-  imageMimeType: string;
+  // @ApiProperty({
+  //   example: 'image/jpeg',
+  //   description: "MIME type for the product's image",
+  // })
+  // imageMimeType: string;
 
   @ApiProperty({
     example: '1d239fa7-5102-4c0d-b99d-bfc9fa1d867f',

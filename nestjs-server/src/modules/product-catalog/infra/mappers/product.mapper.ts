@@ -39,7 +39,7 @@ export class ProductMapper {
   }
   toDomain(productModel: ProductModel): ProductEntity {
     const image = new Image({
-      data: productModel.image,
+      data: productModel.image as any,
       // TODO: get mime type from first 8 bytes of image
       mimeType: 'image/png',
     });
@@ -72,7 +72,7 @@ export class ProductMapper {
     response.price = props.price;
     response.quantity = props.quantity;
     response.active = props.active;
-    response.imageUrl = `/${routesV1.product.root}/${props.slug}/image`;
+    // response.imageUrl = `/${routesV1.product.root}/${props.id}/image`;
     // response.sku = props.sku;
     response.categoryId = props.categoryId;
     return response;

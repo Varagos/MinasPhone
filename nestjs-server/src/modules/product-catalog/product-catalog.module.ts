@@ -21,6 +21,10 @@ import { CreateProductHttpController } from './application/products/commands/cre
 import { CreateProductCommandHandler } from './application/products/commands/create-product/create-product.handler';
 import { ProductRepository } from './infra/database/product.repository';
 import { ProductMapper } from './infra/mappers/product.mapper';
+import { DeleteProductCommandHandler } from './application/products/commands/delete-product/delete-product.handler';
+import { DeleteProductHttpController } from './application/products/commands/delete-product/delete-product.http.controller';
+import { UpdateProductHttpController } from './application/products/commands/update-product/update-product.http.controller';
+import { UpdateProductCommandHandler } from './application/products/commands/update-product/update-product.handler';
 
 const httpControllers = [
   FindCategoriesHttpController,
@@ -31,6 +35,8 @@ const httpControllers = [
   FindProductsHttpController,
   FindProductImageHttpController,
   CreateProductHttpController,
+  DeleteProductHttpController,
+  UpdateProductHttpController,
 ];
 
 const commandHandlers: Provider[] = [
@@ -39,6 +45,8 @@ const commandHandlers: Provider[] = [
   DeleteCategoryCommandHandler,
   UpdateCategoryCommandHandler,
   CreateProductCommandHandler,
+  DeleteProductCommandHandler,
+  UpdateProductCommandHandler,
 ];
 
 const queryHandlers: Provider[] = [

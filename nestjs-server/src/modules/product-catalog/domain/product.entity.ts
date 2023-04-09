@@ -98,6 +98,45 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
 
     return product;
   }
+  delete(): void {
+    // this.addEvent(
+    // new ProductDeletedDomainEvent({
+    //   aggregateId: this.id,
+    // }),
+    // );
+  }
+
+  public updateName(name: string): void {
+    this.props.name = name;
+  }
+
+  public updateDescription(description: string): void {
+    this.props.description = description;
+  }
+
+  public updatePrice(price: number): void {
+    this.props.price = price;
+  }
+
+  public updateQuantity(quantity: number): void {
+    this.props.quantity = quantity;
+  }
+
+  public updateActiveStatus(active: boolean): void {
+    this.props.active = active;
+  }
+
+  public updateSku(sku: string): void {
+    this.props.sku = sku;
+  }
+
+  public updateCategoryId(categoryId: string): void {
+    this.props.categoryId = categoryId;
+  }
+
+  public updateImage(img: Image): void {
+    this.props.image = img;
+  }
 
   validate(): void {
     // const guardArgs: IGuardArgument[] = [

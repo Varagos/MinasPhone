@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ProductEntity } from '@modules/product-catalog/domain/product.entity';
 import { ProductModel, productSchema } from '../database/product.repository';
-import { Image, MimeType } from '../../domain/value-objects/image.value-object';
+import { Image } from '../../domain/value-objects/image.value-object';
 import { ProductResponseDto } from '@modules/product-catalog/application/categories/dtos/product.response.dto';
-import { routesV1 } from '@config/app.routes';
 @Injectable()
 export class ProductMapper {
   toPersistence(product: ProductEntity): ProductModel {

@@ -9,10 +9,6 @@ import { ProductRepositoryPort } from '@modules/product-catalog/domain/ports/pro
 import { SqlRepositoryBase } from '@libs/db/sql-repository.base';
 import { ProductMapper } from '../mappers/product.mapper';
 
-const mimeTypeValues = Object.values(MimeType).filter(
-  (value) => typeof value === 'string',
-) as string[];
-
 /**
  * Runtime validation of user object for extra safety (in case database schema changes).
  * https://github.com/gajus/slonik#runtime-validation

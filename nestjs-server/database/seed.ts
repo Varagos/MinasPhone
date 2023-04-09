@@ -2,7 +2,6 @@
 import { getMigrator } from './getMigrator';
 import * as fs from 'fs';
 import * as path from 'path';
-import { QueryFunction } from 'slonik';
 
 // Utility function to run a migration
 export const seed = async (query: any, file: string) => {

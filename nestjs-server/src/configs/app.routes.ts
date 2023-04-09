@@ -23,6 +23,9 @@ export const routesV1 = {
   product: {
     root: productsRoot,
     image: `/${productsRoot}/:id/image`,
+    getOne: `/${productsRoot}/:id`,
+    delete: `/${productsRoot}/:id`,
+    update: `/${productsRoot}/:id`,
   },
   user: {
     root: usersRoot,

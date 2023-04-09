@@ -1,1 +1,2 @@
+export const PRODUCT_REPO = 'PRODUCT_REPO';
 export const CATEGORY_REPO = 'CATEGORY_REPO';

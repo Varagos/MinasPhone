@@ -17,7 +17,7 @@ import { Paginated } from '@libs/ddd';
 import { ResponseBase } from '@libs/api/response.base';
 import { routesV1 } from '@config/app.routes';
 import { ProductPaginatedResponseDto } from '@modules/product-catalog/application/categories/dtos/product.paginated.response.dto';
-import { ProductModel } from '@modules/product-catalog/infra/database/product.entity';
+import { ProductModel } from '@modules/product-catalog/infra/database/product.repository';
 
 @Controller(routesV1.version)
 export class FindProductsHttpController {

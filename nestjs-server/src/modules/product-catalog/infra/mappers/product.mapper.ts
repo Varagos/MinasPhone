@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ProductEntity } from '@modules/product-catalog/domain/product.entity';
-import { ProductModel, productSchema } from '../database/product.entity';
-import { Image } from '../../domain/value-objects/image.value-object';
+import { ProductModel, productSchema } from '../database/product.repository';
+import { Image, MimeType } from '../../domain/value-objects/image.value-object';
 import { ProductResponseDto } from '@modules/product-catalog/application/categories/dtos/product.response.dto';
 import { routesV1 } from '@config/app.routes';
 @Injectable()
@@ -32,16 +32,16 @@ export class ProductMapper {
       price,
       quantity,
       active,
-      image: image,
+      image_data: image.data,
+      image_mimetype: image.mimeType,
       sku,
       category_id: categoryId,
     });
   }
   toDomain(productModel: ProductModel): ProductEntity {
     const image = new Image({
-      data: productModel.image as any,
-      // TODO: get mime type from first 8 bytes of image
-      mimeType: 'image/png',
+      data: productModel.image_data,
+      mimeType: productModel.image_mimetype,
     });
     // Get mimetype from image
     // const buffer = Buffer.from(productModel.image, 'base64');

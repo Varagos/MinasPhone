@@ -16,7 +16,7 @@ import { Result, match } from 'oxide.ts';
 import { FindProductImageQuery } from './find-products.query';
 import { routesV1 } from '@config/app.routes';
 import { ProductPaginatedResponseDto } from '@modules/product-catalog/application/categories/dtos/product.paginated.response.dto';
-import { ProductModel } from '@modules/product-catalog/infra/database/product.entity';
+import { ProductModel } from '@modules/product-catalog/infra/database/product.repository';
 import { NotFoundException } from '@libs/exceptions';
 
 @Controller(routesV1.version)
@@ -41,25 +41,31 @@ export class FindProductImageHttpController {
 
     return match(result, {
       Ok: (product) => {
-        const imageData = product.image;
-
-        console.log(imageData);
-        const base64EncodedString = imageData.toString('utf-8');
-        // console.log(base64EncodedString);
-
-        const matches = base64EncodedString.match(
-          /^data:([A-Za-z-+\/]+);base64,(.+)$/,
-        )!;
-        const mimeType = matches[1]; // extract the mime type
-        const base64Data = matches[2]; // extract the base64-encoded data
-
-        // const data = base64EncodedString.split(',')[1]
-        const img = Buffer.from(base64Data, 'base64');
+        /**TEMP */
         res.writeHead(200, {
-          'Content-Type': mimeType ?? 'image/jpeg',
-          'Content-Length': img.length,
+          'Content-Type': product.image_mimetype,
+          'Content-Length': product.image_data.length,
         });
-        return res.end(img);
+        return res.end(product.image_data);
+
+        //**TEMPO */
+        // console.log(imageData);
+        // const base64EncodedString = imageData.toString('utf-8');
+        // // console.log(base64EncodedString);
+
+        // const matches = base64EncodedString.match(
+        //   /^data:([A-Za-z-+\/]+);base64,(.+)$/,
+        // )!;
+        // const mimeType = matches[1]; // extract the mime type
+        // const base64Data = matches[2]; // extract the base64-encoded data
+
+        // const data = base64EncodedString.split(',')[1];
+        // const img = Buffer.from(base64Data, 'base64');
+        // res.writeHead(200, {
+        //   'Content-Type': mimeType ?? 'image/jpeg',
+        //   'Content-Length': img.length,
+        // });
+        // return res.end(img);
       },
       Err: (error: Error) => {
         if (error instanceof NotFoundException) {

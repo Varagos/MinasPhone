@@ -5,7 +5,7 @@ import { DeleteCategoryCommandHandler } from './application/categories/commands/
 import { FindCategoriesQueryHandler } from './application/categories/queries/find-categories/find-categories.handler';
 import { FindCategoryByIdQueryHandler } from './application/categories/queries/find-category-by-id/find-category-by-id.handler';
 import { CategoryMapper } from './infra/mappers/category.mapper';
-import { CATEGORY_REPO } from './constants';
+import { CATEGORY_REPO, PRODUCT_REPO } from './constants';
 import { CategoryRepository } from './infra/database/category.repository';
 import { CqrsModule } from '@nestjs/cqrs';
 import { FindCategoryByIdHttpController } from './application/categories/queries/find-category-by-id/find-category-by-id.http.controller';
@@ -17,6 +17,10 @@ import { FindProductsQueryHandler } from './application/products/queries/find-pr
 import { FindProductsHttpController } from './application/products/queries/find-products/find-products.http.controller';
 import { FindProductImageQueryHandler } from './application/products/queries/find-image/find-image.handler';
 import { FindProductImageHttpController } from './application/products/queries/find-image/find-image.http.controller';
+import { CreateProductHttpController } from './application/products/commands/create-product/create-product.http.controller';
+import { CreateProductCommandHandler } from './application/products/commands/create-product/create-product.handler';
+import { ProductRepository } from './infra/database/product.repository';
+import { ProductMapper } from './infra/mappers/product.mapper';
 
 const httpControllers = [
   FindCategoriesHttpController,
@@ -26,6 +30,7 @@ const httpControllers = [
   UpdateCategoryHttpController,
   FindProductsHttpController,
   FindProductImageHttpController,
+  CreateProductHttpController,
 ];
 
 const commandHandlers: Provider[] = [
@@ -33,6 +38,7 @@ const commandHandlers: Provider[] = [
   CreateCategoryCommandHandler,
   DeleteCategoryCommandHandler,
   UpdateCategoryCommandHandler,
+  CreateProductCommandHandler,
 ];
 
 const queryHandlers: Provider[] = [
@@ -42,10 +48,11 @@ const queryHandlers: Provider[] = [
   FindProductImageQueryHandler,
 ];
 
-const mappers: Provider[] = [CategoryMapper];
+const mappers: Provider[] = [CategoryMapper, ProductMapper];
 
 const repositories: Provider[] = [
   { provide: CATEGORY_REPO, useClass: CategoryRepository },
+  { provide: PRODUCT_REPO, useClass: ProductRepository },
 ];
 
 @Module({

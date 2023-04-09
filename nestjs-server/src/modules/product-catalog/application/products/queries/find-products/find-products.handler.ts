@@ -7,7 +7,7 @@ import { Paginated } from '@libs/ddd/index';
 import {
   ProductModel,
   productSchema,
-} from '@modules/product-catalog/infra/database/product.entity';
+} from '@modules/product-catalog/infra/database/product.repository';
 
 export type FindProductsResponse = Result<Paginated<ProductModel>, Error>;
 

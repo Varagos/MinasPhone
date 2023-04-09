@@ -211,6 +211,8 @@ export abstract class SqlRepositoryBase<
         propertyNames.push(sql.identifier([column]));
         if (value instanceof Date) {
           values.push(sql.timestamp(value));
+        } else if (value instanceof Buffer) {
+          values.push(sql.binary(value));
         } else {
           values.push(value);
         }

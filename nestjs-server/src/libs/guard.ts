@@ -59,9 +59,12 @@ export class Guard {
     }
 
     try {
-      const decoded = atob(str);
-      const encoded = btoa(decoded);
+      const decodedBinaryData = Buffer.from(str, 'base64');
+      const encoded = decodedBinaryData.toString('base64');
       return encoded === str;
+      // const decoded = Buffer.from(base64Data, 'base64').toString('ascii');
+      // const encoded = Buffer.from(decoded, 'ascii').toString('base64');
+      // return encoded === base64Data;
     } catch (e) {
       return false;
     }

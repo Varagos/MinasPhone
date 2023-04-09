@@ -1,6 +1,7 @@
 import { AggregateID, AggregateRoot } from '@libs/ddd/index';
 import { randomUUID } from 'crypto';
 import { Image } from './value-objects/image.value-object';
+import { customAlphabet } from 'nanoid';
 
 interface ProductProps {
   name: string;
@@ -16,15 +17,13 @@ interface ProductProps {
 interface CreateProductProps {
   name: string;
   description: string;
-  slug: string;
+  // slug: string;
   price: number;
   quantity: number;
   active: boolean;
-  mediaFileName: string;
   image: Image;
   sku: string | null;
   categoryId: string;
-  // mediaUrl?: string;
 }
 
 export class ProductEntity extends AggregateRoot<ProductProps> {
@@ -75,10 +74,18 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
 
   public static create(props: CreateProductProps): ProductEntity {
     const id = randomUUID();
+    const prefix = 'prod_';
+    const length = 10;
+    const slug =
+      prefix +
+      customAlphabet(
+        '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        length,
+      )();
 
     const defaultProps = {
       active: props.active ?? true,
-      slug: props.slug,
+      slug,
       name: props.name,
       description: props.description,
       quantity: props.quantity,

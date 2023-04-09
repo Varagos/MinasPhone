@@ -6,7 +6,7 @@ import { FindProductImageQuery } from './find-products.query';
 import {
   ProductModel,
   productSchema,
-} from '@modules/product-catalog/infra/database/product.entity';
+} from '@modules/product-catalog/infra/database/product.repository';
 import { NotFoundException } from '@libs/exceptions';
 
 export type FindProductsResponse = Result<ProductModel, Error>;

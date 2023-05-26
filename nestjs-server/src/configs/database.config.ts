@@ -10,6 +10,12 @@ export const databaseConfig = {
   username: get('DB_USERNAME').required().asString(),
   password: get('DB_PASSWORD').required().asString(),
   database: get('DB_NAME').required().asString(),
+  endpointId: get('DB_ENDPOINT_ID').asString(),
 };
+console.log({ databaseConfig });
 
-export const postgresConnectionUri = `postgres://${databaseConfig.username}:${databaseConfig.password}@${databaseConfig.host}/${databaseConfig.database}`;
+const postgresConnectionUri = !databaseConfig.endpointId
+  ? `postgres://${databaseConfig.username}:${databaseConfig.password}@${databaseConfig.host}/${databaseConfig.database}`
+  : `postgres://${databaseConfig.username}:${databaseConfig.password}@${databaseConfig.host}/${databaseConfig.database}?options=project%3D${databaseConfig.endpointId}&sslmode=require`;
+
+export { postgresConnectionUri };

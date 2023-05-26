@@ -37,5 +37,6 @@ async function bootstrap() {
 
   await app.listen(8080);
   console.log(`Application is running on: ${await app.getUrl()}`);
+  console.log(`Swagger is running on: ${await app.getUrl()}/api`);
 }
 bootstrap();

@@ -8,17 +8,28 @@ import * as path from 'path';
 const environmentFile: any = {
   development: '../.development.env',
   test: '../.env.test',
-  production: '../.env',
+  production: '../.env.prod',
+  'development:docker': '../.development.docker.env',
 };
 // use .env or .env.test depending on NODE_ENV variable
 const envPath = path.resolve(
   __dirname,
-  process.env.NODE_ENV ? environmentFile[process.env.NODE_ENV] : '../.env',
+  environmentFile[process.env.NODE_ENV ?? 'development'],
 );
 dotenv.config({ path: envPath });
 
 export async function getMigrator() {
-  const dbUrl = `postgres://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}`;
+  const dbUsername = process.env.DB_USERNAME;
+  const dbPassword = process.env.DB_PASSWORD;
+  const dbHost = process.env.DB_HOST;
+  const dbName = process.env.DB_NAME;
+  const dbEndpointId = process.env.DB_ENDPOINT_ID;
+  console.log('env:', process.env.NODE_ENV);
+
+  const dbUrl = !dbEndpointId
+    ? `postgres://${dbUsername}:${dbPassword}@${dbHost}/${dbName}`
+    : `postgres://${dbUsername}:${dbPassword}@${dbHost}/${dbName}?options=project%3D${dbEndpointId}&sslmode=require`;
+
   console.log('envPath', envPath);
   console.log('dbUrl', dbUrl);
   const pool = await createPool(dbUrl);

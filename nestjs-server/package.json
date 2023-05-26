@@ -27,7 +27,9 @@
     "migration:executed:tests": "NODE_ENV=test ts-node database/migrate executed",
     "migration:pending": "ts-node database/migrate pending",
     "migration:pending:tests": "NODE_ENV=test ts-node database/migrate pending",
-    "seed:up": "ts-node database/seed"
+    "seed:up": "ts-node database/seed",
+    "docker:dev:backend": "docker compose up -d --scale backend=0",
+    "docker:prod": "docker compose -f docker-compose.prod.yml up -d --build"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

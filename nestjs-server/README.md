@@ -1,27 +1,3 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
@@ -57,6 +33,75 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## Deployment
+
+### Heroku
+
+app-name=`minas-phone-api`
+
+```bash
+# Set environment variables on Heroku:
+heroku config:set <KEY>=<VALUE> --app <app-name>,
+#  e.g. NODE_ENV=production
+
+# Navigate to the directory containing the Dockerfile: Navigate to the directory where your Dockerfile and your application code resides.
+
+# Build and push your Docker image:
+heroku container:push web --app minas-phone-api
+# to build your Docker image and push it to the Heroku Container Registry.
+
+# Release your Docker image
+heroku container:release web --app minas-phone-api
+# to release your Docker image and deploy your app.
+
+
+# You should now be able to open
+https://minas-phone-api.herokuapp.com/api
+```
+
+### TODO CI/CD
+
+```yaml
+name: Deploy to Heroku
+
+on:
+  push:
+    branches:
+      - main
+  jobs:
+    build-and-deploy:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Login to Heroku Container Registry
+          run: docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
+          env:
+            HEROKU_USERNAME: ${{ secrets.HEROKU_USERNAME }}
+            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+        - name: Build and push Docker image
+          run: |
+            docker build -t registry.heroku.com/$HEROKU_APP_NAME/web .
+            docker push registry.heroku.com/$HEROKU_APP_NAME/web
+          env:
+            HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+
+        - name: Release Docker image
+          run: |
+            heroku container:release web --app $HEROKU_APP_NAME
+          env:
+            HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+```
+
+### Neon
+
+the postgres db is currently hosted on `neon.tech`
+
+### Notes
 
 Some potential bounded contexts/modules
 

@@ -23,7 +23,7 @@ const setupSwagger = (app: INestApplication) => {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', 'http://localhost:3001'],
     allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
     credentials: true,
   });
@@ -35,7 +35,7 @@ async function bootstrap() {
 
   setupSwagger(app);
 
-  await app.listen(8080);
+  await app.listen(process.env.PORT || 8080);
   console.log(`Application is running on: ${await app.getUrl()}`);
   console.log(`Swagger is running on: ${await app.getUrl()}/api`);
 }

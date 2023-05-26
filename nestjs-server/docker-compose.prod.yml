@@ -3,6 +3,7 @@ name: minas_phone_prod
 
 services:
   backend:
+    image: registry.heroku.com/minas-phone-api/backend
     build:
       context: .
       dockerfile: Dockerfile

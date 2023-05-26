@@ -16,6 +16,7 @@ import Dashboard from 'supertokens-node/recipe/dashboard/index.js';
 import { Roles, UserRolesService } from './roles/index';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
+// TODO Fix this
 const adminEmails = ['mark.girgis13@gmail.com'];
 
 // const dto: CreateUserDTO = {

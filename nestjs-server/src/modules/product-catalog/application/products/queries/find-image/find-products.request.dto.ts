@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString, IsUUID } from 'class-validator';
 
-export class FindProductsRequestDto {
+export class FindImageRequestDto {
   @ApiProperty({
     required: false,
     example: 'iphone-12',

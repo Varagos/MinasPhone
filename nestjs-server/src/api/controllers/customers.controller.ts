@@ -4,7 +4,9 @@ import { GetAllUsersQuery } from '@modules/customers/application/queries/get-all
 import { DeleteUserCommand } from '@modules/customers/application/commands/delete-user/delete-user.command';
 import { GetUserByIdQuery } from '@modules/customers/application/queries/get-user-by-id/get-user-by-id.query';
 import { routesV1 } from 'configs/app.routes';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('users')
 @Controller(routesV1.version)
 export class CustomersController {
   constructor(
@@ -16,13 +18,14 @@ export class CustomersController {
   // create(@Body() createCustomerDto: CreateCustomerDto) {
   //   // return this.q.create(createCustomerDto);
   // }
-
+  @ApiOperation({ summary: 'Find all users' })
   @Get(routesV1.user.root)
   findAll() {
     const query = new GetAllUsersQuery();
     return this.queryBus.execute(query);
   }
 
+  @ApiOperation({ summary: 'Find one user' })
   @Get(routesV1.user.getOne)
   findOne(@Param('id') id: string) {
     const query = new GetUserByIdQuery(id);
@@ -37,6 +40,7 @@ export class CustomersController {
   //   return this.customersService.update(+id, updateCustomerDto);
   // }
 
+  @ApiOperation({ summary: 'Delete one user' })
   @Delete(routesV1.user.delete)
   remove(@Param('id') id: string) {
     const command = new DeleteUserCommand(id);

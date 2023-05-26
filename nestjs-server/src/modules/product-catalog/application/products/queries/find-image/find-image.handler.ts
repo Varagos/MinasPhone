@@ -2,7 +2,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Err, Ok, Result } from 'oxide.ts';
 import { InjectPool } from 'nestjs-slonik';
 import { DatabasePool, sql } from 'slonik';
-import { FindProductImageQuery } from './find-products.query';
+import { FindProductImageQuery } from './find-product-image.query';
 import {
   ProductModel,
   productSchema,

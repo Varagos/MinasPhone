@@ -15,6 +15,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ContextInterceptor } from '@libs/application/context/ContextInterceptor';
 import { ExceptionInterceptor } from '@libs/application/interceptors/exception.interceptor';
 import { postgresConnectionUri } from '@config/database.config';
+import { ApiModule } from '@api/api.module';
 const interceptors = [
   {
     provide: APP_INTERCEPTOR,
@@ -42,6 +43,7 @@ const interceptors = [
     MarketingModule,
     AnalyticsModule,
     SuperTokensAuthModule,
+    ApiModule,
   ],
   providers: [...interceptors],
 })

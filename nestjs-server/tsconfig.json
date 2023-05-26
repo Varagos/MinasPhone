@@ -17,7 +17,8 @@
       "@shared/*": ["shared/*"],
       "@libs/*": ["libs/*"],
       "@modules/*": ["modules/*"],
-      "@config/*": ["configs/*"]
+      "@config/*": ["configs/*"],
+      "@api/*": ["api/*"],
     },
     "incremental": true,
     "skipLibCheck": true

@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { CustomersController } from './infra/controllers/customers.controller';
 import { CqrsModule } from '@nestjs/cqrs';
 import { SuperTokensAuthModule } from './infra/services/super-tokens/super-tokens.module';
 import { authConfig } from 'configs/auth.config';
@@ -29,7 +28,6 @@ import { QueryHandlers } from './application/queries/index';
       userRegisteredEventName: USER_REGISTER_EVENT_NAME,
     }),
   ],
-  controllers: [CustomersController],
   providers: [
     UserRegisteredListener,
     ...QueryHandlers,

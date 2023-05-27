@@ -400,3 +400,5 @@ Temporary Items
 .development.docker.env
 .env.prod
 dist
+
+/credentials/*

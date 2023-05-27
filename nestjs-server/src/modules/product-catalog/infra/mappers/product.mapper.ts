@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ProductEntity } from '@modules/product-catalog/domain/product.entity';
 import { ProductModel, productSchema } from '../database/product.repository';
-import { Image } from '../../domain/value-objects/image.value-object';
 import { ProductResponseDto } from '@modules/product-catalog/application/categories/dtos/product.response.dto';
 @Injectable()
 export class ProductMapper {
@@ -16,7 +15,7 @@ export class ProductMapper {
       price,
       quantity,
       active,
-      image,
+      imageUri,
       sku,
       categoryId,
     } = product;
@@ -31,17 +30,12 @@ export class ProductMapper {
       price,
       quantity,
       active,
-      image_data: image.data,
-      image_mimetype: image.mimeType,
+      image_uri: imageUri,
       sku,
       category_id: categoryId,
     });
   }
   toDomain(productModel: ProductModel): ProductEntity {
-    const image = new Image({
-      data: productModel.image_data,
-      mimeType: productModel.image_mimetype,
-    });
     // Get mimetype from image
     // const buffer = Buffer.from(productModel.image, 'base64');
     // const mimeType = fileType(buffer);
@@ -56,7 +50,7 @@ export class ProductMapper {
         price: productModel.price,
         quantity: productModel.quantity,
         active: productModel.active,
-        image,
+        imageUri: productModel.image_uri,
         sku: productModel.sku,
         categoryId: productModel.category_id,
       },
@@ -71,7 +65,7 @@ export class ProductMapper {
     response.price = props.price;
     response.quantity = props.quantity;
     response.active = props.active;
-    // response.imageUrl = `/${routesV1.product.root}/${props.id}/image`;
+    response.imageUrl = props.imageUri;
     // response.sku = props.sku;
     response.categoryId = props.categoryId;
     return response;

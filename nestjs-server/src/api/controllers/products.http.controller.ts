@@ -42,6 +42,8 @@ import { DeleteProductCommandResponse } from '@modules/product-catalog/applicati
 import { UpdateProductRequestDto } from '@modules/product-catalog/application/products/commands/update-product/update-product.request.dto';
 import { UpdateProductCommand } from '@modules/product-catalog/application/products/commands/update-product/update-product.command';
 import { UpdateProductCommandResponse } from '@modules/product-catalog/application/products/commands/update-product/update-product.handler';
+import { UploadProductImageCommand } from '@modules/product-catalog/application/products/commands/upload-image/upload-product-image.command';
+import { UploadImageCommandResponse } from '@modules/product-catalog/application/products/commands/upload-image/upload-product-image.handler';
 
 @ApiTags('products')
 @Controller(routesV1.version)
@@ -68,7 +70,25 @@ export class ProductsHttpController {
   @Post(routesV1.product.root)
   async create(@Body() body: CreateProductRequestDto): Promise<IdResponse> {
     console.log('body', body);
-    const command = new CreateProductCommand(body);
+
+    const { image, ...rest } = body;
+    const uploadImageCommand = new UploadProductImageCommand({
+      image,
+    });
+
+    const uploadImageResult: UploadImageCommandResponse =
+      await this.commandBus.execute(uploadImageCommand);
+    // match and if error return prematurely
+    const imageUrl = match(uploadImageResult, {
+      Ok: (image: string) => image,
+      Err: (error: Error) => {
+        if (error instanceof ArgumentInvalidException)
+          throw new BadRequestException(error.message);
+        throw error;
+      },
+    });
+
+    const command = new CreateProductCommand({ ...rest, imageUri: imageUrl });
 
     const result: CreateProductCommandResponse = await this.commandBus.execute(
       command,
@@ -187,6 +207,7 @@ export class ProductsHttpController {
         price: product.price,
         quantity: product.quantity,
         active: product.active,
+        imageUrl: product.image_uri,
         categoryId: product.category_id,
       })),
     });
@@ -226,6 +247,7 @@ export class ProductsHttpController {
           price: product.price,
           quantity: product.quantity,
           active: product.active,
+          imageUrl: product.image_uri,
           categoryId: product.category_id,
         };
       },
@@ -238,35 +260,35 @@ export class ProductsHttpController {
     });
   }
 
-  @Get(routesV1.product.image)
-  @ApiOperation({ summary: 'Find product Image' })
-  @ApiResponse({
-    status: HttpStatus.OK,
-  })
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  async findImage(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Res() res: Response,
-  ) {
-    const query = new FindProductImageQuery(id);
-    const result: Result<ProductModel, Error> = await this.queryBus.execute(
-      query,
-    );
+  // @Get(routesV1.product.image)
+  // @ApiOperation({ summary: 'Find product Image' })
+  // @ApiResponse({
+  //   status: HttpStatus.OK,
+  // })
+  // @UsePipes(new ValidationPipe({ whitelist: true }))
+  // async findImage(
+  //   @Param('id', ParseUUIDPipe) id: string,
+  //   @Res() res: Response,
+  // ) {
+  //   const query = new FindProductImageQuery(id);
+  //   const result: Result<ProductModel, Error> = await this.queryBus.execute(
+  //     query,
+  //   );
 
-    return match(result, {
-      Ok: (product) => {
-        res.writeHead(200, {
-          'Content-Type': product.image_mimetype,
-          'Content-Length': product.image_data.length,
-        });
-        return res.end(product.image_data);
-      },
-      Err: (error: Error) => {
-        if (error instanceof NotFoundException) {
-          throw new HttpNotFoundException();
-        }
-        throw error;
-      },
-    });
-  }
+  //   return match(result, {
+  //     Ok: (product) => {
+  //       res.writeHead(200, {
+  //         'Content-Type': product.image_mimetype,
+  //         'Content-Length': product.image_data.length,
+  //       });
+  //       return res.end(product.image_data);
+  //     },
+  //     Err: (error: Error) => {
+  //       if (error instanceof NotFoundException) {
+  //         throw new HttpNotFoundException();
+  //       }
+  //       throw error;
+  //     },
+  //   });
+  // }
 }

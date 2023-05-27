@@ -38,11 +38,11 @@ export class ProductResponseDto extends ResponseBase {
   })
   active: boolean;
 
-  // @ApiProperty({
-  //   example: 'http://example.com/image.jpg',
-  //   description: "URL for the product's image",
-  // })
-  // imageUrl: string;
+  @ApiProperty({
+    example: 'http://example.com/image.jpg',
+    description: "URL for the product's image",
+  })
+  imageUrl: string;
 
   // @ApiProperty({
   //   example: 'image/jpeg',

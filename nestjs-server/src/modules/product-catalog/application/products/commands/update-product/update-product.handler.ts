@@ -9,7 +9,6 @@ import { PRODUCT_REPO } from '@modules/product-catalog/constants';
 import { UpdateProductCommand } from './update-product.command';
 import { ForeignKeyIntegrityConstraintViolationError } from 'slonik';
 import { ProductRepositoryPort } from '@modules/product-catalog/domain/ports/product.repository.port';
-import { Image } from '@modules/product-catalog/domain/value-objects/image.value-object';
 
 export type UpdateProductCommandResponse = Result<
   void,
@@ -58,8 +57,7 @@ export class UpdateProductCommandHandler {
       }
 
       if (command.image) {
-        const image = Image.create(command.image);
-        product.updateImage(image);
+        product.updateImage(command.image);
       }
 
       await this.productRepo.update(product);

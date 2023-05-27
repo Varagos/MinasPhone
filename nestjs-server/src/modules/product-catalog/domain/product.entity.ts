@@ -10,7 +10,7 @@ interface ProductProps {
   price: number;
   quantity: number;
   active: boolean;
-  image: Image;
+  imageUri: string;
   sku: string | null;
   categoryId: string;
 }
@@ -21,7 +21,7 @@ interface CreateProductProps {
   price: number;
   quantity: number;
   active: boolean;
-  image: Image;
+  imageUri: string;
   sku: string | null;
   categoryId: string;
 }
@@ -52,8 +52,8 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
     return this.props.quantity;
   }
 
-  get image(): Image {
-    return this.props.image;
+  get imageUri(): string {
+    return this.props.imageUri;
   }
 
   get sku(): string | null {
@@ -89,7 +89,7 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
       name: props.name,
       description: props.description,
       quantity: props.quantity,
-      image: props.image,
+      imageUri: props.imageUri,
       sku: props.sku,
       price: props.price,
       categoryId: props.categoryId,
@@ -134,8 +134,8 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
     this.props.categoryId = categoryId;
   }
 
-  public updateImage(img: Image): void {
-    this.props.image = img;
+  public updateImage(imageUri: string): void {
+    this.props.imageUri = imageUri;
   }
 
   validate(): void {

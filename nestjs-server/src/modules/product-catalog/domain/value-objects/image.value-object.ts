@@ -21,7 +21,7 @@ export class Image extends ValueObject<ImageProps> {
     return this.props.data;
   }
 
-  get mimeType(): string | undefined {
+  get mimeType(): MimeType | undefined {
     return this.props.mimeType;
   }
 

@@ -31,8 +31,7 @@ export class CreateProductCommandHandler implements ICommandHandler {
     command: CreateProductCommand,
   ): Promise<CreateProductCommandResponse> {
     try {
-      const image = Image.create(command.image);
-      const product = ProductEntity.create({ ...command, image });
+      const product = ProductEntity.create({ ...command });
 
       /* Wrapping operation in a transaction to make sure
          that all domain events are processed atomically */

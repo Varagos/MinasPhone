@@ -29,33 +29,31 @@ const myDataProviderWithBase64Image = (dataProvider: DataProvider): DataProvider
      * the `picture` sent property, with `src` and `title` attributes.
      */
 
-    // return Promise.all(newPictures.map(convertFileToBase64))
-    //   .then((base64Pictures) =>
-    //     base64Pictures.map((picture64) => ({
-    //       src: picture64,
-    //       title: `${params.data.title}`,
-    //     }))
-    //   )
-    //   .then((transformedNewPictures) =>
-    //     dataProvider.create(resource, {
-    //       data: {
-    //         ...params.data,
-    //         pictures: [...transformedNewPictures, ...formerPictures],
-    //       },
-    //     })
-    //   );
-
     const base64Image = await convertFileToBase64(params.data.media);
+    // return dataProvider.create(resource, {
+    //   ...params,
+    //   data: {
+    //     ...params.data,
+    //     slug,
+    //     image: base64Image,
+    //   },
+    // });
     return httpClient(`${apiUrl}/${resource}`, {
       method: 'POST',
-      body: {
+      body: JSON.stringify({
         ...params.data,
         slug,
         image: base64Image,
-      },
-    }).then(({ json }) => ({
-      data: { ...params.data, id: json.id },
-    }));
+      }),
+    })
+      .then(({ json }) => ({
+        data: { ...params.data, id: json.id, media: { src: params.data.imageUrl } },
+      }))
+      .catch((error) => {
+        console.log('what the hell');
+        console.log(error);
+        throw error;
+      });
   },
   update: async (resource, params) => {
     if (resource !== 'products') {

@@ -32,6 +32,10 @@ const convertStringToNumber = (value: string) => {
   return isNaN(float) ? null : float;
 };
 
+/**
+ * 
+image*	[...]
+ */
 export const ProductCreate = () => (
   <Create>
     <SimpleForm>

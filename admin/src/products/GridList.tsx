@@ -39,7 +39,7 @@ export const ImageList = ({ actions }: ProductListProps) => {
       <Datagrid rowClick="edit">
         <ImageField
           sx={{ '& img': { maxWidth: 100, maxHeight: 100, objectFit: 'contain' } }}
-          source="mediaFileName"
+          source="imageUrl"
           label="Image"
           sortable={false}
         />

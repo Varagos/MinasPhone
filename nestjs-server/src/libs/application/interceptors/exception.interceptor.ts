@@ -32,10 +32,11 @@ export class ExceptionInterceptor implements NestInterceptor {
             err.status === 400;
           // Transforming class-validator errors to a different format
           if (isClassValidatorError) {
+            console.log('isClassValidatorError', err?.response?.message);
             err = new BadRequestException(
               new ApiErrorResponse({
                 statusCode: err.status,
-                message: 'Validation error',
+                message: 'Validation error: ' + err?.response?.message,
                 error: err?.response?.error,
                 subErrors: err?.response?.message,
                 correlationId: RequestContextService.getRequestId(),

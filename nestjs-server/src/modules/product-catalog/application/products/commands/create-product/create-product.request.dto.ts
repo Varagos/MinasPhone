@@ -69,7 +69,7 @@ export class CreateProductRequestDto {
     description: 'The SKU of the product',
   })
   @IsString()
-  @IsNotEmpty()
+  // @IsNotEmpty()
   sku: string;
 
   @ApiProperty({

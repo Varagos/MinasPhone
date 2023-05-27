@@ -33,10 +33,11 @@ const dataProvider: DataProvider = {
       // const getOneData = Object.values(json)[0] as any;
       const getOneData = json;
       if (resource === 'products') {
-        const { mediaFileName } = getOneData;
+        // This is how we transform the api imageUrl to the expected react-admin media object
+        const { imageUrl } = getOneData;
         getOneData.media = {
           title: 'cat.png',
-          src: mediaFileName,
+          src: imageUrl,
         };
       }
       return {

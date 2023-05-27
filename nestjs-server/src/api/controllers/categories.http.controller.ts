@@ -161,7 +161,7 @@ export class CategoriesHttpController {
     type: CategoryPaginatedResponseDto,
   })
   @UsePipes(new ValidationPipe({ whitelist: true }))
-  async findUsers(
+  async findCategories(
     @Body() request: FindCategoriesDto,
     @Query() queryParams: PaginatedQueryRequestDto,
   ): Promise<CategoryPaginatedResponseDto> {

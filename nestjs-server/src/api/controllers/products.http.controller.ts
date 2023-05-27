@@ -42,8 +42,8 @@ import { DeleteProductCommandResponse } from '@modules/product-catalog/applicati
 import { UpdateProductRequestDto } from '@modules/product-catalog/application/products/commands/update-product/update-product.request.dto';
 import { UpdateProductCommand } from '@modules/product-catalog/application/products/commands/update-product/update-product.command';
 import { UpdateProductCommandResponse } from '@modules/product-catalog/application/products/commands/update-product/update-product.handler';
-import { UploadProductImageCommand } from '@modules/product-catalog/application/products/commands/upload-image/upload-product-image.command';
-import { UploadImageCommandResponse } from '@modules/product-catalog/application/products/commands/upload-image/upload-product-image.handler';
+import { UploadImageCommand } from '@modules/product-catalog/application/images/commands/upload-image/upload-image.command';
+import { UploadImageCommandResponse } from '@modules/product-catalog/application/images/commands/upload-image/upload-image.handler';
 
 @ApiTags('products')
 @Controller(routesV1.version)
@@ -69,10 +69,8 @@ export class ProductsHttpController {
   })
   @Post(routesV1.product.root)
   async create(@Body() body: CreateProductRequestDto): Promise<IdResponse> {
-    console.log('body', body);
-
     const { image, ...rest } = body;
-    const uploadImageCommand = new UploadProductImageCommand({
+    const uploadImageCommand = new UploadImageCommand({
       image,
     });
 
@@ -153,7 +151,28 @@ export class ProductsHttpController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() body: UpdateProductRequestDto,
   ): Promise<'OK'> {
-    const command = new UpdateProductCommand({ ...body, id });
+    const { image: imageBase64EncodedString, ...rest } = body;
+    let imageUri: string | undefined;
+    if (imageBase64EncodedString) {
+      const uploadImageCommand = new UploadImageCommand({
+        image: imageBase64EncodedString,
+      });
+
+      const uploadImageResult: UploadImageCommandResponse =
+        await this.commandBus.execute(uploadImageCommand);
+      // match and if error return prematurely
+      const imageUrl = match(uploadImageResult, {
+        Ok: (image: string) => image,
+        Err: (error: Error) => {
+          if (error instanceof ArgumentInvalidException)
+            throw new BadRequestException(error.message);
+          throw error;
+        },
+      });
+      imageUri = imageUrl;
+    }
+
+    const command = new UpdateProductCommand({ ...rest, imageUri, id });
 
     const result: UpdateProductCommandResponse = await this.commandBus.execute(
       command,

@@ -56,8 +56,8 @@ export class UpdateProductCommandHandler {
         product.updateCategoryId(command.categoryId);
       }
 
-      if (command.image) {
-        product.updateImage(command.image);
+      if (command.imageUri) {
+        product.updateImage(command.imageUri);
       }
 
       await this.productRepo.update(product);

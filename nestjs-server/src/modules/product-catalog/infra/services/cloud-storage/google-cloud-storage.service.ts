@@ -2,7 +2,6 @@ import { Storage } from '@google-cloud/storage';
 import { Injectable } from '@nestjs/common';
 import {
   ImageUploadException,
-  ImagePublicAccessException,
   InvalidImageBufferException,
 } from './exceptions';
 import { ICloudStorageServicePort } from './cloud-storage.interface';
@@ -84,5 +83,11 @@ export class GoogleCloudStorageServiceAdapter
     const publicUrl = `https://storage.googleapis.com/${this.bucketName}/${fileName}`;
 
     return publicUrl;
+  }
+
+  async deleteImage(fileName: string): Promise<void> {
+    const file = this.storage.bucket(this.bucketName).file(fileName);
+
+    await file.delete();
   }
 }

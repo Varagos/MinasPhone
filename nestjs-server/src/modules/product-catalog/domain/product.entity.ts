@@ -2,6 +2,8 @@ import { AggregateID, AggregateRoot } from '@libs/ddd/index';
 import { randomUUID } from 'crypto';
 import { Image } from './value-objects/image.value-object';
 import { customAlphabet } from 'nanoid';
+import { ProductImageUpdatedDomainEvent } from './events/product-image-updated.domain-event';
+import { ProductDeletedDomainEvent } from './events/product-deleted.domain-event';
 
 interface ProductProps {
   name: string;
@@ -99,11 +101,12 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
     return product;
   }
   delete(): void {
-    // this.addEvent(
-    // new ProductDeletedDomainEvent({
-    //   aggregateId: this.id,
-    // }),
-    // );
+    this.addEvent(
+      new ProductDeletedDomainEvent({
+        aggregateId: this.id,
+        imageUri: this.props.imageUri,
+      }),
+    );
   }
 
   public updateName(name: string): void {
@@ -135,6 +138,12 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
   }
 
   public updateImage(imageUri: string): void {
+    this.addEvent(
+      new ProductImageUpdatedDomainEvent({
+        aggregateId: this.id,
+        oldImageUri: this.props.imageUri,
+      }),
+    );
     this.props.imageUri = imageUri;
   }
 

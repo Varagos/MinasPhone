@@ -60,6 +60,35 @@ heroku container:release web --app minas-phone-api
 https://minas-phone-api.herokuapp.com/api
 ```
 
+### Azure
+
+```bash
+az acr create --resource-group minas-phone --name minasphonecontainerregistry --sku Basic
+
+# Update backend tag, then
+docker compose -f docker-compose.prod.yml up --build -d
+
+docker images
+
+# Push changes to registry
+docker compose -f docker-compose.prod.yml push
+
+# Verify image is stored, (based on docker images above)
+az acr repository show --name minasphonecontainerregistry --repository minas_phone_backend
+
+docker login azure
+
+# Skip if previously done
+docker context create aci minasphoneacicontext
+
+docker context ls
+
+docker context use minasphoneacicontext
+
+docker compose -f docker-compose.prod.yml up
+
+```
+
 ### TODO CI/CD
 
 ```yaml
@@ -109,7 +138,7 @@ Some potential bounded contexts/modules
 
 - Order Management: This bounded context would handle the entire order management process, including order placement, payment processing, and order fulfillment.
 
-- Customer Management: This bounded context would handle customer registration, authentication, and account management, as well as any other customer-related features.
+- User Management: This bounded context would handle user registration, authentication, and account management, as well as any other customer-related features.
 
 - Shipping: This bounded context would handle the logistics of shipping, including order tracking, shipping carrier integration, and other related functionality.
 

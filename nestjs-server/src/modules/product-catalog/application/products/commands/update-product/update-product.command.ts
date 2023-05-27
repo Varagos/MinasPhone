@@ -15,7 +15,7 @@ export class UpdateProductCommand {
 
   public readonly categoryId?: string;
 
-  public readonly image?: string;
+  public readonly imageUri: string;
 
   constructor(props: Partial<UpdateProductCommand>) {
     Object.assign(this, props);

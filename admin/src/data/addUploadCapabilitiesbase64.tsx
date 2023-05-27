@@ -47,7 +47,7 @@ const myDataProviderWithBase64Image = (dataProvider: DataProvider): DataProvider
       }),
     })
       .then(({ json }) => ({
-        data: { ...params.data, id: json.id, media: { src: params.data.imageUrl } },
+        data: { ...params.data, id: json.id },
       }))
       .catch((error) => {
         console.log('what the hell');
@@ -65,7 +65,7 @@ const myDataProviderWithBase64Image = (dataProvider: DataProvider): DataProvider
 
     return httpClient(`${apiUrl}/${resource}/${params.id}`, {
       method: 'PUT',
-      body: jsonBody,
+      body: JSON.stringify(jsonBody),
     }).then(({ json }) => ({ data: { ...(params.data as any), id: params.id } }));
   },
 });

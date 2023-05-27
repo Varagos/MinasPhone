@@ -19,9 +19,12 @@ import { ProductRepository } from './infra/database/product.repository';
 import { ProductMapper } from './infra/mappers/product.mapper';
 import { DeleteProductCommandHandler } from './application/products/commands/delete-product/delete-product.handler';
 import { UpdateProductCommandHandler } from './application/products/commands/update-product/update-product.handler';
-import { UploadProductImageCommandHandler } from './application/products/commands/upload-image/upload-product-image.handler';
+import { UploadImageCommandHandler } from './application/images/commands/upload-image/upload-image.handler';
 import { GoogleCloudStorageServiceAdapter } from './infra/services/cloud-storage/google-cloud-storage.service';
 import { FindProductByIdQueryHandler } from './application/products/queries/find-product-by-id/find-product-by-id.handler';
+import { DeleteImageAfterProductDeletionDomainEventHandler } from './application/images/event-handlers/delete-image-after-product-deletion.domain-event-handler';
+import { DeleteImageCommandHandler } from './application/images/commands/delete-image/delete-image.handler';
+import { DeleteOldImageAfterProductImageUpdateDomainEventHandler } from './application/images/event-handlers/delete-old-image-after-product-image-update.domain-event-handler';
 
 const commandHandlers: Provider[] = [
   // Category
@@ -34,7 +37,8 @@ const commandHandlers: Provider[] = [
   DeleteProductCommandHandler,
   UpdateProductCommandHandler,
   // Image
-  UploadProductImageCommandHandler,
+  UploadImageCommandHandler,
+  DeleteImageCommandHandler,
 ];
 
 const queryHandlers: Provider[] = [
@@ -43,6 +47,11 @@ const queryHandlers: Provider[] = [
   FindProductsQueryHandler,
   FindProductImageQueryHandler,
   FindProductByIdQueryHandler,
+];
+
+const eventHandlers: Provider[] = [
+  DeleteImageAfterProductDeletionDomainEventHandler,
+  DeleteOldImageAfterProductImageUpdateDomainEventHandler,
 ];
 
 const mappers: Provider[] = [CategoryMapper, ProductMapper];
@@ -66,6 +75,7 @@ const services: Provider[] = [
     ...repositories,
     ...commandHandlers,
     ...queryHandlers,
+    ...eventHandlers,
     ...mappers,
     ...services,
   ],

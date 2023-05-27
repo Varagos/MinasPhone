@@ -6,4 +6,5 @@ export interface ICloudStorageServicePort {
    * @returns the url of the uploaded image
    */
   uploadImage(image: Image): Promise<string>;
+  deleteImage(fileName: string): Promise<void>;
 }

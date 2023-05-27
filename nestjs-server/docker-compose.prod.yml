@@ -2,13 +2,69 @@ version: '3'
 name: minas_phone_prod
 
 services:
+  postgres:
+    image: postgres:15
+    restart: always
+    ports:
+      - 5432:5432
+    networks:
+      - app_network
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
   backend:
-    image: registry.heroku.com/minas-phone-api/backend
     build:
       context: .
       dockerfile: Dockerfile
     restart: always
     ports:
       - 80:8080
+    depends_on:
+      - postgres
+      - supertokens
+    networks:
+      - app_network
     environment:
       - NODE_ENV=production
+
+  auth-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${SUPERTOKENS_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${SUPERTOKENS_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${SUPERTOKENS_POSTGRES_DB}
+    ports:
+      - 5433:5432
+    networks:
+      - app_network
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'pg_isready']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  supertokens:
+    image: registry.supertokens.io/supertokens/supertokens-postgresql:5.0
+    depends_on:
+      auth-db:
+        condition: service_healthy
+    ports:
+      - 3567:3567
+    environment:
+      POSTGRESQL_CONNECTION_URI: 'postgresql://${SUPERTOKENS_POSTGRES_USER}:${SUPERTOKENS_POSTGRES_PASSWORD}@auth-db:5432/${SUPERTOKENS_POSTGRES_DB}'
+      API_KEYS: ${SUPERTOKENS_API_KEYS}
+    networks:
+      - app_network
+    restart: unless-stopped
+    healthcheck:
+      test: >
+        bash -c 'exec 3<>/dev/tcp/127.0.0.1/3567 && echo -e "GET /hello HTTP/1.1\r\nhost: 127.0.0.1:3567\r\nConnection: close\r\n\r\n" >&3 && cat <&3 | grep "Hello"'
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  app_network:
+    driver: bridge

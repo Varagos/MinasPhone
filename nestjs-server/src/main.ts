@@ -1,9 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import supertokens from 'supertokens-node';
 import { AppModule } from './app.module';
-import { SupertokensExceptionFilter } from '@modules/customers/infra/services/super-tokens/auth.filter';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { json, urlencoded } from 'express';
+import { SupertokensExceptionFilter } from '@modules/user-management/infra/services/super-tokens/filters/auth.filter';
 
 const setupSwagger = (app: INestApplication) => {
   const config = new DocumentBuilder()
@@ -32,6 +33,8 @@ async function bootstrap() {
   app.setGlobalPrefix('api', {
     exclude: ['auth'],
   });
+  app.use(json({ limit: '50mb' }));
+  app.use(urlencoded({ limit: '50mb', extended: true }));
 
   setupSwagger(app);
 

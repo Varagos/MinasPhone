@@ -1,0 +1,128 @@
+import { Inject, Injectable } from '@nestjs/common';
+import supertokens from 'supertokens-node';
+import Session from 'supertokens-node/recipe/session';
+
+import {
+  ConfigInjectionToken,
+  AuthModuleConfig,
+  UserRegisterEventTopicToken,
+} from '../config.interface';
+
+import EmailPassword from 'supertokens-node/recipe/emailpassword';
+import UserRoles from 'supertokens-node/recipe/userroles';
+
+import Dashboard from 'supertokens-node/recipe/dashboard';
+import { SupertokensUserRolesService } from './roles.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { Roles } from '@modules/user-management/application/ports/role-service.port';
+import { authConfig } from '@config/auth.config';
+
+const adminEmails = authConfig.superTokens.adminEmails;
+
+// const dto: CreateUserDTO = {
+//   id,
+//   email,
+//   firstName: formFields[2].value,
+//   lastName: formFields[3].value,
+//   timeJoined,
+// };
+interface CreateUserDTO {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  timeJoined: number;
+}
+
+@Injectable()
+export class SuperTokensInitService {
+  constructor(
+    @Inject(ConfigInjectionToken)
+    private readonly config: AuthModuleConfig,
+    @Inject(UserRegisterEventTopicToken)
+    private readonly userRegisteredTopic: string,
+    private eventEmitter: EventEmitter2,
+    private readonly rolesService: SupertokensUserRolesService,
+  ) {
+    this.init();
+  }
+
+  private async init() {
+    supertokens.init({
+      appInfo: this.config.appInfo,
+      supertokens: {
+        connectionURI: this.config.connectionURI,
+        apiKey: this.config.apiKey,
+      },
+      recipeList: [
+        UserRoles.init(),
+        EmailPassword.init({
+          signUpFeature: {
+            formFields: [
+              {
+                id: 'firstName',
+              },
+              {
+                id: 'lastName',
+              },
+            ],
+          },
+          override: {
+            apis: (originalImplementation) => {
+              // eslint-disable-next-line @typescript-eslint/no-this-alias
+              const self = this;
+              return {
+                ...originalImplementation,
+                signUpPOST: async function (input) {
+                  if (originalImplementation.signUpPOST === undefined) {
+                    throw Error('Should never come here');
+                  }
+
+                  // First we call the original implementation of signUpPOST.
+                  const response = await originalImplementation.signUpPOST(
+                    input,
+                  );
+
+                  // Post sign up response, we check if it was successful
+                  if (response.status === 'OK') {
+                    const { id, email, timeJoined } = response.user;
+
+                    let role = Roles.Customer; // TODO: fetch role based on userId
+                    if (adminEmails.includes(email)) {
+                      role = Roles.Admin;
+                    }
+                    await new SupertokensUserRolesService().assignRole(
+                      id,
+                      role,
+                    );
+
+                    // // These are the input form fields values that the user used while signing up
+                    const formFields = input.formFields;
+                    // post sign up logic
+                    const dto: CreateUserDTO = {
+                      id,
+                      email,
+                      firstName: formFields[2].value,
+                      lastName: formFields[3].value,
+                      timeJoined,
+                    };
+                    self.eventEmitter.emit(self.userRegisteredTopic, dto);
+                  }
+                  return response;
+                },
+              };
+            },
+          },
+        }),
+        Session.init(),
+        Dashboard.init({
+          apiKey: process.env.SUPER_TOKENS_API_KEY!,
+        }),
+      ],
+    });
+
+    // Create roles
+    // UserRolesService.createRole(Roles.Customer, []);
+    // UserRolesService.createRole(Roles.Admin, []);
+  }
+}

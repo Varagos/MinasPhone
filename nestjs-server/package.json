@@ -7,10 +7,9 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
+    "start": "node dist/main",
     "start:dev": "NODE_ENV=development nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -28,7 +27,7 @@
     "migration:pending": "ts-node database/migrate pending",
     "migration:pending:tests": "NODE_ENV=test ts-node database/migrate pending",
     "seed:up": "ts-node database/seed",
-    "docker:dev:backend": "docker compose up -d --scale backend=0",
+    "docker:dev:api": "docker compose up -d --scale api=0",
     "docker:prod": "docker compose -f docker-compose.prod.yml up -d --build"
   },
   "dependencies": {
@@ -52,6 +51,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.5",
     "slonik": "^31",
+    "supertokens-node": "^13",
     "zod": "^3.21.4"
   },
   "devDependencies": {
@@ -71,7 +71,6 @@
     "prettier": "^2.7.1",
     "source-map-support": "^0.5.21",
     "supertest": "^6.2.4",
-    "supertokens-node": "^13",
     "ts-jest": "^28.0.5",
     "ts-loader": "^9.3.1",
     "ts-node": "^10.8.2",

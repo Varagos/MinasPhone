@@ -1,7 +1,7 @@
 import { Module, Provider } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { SuperTokensAuthModule } from './infra/services/super-tokens/super-tokens.module';
-import { authConfig } from 'configs/auth.config';
+import { authConfig } from '@config/auth.config';
 import { AUTH_SERVICE_TOKEN, ROLES_SERVICE_TOKEN } from './constants';
 import { SuperTokensAuthService } from './infra/services/super-tokens/services/auth.service';
 import {

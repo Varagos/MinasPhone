@@ -12,15 +12,17 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@shared/*": ["shared/*"],
-      "@libs/*": ["libs/*"],
-      "@modules/*": ["modules/*"],
-      "@config/*": ["configs/*"],
-      "@api/*": ["api/*"],
+      "@shared/*": ["src/shared/*"],
+      "@libs/*": ["src/libs/*"],
+      "@modules/*": ["src/modules/*"],
+      "@config/*": ["src/configs/*"],
+      "@api/*": ["src/api/*"]
     },
     "incremental": true,
     "skipLibCheck": true
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

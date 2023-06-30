@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { DeleteUserCommand } from '@modules/user-management/application/commands/delete-user/delete-user.command';
-import { routesV1 } from 'configs/app.routes';
+import { routesV1 } from '@config/app.routes';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PaginatedQueryRequestDto } from '@libs/api/paginated-query.request.dto';
 import { FindUsersDto } from '@modules/user-management/application/queries/find-users/find-users.request.dto';

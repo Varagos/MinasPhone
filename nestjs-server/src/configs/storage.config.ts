@@ -1,5 +1,5 @@
 import { get } from 'env-var';
-import '../libs/utils/dotenv';
+import './dotenv';
 import { join } from 'path';
 
 // https://github.com/Sairyss/backend-best-practices#configuration

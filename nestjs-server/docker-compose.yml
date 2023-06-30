@@ -2,19 +2,7 @@ version: '3'
 name: minas_phone_dev
 
 services:
-  postgres:
-    image: postgres
-    restart: always
-    ports:
-      - 5432:5432
-    networks:
-      - app_network
-    environment:
-      - POSTGRES_USER=${DB_USERNAME}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
-
-  backend:
+  api:
     build:
       context: .
       dockerfile: Dockerfile
@@ -29,33 +17,56 @@ services:
     environment:
       - NODE_ENV=development:docker
 
-  auth-db:
+  postgres:
     image: 'postgres:latest'
-    environment:
-      POSTGRES_USER: ${SUPERTOKENS_POSTGRES_USER}
-      POSTGRES_PASSWORD: ${SUPERTOKENS_POSTGRES_PASSWORD}
-      POSTGRES_DB: ${SUPERTOKENS_POSTGRES_DB}
     ports:
-      - 5433:5432
-    networks:
-      - app_network
+      - 5432:5432
+    user: ${DB_USERNAME}
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     restart: unless-stopped
     healthcheck:
       test: ['CMD', 'pg_isready']
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - app_network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  # Note: If you are assigning a custom name to your db service on the line below, make sure it does not contain underscores
+  db:
+    image: 'postgres:latest'
+    environment:
+      POSTGRES_USER: supertokens_user
+      POSTGRES_PASSWORD: somePassword
+      POSTGRES_DB: supertokens
+    expose:
+      - '5433' # Publishes 5433 to other containers but NOT to host machine
+    ports:
+      - '5433:5433'
+    networks:
+      - app_network
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'supertokens_user', '-d', 'supertokens']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    command: -p 5433
 
   supertokens:
-    image: registry.supertokens.io/supertokens/supertokens-postgresql:5.0
+    image: registry.supertokens.io/supertokens/supertokens-postgresql:6.0
     depends_on:
-      auth-db:
+      db:
         condition: service_healthy
     ports:
       - 3567:3567
     environment:
-      POSTGRESQL_CONNECTION_URI: 'postgresql://${SUPERTOKENS_POSTGRES_USER}:${SUPERTOKENS_POSTGRES_PASSWORD}@auth-db:5432/${SUPERTOKENS_POSTGRES_DB}'
-      API_KEYS: ${SUPERTOKENS_API_KEYS}
+      POSTGRESQL_CONNECTION_URI: 'postgresql://supertokens_user:somePassword@db:5433/supertokens'
     networks:
       - app_network
     restart: unless-stopped
@@ -69,3 +80,6 @@ services:
 networks:
   app_network:
     driver: bridge
+volumes:
+  postgres-data:
+  auth-db-data:

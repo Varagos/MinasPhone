@@ -1,10 +1,11 @@
 import { get } from 'env-var';
-import '../libs/utils/dotenv';
+import './dotenv';
 
 // https://github.com/Sairyss/backend-best-practices#configuration
 console.log(
   'SUPER_TOKENS_CONNECTION_URI:',
   process.env.SUPER_TOKENS_CONNECTION_URI,
+  process.env,
 );
 
 export const authConfig = {

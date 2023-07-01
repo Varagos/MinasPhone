@@ -11,11 +11,11 @@ const environmentFile: any = {
   production: '../.env.prod',
   'development:docker': '../.development.docker.env',
 };
+if (!process.env.NODE_ENV) {
+  throw new Error('NODE_ENV not set');
+}
 // use .env or .env.test depending on NODE_ENV variable
-const envPath = path.resolve(
-  __dirname,
-  environmentFile[process.env.NODE_ENV ?? 'development'],
-);
+const envPath = path.resolve(__dirname, environmentFile[process.env.NODE_ENV]);
 dotenv.config({ path: envPath });
 
 export async function getMigrator() {

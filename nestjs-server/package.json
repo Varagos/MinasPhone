@@ -9,6 +9,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node dist/main",
     "start:dev": "NODE_ENV=development nest start --watch",
+    "start:prod": "NODE_ENV=production nest start --watch",
     "start:debug": "nest start --debug --watch",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
@@ -26,9 +27,7 @@
     "migration:executed:tests": "NODE_ENV=test ts-node database/migrate executed",
     "migration:pending": "ts-node database/migrate pending",
     "migration:pending:tests": "NODE_ENV=test ts-node database/migrate pending",
-    "seed:up": "ts-node database/seed",
-    "docker:dev:api": "docker compose up -d --scale api=0",
-    "docker:prod": "docker compose -f docker-compose.prod.yml up -d --build"
+    "seed:up": "ts-node database/seed"
   },
   "dependencies": {
     "@google-cloud/storage": "^6.10.1",

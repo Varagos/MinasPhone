@@ -1,10 +1,10 @@
 version: '3'
-name: minas_phone_dev
+name: minas_phone_prod
 
 services:
   api:
     build:
-      context: .
+      context: ../..
       dockerfile: Dockerfile
     restart: always
     ports:
@@ -15,7 +15,9 @@ services:
     networks:
       - app_network
     environment:
-      - NODE_ENV=development:docker
+      - NODE_ENV=production
+      - DB_DOCKER_HOST=postgres
+      - ST_DOCKER_URI=http://supertokens:3567
 
   postgres:
     image: 'postgres:latest'
@@ -37,36 +39,17 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
-  # Note: If you are assigning a custom name to your db service on the line below, make sure it does not contain underscores
-  db:
-    image: 'postgres:latest'
-    environment:
-      POSTGRES_USER: supertokens_user
-      POSTGRES_PASSWORD: somePassword
-      POSTGRES_DB: supertokens
-    expose:
-      - '5433' # Publishes 5433 to other containers but NOT to host machine
-    ports:
-      - '5433:5433'
-    networks:
-      - app_network
-    restart: unless-stopped
-    healthcheck:
-      test: ['CMD', 'pg_isready', '-U', 'supertokens_user', '-d', 'supertokens']
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    command: -p 5433
-
   supertokens:
     image: registry.supertokens.io/supertokens/supertokens-postgresql:6.0
-    depends_on:
-      db:
-        condition: service_healthy
     ports:
       - 3567:3567
+    depends_on:
+      postgres:
+        condition: service_healthy
     environment:
-      POSTGRESQL_CONNECTION_URI: 'postgresql://supertokens_user:somePassword@db:5433/supertokens'
+      POSTGRESQL_CONNECTION_URI: 'postgresql://${ST_DB_USER}:${ST_DB_PASSWORD}@${ST_DB_HOST}:${ST_DB_PORT}/${ST_DB_NAME}'
+      API_KEYS: ${SUPERTOKENS_API_KEYS}
+      POSTGRESQL_TABLE_SCHEMA: 'supertokens'
     networks:
       - app_network
     restart: unless-stopped
@@ -82,4 +65,3 @@ networks:
     driver: bridge
 volumes:
   postgres-data:
-  auth-db-data:

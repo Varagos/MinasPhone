@@ -5,7 +5,8 @@ import './dotenv';
 
 export const databaseConfig = {
   type: 'postgres',
-  host: get('DB_HOST').required().asString(),
+  host:
+    get('DB_DOCKER_HOST').asString() || get('DB_HOST').required().asString(),
   port: get('DB_PORT').required().asIntPositive(),
   username: get('DB_USERNAME').required().asString(),
   password: get('DB_PASSWORD').required().asString(),

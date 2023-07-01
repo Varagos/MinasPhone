@@ -10,27 +10,27 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - postgres
+      - db
       - supertokens
     networks:
       - app_network
     environment:
       - NODE_ENV=production
-      - DB_DOCKER_HOST=postgres
+      - DB_DOCKER_HOST=db
       - ST_DOCKER_URI=http://supertokens:3567
 
-  postgres:
+  db:
     image: 'postgres:latest'
     ports:
       - 5432:5432
     user: ${DB_USERNAME}
     environment:
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME?err}
+      POSTGRES_PASSWORD: ${DB_PASSWORD?err}
+      POSTGRES_DB: ${DB_NAME?err}
     restart: unless-stopped
     healthcheck:
-      test: ['CMD', 'pg_isready']
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USERNAME} -d ${DB_NAME}']
       interval: 5s
       timeout: 5s
       retries: 5
@@ -41,15 +41,15 @@ services:
 
   supertokens:
     image: registry.supertokens.io/supertokens/supertokens-postgresql:6.0
+    depends_on:
+      db:
+        condition: service_healthy
     ports:
       - 3567:3567
-    depends_on:
-      postgres:
-        condition: service_healthy
     environment:
-      POSTGRESQL_CONNECTION_URI: 'postgresql://${ST_DB_USER}:${ST_DB_PASSWORD}@${ST_DB_HOST}:${ST_DB_PORT}/${ST_DB_NAME}'
-      API_KEYS: ${SUPERTOKENS_API_KEYS}
+      POSTGRESQL_CONNECTION_URI: 'postgresql://${DB_USERNAME}:${DB_PASSWORD}@db:5432/${DB_NAME}'
       POSTGRESQL_TABLE_SCHEMA: 'supertokens'
+      API_KEYS: ${SUPERTOKENS_API_KEYS}
     networks:
       - app_network
     restart: unless-stopped

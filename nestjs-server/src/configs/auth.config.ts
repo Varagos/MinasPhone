@@ -11,7 +11,8 @@ console.log(
 export const authConfig = {
   superTokens: {
     connectionURI:
-      get('ST_DOCKER_URI').asString() || get('ST_HOST').required().asString(),
+      get('ST_DOCKER_URI').asString() ||
+      get('SUPER_TOKENS_CONNECTION_URI').required().asString(),
     apiKey: get('SUPER_TOKENS_API_KEY').required().asString(),
     adminEmails: get('SUPER_TOKENS_ADMIN_EMAILS').required().asArray(),
     // 'mark.girgis13@gmail.com', 'admin@minasphone.gr'

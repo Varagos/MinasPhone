@@ -20,7 +20,9 @@ export class GoogleCloudStorageServiceAdapter
   private bucketName = storageConfig.gcp_bucket_name;
 
   constructor() {
-    this.storage = new Storage();
+    this.storage = new Storage({
+      credentials: storageConfig.gcp_service_account,
+    });
   }
 
   fileNameAndContentType: Partial<Record<MimeType, any>> = {

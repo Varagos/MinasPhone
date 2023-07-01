@@ -396,7 +396,7 @@ Temporary Items
 # Local
 .env
 .docker.env
-.development.env
+.env.development
 .development.docker.env
 .env.prod
 dist

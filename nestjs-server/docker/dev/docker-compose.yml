@@ -1,6 +1,10 @@
 version: '3'
 name: minas_phone_dev
 
+# # Copy env files
+# COPY .env.prod .
+# COPY .development.docker.env .
+
 services:
   api:
     build:
@@ -16,6 +20,10 @@ services:
       - app_network
     environment:
       - NODE_ENV=development:docker
+      - DB_DOCKER_HOST=db
+      - ST_DOCKER_URI=http://supertokens:3567
+    env_file:
+      - '../../.env.development'
 
   postgres:
     image: 'postgres:latest'
@@ -36,6 +44,17 @@ services:
       - app_network
     volumes:
       - postgres-data:/var/lib/postgresql/data
+
+  # pgadmin:
+  #   container_name: pgadmin_container
+  #   image: dpage/pgadmin4
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@email.com
+  #     PGADMIN_DEFAULT_PASSWORD: admin
+  #   ports:
+  #     - 5050:80
+  #   networks:
+  #     - postgres
 
   # Note: If you are assigning a custom name to your db service on the line below, make sure it does not contain underscores
   db:

@@ -3,9 +3,9 @@ name: minas_phone_prod
 
 services:
   api:
+    # image: varagos/minas-phone-api:0.0.1
     build:
       context: ../..
-      dockerfile: Dockerfile
     restart: always
     ports:
       - 8080:8080
@@ -18,6 +18,8 @@ services:
       - NODE_ENV=production
       - DB_DOCKER_HOST=db
       - ST_DOCKER_URI=http://supertokens:3567
+    env_file:
+      - '../../.env.prod'
 
   db:
     image: 'postgres:latest'

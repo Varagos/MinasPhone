@@ -19,10 +19,6 @@ COPY --from=build /app/dist ./dist
 COPY package.json .
 COPY yarn.lock .
 
-# Copy env files
-COPY .env.prod .
-COPY .development.docker.env .
-
 RUN yarn install --production --immutable
 
 CMD ["yarn", "start"]

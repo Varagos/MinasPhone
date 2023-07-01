@@ -6,10 +6,9 @@ import * as dotenv from 'dotenv';
 import * as path from 'path';
 
 const environmentFile: any = {
-  development: '../.development.env',
+  development: '../.env.development',
   test: '../.env.test',
   production: '../.env.prod',
-  'development:docker': '../.development.docker.env',
 };
 if (!process.env.NODE_ENV) {
   throw new Error('NODE_ENV not set');

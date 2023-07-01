@@ -169,3 +169,38 @@ Run the migration:create script to create a new migration file in the migrations
 Run the migration:up script to apply the new migration and create the users table in the database. The up command applies all migrations that have not been applied yet.
 
 Note that you can also use the migration:down script to roll back a migration if necessary.
+
+## DockerHub
+
+To publish your backend Docker image to Docker Hub, you can follow these steps:
+
+1. Tag your Docker image: Before pushing the image to Docker Hub, you need to tag it with the appropriate repository name. Assuming you have already built your Docker image, you can use the following command to tag it:
+
+```bash
+docker tag <image_id> <docker_hub_username>/<repository_name>:<tag>
+#Example: varagos/minas-phone-api:0.0.1
+```
+
+Replace <image_id> with the ID or name of your Docker image, <docker_hub_username> with your Docker Hub username, <repository_name> with the desired repository name, and <tag> with a version or tag name for your image.
+
+2. Log in to Docker Hub: To push the image, you need to log in to Docker Hub using the docker login command:
+
+```bash
+docker login
+```
+
+You will be prompted to enter your Docker Hub username and password.
+
+3. Push the Docker image: Once you are logged in, you can push the Docker image to Docker Hub using the docker push command:
+
+```bash
+docker push <docker_hub_username>/<repository_name>:<tag>
+```
+
+Replace <docker_hub_username>, <repository_name>, and <tag> with the corresponding values you used while tagging the image.
+
+Docker will start pushing the image to Docker Hub, and the progress will be displayed in the terminal.
+
+4. Verify the pushed image: After the push is complete, you can go to your Docker Hub account in a web browser and navigate to the repository you pushed the image to. You should see the image listed there.
+
+By following these steps, you can publish your backend Docker image to Docker Hub, making it available for others to use and download. Remember to ensure that the image is properly tagged and that you have logged in to Docker Hub before pushing the image.

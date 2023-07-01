@@ -3,7 +3,7 @@ import * as path from 'path';
 
 console.log(`Current environment: ${process.env.NODE_ENV}`);
 const mapEnvsToEnvFiles: any = {
-  development: '../../.development.env',
+  development: '../../.env.development',
   test: '../../.env.test',
   production: '../../.env.prod',
   'development:docker': '../../.development.docker.env',

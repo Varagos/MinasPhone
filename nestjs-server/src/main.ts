@@ -31,7 +31,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalFilters(new SupertokensExceptionFilter());
   app.setGlobalPrefix('api', {
-    exclude: ['auth'],
+    exclude: ['auth', 'health'],
   });
   app.use(json({ limit: '50mb' }));
   app.use(urlencoded({ limit: '50mb', extended: true }));

@@ -57,7 +57,9 @@ export class CreateProductRequestDto {
 
   @ApiProperty({
     required: true,
-    description: 'The base64-encoded image of the product to create',
+    description: `The base64-encoded image of the product to create. The output format must be data:content_type;base64,encoded_string.
+    You can use https://base64.guru/converter/encode/image to encode an image to base64, select the output format as Data URI`,
+    example: 'data:image/jpeg;base64,/9j/4AAQSkZJRg...<truncated for brevity>',
   })
   @IsString()
   @IsNotEmpty()

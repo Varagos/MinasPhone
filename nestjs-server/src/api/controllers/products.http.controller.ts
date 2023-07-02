@@ -11,6 +11,7 @@ import {
   Post,
   Delete,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -44,6 +45,7 @@ import { UpdateProductCommand } from '@modules/product-catalog/application/produ
 import { UpdateProductCommandResponse } from '@modules/product-catalog/application/products/commands/update-product/update-product.handler';
 import { UploadImageCommand } from '@modules/product-catalog/application/images/commands/upload-image/upload-image.command';
 import { UploadImageCommandResponse } from '@modules/product-catalog/application/images/commands/upload-image/upload-image.handler';
+import { RolesGuard } from '@modules/user-management/user-management.module';
 
 @ApiTags('products')
 @Controller(routesV1.version)
@@ -53,7 +55,11 @@ export class ProductsHttpController {
     private readonly queryBus: QueryBus,
   ) {}
 
-  @ApiOperation({ summary: 'Create a Product' })
+  @ApiOperation({
+    summary: 'Create a Product',
+    description:
+      'This route can only be accessed by admins. It is used to create a product.',
+  })
   @ApiResponse({
     status: HttpStatus.OK,
     type: IdResponse,
@@ -68,6 +74,7 @@ export class ProductsHttpController {
     type: ApiErrorResponse,
   })
   @Post(routesV1.product.root)
+  @UseGuards(new RolesGuard())
   async create(@Body() body: CreateProductRequestDto): Promise<IdResponse> {
     const { image, ...rest } = body;
     const uploadImageCommand = new UploadImageCommand({
@@ -106,7 +113,11 @@ export class ProductsHttpController {
     });
   }
 
-  @ApiOperation({ summary: 'Delete a Product' })
+  @ApiOperation({
+    summary: 'Delete a Product',
+    description:
+      'This route can only be accessed by admins. It is used to delete a product.',
+  })
   @ApiResponse({
     status: HttpStatus.OK,
     type: IdResponse,
@@ -116,6 +127,7 @@ export class ProductsHttpController {
     type: ApiErrorResponse,
   })
   @Delete(routesV1.product.delete)
+  @UseGuards(new RolesGuard())
   async delete(@Param('id', ParseUUIDPipe) id: string): Promise<boolean> {
     const command = new DeleteProductCommand(id);
 
@@ -133,7 +145,11 @@ export class ProductsHttpController {
     });
   }
 
-  @ApiOperation({ summary: 'Update a Product' })
+  @ApiOperation({
+    summary: 'Update a Product',
+    description:
+      'This route can only be accessed by admins. It is used to update a product.',
+  })
   @ApiResponse({
     status: HttpStatus.OK,
     type: IdResponse,
@@ -147,6 +163,7 @@ export class ProductsHttpController {
     type: ApiErrorResponse,
   })
   @Put(routesV1.product.update)
+  @UseGuards(new RolesGuard())
   async updateOne(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() body: UpdateProductRequestDto,

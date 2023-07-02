@@ -6,7 +6,7 @@ import { VerifySessionOptions } from 'supertokens-node/recipe/session';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private readonly verifyOptions?: VerifySessionOptions) {}
+  constructor(protected readonly verifyOptions?: VerifySessionOptions) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = context.switchToHttp();

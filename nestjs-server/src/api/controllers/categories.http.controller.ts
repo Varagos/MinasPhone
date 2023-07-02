@@ -13,6 +13,7 @@ import {
   ValidationPipe,
   Query,
   Get,
+  UseGuards,
 } from '@nestjs/common';
 import { routesV1 } from '@config/app.routes';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -40,6 +41,11 @@ import { ResponseBase } from '@libs/api/response.base';
 import { FindCategoryByIdQueryResponse } from '@modules/product-catalog/application/categories/queries/find-category-by-id/find-category-by-id.handler';
 import { FindCategoryByIdQuery } from '@modules/product-catalog/application/categories/queries/find-category-by-id/find-category-by-id.query';
 import { CategoryResponseDto } from '@modules/product-catalog/application/categories/dtos/category.response.dto';
+import {
+  RolesGuard,
+  Session,
+} from '@modules/user-management/user-management.module';
+import { SessionContainer } from 'supertokens-node/recipe/session';
 
 @ApiTags('categories')
 @Controller(routesV1.version)
@@ -49,7 +55,11 @@ export class CategoriesHttpController {
     private readonly queryBus: QueryBus,
   ) {}
 
-  @ApiOperation({ summary: 'Create a Category' })
+  @ApiOperation({
+    summary: 'Create a Category',
+    description:
+      'This route can only be accessed by admins. It is used to create a new Category.',
+  })
   @ApiResponse({
     status: HttpStatus.OK,
     type: IdResponse,
@@ -64,8 +74,12 @@ export class CategoriesHttpController {
     type: ApiErrorResponse,
   })
   @Post(routesV1.category.root)
-  async create(@Body() body: CreateCategoryRequestDto): Promise<IdResponse> {
-    console.log('body', body);
+  @UseGuards(new RolesGuard())
+  async create(
+    @Body() body: CreateCategoryRequestDto,
+    @Session() session: SessionContainer,
+  ): Promise<IdResponse> {
+    console.log({ session: session });
     const { slug, name, parentId = null } = body;
     const command = new CreateCategoryCommand(slug, name, parentId);
 
@@ -86,7 +100,11 @@ export class CategoriesHttpController {
     });
   }
 
-  @ApiOperation({ summary: 'Update a Category' })
+  @ApiOperation({
+    summary: 'Update a Category',
+    description:
+      'This route can only be accessed by admins. It is used to update a Category.',
+  })
   @ApiResponse({
     status: HttpStatus.OK,
     type: IdResponse,
@@ -101,6 +119,7 @@ export class CategoriesHttpController {
     type: ApiErrorResponse,
   })
   @Put(routesV1.category.update)
+  @UseGuards(new RolesGuard())
   async updateOne(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() body: UpdateCategoryRequestDto,
@@ -122,7 +141,11 @@ export class CategoriesHttpController {
     });
   }
 
-  @ApiOperation({ summary: 'Delete a category' })
+  @ApiOperation({
+    summary: 'Delete a category',
+    description:
+      'This route can only be accessed by admins. It is used to delete a Category.',
+  })
   @ApiResponse({
     status: HttpStatus.OK,
     type: IdResponse,
@@ -137,6 +160,7 @@ export class CategoriesHttpController {
     type: ApiErrorResponse,
   })
   @Delete(routesV1.category.delete)
+  @UseGuards(new RolesGuard())
   async delete(@Param('id', ParseUUIDPipe) id: string): Promise<boolean> {
     const command = new DeleteCategoryCommand(id);
 

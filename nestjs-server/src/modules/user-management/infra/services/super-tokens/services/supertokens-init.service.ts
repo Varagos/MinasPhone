@@ -104,6 +104,12 @@ export class SuperTokensInitService {
 
                     const firstName = formFields[2].value;
                     const lastName = formFields[3].value;
+                    /**
+                     * TODO: a noticed bug is that the user post-signup does not have the role
+                     * assigned to them, inside their session & token.
+                     * They have to login again to get the role assigned to them.
+                     * This should be fixed.
+                     */
 
                     await UserMetadata.updateUserMetadata(id, {
                       last_name: lastName,

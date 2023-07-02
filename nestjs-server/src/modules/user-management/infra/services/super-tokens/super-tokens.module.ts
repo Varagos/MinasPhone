@@ -16,6 +16,9 @@ import {
 import { SupertokensUserRolesService } from './services/roles.service';
 import { SuperTokensAuthService } from './services/auth.service';
 import { RolesInitializerService } from './services/roles-init.service';
+export { AuthGuard } from './guards/auth.guard';
+export { RolesGuard } from './guards/roles.guard';
+export { Session } from './decorators/session.decorator';
 
 @Module({
   providers: [],

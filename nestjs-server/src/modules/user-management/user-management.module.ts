@@ -12,6 +12,13 @@ import { SupertokensUserRolesService } from './infra/services/super-tokens/servi
 import { FindUsersQueryHandler } from './application/queries/find-users/find-users.handler';
 import { FindUserByIdQueryHandler } from './application/queries/find-user-by-id/find-user-by-id.handler';
 
+// Stuff not registered as providers in super-tokens, because they are initialized on each controller.
+export {
+  AuthGuard,
+  RolesGuard,
+  Session,
+} from './infra/services/super-tokens/super-tokens.module';
+
 const queryHandlers: Provider[] = [
   FindUsersQueryHandler,
   FindUserByIdQueryHandler,

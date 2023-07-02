@@ -9,6 +9,7 @@ import {
   HttpStatus,
   ValidationPipe,
   UsePipes,
+  UseGuards,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { DeleteUserCommand } from '@modules/user-management/application/commands/delete-user/delete-user.command';
@@ -25,6 +26,7 @@ import { FindUserByIdQueryResponse } from '@modules/user-management/application/
 import { NotFoundException } from '@libs/exceptions';
 import { FindUserByIdQuery } from '@modules/user-management/application/queries/find-user-by-id/find-user-by-id.query';
 import { UserResponseDto } from '@modules/user-management/dtos/user.response.dto';
+import { RolesGuard } from '@modules/user-management/user-management.module';
 
 @ApiTags('users')
 @Controller(routesV1.version)
@@ -35,12 +37,16 @@ export class UsersController {
   ) {}
 
   @Get(routesV1.user.root)
-  @ApiOperation({ summary: 'Find users' })
+  @ApiOperation({
+    summary: 'Find users',
+    description: 'This route can only be accessed by admins.',
+  })
   @ApiResponse({
     status: HttpStatus.OK,
     type: UserPaginatedResponseDto,
   })
   @UsePipes(new ValidationPipe({ whitelist: true }))
+  @UseGuards(new RolesGuard())
   async findAll(
     @Body() request: FindUsersDto,
     @Query() queryParams: PaginatedQueryRequestDto,
@@ -77,6 +83,7 @@ export class UsersController {
     status: HttpStatus.NOT_FOUND,
     type: ApiResponse,
   })
+  @UseGuards(new RolesGuard())
   async findOne(@Param('id') id: string): Promise<UserResponseDto> {
     const query = new FindUserByIdQuery(id);
     const result: FindUserByIdQueryResponse = await this.queryBus.execute(
@@ -114,6 +121,7 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Delete one user' })
   @Delete(routesV1.user.delete)
+  @UseGuards(new RolesGuard())
   remove(@Param('id') id: string) {
     const command = new DeleteUserCommand(id);
     return this.commandBus.execute(command);

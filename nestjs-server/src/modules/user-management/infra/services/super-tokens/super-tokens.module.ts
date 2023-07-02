@@ -33,13 +33,15 @@ export class SuperTokensAuthModule implements NestModule {
     appInfo,
     userRegisteredEventName,
   }: AuthModuleConfig): DynamicModule {
+    const config: AuthModuleConfig = {
+      connectionURI,
+      apiKey,
+      appInfo,
+      userRegisteredEventName,
+    };
     const providers: Provider<any>[] = [
       {
-        useValue: {
-          appInfo,
-          connectionURI,
-          apiKey,
-        },
+        useValue: config,
         provide: ConfigInjectionToken,
       },
       {

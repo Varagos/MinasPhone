@@ -1,42 +1,38 @@
 version: '3'
 name: minas_phone_dev
 
-# # Copy env files
-# COPY .env.prod .
-# COPY .development.docker.env .
-
 services:
   api:
-    build:
-      context: ../..
-      dockerfile: Dockerfile
+    image: varagos/minas-phone-api:0.0.1
+    # build:
+    #   context: ../..
     restart: always
     ports:
       - 8080:8080
     depends_on:
-      - postgres
+      - db
       - supertokens
     networks:
       - app_network
     environment:
-      - NODE_ENV=development:docker
+      - NODE_ENV=development
       - DB_DOCKER_HOST=db
       - ST_DOCKER_URI=http://supertokens:3567
     env_file:
       - '../../.env.development'
 
-  postgres:
+  db:
     image: 'postgres:latest'
     ports:
       - 5432:5432
     user: ${DB_USERNAME}
     environment:
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME?err}
+      POSTGRES_PASSWORD: ${DB_PASSWORD?err}
+      POSTGRES_DB: ${DB_NAME?err}
     restart: unless-stopped
     healthcheck:
-      test: ['CMD', 'pg_isready']
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USERNAME} -d ${DB_NAME}']
       interval: 5s
       timeout: 5s
       retries: 5
@@ -44,48 +40,6 @@ services:
       - app_network
     volumes:
       - postgres-data:/var/lib/postgresql/data
-
-  # pgadmin:
-  #   container_name: pgadmin_container
-  #   image: dpage/pgadmin4
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: admin@email.com
-  #     PGADMIN_DEFAULT_PASSWORD: admin
-  #   ports:
-  #     - 5050:80
-  #   networks:
-  #     - postgres
-
-  # Note: If you are assigning a custom name to your db service on the line below, make sure it does not contain underscores
-  db:
-    image: 'postgres:latest'
-    environment:
-      POSTGRES_USER: supertokens_user
-      POSTGRES_PASSWORD: somePassword
-      POSTGRES_DB: supertokens
-    expose:
-      - '5433' # Publishes 5433 to other containers but NOT to host machine
-    ports:
-      - '5433:5433'
-    networks:
-      - app_network
-    restart: unless-stopped
-    healthcheck:
-      test:
-        [
-          'CMD',
-          'pg_isready',
-          '-p',
-          '5433',
-          '-U',
-          'supertokens_user',
-          '-d',
-          'supertokens',
-        ]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    command: -p 5433
 
   supertokens:
     image: registry.supertokens.io/supertokens/supertokens-postgresql:6.0
@@ -95,7 +49,7 @@ services:
     ports:
       - 3567:3567
     environment:
-      POSTGRESQL_CONNECTION_URI: 'postgresql://supertokens_user:somePassword@db:5433/supertokens'
+      POSTGRESQL_CONNECTION_URI: 'postgresql://${DB_USERNAME}:${DB_PASSWORD}@db:5432/${DB_NAME}'
       POSTGRESQL_TABLE_SCHEMA: 'supertokens'
       API_KEYS: ${SUPERTOKENS_API_KEYS}
     networks:
@@ -113,4 +67,3 @@ networks:
     driver: bridge
 volumes:
   postgres-data:
-  auth-db-data:

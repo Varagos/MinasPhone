@@ -12,6 +12,8 @@ import EmailPassword from 'supertokens-node/recipe/emailpassword';
 import UserRoles from 'supertokens-node/recipe/userroles';
 
 import Dashboard from 'supertokens-node/recipe/dashboard';
+import UserMetadata from 'supertokens-node/recipe/usermetadata';
+
 import { SupertokensUserRolesService } from './roles.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Roles } from '@modules/user-management/application/ports/role-service.port';
@@ -48,6 +50,7 @@ export class SuperTokensInitService {
   }
 
   private async init() {
+    console.log({ apiKey: this.config.apiKey });
     supertokens.init({
       appInfo: this.config.appInfo,
       supertokens: {
@@ -98,12 +101,21 @@ export class SuperTokensInitService {
 
                     // // These are the input form fields values that the user used while signing up
                     const formFields = input.formFields;
+
+                    const firstName = formFields[2].value;
+                    const lastName = formFields[3].value;
+
+                    await UserMetadata.updateUserMetadata(id, {
+                      last_name: lastName,
+                      first_name: firstName,
+                      role,
+                    });
                     // post sign up logic
                     const dto: CreateUserDTO = {
                       id,
                       email,
-                      firstName: formFields[2].value,
-                      lastName: formFields[3].value,
+                      firstName,
+                      lastName,
                       timeJoined,
                     };
                     self.eventEmitter.emit(self.userRegisteredTopic, dto);
@@ -116,8 +128,11 @@ export class SuperTokensInitService {
         }),
         Session.init(),
         Dashboard.init({
-          apiKey: process.env.SUPER_TOKENS_API_KEY!,
+          // apiKey: this.config.apiKey,
+          // apiKey: this.config.apiKey
+          // apiKey: process.env.SUPER_TOKENS_API_KEY!,
         }),
+        UserMetadata.init(),
       ],
     });
 

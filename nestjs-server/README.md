@@ -179,6 +179,9 @@ To publish your backend Docker image to Docker Hub, you can follow these steps:
 ```bash
 docker tag <image_id> <docker_hub_username>/<repository_name>:<tag>
 #Example: varagos/minas-phone-api:0.0.1
+
+# Otherwise you can build and tag an image for Docker Hub in a single command using
+docker build -t <docker_hub_username>/<repository_name>:<tag> .
 ```
 
 Replace <image_id> with the ID or name of your Docker image, <docker_hub_username> with your Docker Hub username, <repository_name> with the desired repository name, and <tag> with a version or tag name for your image.

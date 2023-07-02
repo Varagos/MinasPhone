@@ -3,6 +3,8 @@ import Session from 'supertokens-web-js/recipe/session';
 import EmailPassword from 'supertokens-web-js/recipe/emailpassword';
 import { apiBaseUrl } from '../../config';
 
+console.log({ apiBaseUrl });
+
 SuperTokens.init({
   appInfo: {
     apiDomain: apiBaseUrl,

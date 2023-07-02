@@ -72,13 +72,15 @@ const dataProvider: DataProvider = {
     }));
   },
   // create a record
-  create: (resource, params) =>
-    httpClient(`${apiUrl}/${resource}`, {
+  create: (resource, params) => {
+    console.log({ data: params.data });
+    return httpClient(`${apiUrl}/${resource}`, {
       method: 'POST',
       body: JSON.stringify(params.data),
     }).then(({ json }) => ({
       data: { ...params.data, id: json.id },
-    })),
+    }));
+  },
   // update a record based on a patch
   update: (resource, params) =>
     httpClient(`${apiUrl}/${resource}/${params.id}`, {

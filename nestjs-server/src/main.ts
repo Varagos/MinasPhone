@@ -24,7 +24,16 @@ const setupSwagger = (app: INestApplication) => {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: '*', //['http://localhost:3000', 'http://localhost:3001'],
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'http://admin.minasphone.gr',
+      'https://admin.minasphone.gr',
+      'http://minasphone.gr',
+      'https://minasphone.gr',
+      'https://www.minasphone.gr',
+      'https://www.admin.minasphone.gr',
+    ],
     allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
     credentials: true,
   });

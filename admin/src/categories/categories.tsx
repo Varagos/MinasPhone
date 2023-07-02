@@ -38,12 +38,17 @@ export const CategoryEdit = () => (
   </Edit>
 );
 
+const defaultParse = (value: string) => {
+  console.log({ defaultParse, value });
+  return value === '' ? null : value;
+};
+
 export const CategoryCreate = () => (
   <Create>
     <SimpleForm>
       <TextInput source="slug" />
       <TextInput source="name" />
-      <ReferenceInput source="parentId" reference="categories" allowEmpty>
+      <ReferenceInput source="parentId" reference="categories">
         <SelectInput optionText="name" />
       </ReferenceInput>
     </SimpleForm>

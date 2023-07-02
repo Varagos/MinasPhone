@@ -14,7 +14,7 @@ const httpClient = fetchUtils.fetchJson;
  * and stores images passed to the dataProvider.update('posts') call as Base64 strings.
  * React-admin offers an <ImageInput /> component that allows image upload:
  */
-const myDataProviderWithBase64Image = (dataProvider: DataProvider): DataProvider => ({
+const dataProviderForProductsBase64ImageHandling = (dataProvider: DataProvider): DataProvider => ({
   ...dataProvider,
 
   create: async (resource, params) => {
@@ -86,4 +86,4 @@ const buildJsonBody = async (data: any, additionalData?: Record<string, any>): P
   return rest;
 };
 
-export default myDataProviderWithBase64Image;
+export default dataProviderForProductsBase64ImageHandling;

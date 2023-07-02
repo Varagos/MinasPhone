@@ -3,9 +3,8 @@ name: minas_phone_dev
 
 services:
   api:
-    image: varagos/minas-phone-api:0.0.1
-    # build:
-    #   context: ../..
+    build:
+      context: ../..
     restart: always
     ports:
       - 8080:8080

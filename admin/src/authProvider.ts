@@ -10,6 +10,7 @@ const authProvider: AuthProvider = {
     if (loginResult.status !== SignInStatus.OK) {
       return Promise.reject(loginResult.error);
     }
+    console.log({ loginResult });
     const isAdmin = await shouldLoadRoute();
     if (!isAdmin) {
       // TODO log who tried to login

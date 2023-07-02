@@ -1,7 +1,7 @@
 {
   "name": "nest-typescript-starter",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "Nest TypeScript starter repository",
   "license": "MIT",
   "scripts": {

@@ -203,7 +203,3 @@ docker push <docker_hub_username>/<repository_name>:<tag>
 Replace <docker_hub_username>, <repository_name>, and <tag> with the corresponding values you used while tagging the image.
 
 Docker will start pushing the image to Docker Hub, and the progress will be displayed in the terminal.
-
-4. Verify the pushed image: After the push is complete, you can go to your Docker Hub account in a web browser and navigate to the repository you pushed the image to. You should see the image listed there.
-
-By following these steps, you can publish your backend Docker image to Docker Hub, making it available for others to use and download. Remember to ensure that the image is properly tagged and that you have logged in to Docker Hub before pushing the image.

@@ -14,5 +14,5 @@ const envPath: string = path.resolve(
   __dirname,
   mapEnvsToEnvFiles[process.env.NODE_ENV!] || '../../.env.prod',
 );
-console.log('envPath', envPath);
+console.log({ envPath });
 config({ path: envPath });

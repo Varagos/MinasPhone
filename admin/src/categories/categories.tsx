@@ -1,4 +1,5 @@
 import {
+  ChipField,
   Create,
   Datagrid,
   Edit,
@@ -16,9 +17,9 @@ export const CategoryList = () => (
     <Datagrid rowClick="edit">
       <TextField source="id" />
       <TextField source="slug" />
-      <TextField source="name" />
-      <ReferenceField source="parent_id" reference="categories">
-        <TextField source="id" />
+      <ChipField source="name" />
+      <ReferenceField source="parentId" reference="categories">
+        <TextField source="name" />
       </ReferenceField>
     </Datagrid>
   </List>
@@ -30,19 +31,24 @@ export const CategoryEdit = () => (
       <TextInput disabled source="id" />
       <TextInput source="slug" disabled />
       <TextInput source="name" />
-      <ReferenceInput source="parent_id" reference="categories" allowEmpty>
+      <ReferenceInput source="parentId" reference="categories" allowEmpty>
         <SelectInput optionText="name" />
       </ReferenceInput>
     </SimpleForm>
   </Edit>
 );
 
+const defaultParse = (value: string) => {
+  console.log({ defaultParse, value });
+  return value === '' ? null : value;
+};
+
 export const CategoryCreate = () => (
   <Create>
-    <SimpleForm>
+    <SimpleForm sanitizeEmptyValues>
       <TextInput source="slug" />
       <TextInput source="name" />
-      <ReferenceInput source="parent_id" reference="categories" allowEmpty>
+      <ReferenceInput source="parentId" reference="categories">
         <SelectInput optionText="name" />
       </ReferenceInput>
     </SimpleForm>

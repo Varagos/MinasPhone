@@ -23,7 +23,7 @@ import Aside from './Aside';
 
 const ProductList = () => {
   const getResourceLabel = useGetResourceLabel();
-  const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
+  const isSmall: boolean = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
   return (
     <ListBase perPage={24} sort={{ field: 'reference', order: 'ASC' }}>
       <Title defaultTitle={getResourceLabel('products', 2)} />

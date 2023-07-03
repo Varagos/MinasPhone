@@ -1,0 +1,28 @@
+/* .content {
+  background-color: theme.palette.background.default;
+} */
+.media {
+  width: 100%;
+  height: auto;
+}
+
+.sectionTitle {
+  font-weight: 900;
+  border-bottom: thick solid #6a2c70;
+  padding-bottom: 3px;
+  margin-bottom: 40px;
+}
+
+.stretch {
+  height: 100%;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+}
+
+.phoneRepairImage {
+  width: 90%;
+  height: auto;
+}

@@ -1,0 +1,53 @@
+.helperBar {
+  min-height: 48px;
+}
+.helperToolBar {
+  justify-content: space-between;
+}
+.authLink {
+  color: white;
+  text-decoration: none;
+  -webkit-transition: color 0.4s;
+  -moz-transition: color 0.4s;
+  -ms-transition: color 0.4s;
+  -o-transition: color 0.4s;
+  transition: color 0.4s;
+}
+.authLink:hover {
+  color: 'black';
+}
+.appBar {
+  box-shadow: 'none';
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.title {
+  flex-grow: 1;
+  display: flex;
+  align-items: flex-end;
+}
+.navLinkHome {
+  color: #ffce2a;
+}
+:hover .navLinkHome {
+  background-color: #ffff;
+}
+.navLink {
+  flex-grow: 1;
+  color: black;
+}
+:hover .navLink {
+  color: #ffce2a;
+  background-color: #ffff;
+}
+.image {
+  margin-right: 10px;
+  display: block;
+}
+.grow {
+  flex-grow: 1;
+}
+
+.linkButton {
+  text-decoration: none;
+  color: #000;
+}

@@ -20,7 +20,6 @@ const Navbar = () => {
   const classes = useStyles();
   const location = useLocation();
   const [anchor, setAnchor] = useState(false);
-  const [open, setOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const authStatus = useAppSelector((state) => state.user.status);
   const user = useAppSelector((state) => state.user.data);
@@ -43,14 +42,6 @@ const Navbar = () => {
   }, []);
 
   const cart = useAppSelector((state) => state.cart.data);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const toggleDrawer = (open: any) => (event: any) => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -147,7 +138,6 @@ const Navbar = () => {
               </IconButton>
             )}
           </div>
-          <LoginForm open={open} handleClose={handleClose} />
           {location.pathname !== '/cart' && (
             <div>
               <IconButton component={Link} to="/cart" aria-label="Show cart items" color="inherit">

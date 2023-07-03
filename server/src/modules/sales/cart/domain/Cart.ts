@@ -39,6 +39,13 @@ export class Cart extends AggregateRoot<CartProps> {
     return this.props.lineItems.length > 0;
   }
 
+  getLineItemWithProductId(productId: ProductId): CartItem | null {
+    return (
+      this.props.lineItems.find((item) => item.productId.equals(productId)) ??
+      null
+    );
+  }
+
   public static create(props: CartProps, id?: UniqueEntityID): Result<Cart> {
     // TODO validations
 
@@ -52,6 +59,10 @@ export class Cart extends AggregateRoot<CartProps> {
       // domain event
     }
     return Result.ok<Cart>(cart);
+  }
+
+  public static createEmpty(): Result<Cart> {
+    return this.create({ lineItems: [] });
   }
 
   /**

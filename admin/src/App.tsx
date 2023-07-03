@@ -23,6 +23,7 @@ import categories from './categories';
 import users from './users';
 import Configuration from './configuration/Configuration';
 import { apiBaseUrl } from './config';
+import dataProviderForProductsBase64ImageHandling from './data/addUploadCapabilitiesbase64';
 
 const i18nProvider = polyglotI18nProvider((locale) => {
   if (locale === 'gr') {
@@ -30,7 +31,7 @@ const i18nProvider = polyglotI18nProvider((locale) => {
   }
   return englishMessages;
 }, 'en');
-console.log(apiBaseUrl)
+console.log(apiBaseUrl);
 
 const App = () => {
   return (
@@ -38,7 +39,7 @@ const App = () => {
       title="Minas Phone Admin"
       dashboard={Dashboard}
       authProvider={authProvider}
-      dataProvider={myDataProvider(dataProvider)}
+      dataProvider={dataProviderForProductsBase64ImageHandling(dataProvider)}
       layout={Layout}
       loginPage={Login}
       i18nProvider={i18nProvider}

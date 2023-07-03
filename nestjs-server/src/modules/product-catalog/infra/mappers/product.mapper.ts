@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ProductEntity } from '@modules/product-catalog/domain/product.entity';
 import { ProductModel, productSchema } from '../database/product.repository';
 import { ProductResponseDto } from '@modules/product-catalog/application/categories/dtos/product.response.dto';
+import { Money } from '@modules/product-catalog/domain/value-objects/money.value-object';
 @Injectable()
 export class ProductMapper {
   toPersistence(product: ProductEntity): ProductModel {
@@ -27,7 +28,7 @@ export class ProductMapper {
       name,
       description,
       slug,
-      price,
+      price: price.amount.toNumber(),
       quantity,
       active,
       image_uri: imageUri,
@@ -47,11 +48,11 @@ export class ProductMapper {
         name: productModel.name,
         description: productModel.description,
         slug: productModel.slug,
-        price: productModel.price,
+        price: Money.create(productModel.price),
         quantity: productModel.quantity,
         active: productModel.active,
         imageUri: productModel.image_uri,
-        sku: productModel.sku,
+        sku: productModel.sku ? productModel.sku : null,
         categoryId: productModel.category_id,
       },
     });
@@ -62,7 +63,7 @@ export class ProductMapper {
     response.name = props.name;
     response.slug = props.slug;
     response.description = props.description;
-    response.price = props.price;
+    response.price = props.price.amount.toNumber();
     response.quantity = props.quantity;
     response.active = props.active;
     response.imageUrl = props.imageUri;

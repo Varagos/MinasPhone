@@ -4,12 +4,13 @@ import { Image } from './value-objects/image.value-object';
 import { customAlphabet } from 'nanoid';
 import { ProductImageUpdatedDomainEvent } from './events/product-image-updated.domain-event';
 import { ProductDeletedDomainEvent } from './events/product-deleted.domain-event';
+import { Money } from './value-objects/money.value-object';
 
 interface ProductProps {
   name: string;
   description: string;
   slug: string;
-  price: number;
+  price: Money;
   quantity: number;
   active: boolean;
   imageUri: string;
@@ -20,7 +21,7 @@ interface CreateProductProps {
   name: string;
   description: string;
   // slug: string;
-  price: number;
+  price: Money;
   quantity: number;
   active: boolean;
   imageUri: string;
@@ -62,7 +63,7 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
     return this.props.sku;
   }
 
-  get price(): number {
+  get price(): Money {
     return this.props.price;
   }
 
@@ -117,7 +118,7 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
     this.props.description = description;
   }
 
-  public updatePrice(price: number): void {
+  public updatePrice(price: Money): void {
     this.props.price = price;
   }
 

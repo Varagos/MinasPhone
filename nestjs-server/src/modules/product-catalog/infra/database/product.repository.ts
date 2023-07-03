@@ -24,7 +24,7 @@ export const productSchema = z.object({
   quantity: z.number().min(0),
   active: z.boolean(),
   image_uri: z.string(),
-  sku: z.string().nullable(),
+  sku: z.string().max(255).nullable().optional(),
   category_id: z.string().uuid(),
 });
 

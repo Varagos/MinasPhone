@@ -1,7 +1,7 @@
 {
   "name": "nest-typescript-starter",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Nest TypeScript starter repository",
   "license": "MIT",
   "scripts": {
@@ -41,6 +41,7 @@
     "@slonik/migrator": "^0.11.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "decimal.js": "^10.4.3",
     "dotenv": "^16.0.3",
     "env-var": "^7.3.0",
     "nanoid": "3.3.4",

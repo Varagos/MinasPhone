@@ -14,6 +14,7 @@ import { Image } from '@modules/product-catalog/domain/value-objects/image.value
 import { ProductAlreadyExistsError } from '@modules/product-catalog/domain/product.errors';
 import { PRODUCT_REPO } from '@modules/product-catalog/constants';
 import { ForeignKeyIntegrityConstraintViolationError } from 'slonik';
+import { Money } from '@modules/product-catalog/domain/value-objects/money.value-object';
 
 export type CreateProductCommandResponse = Result<
   AggregateID,
@@ -31,7 +32,12 @@ export class CreateProductCommandHandler implements ICommandHandler {
     command: CreateProductCommand,
   ): Promise<CreateProductCommandResponse> {
     try {
-      const product = ProductEntity.create({ ...command });
+      const price = Money.create(command.price);
+      const props = {
+        ...command,
+        price,
+      };
+      const product = ProductEntity.create(props);
 
       /* Wrapping operation in a transaction to make sure
          that all domain events are processed atomically */

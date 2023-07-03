@@ -3,6 +3,7 @@ import {
   IsBoolean,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   IsUUID,
   Min,
@@ -71,7 +72,7 @@ export class CreateProductRequestDto {
     description: 'The SKU of the product',
   })
   @IsString()
-  // @IsNotEmpty()
+  @IsOptional()
   sku: string;
 
   @ApiProperty({

@@ -1,0 +1,56 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'nestjs-server/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Get version from package.json
+        id: package-version
+        run: echo "::set-output name=version::$(node -p "require('./nestjs-server/package.json').version")"
+
+      - name: Check if tag exists
+        id: check-tag
+        run: echo "::set-output name=exists::$(git tag --list | grep -q "nestjs-server-v${{ steps.package-version.outputs.version }}" && echo 'true' || echo 'false')"
+
+      - name: Docker login
+        if: steps.check-tag.outputs.exists == 'false'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build and push Docker image
+        if: steps.check-tag.outputs.exists == 'false'
+        uses: docker/build-push-action@v2
+        with:
+          context: ./nestjs-server
+          push: true
+          tags: varagos/minas-phone-api:${{ steps.package-version.outputs.version }}
+
+      - name: Set up Git user
+        if: steps.check-tag.outputs.exists == 'false'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Create Git tag
+        if: steps.check-tag.outputs.exists == 'false'
+        run: |
+          git tag nestjs-server-v${{ steps.package-version.outputs.version }}
+          git push origin --tags

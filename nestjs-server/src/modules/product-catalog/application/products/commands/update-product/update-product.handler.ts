@@ -9,6 +9,7 @@ import { PRODUCT_REPO } from '@modules/product-catalog/constants';
 import { UpdateProductCommand } from './update-product.command';
 import { ForeignKeyIntegrityConstraintViolationError } from 'slonik';
 import { ProductRepositoryPort } from '@modules/product-catalog/domain/ports/product.repository.port';
+import { Money } from '@modules/product-catalog/domain/value-objects/money.value-object';
 
 export type UpdateProductCommandResponse = Result<
   void,
@@ -41,7 +42,8 @@ export class UpdateProductCommandHandler {
       }
 
       if (command.price !== undefined) {
-        product.updatePrice(command.price);
+        const price = Money.create(command.price);
+        product.updatePrice(price);
       }
 
       if (command.quantity !== undefined) {

@@ -45,7 +45,7 @@ const defaultParse = (value: string) => {
 
 export const CategoryCreate = () => (
   <Create>
-    <SimpleForm>
+    <SimpleForm sanitizeEmptyValues>
       <TextInput source="slug" />
       <TextInput source="name" />
       <ReferenceInput source="parentId" reference="categories">

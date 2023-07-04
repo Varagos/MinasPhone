@@ -189,6 +189,7 @@ export class CategoriesHttpController {
     @Body() request: FindCategoriesDto,
     @Query() queryParams: PaginatedQueryRequestDto,
   ): Promise<CategoryPaginatedResponseDto> {
+    console.log({ request });
     const query = new FindCategoriesQuery({
       ...request,
       limit: queryParams?.limit,

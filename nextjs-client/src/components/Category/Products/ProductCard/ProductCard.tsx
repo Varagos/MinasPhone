@@ -1,4 +1,11 @@
-import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@mui/material';
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Typography,
+  IconButton,
+} from '@mui/material';
 import { AddShoppingCart } from '@mui/icons-material';
 
 import useStyles from './styles';
@@ -6,7 +13,8 @@ import Link from 'next/link';
 import { useAppDispatch } from '@/redux/store';
 import { addedToCart, addToCart } from '../../../../redux/slices/cart';
 import { useState } from 'react';
-import { Product } from '@/services/products';
+import { Product } from '@/api/types/products';
+import { formatPriceWithSymbol } from '@/utils/prices';
 
 type ProductProps = {
   product: Product;
@@ -43,7 +51,7 @@ function ProductCard({ product }: ProductProps) {
           These are small (100 x 100 or 200 x 200)  */}
         <CardMedia
           component="img"
-          image={product.media.source}
+          image={product.imageUrl}
           title={product.name}
           sx={{
             objectFit: 'contain',
@@ -63,7 +71,11 @@ function ProductCard({ product }: ProductProps) {
         }}
       >
         <div>
-          <Link href={`/products/${product.id}`} passHref style={{ textDecoration: 'none' }}>
+          <Link
+            href={`/products/${product.id}`}
+            passHref
+            style={{ textDecoration: 'none' }}
+          >
             <Typography
               display="block"
               color="textSecondary"
@@ -89,10 +101,16 @@ function ProductCard({ product }: ProductProps) {
             </Typography>
           </Link>
           <CardActions disableSpacing className={classes.cardActions}>
-            <Typography style={{ marginRight: 'auto', color: '#69b67c' }} variant="h6">
-              {product.price.formatted_with_symbol}
+            <Typography
+              style={{ marginRight: 'auto', color: '#69b67c' }}
+              variant="h6"
+            >
+              {formatPriceWithSymbol(product.price)}
             </Typography>
-            <IconButton aria-label="Add to Card" onClick={() => handleAddToCart(product.id, 1)}>
+            <IconButton
+              aria-label="Add to Card"
+              onClick={() => handleAddToCart(product.id, 1)}
+            >
               <AddShoppingCart />
             </IconButton>
           </CardActions>

@@ -1,3 +1,11 @@
+import { PaginatedRequest, PaginatedResponse } from './common';
+
+export type FindCategoriesDto = {
+  slug?: string;
+  name?: string;
+  parentId?: string;
+};
+
 export interface Category {
   id: string;
   createdAt: string;
@@ -7,18 +15,10 @@ export interface Category {
   parentId?: string; // Assuming parentId can be optional
 }
 
-export interface CategoryPaginatedResponse {
-  count: number;
-  limit: number;
-  page: number;
-  data: Category[];
-}
+export type CategoryPaginatedResponse = PaginatedResponse<Category>;
 
 export interface ICategoriesApi {
-  useCategories(
-    limit?: number,
-    page?: number
-  ): {
+  useCategories(params: PaginatedRequest<FindCategoriesDto>): {
     categories: CategoryPaginatedResponse | null;
     isLoading: boolean;
     isError: any;

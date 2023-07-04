@@ -1,12 +1,31 @@
 import useSWR from 'swr';
 import { routes } from './config';
 import { fetcher } from './common/fetcher';
-import { Category, CategoryPaginatedResponse, ICategoriesApi } from '../types';
+import {
+  ICategoriesApi,
+  CategoryPaginatedResponse,
+  Category,
+} from '../types/types';
+import { PaginatedRequest } from '../types/common';
+import { FindCategoriesDto } from '../types/categories';
 
 export class CategoriesApi implements ICategoriesApi {
-  useCategories(limit: number, page: number) {
+  useCategories({
+    limit,
+    page,
+    slug,
+    name,
+    parentId,
+  }: PaginatedRequest<FindCategoriesDto>) {
     const { data, error, isLoading } = useSWR<CategoryPaginatedResponse>(
-      routes.v1.categories.findMany(limit, page),
+      [
+        routes.v1.categories.findMany(limit, page),
+        {
+          slug,
+          name,
+          parentId,
+        },
+      ],
       fetcher
     );
 

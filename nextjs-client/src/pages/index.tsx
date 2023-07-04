@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Container, Typography, Grid, Box } from '@mui/material';
 
 import { MainContainer, SectionTitle } from '@/components/Landing/styles';
@@ -19,9 +19,14 @@ import { fetchCart } from '@/redux/slices/cart';
 import { api } from '@/api/index';
 
 export default function Landing() {
-  const recommendedProducts = useAppSelector((state) => state.products.data);
   const dispatch = useAppDispatch();
-  const { categories, isLoading, isError } = api.useCategories(10, 0);
+  const { categories, isLoading, isError } = api.useCategories({
+    limit: 10,
+    page: 0,
+  });
+  const { products } = api.useProducts({ limit: 10, page: 0 });
+  console.log('categories:', categories);
+  console.log('products:', products);
 
   // if (isLoading) return <div>Loading...</div>;
 
@@ -50,9 +55,16 @@ export default function Landing() {
     dispatch(fetchCart());
   }, []);
 
-  const shuffled = structuredClone(recommendedProducts).sort(
-    () => 0.5 - Math.random()
-  );
+  // const shuffled = structuredClone(recommendedProducts).sort(
+  //   () => 0.5 - Math.random()
+  // );
+  const shuffled = useMemo(() => {
+    if (products && products.data) {
+      const clonedProducts = structuredClone(products.data);
+      return clonedProducts.sort(() => 0.5 - Math.random());
+    }
+    return [];
+  }, [products]);
   return (
     <>
       <Head>

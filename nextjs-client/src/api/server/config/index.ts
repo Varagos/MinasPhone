@@ -9,6 +9,11 @@ const routes = {
         `${API_BASE_URL}/api/v1/categories?limit=${limit}&page=${page}`,
       fineOne: (id: string) => `${API_BASE_URL}/api/v1/categories/${id}`,
     },
+    products: {
+      findMany: (limit: number, page: number) =>
+        `${API_BASE_URL}/api/v1/products?limit=${limit}&page=${page}`,
+      fineOne: (id: string) => `${API_BASE_URL}/api/v1/products/${id}`,
+    },
   },
 };
 export { routes };

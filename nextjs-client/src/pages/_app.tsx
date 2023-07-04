@@ -9,17 +9,20 @@ import { useEffect } from 'react';
 import { fetchCategories } from '@/redux/slices/categories';
 import { fetchProducts } from '@/redux/slices/products';
 import { fetchCart } from '@/redux/slices/cart';
+import { CartProvider } from '@/context/cartContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <NewNavbar />
-        <main style={{ minHeight: '80vh' }}>
-          <Component {...pageProps} />
-        </main>
-      </ThemeProvider>
+      <CartProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <NewNavbar />
+          <main style={{ minHeight: '80vh' }}>
+            <Component {...pageProps} />
+          </main>
+        </ThemeProvider>
+      </CartProvider>
     </Provider>
   );
 }

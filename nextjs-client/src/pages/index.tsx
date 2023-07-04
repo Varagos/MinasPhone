@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 import { Container, Typography, Grid, Box } from '@mui/material';
 
-import useStyles from '@/components/Landing/styles';
+import { MainContainer, SectionTitle } from '@/components/Landing/styles';
 import CategoryItem from '@/components/Landing/CategoryItem/CategoryItem';
 import ProductCard from '@/components/Category/Products/ProductCard/ProductCard';
 import PhoneFix from '../../public/undraw_phone_fix.svg';
@@ -16,11 +16,31 @@ import { fetchProducts } from '@/redux/slices/products';
 import SimpleSlider from '../components/Landing/Slider/Slider';
 import { fetchCategories } from '@/redux/slices/categories';
 import { fetchCart } from '@/redux/slices/cart';
+import { api } from '@/api/index';
 
 export default function Landing() {
   const recommendedProducts = useAppSelector((state) => state.products.data);
   const dispatch = useAppDispatch();
-  const classes = useStyles();
+  const { categories, isLoading, isError } = api.useCategories(10, 0);
+
+  // if (isLoading) return <div>Loading...</div>;
+
+  // if (isError) return <div>Error loading categories.</div>;
+
+  // return (
+  //   <div>
+  //     <h1>Categories List</h1>
+  //     <ul>
+  //       {categories &&
+  //         categories.data.map((category) => (
+  //           <li key={category.id}>
+  //             {category.name} ({category.slug})
+  //           </li>
+  //         ))}
+  //     </ul>
+  //   </div>
+  // );
+
   // console.log('recommendedProducts:', recommendedProducts);
 
   useEffect(() => {
@@ -41,7 +61,7 @@ export default function Landing() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={classes.content}>
+      <MainContainer>
         {/* <Carousel>
         {items.map((item, index) => (
           <Item key={index} item={item} />
@@ -51,9 +71,7 @@ export default function Landing() {
           <Container>
             <Box my={8}>
               <Typography variant="h4" align="center" gutterBottom>
-                <span className={classes.sectionTitle}>
-                  ΔΗΜΟΦΙΛΕΙΣ ΚΑΤΗΓΟΡΙΕΣ
-                </span>
+                <SectionTitle>ΔΗΜΟΦΙΛΕΙΣ ΚΑΤΗΓΟΡΙΕΣ</SectionTitle>
               </Typography>
             </Box>
             <Grid container justifyContent="center" spacing={3}>
@@ -84,7 +102,7 @@ export default function Landing() {
           <Container>
             <Box my={8}>
               <Typography variant="h4" align="center" gutterBottom>
-                <span className={classes.sectionTitle}>ΠΡΟΤΕΙΝΟΥΜΕ</span>
+                <SectionTitle>ΠΡΟΤΕΙΝΟΥΜΕ</SectionTitle>
               </Typography>
             </Box>
 
@@ -105,7 +123,7 @@ export default function Landing() {
         <section>
           <Box py={16}>
             <Typography variant="h4" align="center" gutterBottom>
-              <span className={classes.sectionTitle}>ΕΠΙΣΚΕΥΕΣ ΤΗΛΕΦΩΝΩΝ</span>
+              <SectionTitle>ΕΠΙΣΚΕΥΕΣ ΤΗΛΕΦΩΝΩΝ</SectionTitle>
             </Typography>
             <Grid container justifyContent="center" spacing={3}>
               <Grid
@@ -165,7 +183,7 @@ export default function Landing() {
             </Grid>
           </Box>
         </section>
-      </main>
+      </MainContainer>
     </>
   );
 }

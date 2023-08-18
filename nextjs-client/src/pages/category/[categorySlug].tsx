@@ -16,7 +16,7 @@ export const getServerSideProps: GetServerSideProps<CategoryProps> = async (
   context
 ) => {
   const categorySlug = context.params?.categorySlug as string;
-  const products = await api.products.findMany({
+  const products = await api.products.findManyByCategorySlug({
     limit: 10,
     page: 0,
     slug: categorySlug,

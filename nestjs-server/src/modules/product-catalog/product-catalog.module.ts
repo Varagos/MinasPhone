@@ -25,6 +25,7 @@ import { FindProductByIdQueryHandler } from './application/products/queries/find
 import { DeleteImageAfterProductDeletionDomainEventHandler } from './application/images/event-handlers/delete-image-after-product-deletion.domain-event-handler';
 import { DeleteImageCommandHandler } from './application/images/commands/delete-image/delete-image.handler';
 import { DeleteOldImageAfterProductImageUpdateDomainEventHandler } from './application/images/event-handlers/delete-old-image-after-product-image-update.domain-event-handler';
+import { FindProductsByCategorySlugQueryHandler } from './application/products/queries/find-products-by-category-slug/find-products-by-category-slug.handler';
 
 const commandHandlers: Provider[] = [
   // Category
@@ -47,6 +48,7 @@ const queryHandlers: Provider[] = [
   FindProductsQueryHandler,
   FindProductImageQueryHandler,
   FindProductByIdQueryHandler,
+  FindProductsByCategorySlugQueryHandler,
 ];
 
 const eventHandlers: Provider[] = [

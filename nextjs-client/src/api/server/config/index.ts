@@ -13,6 +13,11 @@ const routes = {
       findMany: (limit: number, page: number) =>
         `${API_BASE_URL}/api/v1/products?limit=${limit}&page=${page}`,
       fineOne: (id: string) => `${API_BASE_URL}/api/v1/products/${id}`,
+      findManyByCategorySlug: (params: {
+        limit: number;
+        page: number;
+        slug: string;
+      }) => `${API_BASE_URL}/api/v1/products/category/${params.slug}?limit=${params.limit}&page=${params.page}`,
     },
   },
 };

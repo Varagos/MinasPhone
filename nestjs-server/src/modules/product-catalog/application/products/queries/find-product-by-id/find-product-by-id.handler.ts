@@ -9,7 +9,7 @@ import {
   productSchema,
 } from '@modules/product-catalog/infra/database/product.repository';
 
-export type FindCategoryByIdQueryResponse = Result<ProductModel, Error>;
+export type FindProductByIdQueryResponse = Result<ProductModel, Error>;
 
 @QueryHandler(FindProductByIdQuery)
 export class FindProductByIdQueryHandler implements IQueryHandler {
@@ -26,7 +26,7 @@ export class FindProductByIdQueryHandler implements IQueryHandler {
    */
   async execute(
     query: FindProductByIdQuery,
-  ): Promise<FindCategoryByIdQueryResponse> {
+  ): Promise<FindProductByIdQueryResponse> {
     /**
      * Constructing a query with Slonik.
      * More info: https://contra.com/p/AqZWWoUB-writing-composable-sql-using-java-script

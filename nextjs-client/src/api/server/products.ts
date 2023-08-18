@@ -75,6 +75,24 @@ class ProductsApi implements IProductsApi {
 
     return res.json();
   }
+
+  async findManyByCategorySlug(params: {
+    limit: number;
+    page: number;
+    slug: string;
+  }): Promise<ProductPaginatedResponse> {
+    const { limit, page, slug } = params;
+
+    const res = await fetch(
+      routes.v1.products.findManyByCategorySlug({ limit, page, slug })
+    );
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    return res.json();
+  }
 }
 
 export default ProductsApi;

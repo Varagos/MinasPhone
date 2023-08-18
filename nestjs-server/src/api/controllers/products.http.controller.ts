@@ -20,7 +20,7 @@ import { Response } from 'express';
 import { ResponseBase } from '@libs/api/response.base';
 import { routesV1 } from '@config/app.routes';
 import { FindProductByIdQuery } from '../../modules/product-catalog/application/products/queries/find-product-by-id/find-product-by-id.query';
-import { FindCategoryByIdQueryResponse } from '../../modules/product-catalog/application/products/queries/find-product-by-id/find-product-by-id.handler';
+import { FindProductByIdQueryResponse } from '../../modules/product-catalog/application/products/queries/find-product-by-id/find-product-by-id.handler';
 import { ArgumentInvalidException, NotFoundException } from '@libs/exceptions';
 import { ProductResponseDto } from '@modules/product-catalog/application/categories/dtos/product.response.dto';
 import { ProductPaginatedResponseDto } from '@modules/product-catalog/application/categories/dtos/product.paginated.response.dto';
@@ -46,6 +46,7 @@ import { UpdateProductCommandResponse } from '@modules/product-catalog/applicati
 import { UploadImageCommand } from '@modules/product-catalog/application/images/commands/upload-image/upload-image.command';
 import { UploadImageCommandResponse } from '@modules/product-catalog/application/images/commands/upload-image/upload-image.handler';
 import { RolesGuard } from '@modules/user-management/user-management.module';
+import { FindProductsByCategorySlugQuery } from '@modules/product-catalog/application/products/queries/find-products-by-category-slug/find-products-by-category-slug.query';
 
 @ApiTags('products')
 @Controller(routesV1.version)
@@ -249,6 +250,50 @@ export class ProductsHttpController {
     });
   }
 
+  @Get(routesV1.product.findByCategorySlug)
+  @ApiOperation({ summary: 'Find products by Category Slug' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: ProductPaginatedResponseDto,
+  })
+  @UsePipes(new ValidationPipe({ whitelist: true }))
+  async findProductsByCategorySlug(
+    @Param('slug') slug: string,
+    @Query() queryParams: PaginatedQueryRequestDto,
+  ): Promise<ProductPaginatedResponseDto> {
+    const query = new FindProductsByCategorySlugQuery({
+      slug,
+      limit: queryParams?.limit,
+      page: queryParams?.page,
+    });
+    const result: Result<
+      Paginated<ProductModel>,
+      Error
+    > = await this.queryBus.execute(query);
+
+    const paginated = result.unwrap();
+
+    // Whitelisting returned properties
+    return new ProductPaginatedResponseDto({
+      ...paginated,
+      data: paginated.data.map((product) => ({
+        ...new ResponseBase({
+          id: product.id,
+          createdAt: product.created_at,
+          updatedAt: product.updated_at,
+        }),
+        slug: product.slug,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        quantity: product.quantity,
+        active: product.active,
+        imageUrl: product.image_uri,
+        categoryId: product.category_id,
+      })),
+    });
+  }
+
   @Get(routesV1.product.getOne)
   @ApiOperation({ summary: 'Find product by id' })
   @ApiResponse({
@@ -265,7 +310,7 @@ export class ProductsHttpController {
     const query = new FindProductByIdQuery({
       id,
     });
-    const result: FindCategoryByIdQueryResponse = await this.queryBus.execute(
+    const result: FindProductByIdQueryResponse = await this.queryBus.execute(
       query,
     );
 

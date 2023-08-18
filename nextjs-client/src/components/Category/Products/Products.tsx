@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Typography } from '@mui/material';
 
 import ProductCard from './ProductCard/ProductCard';
-import useStyles from './styles';
+import { MainContainer, ToolBar } from './styles';
 import EmptyLogo from '../../../../public/undraw_empty_xct9.svg';
 import Filter from '../Filter/Filter';
 
@@ -10,8 +10,6 @@ type ProductsType = {
 };
 
 function Products({ products }: ProductsType) {
-  const classes = useStyles();
-
   if (!products.length) {
     return (
       <main>
@@ -30,8 +28,8 @@ function Products({ products }: ProductsType) {
   }
 
   return (
-    <main className={classes.content} style={{ minHeight: '80vh' }}>
-      <div className={classes.toolbar} />
+    <MainContainer>
+      <ToolBar />
       <Container sx={{ pb: 20 }}>
         <Grid container justifyContent="center" spacing={4}>
           {/* <Hidden xsDown> */}
@@ -59,7 +57,7 @@ function Products({ products }: ProductsType) {
           </Grid>
         </Grid>
       </Container>
-    </main>
+    </MainContainer>
   );
 }
 

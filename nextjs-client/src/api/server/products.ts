@@ -65,6 +65,16 @@ class ProductsApi implements IProductsApi {
 
     return res.json();
   }
+
+  async findOneById(id: string): Promise<Product> {
+    const res = await fetch(routes.v1.products.fineOne(id));
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    return res.json();
+  }
 }
 
 export default ProductsApi;

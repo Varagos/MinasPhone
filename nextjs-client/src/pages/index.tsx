@@ -11,11 +11,7 @@ import TabletCategory from '../../public/tablet-category.jpg';
 import SmartWatchCategory from '../../public/smartwatch-category.jpg';
 import PhonesCategory from '../../public/iphone-12-service.png';
 import AccessoriesCategory from '../../public/Hnet-com-image.png';
-import { useAppDispatch, useAppSelector } from '@/redux/store';
-import { fetchProducts } from '@/redux/slices/products';
 import SimpleSlider from '../components/Landing/Slider/Slider';
-import { fetchCategories } from '@/redux/slices/categories';
-import { fetchCart } from '@/redux/slices/cart';
 import { api } from '@/api/index';
 import { GetServerSideProps } from 'next';
 import {

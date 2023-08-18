@@ -2,7 +2,10 @@ import mockApi from './mock';
 import serverApi from './server';
 import { ICategoriesApi, IProductsApi } from './types/types';
 
-export type Api = ICategoriesApi & IProductsApi;
+export interface Api {
+  categories: ICategoriesApi;
+  products: IProductsApi;
+}
 let api: Api;
 
 if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'mock') {

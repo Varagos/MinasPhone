@@ -6,48 +6,50 @@ import { useAppDispatch, useAppSelector } from '@/redux/store';
 import StoreMallDirectoryTwoToneIcon from '@mui/icons-material/StoreMallDirectoryTwoTone';
 import { productSelected } from '@/redux/productSlice';
 import { addedToCart, addToCart } from '@/redux/slices/cart';
-import { fetchProducts } from '@/redux/slices/products';
+import products, { fetchProducts } from '@/redux/slices/products';
 import Spinner from '@/components/Spinner/Spinner';
+import { api } from '@/api';
+import { Product, ProductPaginatedResponse } from '@/api/types/products';
+import { GetServerSideProps } from 'next';
+import { formatPriceWithSymbol } from '@/utils/prices';
 
-export default function ProductPage() {
-  const dispatch = useAppDispatch();
-  // console.log('Product params', params);
-  const router = useRouter();
-  const { productId } = router.query;
+interface ProductsPageProps {
+  product: Product;
+}
+
+export const getServerSideProps: GetServerSideProps<ProductsPageProps> = async (
+  context
+) => {
+  const productId = context.params?.productId as string;
+  const product = await api.products.findOneById(productId);
+  return { props: { product } };
+};
+
+export default function ProductPage({ product }: ProductsPageProps) {
   // console.log(productId);
-  const allProducts = useAppSelector((state) => state.products.data);
-  const product = useAppSelector((state) => state.product.data);
-  const productsStatus = useAppSelector((state) => state.products.status);
-
-  const onProductPageMount = async () => {
-    const product = allProducts.find((product) => product.id === productId);
-    if (!product) {
-      const products = await dispatch(fetchProducts()).unwrap();
-      const product = products.find((product) => product.id === productId);
-      if (product) dispatch(productSelected(product));
-      else console.log('Product not found');
-
-      return;
-    }
-    dispatch(productSelected(product));
-  };
-
-  useEffect(() => {
-    onProductPageMount();
-  }, []);
 
   const handleAddToCart = (id: string) => {
-    dispatch(addedToCart({ productId: id, quantity: 1 }));
-    dispatch(addToCart({ productId: id, quantity: 1 }));
+    // dispatch(addedToCart({ productId: id, quantity: 1 }));
+    // dispatch(addToCart({ productId: id, quantity: 1 }));
   };
 
-  if (productsStatus === 'loading') return <Spinner />;
-  if (!product) return <div style={{ minHeight: '70vh' }}>Error finding product</div>;
+  if (!product)
+    return <div style={{ minHeight: '70vh' }}>Error finding product</div>;
 
   return (
-    <Container maxWidth="lg" sx={{ pt: 10, pb: 20, bgcolor: 'background.paper' }}>
+    <Container
+      maxWidth="lg"
+      sx={{ pt: 10, pb: 20, bgcolor: 'background.paper' }}
+    >
       <Grid container spacing={2}>
-        <Grid container item xs={12} sm={6} sx={{ pt: 13 }} justifyContent="center">
+        <Grid
+          container
+          item
+          xs={12}
+          sm={6}
+          sx={{ pt: 13 }}
+          justifyContent="center"
+        >
           {/* Medium: Product pages
 Every product needs good product page-quality images. These images (usually 640 x 640 or 800 x 800) */}
           <Box
@@ -70,11 +72,17 @@ Every product needs good product page-quality images. These images (usually 640 
               // maxWidth: { xs: 350, md: 250 },
             }}
             alt={product.name}
-            src={product.media.source}
+            src={product.imageUrl}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
             <Box mr={4}>
               <Typography variant="h5" gutterBottom>
                 {product.name}
@@ -82,18 +90,31 @@ Every product needs good product page-quality images. These images (usually 640 
             </Box>
 
             <Box ml={4}>
-              <Typography style={{ marginRight: 'auto', color: '#69b67c' }} variant="h6" noWrap>
-                {product.price.formatted_with_symbol}
+              <Typography
+                style={{ marginRight: 'auto', color: '#69b67c' }}
+                variant="h6"
+                noWrap
+              >
+                {formatPriceWithSymbol(product.price)}
+                {/* {product.price.formatted_with_symbol} */}
               </Typography>
             </Box>
           </Box>
 
           <Box
-            sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', my: 8 }}
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              my: 8,
+            }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <StoreMallDirectoryTwoToneIcon />
-              <Typography variant="caption">Παραλαβή από το κατάστημα.</Typography>
+              <Typography variant="caption">
+                Παραλαβή από το κατάστημα.
+              </Typography>
             </Box>
             <Button
               variant="contained"

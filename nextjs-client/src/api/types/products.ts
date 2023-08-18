@@ -24,6 +24,7 @@ export type ProductPaginatedResponse = PaginatedResponse<Product>;
 
 export interface IProductsApi {
   findMany(params: ProductRequest): Promise<ProductPaginatedResponse>;
+  findOneById(id: string): Promise<Product>;
   useProducts(params: ProductRequest): {
     products: ProductPaginatedResponse | null;
     isLoading: boolean;

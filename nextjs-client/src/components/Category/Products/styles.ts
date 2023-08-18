@@ -1,13 +1,9 @@
-import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 
-export default makeStyles((theme) => ({
-  toolbar: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3),
-  },
-  root: {
-    flexGrow: 1,
-  },
+export const MainContainer = styled('main')(({ theme }) => ({
+  flexGrow: 1,
+  backgroundColor: theme.palette.background.default,
+  padding: theme.spacing(3),
 }));
+
+export const ToolBar = styled('div')(({ theme }) => theme.mixins.toolbar);

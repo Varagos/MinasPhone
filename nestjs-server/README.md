@@ -203,3 +203,30 @@ docker push <docker_hub_username>/<repository_name>:<tag>
 Replace <docker_hub_username>, <repository_name>, and <tag> with the corresponding values you used while tagging the image.
 
 Docker will start pushing the image to Docker Hub, and the progress will be displayed in the terminal.
+
+## Publish using CI/CD
+
+- To create a Git tag, you typically use the following command:
+
+```bash
+
+git tag <tagname>
+```
+
+So, in the context of the naming pattern mentioned earlier (`nestjs-server-v1.2.3`), you would create a tag for a new version by running:
+
+```bash
+
+git tag nestjs-server-v1.2.3
+```
+
+After creating the tag, you would need to push it to the remote repository. You can do that with the following command:
+
+```bash
+
+git push origin nestjs-server-v1.2.3
+```
+
+This will push the specific tag `nestjs-server-v1.2.3` to the remote repository, and if your GitHub Actions workflow is configured as I described earlier, it will trigger the build and publish process.
+
+Note: Make sure to run the `git tag` command on the commit you want to mark as a release. Typically, this would be the latest commit on your main branch or another branch you're using for production releases, but you can also tag previous commits if needed.

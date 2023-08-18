@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Container, Typography, Grid, Box } from '@mui/material';
 
 import { MainContainer, SectionTitle } from '@/components/Landing/styles';
@@ -17,54 +17,39 @@ import SimpleSlider from '../components/Landing/Slider/Slider';
 import { fetchCategories } from '@/redux/slices/categories';
 import { fetchCart } from '@/redux/slices/cart';
 import { api } from '@/api/index';
+import { GetServerSideProps } from 'next';
+import {
+  CategoryPaginatedResponse,
+  Product,
+  ProductPaginatedResponse,
+} from '@/api/types/types';
 
-export default function Landing() {
-  const dispatch = useAppDispatch();
-  const { categories, isLoading, isError } = api.useCategories({
-    limit: 10,
-    page: 0,
-  });
-  const { products } = api.useProducts({ limit: 10, page: 0 });
-  console.log('categories:', categories);
-  console.log('products:', products);
+interface LandingProps {
+  categories: CategoryPaginatedResponse;
+  products: ProductPaginatedResponse;
+}
 
-  // if (isLoading) return <div>Loading...</div>;
+export const getServerSideProps: GetServerSideProps<
+  LandingProps
+> = async () => {
+  const categories = await api.categories.findMany({ limit: 10, page: 0 });
+  console.log({ categories });
+  const products = await api.products.findMany({ limit: 10, page: 0 });
+  return { props: { categories, products } };
+};
 
-  // if (isError) return <div>Error loading categories.</div>;
+export default function Landing({ categories, products }: LandingProps) {
+  console.log('Landing categories:', categories, 'products:', products);
 
-  // return (
-  //   <div>
-  //     <h1>Categories List</h1>
-  //     <ul>
-  //       {categories &&
-  //         categories.data.map((category) => (
-  //           <li key={category.id}>
-  //             {category.name} ({category.slug})
-  //           </li>
-  //         ))}
-  //     </ul>
-  //   </div>
-  // );
-
-  // console.log('recommendedProducts:', recommendedProducts);
+  const [shuffledProducts, setShuffledProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    dispatch(fetchCategories());
-    dispatch(fetchProducts());
-    dispatch(fetchCart());
+    // dispatch(fetchCart());
+    const clonedProducts = structuredClone(products.data);
+    setShuffledProducts(clonedProducts.sort(() => 0.5 - Math.random()));
   }, []);
 
-  // const shuffled = structuredClone(recommendedProducts).sort(
-  //   () => 0.5 - Math.random()
-  // );
-  const shuffled = useMemo(() => {
-    if (products && products.data) {
-      const clonedProducts = structuredClone(products.data);
-      return clonedProducts.sort(() => 0.5 - Math.random());
-    }
-    return [];
-  }, [products]);
   return (
     <>
       <Head>
@@ -98,7 +83,7 @@ export default function Landing() {
                 dest="/category/tablets"
               />
               <CategoryItem
-                src={AccessoriesCategory} //"https://i.ibb.co/R6vPgNz/Hnet-com-image.png"
+                src={AccessoriesCategory}
                 heading="ACCESSORIES"
                 dest="/category/accessories"
               />
@@ -124,7 +109,7 @@ export default function Landing() {
               spacing={2}
               alignItems="stretch"
             >
-              {shuffled.slice(0, 4).map((product: any) => (
+              {shuffledProducts.slice(0, 4).map((product) => (
                 <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
                   <ProductCard product={product} />
                 </Grid>

@@ -23,6 +23,7 @@ export type ProductRequest = PaginatedRequest<FindProductsDto>;
 export type ProductPaginatedResponse = PaginatedResponse<Product>;
 
 export interface IProductsApi {
+  findMany(params: ProductRequest): Promise<ProductPaginatedResponse>;
   useProducts(params: ProductRequest): {
     products: ProductPaginatedResponse | null;
     isLoading: boolean;

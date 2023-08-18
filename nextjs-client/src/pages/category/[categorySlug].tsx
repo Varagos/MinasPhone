@@ -4,32 +4,39 @@ import { useAppDispatch, useAppSelector } from '../../redux/store';
 import Products from '@/components/Category/Products/Products';
 import { useRouter } from 'next/router';
 import Spinner from '@/components/Spinner/Spinner';
+import { ProductPaginatedResponse } from '@/api/types/products';
+import { api } from '@/api';
+import { GetServerSideProps } from 'next';
 
-const Category = () => {
+interface CategoryProps {
+  products: ProductPaginatedResponse;
+}
+
+export const getServerSideProps: GetServerSideProps<CategoryProps> = async (
+  context
+) => {
+  const categorySlug = context.params?.categorySlug as string;
+  const products = await api.products.findMany({
+    limit: 10,
+    page: 0,
+    slug: categorySlug,
+  });
+  return { props: { products } };
+};
+
+const Category = ({ products }: CategoryProps) => {
   // console.log('Product params', params);
   const router = useRouter();
   const { categorySlug } = router.query;
-  // console.log(categorySlug);
+  console.log({ products });
+  console.log({ categorySlug });
   if (typeof categorySlug !== 'string') return <div>Category not found</div>;
 
-  const products = useAppSelector((state) => state.products.data);
-  const productsStatus = useAppSelector((state) => state.products.status);
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    // console.log('categorySlug changed', categorySlug);
-    if (categorySlug) {
-      dispatch(fetchProductsByCategorySlug(categorySlug));
-    }
-  }, [categorySlug]);
-
-  return productsStatus === 'loading' ? (
-    <Spinner />
-  ) : (
-    <Products products={products} />
-  );
-  // return productsLoading ? <Spinner /> : <Products products={products} />;
+  // return productsStatus === 'loading' ? (
+  //   <Spinner />
+  // ) : (
+  return <Products products={products.data} />;
+  // );
 };
 
 export default Category;

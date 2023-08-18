@@ -6,14 +6,28 @@ import { useRouter } from 'next/router';
 import newLogo from '../../../public/free-logo-design (1).png';
 import useStyles from './styles';
 import AppDrawer from './AppDrawer/AppDrawer';
-import { AppBar, Badge, Box, Button, IconButton, Snackbar, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Badge,
+  Box,
+  Button,
+  IconButton,
+  Snackbar,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 
-import { PersonOutline, Phone, ShoppingCart, Menu as MenuIcon } from '@mui/icons-material';
+import {
+  PersonOutline,
+  Phone,
+  ShoppingCart,
+  Menu as MenuIcon,
+} from '@mui/icons-material';
 import Image from 'next/image';
 import IconLinkButton from '../custom-components/IconLinkButton';
 import LinkButton from '../custom-components/LinkButton';
-import { useAppSelector } from '@/redux/store';
 import LogoutButton from './Logout/LogoutButton';
+import { Cart } from '@/types/cart';
 
 const NewNavbar = () => {
   const classes = useStyles();
@@ -22,8 +36,11 @@ const NewNavbar = () => {
 
   const [anchor, setAnchor] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const authStatus = useAppSelector((state) => state.user.status);
-  const user = useAppSelector((state) => state.user.data);
+  const user = { role: 'notAdmin' };
+  const authStatus: string = 'todo';
+  const cart: Cart | undefined = undefined as any;
+  // const authStatus = useAppSelector((state) => state.user.status);
+  // const user = useAppSelector((state) => state.user.data);
   //   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -40,10 +57,14 @@ const NewNavbar = () => {
     })();
   }, []);
 
-  const cart = useAppSelector((state) => state.cart.data);
+  // const cart = useAppSelector((state) => state.cart.data);
 
   const toggleDrawer = (open: any) => (event: any) => {
-    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
       return;
     }
     setAnchor(open);
@@ -70,6 +91,17 @@ const NewNavbar = () => {
     };
   }
 
+  //     {/* <AdminPanelSettingsIcon fontSize="medium" style={{ verticalAlign: 'bottom', paddingBottom: 1 }} /> */}
+  // {/* {authStatus === 'signedOut' && (
+  //   <IconButton aria-label="Login user" color="inherit" component={Link} to="/auth">
+  //     <PersonOutline
+  //       fontSize="medium"
+  //       // color="black"
+  //       style={{ verticalAlign: 'bottom', paddingBottom: 1 }}
+  //     />
+  //   </IconButton>
+  // )} */}
+
   return (
     <div>
       <AppBar
@@ -95,7 +127,6 @@ const NewNavbar = () => {
           <Box className={classes.title} color="inherit">
             <Link href="/">
               <Image src={newLogo} alt="MinasPhone" className={classes.image} />
-              {/* <img src={newLogo} alt="MinasPhone" className={classes.image} /> */}
             </Link>
           </Box>
           <div className={classes.grow} />
@@ -103,16 +134,28 @@ const NewNavbar = () => {
             <LinkButton href="/" sx={activeClass('/')}>
               ΑΡΧΙΚΗ
             </LinkButton>
-            <LinkButton href="/category/smartphones" sx={activeClass('/category/smartphones')}>
+            <LinkButton
+              href="/category/smartphones"
+              sx={activeClass('/category/smartphones')}
+            >
               ΚΙΝΗΤΑ
             </LinkButton>
-            <LinkButton href="/category/smartwatches" sx={activeClass('/category/smartwatches')}>
+            <LinkButton
+              href="/category/smartwatches"
+              sx={activeClass('/category/smartwatches')}
+            >
               SMARTWATCH
             </LinkButton>
-            <LinkButton href="/category/tablets" sx={activeClass('/category/tablets')}>
+            <LinkButton
+              href="/category/tablets"
+              sx={activeClass('/category/tablets')}
+            >
               TABLET
             </LinkButton>
-            <LinkButton href="/category/accessories" sx={activeClass('/category/accessories')}>
+            <LinkButton
+              href="/category/accessories"
+              sx={activeClass('/category/accessories')}
+            >
               ΑΞΕΣΟΥΑΡ
             </LinkButton>
             <LinkButton href="/products" sx={activeClass('/products')}>
@@ -121,20 +164,13 @@ const NewNavbar = () => {
           </Box>
           <div>
             {user?.role === 'admin' && (
-              <IconLinkButton aria-label="Admin panel" color="inherit" href="/dashboard">
-                {/* <AdminPanelSettingsIcon fontSize="medium" style={{ verticalAlign: 'bottom', paddingBottom: 1 }} /> */}
-              </IconLinkButton>
+              <IconLinkButton
+                aria-label="Admin panel"
+                color="inherit"
+                href="/dashboard"
+              ></IconLinkButton>
             )}
             {authStatus === 'signedIn' && <LogoutButton />}
-            {/* {authStatus === 'signedOut' && (
-              <IconButton aria-label="Login user" color="inherit" component={Link} to="/auth">
-                <PersonOutline
-                  fontSize="medium"
-                  // color="black"
-                  style={{ verticalAlign: 'bottom', paddingBottom: 1 }}
-                />
-              </IconButton>
-            )} */}
           </div>
           {currentPath !== '/cart' && (
             <div>

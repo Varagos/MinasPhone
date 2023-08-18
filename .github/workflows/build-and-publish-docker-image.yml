@@ -2,10 +2,8 @@ name: Build and Publish Docker Image
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'nestjs-server/**'
+    tags:
+      - 'nestjs-server-v*'
 
 jobs:
   build:
@@ -20,37 +18,23 @@ jobs:
         with:
           node-version: 14
 
-      - name: Get version from package.json
-        id: package-version
-        run: echo "::set-output name=version::$(node -p "require('./nestjs-server/package.json').version")"
+      - name: Extract tag name
+        id: tag-name
+        run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
 
-      - name: Check if tag exists
-        id: check-tag
-        run: echo "::set-output name=exists::$(git tag --list | grep -q "nestjs-server-v${{ steps.package-version.outputs.version }}" && echo 'true' || echo 'false')"
+      - name: Extract version from tag name
+        id: tag-version
+        run: echo "::set-output name=version::$(echo ${{ steps.tag-name.outputs.tag }} | sed 's/nestjs-server-v//')"
 
       - name: Docker login
-        if: steps.check-tag.outputs.exists == 'false'
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       - name: Build and push Docker image
-        if: steps.check-tag.outputs.exists == 'false'
         uses: docker/build-push-action@v2
         with:
           context: ./nestjs-server
           push: true
-          tags: varagos/minas-phone-api:${{ steps.package-version.outputs.version }}
-
-      - name: Set up Git user
-        if: steps.check-tag.outputs.exists == 'false'
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
-      - name: Create Git tag
-        if: steps.check-tag.outputs.exists == 'false'
-        run: |
-          git tag nestjs-server-v${{ steps.package-version.outputs.version }}
-          git push origin --tags
+          tags: varagos/minas-phone-api:${{ steps.tag-version.outputs.version }}

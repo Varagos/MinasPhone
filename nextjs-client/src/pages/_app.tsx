@@ -4,25 +4,18 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/lib/theme';
 import NewNavbar from '@/components/Navbar/Navbar';
 import { Provider } from 'react-redux';
-import { store, useAppDispatch } from '../redux/store';
-import { useEffect } from 'react';
-import { fetchCategories } from '@/redux/slices/categories';
-import { fetchProducts } from '@/redux/slices/products';
-import { fetchCart } from '@/redux/slices/cart';
-import { CartProvider } from '@/context/cartContext';
+import { store } from '../redux/store';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <CartProvider>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <NewNavbar />
-          <main style={{ minHeight: '80vh' }}>
-            <Component {...pageProps} />
-          </main>
-        </ThemeProvider>
-      </CartProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <NewNavbar />
+        <main style={{ minHeight: '80vh' }}>
+          <Component {...pageProps} />
+        </main>
+      </ThemeProvider>
     </Provider>
   );
 }

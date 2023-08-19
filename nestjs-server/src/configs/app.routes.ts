@@ -8,6 +8,8 @@ const usersRoot = 'users';
 const walletsRoot = 'wallets';
 const categoriesRoot = 'categories';
 const productsRoot = 'products';
+const cartRoot = 'cart';
+const ordersRoot = 'orders';
 
 // Api Versions
 const v1 = 'v1';
@@ -27,6 +29,18 @@ export const routesV1 = {
     delete: `/${productsRoot}/:id`,
     update: `/${productsRoot}/:id`,
     findByCategorySlug: `/${productsRoot}/category/:slug`,
+  },
+  cart: {
+    // Fetch cart from cookie or create a new one
+    fetch: `/${cartRoot}/fetch`,
+    addLineItem: `/${cartRoot}/line-item`,
+    updateLineItem: `/${cartRoot}/line-item/:id`,
+    deleteLineItem: `/${cartRoot}/line-item/:id`,
+    empty: `/${cartRoot}/empty`,
+  },
+  order: {
+    root: ordersRoot,
+    getOne: `/${ordersRoot}/:id`,
   },
   user: {
     root: usersRoot,

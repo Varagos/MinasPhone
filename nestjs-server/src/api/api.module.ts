@@ -4,6 +4,7 @@ import { UsersController } from './controllers/users.controller';
 import { CategoriesHttpController } from './controllers/categories.http.controller';
 import { ProductsHttpController } from './controllers/products.http.controller';
 import { HealthController } from './health.controller';
+import { CartHttpController } from './controllers/cart.http.controller';
 
 @Module({
   imports: [CqrsModule],
@@ -12,6 +13,7 @@ import { HealthController } from './health.controller';
     UsersController,
     CategoriesHttpController,
     ProductsHttpController,
+    CartHttpController,
   ],
 })
 export class ApiModule {}

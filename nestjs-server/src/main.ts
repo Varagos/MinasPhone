@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import supertokens from 'supertokens-node';
+import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -44,6 +45,7 @@ async function bootstrap() {
   });
   app.use(json({ limit: '50mb' }));
   app.use(urlencoded({ limit: '50mb', extended: true }));
+  app.use(cookieParser());
 
   setupSwagger(app);
 

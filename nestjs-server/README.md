@@ -89,43 +89,6 @@ docker compose -f docker-compose.prod.yml up
 
 ```
 
-### TODO CI/CD
-
-```yaml
-name: Deploy to Heroku
-
-on:
-  push:
-    branches:
-      - main
-  jobs:
-    build-and-deploy:
-      runs-on: ubuntu-latest
-
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
-
-        - name: Login to Heroku Container Registry
-          run: docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
-          env:
-            HEROKU_USERNAME: ${{ secrets.HEROKU_USERNAME }}
-            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-
-        - name: Build and push Docker image
-          run: |
-            docker build -t registry.heroku.com/$HEROKU_APP_NAME/web .
-            docker push registry.heroku.com/$HEROKU_APP_NAME/web
-          env:
-            HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
-
-        - name: Release Docker image
-          run: |
-            heroku container:release web --app $HEROKU_APP_NAME
-          env:
-            HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
-```
-
 ### Neon
 
 the postgres db is currently hosted on `neon.tech`
@@ -146,7 +109,68 @@ Some potential bounded contexts/modules
 
 - Analytics: This bounded context would be responsible for tracking and analyzing user behavior and customer data, such as clickstream data, user demographics, and other analytics-related features.
 
+## Cart
+
 The cart can be seen as a part of the Order Management bounded context, as it is directly related to the order process. It involves adding products to a cart, updating the cart contents, and eventually checking out and placing an order. However, depending on the complexity of your application, the cart could potentially be treated as a separate bounded context on its own.
+
+Storing the cart data in a session or a cookie is a common pattern, especially for guest users or when you want to minimize database interaction. This approach can be both efficient and suitable for many e-commerce applications, at least in the early stages. Here are some considerations for this approach:
+
+### Pros of Storing Cart in Session/Cookie:
+
+1. **Simplicity** : You can avoid complexities related to database schema, synchronization, and transaction management.
+2. **Performance** : Retrieving cart data from a session or cookie is often faster than a database query, leading to quicker response times.
+3. **Guest Users** : You can easily support guest users (i.e., users not logged into an account) by associating the cart with their session.
+
+### Cons and Considerations:
+
+1. **Size Limitations** : Cookies have size limitations (around 4KB per cookie), so you must be mindful of how much data you are storing. Sessions can also have limitations depending on how they're implemented.
+2. **Security Concerns** : Storing sensitive information in cookies can lead to security risks. Ensure that you're only storing necessary data and consider encrypting the contents if needed.
+3. **Persistence** : If the user clears their cookies or if the session expires, the cart data will be lost. This might be acceptable for guest users but might not be ideal for registered users.
+4. **Synchronization with Actual Prices** : Since the cart data is stored in the client's session or cookie, it may not automatically reflect changes in product prices or availability. You'll have to decide how to handle such scenarios.
+
+### Transitioning to Database Storage Later:
+
+If you start with session/cookie storage and decide to move to database storage later, you'll need to consider a migration strategy. Here's a common pattern:
+
+1. **For Guest Users** : Continue using sessions/cookies as before.
+2. **For Logged-in Users** : Upon login or cart modification, transfer the cart data from the session/cookie to the database, associating it with the user's account.
+3. **Hybrid Approach** : You can use sessions/cookies for temporary storage (e.g., for guest users or before login) and then transfer to the database for more permanent storage (e.g., after login or for registered users).
+
+### Conclusion:
+
+Storing the cart in a session or cookie is a valid approach that offers simplicity and performance benefits, especially for guest users or in the early stages of development. Be aware of the limitations and potential security considerations and plan for a possible transition to database storage if your application's requirements grow. It aligns well with a Domain-Driven Design (DDD) approach, as it allows you to define the cart as an aggregate and encapsulate the behavior according to the business rules, whether stored in a cookie, session, or database.
+
+Keeping only product IDs and quantities inside the cart cookie and then fetching the detailed information like product names, prices, and descriptions from the server when needed is a wise approach. This addresses several key concerns:
+
+### Security:
+
+By storing only product IDs and quantities in the cookie, you minimize the risk of malicious alteration. Clients can't modify product details, prices, or other attributes that should be controlled server-side.
+
+### Consistency:
+
+By retrieving product details from the server when displaying the cart, you ensure that the information is up-to-date and consistent with the current state of the product catalog. If prices, descriptions, or other details change, these updates are automatically reflected in the cart view.
+
+### Size:
+
+Storing only product IDs and quantities minimizes the amount of data stored in the cookie, helping you stay within the typical size limitations of cookies (around 4KB per cookie).
+
+### Implementation:
+
+Here's a high-level outline of how you might implement this:
+
+1. **Add to Cart** : When a user adds a product to the cart, store the product ID and quantity in the cookie.
+2. **View Cart** : When the user views the cart:
+
+- Retrieve the product IDs and quantities from the cookie.
+- Query the server for the corresponding product details using a dedicated "fetch cart" query or similar endpoint.
+- Aggregate the information to present the complete cart view to the user, including product names, prices, images, etc.
+
+3. **Update Cart** : If the user updates the cart (e.g., changing quantities, removing items), update the product IDs and quantities in the cookie, and refresh the view as needed.
+4. **Validation** : You may want to implement server-side validation when processing the cart (e.g., during checkout) to ensure that the quantities, pricing, and other attributes are consistent with the current state of the product catalog and business rules.
+
+### Conclusion:
+
+Storing only product ID references in the cart cookie, coupled with server-side aggregation of product details, provides a robust and flexible approach that balances security, consistency, and efficiency. It allows you to maintain control over key product attributes while providing a seamless and responsive user experience. Make sure to include appropriate server-side validation and error handling to gracefully handle any discrepancies or issues that may arise.
 
 ### To create a users table using @slonik/migrator, you would need to follow these steps:
 

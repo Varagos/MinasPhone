@@ -29,6 +29,7 @@ import LinkButton from '../custom-components/LinkButton';
 import LogoutButton from './Logout/LogoutButton';
 import { api } from '@/api';
 import { Cart } from '@/api/types/cart';
+import { useCart } from '@/hooks/useCart';
 
 const NewNavbar = () => {
   const classes = useStyles();
@@ -39,18 +40,12 @@ const NewNavbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const user = { role: 'notAdmin' };
   const authStatus: string = 'todo';
-  const [cart, setCart] = useState<Cart | null>(null);
+  const { cart, setCart } = useCart();
+
   // const authStatus = useAppSelector((state) => state.user.status);
   // const user = useAppSelector((state) => state.user.data);
   //   const dispatch = useAppDispatch();
-  async function fetchCart() {
-    const cart = await api.cart.retrieveCart();
-    console.log('CART IS ', cart);
-    setCart(cart);
-  }
-
   useEffect(() => {
-    fetchCart();
     (async () => {
       //   const res = await doesSessionExist();
       //   setIsLoggedIn(res);

@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { Product } from '@/api/types/products';
 import { formatPriceWithSymbol } from '@/utils/prices';
 import { api } from '@/api';
+import { useCart } from '@/hooks/useCart';
 
 type ProductProps = {
   product: Product;
@@ -23,10 +24,11 @@ function ProductCard({ product }: ProductProps) {
   const classes = useStyles();
   const [raised, setRaised] = useState<boolean>(false);
 
+  const { setCart } = useCart();
+
   const handleAddToCart = async (id: string, quantity = 1) => {
-    await api.cart.addToCart(id, quantity);
-    // dispatch(addedToCart({ productId: id, quantity: 1 }));
-    // dispatch(addToCart({ productId: id, quantity }));
+    const cart = await api.cart.addToCart(id, quantity);
+    setCart(cart);
   };
 
   return (

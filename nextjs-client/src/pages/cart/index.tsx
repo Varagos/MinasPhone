@@ -1,29 +1,26 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Typography, Button, Grid, Box } from '@mui/material';
 import Link from 'next/link';
-import { emptyCart, fetchCart } from '@/redux/slices/cart';
-import { useAppDispatch, useAppSelector } from '@/redux/store';
 import useStyles from './_styles';
 import LinkButton from '@/components/custom-components/LinkButton';
 import Spinner from '@/components/Spinner/Spinner';
 import CartItem from '@/components/CartItem/CartItem';
+import { api } from '@/api';
+import type { Cart } from '@/api/types/cart';
+import { formatPriceWithSymbol } from '@/utils/prices';
+import { useCart } from '@/hooks/useCart';
 
-const Cart = () => {
+const CartPage = () => {
   const classes = useStyles();
 
-  const cart = useAppSelector((state) => state.cart.data);
-  // TODO Make sure Use cannot proceed to checkout if cart is status is pending
-  const status = useAppSelector((state) => state.cart.status);
+  const { cart, setCart } = useCart();
 
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchCart());
-  }, []);
   const handleEmptyCart = async () => {
-    dispatch(emptyCart());
+    const cart = await api.cart.clearCart();
+    setCart(cart);
   };
 
-  if (!cart) return <div>"Loading..."</div>;
+  if (cart === null) return <Spinner />;
 
   const EmptyCart = () => (
     <div style={{ minHeight: '60vh' }}>
@@ -42,10 +39,10 @@ const Cart = () => {
   const FilledCart = () => (
     <Box mb={6}>
       <Grid container spacing={3}>
-        {status === 'loading' ? (
+        {cart === null ? (
           <Spinner />
         ) : (
-          cart.line_items.map((item) => (
+          cart.lineItems.map((item) => (
             <Grid item sm={12} key={item.id}>
               <CartItem item={item} />
             </Grid>
@@ -54,7 +51,7 @@ const Cart = () => {
       </Grid>
       <div className={classes.cardDetails}>
         <Typography variant="h4">
-          Σύνολο: {cart.subtotal.formatted_with_symbol}
+          Σύνολο: {formatPriceWithSymbol(cart.subtotal)}
         </Typography>
         <div>
           <Button
@@ -75,7 +72,7 @@ const Cart = () => {
             type="button"
             variant="contained"
             color="primary"
-            disabled={status !== 'success'}
+            disabled={cart === null || cart.lineItems.length === 0}
             sx={{ ml: 5, textTransform: 'none' }}
           >
             Ολοκλήρωση παραγγελίας
@@ -85,18 +82,15 @@ const Cart = () => {
     </Box>
   );
 
-  // console.log(cart.line_items);
-  if (!cart.line_items) return <div>"Loading..."</div>;
-
   return (
     <Container sx={{ pt: 2, pb: 20 }}>
       {/* <div className={classes.toolbar} /> */}
       <Typography className={classes.title} variant="h3" gutterBottom>
         Καλάθι Αγορών
       </Typography>
-      {!cart.line_items.length ? <EmptyCart /> : <FilledCart />}
+      {!cart.lineItems.length ? <EmptyCart /> : <FilledCart />}
     </Container>
   );
 };
 
-export default Cart;
+export default CartPage;

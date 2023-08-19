@@ -8,13 +8,6 @@ import {
   Box,
   IconButton,
 } from '@mui/material';
-import {
-  cartItemRemoved,
-  cartUpdated,
-  removeFromCart,
-  updateCart,
-} from '@/redux/slices/cart';
-import { useAppDispatch } from '@/redux/store';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
@@ -24,26 +17,31 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import useStyles from './styles';
 import Link from 'next/link';
-import { LineItem } from '@/types/line-item';
-// import { LineItem } from '@/services/cart';
+import { api } from '@/api';
+import { CartLineItem } from '@/api/types/cart';
+import { formatPriceWithSymbol } from '@/utils/prices';
+import { useCart } from '@/hooks/useCart';
 
 type CartItemProps = {
-  item: LineItem;
+  item: CartLineItem;
 };
 
 const CartItem = ({ item }: CartItemProps) => {
   const classes = useStyles();
 
-  const dispatch = useAppDispatch();
+  const { setCart } = useCart();
 
   const handleRemoveFromCart = async (lineItemId: string) => {
-    dispatch(cartItemRemoved({ lineItemId }));
-    dispatch(removeFromCart(lineItemId));
+    const cart = await api.cart.removeFromCart(lineItemId);
+    setCart(cart);
   };
 
   const onUpdateCartQty = async (lineItemId: string, quantity: number) => {
-    dispatch(cartUpdated({ lineItemId, quantity }));
-    dispatch(updateCart({ lineItemId, quantity }));
+    if (quantity === 0) {
+      return handleRemoveFromCart(lineItemId);
+    }
+    const cart = await api.cart.updateLineItem(lineItemId, quantity);
+    setCart(cart);
   };
 
   return (
@@ -51,16 +49,16 @@ const CartItem = ({ item }: CartItemProps) => {
       <CardMedia
         component="img"
         sx={{ width: 151, padding: 3 }}
-        image={item.media.source}
+        image={item.productImage}
         alt="Live from space album cover"
       />
       <Box sx={{ display: 'flex', flexDirection: 'column', flex: 3 }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h5">
-            {item.name}
+            {item.productName}
           </Typography>
           <Link
-            href={`/products/${item.product_id}`}
+            href={`/products/${item.productId}`}
             style={{ textDecoration: 'none' }}
             passHref
           >
@@ -99,7 +97,7 @@ const CartItem = ({ item }: CartItemProps) => {
         }}
       >
         <Typography variant="h5" align="center">
-          {item.line_total.formatted_with_symbol}
+          {formatPriceWithSymbol(item.quantity * item.productPrice)}
         </Typography>
 
         <IconButton

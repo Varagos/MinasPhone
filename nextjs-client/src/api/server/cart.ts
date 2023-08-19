@@ -17,18 +17,21 @@ export class CartApi implements ICartApi {
 
     return res.json();
   }
+
   async clearCart(): Promise<Cart> {
     const res = await fetch(routes.v1.cart.empty(), {
-      method: 'POST',
+      method: 'DELETE',
       credentials: 'include',
+      redirect: 'follow',
     });
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch data');
+      throw new Error('Failed to clear cart');
     }
 
     return this.retrieveCart();
   }
+
   async addToCart(productId: string, quantity: number): Promise<Cart> {
     console.log({
       productId,
@@ -39,8 +42,8 @@ export class CartApi implements ICartApi {
     myHeaders.append('Content-Type', 'application/json');
 
     const raw = JSON.stringify({
-      productId: '9f72ea0d-fcf6-49c7-b7a0-8920fb3062b9',
-      quantity: 1,
+      productId,
+      quantity,
     });
 
     const requestOptions: RequestInit = {
@@ -72,16 +75,28 @@ export class CartApi implements ICartApi {
     return this.retrieveCart();
   }
   async updateLineItem(lineItemId: string, quantity: number): Promise<Cart> {
-    const res = await fetch(routes.v1.cart.updateLineItem(lineItemId), {
-      method: 'PUT',
-      body: JSON.stringify({
-        quantity,
-      }),
-      credentials: 'include',
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    const raw = JSON.stringify({
+      quantity,
     });
+
+    const requestOptions: RequestInit = {
+      method: 'PUT',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+      credentials: 'include',
+    };
+
+    const res = await fetch(
+      routes.v1.cart.updateLineItem(lineItemId),
+      requestOptions
+    );
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch data');
+      throw new Error('Failed to update line item');
     }
 
     return this.retrieveCart();

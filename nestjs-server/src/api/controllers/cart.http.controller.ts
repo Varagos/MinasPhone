@@ -229,6 +229,8 @@ export class CartHttpController {
               updatedAt: cart.updatedAt,
             }),
             lineItems: cart.lineItems,
+            totalItems: cart.totalItems,
+            subtotal: cart.subtotal,
           };
         },
         Err: (error: Error) => {
@@ -240,10 +242,12 @@ export class CartHttpController {
       });
     }
 
+    // Create a new cart
     const command = new CreateCartCommand();
     const cart: CreateCartCommandResponse = await this.commandBus.execute(
       command,
     );
+    console.log('Set-Cookie');
     this.setCartCookie(response, cart.unwrap());
     return {
       ...new ResponseBase({
@@ -252,11 +256,12 @@ export class CartHttpController {
         updatedAt: new Date(),
       }),
       lineItems: [],
+      totalItems: 0,
+      subtotal: 0,
     };
   }
 
   private extractCartFromCookie(request: Request): CartPrimitives | null {
-    console.log(request.cookies); // or "request.cookies['cookieKey']"
     const cartCookie = request.cookies[COOKIE_KEY]
       ? JSON.parse(request.cookies[COOKIE_KEY])
       : null;
@@ -265,7 +270,6 @@ export class CartHttpController {
 
   private setCartCookie(response: Response, cart: CartPrimitives): void {
     const cookieValue = JSON.stringify(cart);
-    console.log({ cookieValue });
     response.cookie(COOKIE_KEY, cookieValue);
   }
 

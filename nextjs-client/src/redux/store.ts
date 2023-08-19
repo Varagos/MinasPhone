@@ -1,9 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import categoriesReducer from './slices/categories';
-import productsReducer from './slices/products';
-import productReducer from './productSlice';
-import cartReducer from './slices/cart';
 import userReducer from './slices/userSlice';
 import authReducer from './slices/authSlice';
 import checkoutReducer from './slices/checkout';
@@ -16,10 +12,6 @@ console.log('Loading Redux store...', process.env.NEXT_PUBLIC_ENVIRONMENT);
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    categories: categoriesReducer,
-    products: productsReducer,
-    product: productReducer,
-    cart: cartReducer,
     checkout: checkoutReducer,
     user: userReducer,
   },
@@ -28,9 +20,6 @@ export const store = configureStore({
       thunk: {
         extraArgument: {
           services: {
-            categories: categoriesService,
-            products: productsService,
-            cart: cartService,
             checkout: checkoutService,
           },
         },
@@ -50,9 +39,6 @@ export type AsyncThunkConfig = {
   /** type of the `extra` argument for the thunk middleware, which will be passed in as `thunkApi.extra` */
   extra: {
     services: {
-      categories: ICategoriesService;
-      products: IProductsService;
-      cart: ICartService;
       checkout: ICheckoutService;
     };
   };

@@ -41,7 +41,6 @@ export default function Landing({ categories, products }: LandingProps) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // dispatch(fetchCart());
     const clonedProducts = structuredClone(products.data);
     setShuffledProducts(clonedProducts.sort(() => 0.5 - Math.random()));
   }, []);

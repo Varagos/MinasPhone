@@ -4,9 +4,10 @@ import ProductCard from './ProductCard/ProductCard';
 import { MainContainer, ToolBar } from './styles';
 import EmptyLogo from '../../../../public/undraw_empty_xct9.svg';
 import Filter from '../Filter/Filter';
+import { Product } from '@/api/types/types';
 
 type ProductsType = {
-  products: any[];
+  products: Product[];
 };
 
 function Products({ products }: ProductsType) {

@@ -27,7 +27,8 @@ import Image from 'next/image';
 import IconLinkButton from '../custom-components/IconLinkButton';
 import LinkButton from '../custom-components/LinkButton';
 import LogoutButton from './Logout/LogoutButton';
-import { Cart } from '@/types/cart';
+import { api } from '@/api';
+import { Cart } from '@/api/types/cart';
 
 const NewNavbar = () => {
   const classes = useStyles();
@@ -38,12 +39,18 @@ const NewNavbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const user = { role: 'notAdmin' };
   const authStatus: string = 'todo';
-  const cart: Cart | undefined = undefined as any;
+  const [cart, setCart] = useState<Cart | null>(null);
   // const authStatus = useAppSelector((state) => state.user.status);
   // const user = useAppSelector((state) => state.user.data);
   //   const dispatch = useAppDispatch();
+  async function fetchCart() {
+    const cart = await api.cart.retrieveCart();
+    console.log('CART IS ', cart);
+    setCart(cart);
+  }
 
   useEffect(() => {
+    fetchCart();
     (async () => {
       //   const res = await doesSessionExist();
       //   setIsLoggedIn(res);
@@ -56,8 +63,6 @@ const NewNavbar = () => {
       //   } else dispatch(userSignedOut());
     })();
   }, []);
-
-  // const cart = useAppSelector((state) => state.cart.data);
 
   const toggleDrawer = (open: any) => (event: any) => {
     if (
@@ -175,7 +180,7 @@ const NewNavbar = () => {
           {currentPath !== '/cart' && (
             <div>
               <IconLinkButton href="/cart" aria-label="Show cart items">
-                <Badge badgeContent={cart?.total_items} color="secondary">
+                <Badge badgeContent={cart?.totalItems} color="secondary">
                   <ShoppingCart style={{ color: 'black' }} />
                 </Badge>
               </IconLinkButton>

@@ -17,7 +17,17 @@ const routes = {
         limit: number;
         page: number;
         slug: string;
-      }) => `${API_BASE_URL}/api/v1/products/category/${params.slug}?limit=${params.limit}&page=${params.page}`,
+      }) =>
+        `${API_BASE_URL}/api/v1/products/category/${params.slug}?limit=${params.limit}&page=${params.page}`,
+    },
+    cart: {
+      retrieve: () => `${API_BASE_URL}/api/v1/cart/fetch`,
+      empty: () => `${API_BASE_URL}/api/v1/cart/empty`,
+      addToCart: () => `${API_BASE_URL}/api/v1/cart/line-item`,
+      removeFromCart: (lineItemId: string) =>
+        `${API_BASE_URL}/api/v1/cart/line-item/${lineItemId}`,
+      updateLineItem: (lineItemId: string) =>
+        `${API_BASE_URL}/api/v1/cart/line-item/${lineItemId}`,
     },
   },
 };

@@ -4,9 +4,6 @@ import { useRouter } from 'next/router';
 
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import StoreMallDirectoryTwoToneIcon from '@mui/icons-material/StoreMallDirectoryTwoTone';
-import { productSelected } from '@/redux/productSlice';
-import { addedToCart, addToCart } from '@/redux/slices/cart';
-import products, { fetchProducts } from '@/redux/slices/products';
 import Spinner from '@/components/Spinner/Spinner';
 import { api } from '@/api';
 import { Product, ProductPaginatedResponse } from '@/api/types/products';
@@ -29,8 +26,7 @@ export default function ProductPage({ product }: ProductsPageProps) {
   // console.log(productId);
 
   const handleAddToCart = (id: string) => {
-    // dispatch(addedToCart({ productId: id, quantity: 1 }));
-    // dispatch(addToCart({ productId: id, quantity: 1 }));
+    return api.cart.addToCart(id, 1);
   };
 
   if (!product)

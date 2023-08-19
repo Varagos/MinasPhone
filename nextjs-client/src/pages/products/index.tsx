@@ -9,6 +9,7 @@ import Filter from '@/components/Category/Filter/Filter';
 import { api } from '@/api';
 import { ProductPaginatedResponse } from '@/api/types/products';
 import { GetServerSideProps } from 'next';
+import Products from '@/components/Category/Products/Products';
 
 interface ProductsProps {
   products: ProductPaginatedResponse;
@@ -33,36 +34,7 @@ export default function Landing({ products }: ProductsProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MainContainer>
-        <ToolBar />
-        <Container sx={{ pb: 20 }}>
-          <Grid container justifyContent="center" spacing={4}>
-            {/* <Hidden xsDown> */}
-            <Grid
-              item
-              xs={0}
-              sm={3}
-              sx={{ display: { xs: 'none', md: 'block' } }}
-            >
-              <Filter />
-            </Grid>
-            <Grid item container xs={12} sm={9} spacing={4}>
-              {products.data.map((product) => (
-                <Grid
-                  item
-                  key={product.id}
-                  xs={12}
-                  md={6}
-                  lg={4}
-                  // sx={{ borderColor: 'red', borderWidth: 1, borderStyle: 'solid' }}
-                >
-                  <ProductCard product={product} />
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-        </Container>
-      </MainContainer>
+      <Products products={products.data} />
     </>
   );
 }

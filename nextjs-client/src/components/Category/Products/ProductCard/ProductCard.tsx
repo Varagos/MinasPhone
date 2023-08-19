@@ -10,11 +10,10 @@ import { AddShoppingCart } from '@mui/icons-material';
 
 import useStyles from './styles';
 import Link from 'next/link';
-import { useAppDispatch } from '@/redux/store';
-import { addedToCart, addToCart } from '../../../../redux/slices/cart';
 import { useState } from 'react';
 import { Product } from '@/api/types/products';
 import { formatPriceWithSymbol } from '@/utils/prices';
+import { api } from '@/api';
 
 type ProductProps = {
   product: Product;
@@ -22,12 +21,12 @@ type ProductProps = {
 
 function ProductCard({ product }: ProductProps) {
   const classes = useStyles();
-  const dispatch = useAppDispatch();
   const [raised, setRaised] = useState<boolean>(false);
 
-  const handleAddToCart = (id: string, quantity = 1) => {
-    dispatch(addedToCart({ productId: id, quantity: 1 }));
-    dispatch(addToCart({ productId: id, quantity }));
+  const handleAddToCart = async (id: string, quantity = 1) => {
+    await api.cart.addToCart(id, quantity);
+    // dispatch(addedToCart({ productId: id, quantity: 1 }));
+    // dispatch(addToCart({ productId: id, quantity }));
   };
 
   return (

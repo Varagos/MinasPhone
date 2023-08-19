@@ -4,6 +4,7 @@ import { FetchCartQuery } from './fetch-cart.query';
 import { FindProductsByIdsQuery } from '@modules/product-catalog/application/products/queries/find-products-by-ids/find-products-by-ids.query';
 import { FindProductsByIdsQueryResponse } from '@modules/product-catalog/application/products/queries/find-products-by-ids/find-products-by-ids.handler';
 import { NotFoundException } from '@libs/exceptions';
+import Decimal from 'decimal.js';
 
 export type FetchCartQueryResponse = Result<CartReadModel, Error>;
 
@@ -20,6 +21,8 @@ type CartLineItemReadModel = {
 export type CartReadModel = {
   id: string;
   lineItems: CartLineItemReadModel[];
+  totalItems: number;
+  subtotal: number;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -37,6 +40,8 @@ export class FetchCartQueryHandler implements IQueryHandler {
       return Ok({
         id: cartFromCookie.id,
         lineItems: [],
+        totalItems: 0,
+        subtotal: 0,
         createdAt: cartFromCookie.createdAt,
         updatedAt: cartFromCookie.updatedAt,
       });
@@ -80,9 +85,30 @@ export class FetchCartQueryHandler implements IQueryHandler {
       return Err(new NotFoundException(errorMessage));
     }
 
+    const lineItems = lineItemsOrError.unwrap();
+
+    const totalItems = lineItems.reduce(
+      (acc, lineItem) => acc + lineItem.quantity,
+      0,
+    );
+
+    const subtotal = lineItems
+      .reduce(
+        (acc, lineItem) =>
+          acc.plus(
+            new Decimal(lineItem.quantity).times(
+              new Decimal(lineItem.productPrice),
+            ),
+          ),
+        new Decimal(0),
+      )
+      .toNumber();
+
     return Ok({
       id: cartFromCookie.id,
       lineItems: lineItemsOrError.unwrap(),
+      totalItems,
+      subtotal,
       createdAt: cartFromCookie.createdAt,
       updatedAt: cartFromCookie.updatedAt,
     });

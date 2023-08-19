@@ -7,4 +7,14 @@ export class CartResponseDto extends ResponseBase {
     description: 'Cart line items',
   })
   lineItems: CartReadModel['lineItems'];
+
+  @ApiProperty({
+    description: 'Cart total items',
+  })
+  totalItems: CartReadModel['totalItems'];
+
+  @ApiProperty({
+    description: 'Cart subtotal',
+  })
+  subtotal: CartReadModel['subtotal'];
 }

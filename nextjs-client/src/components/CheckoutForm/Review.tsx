@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, List, ListItem, ListItemText } from '@mui/material';
-import { CheckoutToken } from '../../../types/checkout-token';
+import { CheckoutToken } from '@/types/checkout-token';
 
 type ReviewProps = {
   checkoutToken: CheckoutToken;
@@ -15,8 +15,13 @@ const Review = ({ checkoutToken }: ReviewProps) => {
       <List disablePadding>
         {checkoutToken.line_items.map((product: any) => (
           <ListItem style={{ padding: '10px 0' }} key={product.name}>
-            <ListItemText primary={product.name} secondary={`Ποσότητα: ${product.quantity}`} />
-            <Typography variant="body2">{product.line_total.formatted_with_symbol}</Typography>
+            <ListItemText
+              primary={product.name}
+              secondary={`Ποσότητα: ${product.quantity}`}
+            />
+            <Typography variant="body2">
+              {product.line_total.formatted_with_symbol}
+            </Typography>
           </ListItem>
         ))}
         <ListItem sx={{ py: 4, px: 0 }}>

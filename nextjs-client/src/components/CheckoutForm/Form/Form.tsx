@@ -8,6 +8,7 @@ import Account from '@/components/CheckoutForm/Account';
 import { CheckoutOrderInfo } from '@/pages/checkout';
 import PaymentForm from '../Payment/PaymentForm';
 import Address from '../Address';
+import { CheckoutToken } from '@/types/checkout-token';
 
 export interface FormProps {
   activeStep: number;
@@ -19,6 +20,7 @@ export interface FormProps {
     newOrder: CheckoutCapture
   ) => Promise<void>;
   shippingData: Partial<CheckoutOrderInfo>;
+  checkoutToken: CheckoutToken | null;
 }
 export default function Form(props: FormProps): JSX.Element {
   const {
@@ -28,9 +30,9 @@ export default function Form(props: FormProps): JSX.Element {
     backStep,
     handleCaptureCheckout,
     shippingData,
+    checkoutToken,
   } = props;
   const classes = useStyles();
-  const checkoutToken = useAppSelector((state) => state.checkout.token);
 
   if (checkoutToken === null) {
     return (

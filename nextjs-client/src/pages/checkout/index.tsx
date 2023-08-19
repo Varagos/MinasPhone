@@ -11,7 +11,6 @@ import {
 import Link from 'next/link';
 
 import useStyles from './_styles';
-import { refreshCart } from '@/redux/slices/cart';
 import {
   captureCheckoutOrder,
   checkoutEnded,
@@ -24,6 +23,8 @@ import Account from '@/components/CheckoutForm/Account';
 import PaymentForm from '@/components/CheckoutForm/Payment/PaymentForm';
 import Confirmation from '@/components/CheckoutForm/Confirmation/Confirmation';
 import Form from '@/components/CheckoutForm/Form/Form';
+import { useCart } from '@/hooks/useCart';
+import { api } from '@/api';
 
 const steps = ['Λογαριασμός', 'Διέυθυνση', 'Πληρωμή'];
 
@@ -51,7 +52,8 @@ export default function Checkout() {
 
   const classes = useStyles();
 
-  const cart = useAppSelector((state) => state.cart.data);
+  const { cart, setCart } = useCart();
+
   const dispatch = useAppDispatch();
 
   const handleCaptureCheckout = async (
@@ -65,7 +67,7 @@ export default function Checkout() {
         captureCheckoutOrder({ checkoutTokenId: checkoutTokenId, newOrder })
       ).unwrap();
 
-      dispatch(refreshCart());
+      await api.cart.clearCart();
     } catch (error) {
       setErrorMessage(
         'There was an error capturing checkout' +

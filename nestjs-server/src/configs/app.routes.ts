@@ -42,6 +42,7 @@ export const routesV1 = {
     root: ordersRoot,
     checkout: `/${ordersRoot}/checkout`,
     getOne: `/${ordersRoot}/:id`,
+    getOneBySlug: `/${ordersRoot}/slug/:slug`,
   },
   user: {
     root: usersRoot,

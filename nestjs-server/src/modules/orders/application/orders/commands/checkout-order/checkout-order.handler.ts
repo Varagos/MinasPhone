@@ -53,7 +53,7 @@ export class CheckoutOrderCommandHandler implements ICommandHandler {
       await this.orderRepo.transaction(async () =>
         this.orderRepo.insert(order),
       );
-      return Ok(order.id);
+      return Ok(order.slug);
     } catch (error: any) {
       throw error;
     }

@@ -2,17 +2,17 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Ok, Result, Err } from 'oxide.ts';
 import { InjectPool } from 'nestjs-slonik';
 import { DatabasePool, sql } from 'slonik';
-import {
-  CategoryModel,
-  categorySchema,
-} from '@modules/product-catalog/infra/database/category.repository';
-import { FindCategoryByIdQuery } from './find-category-by-id.query';
+import { FindOrderByIdQuery } from './find-order-by-id.query';
 import { NotFoundException } from '@libs/exceptions';
+import {
+  OrderModel,
+  orderSchema,
+} from '@modules/orders/infra/database/order.repository';
 
-export type FindCategoryByIdQueryResponse = Result<CategoryModel, Error>;
+export type FindOrderByIdQueryResponse = Result<OrderModel, Error>;
 
-@QueryHandler(FindCategoryByIdQuery)
-export class FindCategoryByIdQueryHandler implements IQueryHandler {
+@QueryHandler(FindOrderByIdQuery)
+export class FindOrderByIdQueryHandler implements IQueryHandler {
   constructor(
     @InjectPool()
     private readonly pool: DatabasePool,
@@ -25,15 +25,15 @@ export class FindCategoryByIdQueryHandler implements IQueryHandler {
    * and execute query directly
    */
   async execute(
-    query: FindCategoryByIdQuery,
-  ): Promise<FindCategoryByIdQueryResponse> {
+    query: FindOrderByIdQuery,
+  ): Promise<FindOrderByIdQueryResponse> {
     /**
      * Constructing a query with Slonik.
      * More info: https://contra.com/p/AqZWWoUB-writing-composable-sql-using-java-script
      */
-    const statement = sql.type(categorySchema)`
+    const statement = sql.type(orderSchema)`
          SELECT *
-         FROM categories
+         FROM orders
          WHERE
           id = ${query.id}`;
 

@@ -31,6 +31,9 @@ const routes = {
     },
     orders: {
       checkout: () => `${API_BASE_URL}/api/v1/orders/checkout`,
+      findOne: (orderId: string) => `${API_BASE_URL}/api/v1/orders/${orderId}`,
+      findOneBySlug: (slug: string) =>
+        `${API_BASE_URL}/api/v1/orders/slug/${slug}`,
     },
   },
 };

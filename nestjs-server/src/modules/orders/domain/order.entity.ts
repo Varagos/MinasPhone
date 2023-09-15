@@ -34,8 +34,13 @@ export class OrderEntity extends AggregateRoot<OrderProps> {
     return this.props.contactInfo;
   }
 
+  get slug(): string {
+    return this.props.slug;
+  }
+
   public static create(props: CreateOrderProps): OrderEntity {
     const id = randomUUID();
+    console.log('order id', id);
     const slug = OrderEntity.generateSlug();
 
     const defaultProps = {
@@ -58,7 +63,8 @@ export class OrderEntity extends AggregateRoot<OrderProps> {
   }
 
   private static generateSlug(): string {
-    return customAlphabet('0123456789', 6)();
+    // TODO handle collisions
+    return customAlphabet('0123456789', 8)();
   }
 
   validate(): void {

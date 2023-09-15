@@ -1,13 +1,13 @@
 import mockApi from './mock';
 import serverApi from './server';
 import { ICartApi } from './types/cart';
-import { ICategoriesApi, ICheckoutApi, IProductsApi } from './types/types';
+import { ICategoriesApi, IOrdersApi, IProductsApi } from './types/types';
 
 export interface Api {
   categories: ICategoriesApi;
   products: IProductsApi;
   cart: ICartApi;
-  orders: ICheckoutApi;
+  orders: IOrdersApi;
 }
 let api: Api;
 

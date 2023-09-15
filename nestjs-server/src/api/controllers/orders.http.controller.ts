@@ -5,8 +5,11 @@ import {
   ConflictException as ConflictHttpException,
   Body,
   Post,
+  Get,
   UseGuards,
   Req,
+  ParseUUIDPipe,
+  Param,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { routesV1 } from '@config/app.routes';
@@ -22,6 +25,13 @@ import { COOKIE_KEY } from './cart.http.controller';
 import { CheckoutOrderRequestDto } from '@modules/orders/application/orders/commands/checkout-order/checkout-order.request.dto';
 import { CheckoutOrderCommand } from '@modules/orders/application/orders/commands/checkout-order/checkout-order.command';
 import { CheckoutOrderCommandResponse } from '@modules/orders/application/orders/commands/checkout-order/checkout-order.handler';
+import { OrderResponseDto } from '@modules/orders/application/orders/dtos/order.response.dto';
+import { FindOrderByIdQueryResponse } from '@modules/orders/application/orders/queries/find-order-by-id/find-order-by-id.handler';
+import { FindOrderByIdQuery } from '@modules/orders/application/orders/queries/find-order-by-id/find-order-by-id.query';
+import { ResponseBase } from '@libs/api/response.base';
+import { NotFoundException } from '@libs/exceptions';
+import { FindOrderBySlugQueryResponse } from '@modules/orders/application/orders/queries/find-order-by-slug/find-order-by-slug.handler';
+import { FindOrderBySlugQuery } from '@modules/orders/application/orders/queries/find-order-by-slug/find-order-by-slug.query';
 
 @ApiTags('orders')
 @Controller(routesV1.version)
@@ -82,6 +92,100 @@ export class OrdersHttpController {
       Err: (error: Error) => {
         if (error instanceof CategoryAlreadyExistsError)
           throw new ConflictHttpException(error.message);
+        throw error;
+      },
+    });
+  }
+
+  @Get(routesV1.order.getOne)
+  @ApiOperation({ summary: 'Find category by id' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: OrderResponseDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    type: ApiResponse,
+  })
+  async findOne(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<OrderResponseDto> {
+    const query = new FindOrderByIdQuery({
+      id,
+    });
+    const result: FindOrderByIdQueryResponse = await this.queryBus.execute(
+      query,
+    );
+
+    return match(result, {
+      Ok: (order): OrderResponseDto => {
+        return {
+          ...new ResponseBase({
+            id: order.id,
+            createdAt: order.created_at,
+            updatedAt: order.updated_at,
+          }),
+          slug: order.slug,
+          status: order.status,
+          lineItems: order.line_items,
+          contactInfo: {
+            firstName: order.first_name,
+            lastName: order.last_name,
+            email: order.email,
+            phone: order.phone,
+          },
+        };
+      },
+      Err: (error: Error) => {
+        if (error instanceof NotFoundException) {
+          throw new HttpNotFoundException();
+        }
+        throw error;
+      },
+    });
+  }
+
+  @Get(routesV1.order.getOneBySlug)
+  @ApiOperation({ summary: 'Find category by slug' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: OrderResponseDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    type: ApiResponse,
+  })
+  async findOneBySlug(@Param('slug') slug: string): Promise<OrderResponseDto> {
+    const query = new FindOrderBySlugQuery({
+      slug,
+    });
+    const result: FindOrderBySlugQueryResponse = await this.queryBus.execute(
+      query,
+    );
+
+    return match(result, {
+      Ok: (order): OrderResponseDto => {
+        return {
+          ...new ResponseBase({
+            id: order.id,
+            createdAt: order.created_at,
+            updatedAt: order.updated_at,
+          }),
+          slug: order.slug,
+          status: order.status,
+          lineItems: order.line_items,
+          contactInfo: {
+            firstName: order.first_name,
+            lastName: order.last_name,
+            email: order.email,
+            phone: order.phone,
+          },
+        };
+      },
+      Err: (error: Error) => {
+        if (error instanceof NotFoundException) {
+          throw new HttpNotFoundException();
+        }
         throw error;
       },
     });

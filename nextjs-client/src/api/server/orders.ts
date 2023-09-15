@@ -1,7 +1,7 @@
 import { routes } from './config';
-import { ICheckoutApi } from '../types/types';
+import { IOrdersApi, Order } from '../types/types';
 
-export class OrdersApi implements ICheckoutApi {
+export class OrdersApi implements IOrdersApi {
   async checkoutOrder(params: {
     contactInfo: {
       firstName: string;
@@ -46,10 +46,16 @@ export class OrdersApi implements ICheckoutApi {
     console.log({ data });
     return { orderId };
   }
-  findOrderById(orderId: string): Promise<any> {
-    throw new Error('Method not implemented.');
+
+  async findOrderById(orderId: string): Promise<Order> {
+    const res = await fetch(routes.v1.orders.findOne(orderId));
+    const data = await res.json();
+    return data;
   }
-  findOrderBySlug(slug: string): Promise<any> {
-    throw new Error('Method not implemented.');
+
+  async findOrderBySlug(slug: string): Promise<any> {
+    const res = await fetch(routes.v1.orders.findOneBySlug(slug));
+    const data = await res.json();
+    return data;
   }
 }

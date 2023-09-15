@@ -27,7 +27,7 @@ export async function getMigrator() {
   const dbUrl = `postgres://${dbUsername}:${dbPassword}@${dbHost}/${dbName}`;
 
   console.log('envPath', envPath);
-  console.log('dbUrl', dbUrl);
+  // console.log('dbUrl', dbUrl);
   const pool = await createPool(dbUrl);
 
   const migrator = new SlonikMigrator({

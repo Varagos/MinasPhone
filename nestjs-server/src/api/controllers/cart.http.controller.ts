@@ -42,7 +42,7 @@ import { UpdateCartLineItemCommand } from '@modules/orders/application/carts/com
 import { UpdateCartLineItemRequestDto } from '@modules/orders/application/carts/commands/update-cart/update-cart-line-item.request.dto';
 import { UpdateCartLineItemCommandResponse } from '@modules/orders/application/carts/commands/update-cart/update-cart-line-item.handler';
 
-const COOKIE_KEY = 'cart';
+export const COOKIE_KEY = 'cart';
 
 @ApiTags('cart')
 @Controller(routesV1.version)

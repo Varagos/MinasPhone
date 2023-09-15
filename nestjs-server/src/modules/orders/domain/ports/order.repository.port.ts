@@ -7,6 +7,6 @@ import { OrderEntity } from '../order.entity';
 //   readonly street?: string;
 // }
 
-export interface CategoryRepositoryPort extends RepositoryPort<OrderEntity> {
+export interface OrderRepositoryPort extends RepositoryPort<OrderEntity> {
   findOneBySlug(slug: string): Promise<OrderEntity | null>;
 }

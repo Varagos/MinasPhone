@@ -11,11 +11,13 @@ $ npm install
 ## Running the app
 
 ```bash
+# Docker env
+cd docker/dev
+docker compose up -d
+docker compose stop api
 # development
-$ npm run start
-
-# watch mode
 $ npm run start:dev
+
 
 # production mode
 $ npm run start:prod
@@ -35,30 +37,6 @@ $ npm run test:cov
 ```
 
 ## Deployment
-
-### Heroku
-
-app-name=`minas-phone-api`
-
-```bash
-# Set environment variables on Heroku:
-heroku config:set <KEY>=<VALUE> --app <app-name>,
-#  e.g. NODE_ENV=production
-
-# Navigate to the directory containing the Dockerfile: Navigate to the directory where your Dockerfile and your application code resides.
-
-# Build and push your Docker image:
-heroku container:push web --app minas-phone-api
-# to build your Docker image and push it to the Heroku Container Registry.
-
-# Release your Docker image
-heroku container:release web --app minas-phone-api
-# to release your Docker image and deploy your app.
-
-
-# You should now be able to open
-https://minas-phone-api.herokuapp.com/api
-```
 
 ### Azure
 
@@ -188,9 +166,18 @@ CREATE TABLE users (
 );
 ```
 
-Run the migration:create script to create a new migration file in the migrations directory. The script should prompt you for a name for the migration file. Enter a name that describes the action you want to perform, such as "create_users_table".
+Run the migration:create script to create a new migration file in the migrations directory.
+
+```bash
+# Enter a name that describes the action you want to perform, such as "create_users_table".
+NODE_ENV=development yarn migration:create create_users_table.sql
+```
 
 Run the migration:up script to apply the new migration and create the users table in the database. The up command applies all migrations that have not been applied yet.
+
+```bash
+NODE_ENV=development yarn migration:up
+```
 
 Note that you can also use the migration:down script to roll back a migration if necessary.
 

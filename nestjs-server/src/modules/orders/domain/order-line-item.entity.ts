@@ -1,4 +1,4 @@
-import { AggregateID, Entity } from '@libs/ddd/index.js';
+import { AggregateID, Entity } from '@libs/ddd/index';
 import { randomUUID } from 'crypto';
 
 export interface OrderLineItemProps {

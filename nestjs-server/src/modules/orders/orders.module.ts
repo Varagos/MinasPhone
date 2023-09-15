@@ -5,6 +5,10 @@ import { UpdateCartLineItemCommandHandler } from './application/carts/commands/u
 import { RemoveCartLineItemCommandHandler } from './application/carts/commands/remove-line-item/remove-cart-line-item.handler';
 import { FetchCartQueryHandler } from './application/carts/queries/fetch-cart/fetch-cart.handler';
 import { AddCartLineItemCommandHandler } from './application/carts/commands/add-line-item/add-cart-line-item.handler';
+import { ORDER_REPO } from './constants';
+import { OrderRepository } from './infra/database/order.repository';
+import { OrderMapper } from './infra/mappers/order.mapper';
+import { CheckoutOrderCommandHandler } from './application/orders/commands/checkout-order/checkout-order.handler';
 
 const commandHandlers: Provider[] = [
   // Cart
@@ -12,16 +16,18 @@ const commandHandlers: Provider[] = [
   UpdateCartLineItemCommandHandler,
   RemoveCartLineItemCommandHandler,
   AddCartLineItemCommandHandler,
+  // Order
+  CheckoutOrderCommandHandler,
 ];
 
 const queryHandlers: Provider[] = [FetchCartQueryHandler];
 
 const eventHandlers: Provider[] = [];
 
-const mappers: Provider[] = [];
+const mappers: Provider[] = [OrderMapper];
 
 const repositories: Provider[] = [
-  // { provide: CATEGORY_REPO, useClass: CategoryRepository },
+  { provide: ORDER_REPO, useClass: OrderRepository },
 ];
 
 const services: Provider[] = [];

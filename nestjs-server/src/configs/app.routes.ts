@@ -40,6 +40,7 @@ export const routesV1 = {
   },
   order: {
     root: ordersRoot,
+    checkout: `/${ordersRoot}/checkout`,
     getOne: `/${ordersRoot}/:id`,
   },
   user: {

@@ -2,7 +2,6 @@ import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import { useAppDispatch, useAppSelector } from '@/redux/store';
 import StoreMallDirectoryTwoToneIcon from '@mui/icons-material/StoreMallDirectoryTwoTone';
 import Spinner from '@/components/Spinner/Spinner';
 import { api } from '@/api';

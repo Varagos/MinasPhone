@@ -4,8 +4,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/lib/theme';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
-import { Provider } from 'react-redux';
-import { store } from '../redux/store';
 import { CartProvider } from '@/context/CartProvider';
 
 function MyApp({ Component, pageProps }: AppProps) {

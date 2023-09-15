@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
 import Products from '@/components/Category/Products/Products';
 import { useRouter } from 'next/router';
 import Spinner from '@/components/Spinner/Spinner';

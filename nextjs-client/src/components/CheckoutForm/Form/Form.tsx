@@ -2,7 +2,6 @@ import React from 'react';
 import { Typography, CircularProgress } from '@mui/material';
 
 import useStyles from './styles';
-import { useAppSelector } from '@/redux/store';
 import { CheckoutCapture } from '@/types/checkout-capture';
 import Account from '@/components/CheckoutForm/Account';
 import { CheckoutOrderInfo } from '@/pages/checkout';

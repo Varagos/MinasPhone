@@ -11,12 +11,6 @@ import {
 import Link from 'next/link';
 
 import useStyles from './_styles';
-import {
-  captureCheckoutOrder,
-  checkoutEnded,
-  generateCheckoutToken,
-} from '@/redux/slices/checkout';
-import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { CheckoutCapture } from '@/types/checkout-capture';
 import LinkButton from '@/components/custom-components/LinkButton';
 import Account from '@/components/CheckoutForm/Account';
@@ -25,6 +19,16 @@ import Confirmation from '@/components/CheckoutForm/Confirmation/Confirmation';
 import Form from '@/components/CheckoutForm/Form/Form';
 import { useCart } from '@/hooks/useCart';
 import { api } from '@/api';
+import { CheckoutToken } from '@/types/checkout-token';
+import { Cart } from '@/api/types/types';
+import { Price } from '@/types/price';
+
+export const priceNumberToFormattedPrice = (price: number): Price => ({
+  raw: price,
+  formatted: `$${price}`,
+  formatted_with_symbol: `$${price}`,
+  formatted_with_code: `$${price}`,
+});
 
 const steps = ['Λογαριασμός', 'Διέυθυνση', 'Πληρωμή'];
 
@@ -45,29 +49,29 @@ export type CheckoutOrderInfo = {
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
-  const [shippingData, setShippingData] = useState<Partial<CheckoutOrderInfo>>(
-    {}
-  );
+  const [checkoutOrderInfo, setCheckoutOrderInfo] = useState<
+    Partial<CheckoutOrderInfo>
+  >({});
   const [error, setErrorMessage] = useState('');
 
   const classes = useStyles();
 
   const { cart, setCart } = useCart();
 
-  const dispatch = useAppDispatch();
-
-  const handleCaptureCheckout = async (
-    checkoutTokenId: string,
-    newOrder: CheckoutCapture
-  ) => {
+  const handleCaptureCheckout = async (newOrder: CheckoutCapture) => {
     try {
-      // const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
-      console.log('handling capture checkout', newOrder);
-      await dispatch(
-        captureCheckoutOrder({ checkoutTokenId: checkoutTokenId, newOrder })
-      ).unwrap();
+      const { orderId } = await api.orders.checkoutOrder({
+        contactInfo: {
+          firstName: newOrder.customer.first_name,
+          lastName: newOrder.customer.last_name,
+          email: newOrder.customer.email,
+          phone: `+30${newOrder.customer.phoneNumber}`,
+        },
+      });
+      console.log('phoneNumber', newOrder.customer.phoneNumber);
 
       await api.cart.clearCart();
+      // Navigate to orderId page
     } catch (error) {
       setErrorMessage(
         'There was an error capturing checkout' +
@@ -77,23 +81,26 @@ export default function Checkout() {
   };
   if (!cart) return <div>No cart</div>;
 
-  useEffect(() => {
-    dispatch(generateCheckoutToken({ cartId: cart.id }));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(generateCheckoutToken({ cartId: cart.id }));
+  // }, []);
 
-  useEffect(() => {
-    return () => {
-      // // console.log('cleaned up');
-      dispatch(checkoutEnded());
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     // // console.log('cleaned up');
+  //     dispatch(checkoutEnded());
+  //   };
+  // }, []);
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
   const next = (data: Partial<CheckoutOrderInfo>) => {
     // console.log('NEXT function', data);
-    setShippingData((currentOrderInfo) => ({ ...currentOrderInfo, ...data }));
+    setCheckoutOrderInfo((currentOrderInfo) => ({
+      ...currentOrderInfo,
+      ...data,
+    }));
     nextStep();
   };
 
@@ -106,6 +113,37 @@ export default function Checkout() {
       </LinkButton>
     </>;
   }
+
+  const createCheckoutInfoFromCart = (
+    cart: Cart | null
+  ): CheckoutToken | null => {
+    if (cart === null) return null;
+
+    const line_items: CheckoutToken['line_items'] = cart.lineItems.map(
+      (lineItem) => ({
+        ...lineItem,
+        product_id: lineItem.productId,
+        name: lineItem.productName,
+        image: lineItem.productImage,
+        description: '',
+        price: priceNumberToFormattedPrice(lineItem.productPrice),
+        subtotal: priceNumberToFormattedPrice(
+          lineItem.productPrice * lineItem.quantity
+        ),
+      })
+    );
+    return {
+      id: '13213',
+      cart_id: cart.id,
+      created: new Date(cart.createdAt).getTime(),
+      expires: 0,
+      line_items,
+      live: {
+        subtotal: priceNumberToFormattedPrice(cart.subtotal),
+        total: priceNumberToFormattedPrice(cart.subtotal),
+      },
+    };
+  };
 
   return (
     <>
@@ -138,8 +176,9 @@ export default function Checkout() {
                 next={next}
                 nextStep={nextStep}
                 backStep={backStep}
-                shippingData={shippingData}
+                checkoutOrderInfo={checkoutOrderInfo}
                 handleCaptureCheckout={handleCaptureCheckout}
+                checkoutToken={createCheckoutInfoFromCart(cart)}
               />
             )}
           </Paper>

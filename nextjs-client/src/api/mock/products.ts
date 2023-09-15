@@ -1,8 +1,26 @@
-import { Product, IProductsApi } from '../types/types';
+import {
+  Product,
+  IProductsApi,
+  ProductPaginatedResponse,
+  ProductRequest,
+} from '../types/types';
 import { v4 as uuidv4 } from 'uuid';
 
 // TODO add setTimeout to simulate network latency
 export class ProductsApi implements IProductsApi {
+  findMany(params: ProductRequest): Promise<ProductPaginatedResponse> {
+    throw new Error('Method not implemented.');
+  }
+  findManyByCategorySlug(params: {
+    limit: number;
+    page: number;
+    slug: string;
+  }): Promise<ProductPaginatedResponse> {
+    throw new Error('Method not implemented.');
+  }
+  findOneById(id: string): Promise<Product> {
+    throw new Error('Method not implemented.');
+  }
   private data: Product[] = [
     {
       id: uuidv4(),

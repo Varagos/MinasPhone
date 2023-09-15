@@ -4,10 +4,12 @@ import { ProductsApi } from './products';
 
 const categoriesApi = new CategoriesApi();
 const productsApi = new ProductsApi();
+const cart = undefined as any;
+const orders = undefined as any;
 const mockApi: Api = {
-  useCategories: categoriesApi.useCategories.bind(categoriesApi),
-  useCategory: categoriesApi.useCategory.bind(categoriesApi),
-  useProducts: productsApi.useProducts.bind(productsApi),
-  useProduct: productsApi.useProduct.bind(productsApi),
+  categories: categoriesApi,
+  products: productsApi,
+  cart,
+  orders,
 };
 export default mockApi;

@@ -3,23 +3,32 @@ import { Typography, CircularProgress, Divider, Button } from '@mui/material';
 
 import useStyles from './styles';
 
-import { useAppSelector } from '../../../redux/store';
 import LinkButton from '@/components/custom-components/LinkButton';
+import { CheckoutCaptureResponse } from '@/types/checkout-capture-response';
 
 const Confirmation = () => {
   const classes = useStyles();
-  const orderResponse = useAppSelector((state) => state.checkout.orderResponse);
-  const orderStatus = useAppSelector((state) => state.checkout.status);
-  const errorMessage = useAppSelector((state) => state.checkout.error);
+  const orderResponse: CheckoutCaptureResponse | null = {
+    customer: {
+      firstname: 'Γιάννης',
+      lastname: 'Παπαδόπουλος',
+    },
+    customer_reference: '123456789',
+  } as CheckoutCaptureResponse;
+  const orderStatus: 'idle' | 'loading' | 'success' | 'failed' = 'success';
+  const errorMessage = '';
+  // const orderResponse = useAppSelector((state) => state.checkout.orderResponse);
+  // const orderStatus = useAppSelector((state) => state.checkout.status);
+  // const errorMessage = useAppSelector((state) => state.checkout.error);
 
-  if (orderStatus === 'failed') {
-    console.error(errorMessage);
-    return (
-      <div>
-        <Typography>{errorMessage}</Typography>
-      </div>
-    );
-  }
+  // if (orderStatus === 'failed') {
+  //   console.error(errorMessage);
+  //   return (
+  //     <div>
+  //       <Typography>{errorMessage}</Typography>
+  //     </div>
+  //   );
+  // }
 
   return orderResponse?.customer ? (
     <>

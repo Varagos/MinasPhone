@@ -4,7 +4,7 @@ import { routes } from './config';
 
 export class CheckoutApi implements ICheckoutApi {
   async checkoutCart(): Promise<CheckoutToken> {
-    const res = await fetch(routes.v1.checkout.checkoutCart(), {
+    const res = await fetch(routes.v1.orders.checkout(), {
       method: 'POST',
       credentials: 'include',
     });

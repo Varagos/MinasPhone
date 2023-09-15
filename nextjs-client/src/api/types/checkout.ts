@@ -1,9 +1,15 @@
-import { CheckoutToken } from '@/types/checkout-token';
+type CheckoutOrderParams = {
+  contactInfo: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+  };
+};
 
 export interface ICheckoutApi {
-  checkoutCart: () => Promise<CheckoutToken>;
+  checkoutOrder(params: CheckoutOrderParams): Promise<{ orderId: string }>;
 
-  captureOrder(order: any): Promise<string>;
-
-  findOrder(orderId: string): Promise<any>;
+  findOrderById(orderId: string): Promise<any>;
+  findOrderBySlug(slug: string): Promise<any>;
 }

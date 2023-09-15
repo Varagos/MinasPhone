@@ -12,15 +12,12 @@ import { CheckoutToken } from '@/types/checkout-token';
 
 export interface FormProps {
   activeStep: number;
+  checkoutOrderInfo: Partial<CheckoutOrderInfo>;
+  checkoutToken: CheckoutToken | null;
   next: (data: any) => void;
   nextStep: () => void;
   backStep: () => void;
-  handleCaptureCheckout: (
-    checkoutTokenId: string,
-    newOrder: CheckoutCapture
-  ) => Promise<void>;
-  shippingData: Partial<CheckoutOrderInfo>;
-  checkoutToken: CheckoutToken | null;
+  handleCaptureCheckout: (newOrder: CheckoutCapture) => Promise<void>;
 }
 export default function Form(props: FormProps): JSX.Element {
   const {
@@ -29,7 +26,7 @@ export default function Form(props: FormProps): JSX.Element {
     nextStep,
     backStep,
     handleCaptureCheckout,
-    shippingData,
+    checkoutOrderInfo,
     checkoutToken,
   } = props;
   const classes = useStyles();
@@ -48,7 +45,7 @@ export default function Form(props: FormProps): JSX.Element {
     case 1:
       return (
         <Address
-          shippingData={shippingData}
+          shippingData={checkoutOrderInfo}
           checkoutToken={checkoutToken}
           next={next}
           backStep={backStep}
@@ -57,7 +54,7 @@ export default function Form(props: FormProps): JSX.Element {
     case 2:
       return (
         <PaymentForm
-          shippingData={shippingData as CheckoutOrderInfo}
+          shippingData={checkoutOrderInfo as CheckoutOrderInfo}
           checkoutToken={checkoutToken}
           nextStep={nextStep}
           backStep={backStep}

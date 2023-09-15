@@ -68,10 +68,7 @@ type PaymentFormProps = {
   shippingData: CheckoutOrderInfo;
   backStep: any;
   nextStep: any;
-  onCaptureCheckout: (
-    checkoutTokenId: string,
-    newOrder: CheckoutCapture
-  ) => Promise<void>;
+  onCaptureCheckout: (newOrder: CheckoutCapture) => Promise<void>;
 };
 const PaymentForm = ({
   checkoutToken,
@@ -89,11 +86,11 @@ const PaymentForm = ({
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    const orderData = {
+    const orderData: CheckoutCapture = {
       line_items: checkoutToken.line_items,
       customer: {
-        firstname: shippingData.firstName,
-        lastname: shippingData.lastName,
+        first_name: shippingData.firstName,
+        last_name: shippingData.lastName,
         email: shippingData.email,
         phoneNumber: shippingData.phoneNumber,
       },
@@ -119,7 +116,7 @@ const PaymentForm = ({
     };
     // console.log(orderData);
 
-    onCaptureCheckout(checkoutToken.id, orderData);
+    onCaptureCheckout(orderData);
 
     nextStep();
   };

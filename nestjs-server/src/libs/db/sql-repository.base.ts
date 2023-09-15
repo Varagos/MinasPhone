@@ -19,6 +19,7 @@ import {
   SlonikError,
   SqlToken,
   ValueExpression,
+  SerializableValue,
 } from 'slonik';
 import { ZodTypeAny, TypeOf, ZodObject } from 'zod';
 import { LoggerPort } from '../ports/logger.port';
@@ -203,7 +204,7 @@ export abstract class SqlRepositoryBase<
   ): SqlSqlToken<QueryResultRow> {
     // TODO: generate query from an entire array to insert multiple records at once
     const entries = Object.entries(models[0]);
-    const values: any = [];
+    const values: ValueExpression[] = [];
     const propertyNames: IdentifierSqlToken[] = [];
 
     entries.forEach(([column, value]) => {
@@ -213,8 +214,10 @@ export abstract class SqlRepositoryBase<
           values.push(sql.timestamp(value));
         } else if (value instanceof Buffer) {
           values.push(sql.binary(value));
+        } else if (this.isValidJson(value)) {
+          values.push(sql.jsonb(value as SerializableValue));
         } else {
-          values.push(value);
+          values.push(value as ValueExpression);
         }
       }
     });
@@ -228,6 +231,19 @@ export abstract class SqlRepositoryBase<
 
     const parsedQuery = query;
     return parsedQuery;
+  }
+
+  isValidJson(obj: any): boolean {
+    return this.isJsonObject(obj) || this.isJsonArray(obj);
+  }
+  isJsonObject(obj: any): obj is Record<string, unknown> {
+    return typeof obj === 'object' && obj !== null && !Array.isArray(obj);
+  }
+
+  isJsonArray(obj: any): obj is Array<Record<string, unknown>> {
+    if (!Array.isArray(obj)) return false;
+
+    return obj.every(this.isJsonObject);
   }
 
   /**

@@ -29,8 +29,8 @@ const routes = {
       updateLineItem: (lineItemId: string) =>
         `${API_BASE_URL}/api/v1/cart/line-item/${lineItemId}`,
     },
-    checkout: {
-      checkoutCart: () => `${API_BASE_URL}/api/v1/checkout`,
+    orders: {
+      checkout: () => `${API_BASE_URL}/api/v1/orders/checkout`,
     },
   },
 };

@@ -1,7 +1,18 @@
-import { Category, ICategoriesApi } from '../types/types';
+import { PaginatedRequest } from '../types/common';
+import {
+  Category,
+  CategoryPaginatedResponse,
+  FindCategoriesDto,
+  ICategoriesApi,
+} from '../types/types';
 
 // TODO add setTimeout to simulate network latency
 export class CategoriesApi implements ICategoriesApi {
+  findMany(
+    params: PaginatedRequest<FindCategoriesDto>
+  ): Promise<CategoryPaginatedResponse> {
+    throw new Error('Method not implemented.');
+  }
   private data: Category[] = [
     {
       id: '1',

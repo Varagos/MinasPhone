@@ -7,7 +7,7 @@ export interface Api {
   categories: ICategoriesApi;
   products: IProductsApi;
   cart: ICartApi;
-  checkout: ICheckoutApi;
+  orders: ICheckoutApi;
 }
 let api: Api;
 

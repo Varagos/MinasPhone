@@ -10,6 +10,9 @@ import {
   Req,
   ParseUUIDPipe,
   Param,
+  UsePipes,
+  ValidationPipe,
+  Query,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { routesV1 } from '@config/app.routes';
@@ -32,6 +35,9 @@ import { ResponseBase } from '@libs/api/response.base';
 import { NotFoundException } from '@libs/exceptions';
 import { FindOrderBySlugQueryResponse } from '@modules/orders/application/orders/queries/find-order-by-slug/find-order-by-slug.handler';
 import { FindOrderBySlugQuery } from '@modules/orders/application/orders/queries/find-order-by-slug/find-order-by-slug.query';
+import { OrderPaginatedResponseDto } from '@modules/orders/application/orders/dtos/order.paginated.response.dto';
+import { PaginatedQueryRequestDto } from '@libs/api/paginated-query.request.dto';
+import { FindOrdersQueryDto } from '@modules/orders/application/orders/queries/find-orders/find-orders.request.dto';
 
 @ApiTags('orders')
 @Controller(routesV1.version)
@@ -189,6 +195,53 @@ export class OrdersHttpController {
         throw error;
       },
     });
+  }
+
+  @Get(routesV1.order.root)
+  @ApiOperation({ summary: 'Find orders' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: OrderPaginatedResponseDto,
+  })
+  @UsePipes(
+    new ValidationPipe({
+      whitelist: true,
+      // transform: true,
+      // transformOptions: { enableImplicitConversion: true },
+      // forbidNonWhitelisted: true,
+    }),
+  )
+  async findCategories(
+    @Query() queryParams: FindOrdersQueryDto,
+  ): Promise<OrderPaginatedResponseDto> {
+    console.log({ queryParams });
+    // const query = new FindCategoriesQuery({
+    //   ...request,
+    //   limit: queryParams?.limit,
+    //   page: queryParams?.page,
+    // });
+    // const result: Result<
+    //   Paginated<CategoryModel>,
+    //   Error
+    // > = await this.queryBus.execute(query);
+
+    // const paginated = result.unwrap();
+
+    // // Whitelisting returned properties
+    // return new CategoryPaginatedResponseDto({
+    //   ...paginated,
+    //   data: paginated.data.map((category) => ({
+    //     ...new ResponseBase({
+    //       id: category.id,
+    //       createdAt: category.created_at,
+    //       updatedAt: category.updated_at,
+    //     }),
+    //     slug: category.slug,
+    //     name: category.name,
+    //     parentId: category.parent_id,
+    //   })),
+    // });
+    return 'OK' as any;
   }
 
   private extractCartFromCookie(request: Request): CartPrimitives | null {

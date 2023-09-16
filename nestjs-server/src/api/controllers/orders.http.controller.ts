@@ -13,12 +13,13 @@ import {
   UsePipes,
   ValidationPipe,
   Query,
+  BadRequestException,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { routesV1 } from '@config/app.routes';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { match } from 'oxide.ts';
+import { Result, match } from 'oxide.ts';
 import { IdResponse } from '@libs/api/id.response.dto';
 import { CategoryAlreadyExistsError } from '@modules/product-catalog/domain/category.errors';
 import { ApiErrorResponse } from '@libs/api/api-error.response';
@@ -38,6 +39,10 @@ import { FindOrderBySlugQuery } from '@modules/orders/application/orders/queries
 import { OrderPaginatedResponseDto } from '@modules/orders/application/orders/dtos/order.paginated.response.dto';
 import { PaginatedQueryRequestDto } from '@libs/api/paginated-query.request.dto';
 import { FindOrdersQueryDto } from '@modules/orders/application/orders/queries/find-orders/find-orders.request.dto';
+import { FindOrdersQuery } from '@modules/orders/application/orders/queries/find-orders/find-orders.query';
+import { Paginated } from '@libs/ddd';
+import { CategoryModel } from '@modules/product-catalog/infra/database/category.repository';
+import { OrderModel } from '@modules/orders/infra/database/order.repository';
 
 @ApiTags('orders')
 @Controller(routesV1.version)
@@ -133,7 +138,15 @@ export class OrdersHttpController {
           }),
           slug: order.slug,
           status: order.status,
-          lineItems: order.line_items,
+          lineItems: order.line_items.map((lineItem) => ({
+            id: lineItem.id,
+            productId: lineItem.product_id,
+            productName: lineItem.product_name,
+            productImage: lineItem.product_image,
+            itemPrice: lineItem.item_price,
+            totalPrice: lineItem.total_price,
+            quantity: lineItem.quantity,
+          })),
           contactInfo: {
             firstName: order.first_name,
             lastName: order.last_name,
@@ -179,7 +192,15 @@ export class OrdersHttpController {
           }),
           slug: order.slug,
           status: order.status,
-          lineItems: order.line_items,
+          lineItems: order.line_items.map((lineItem) => ({
+            id: lineItem.id,
+            productId: lineItem.product_id,
+            productName: lineItem.product_name,
+            productImage: lineItem.product_image,
+            itemPrice: lineItem.item_price,
+            totalPrice: lineItem.total_price,
+            quantity: lineItem.quantity,
+          })),
           contactInfo: {
             firstName: order.first_name,
             lastName: order.last_name,
@@ -211,36 +232,73 @@ export class OrdersHttpController {
       // forbidNonWhitelisted: true,
     }),
   )
-  async findCategories(
+  async findOrders(
     @Query() queryParams: FindOrdersQueryDto,
   ): Promise<OrderPaginatedResponseDto> {
     console.log({ queryParams });
-    // const query = new FindCategoriesQuery({
-    //   ...request,
-    //   limit: queryParams?.limit,
-    //   page: queryParams?.page,
-    // });
-    // const result: Result<
-    //   Paginated<CategoryModel>,
-    //   Error
-    // > = await this.queryBus.execute(query);
+    const { range, sort, filter } = queryParams;
+    const start = range?.[0];
+    const end = range?.[1];
+    const limit =
+      start !== undefined && end !== undefined ? end - start + 1 : undefined;
+    if (start !== undefined && limit !== undefined && start % limit !== 0) {
+      throw new BadRequestException(
+        'Invalid range, does not align to a full page',
+      );
+    }
 
-    // const paginated = result.unwrap();
+    const page =
+      start !== undefined && limit !== undefined ? start / limit : undefined;
+    console.log({
+      start,
+      end,
+      limit,
+      page,
+    });
+    const query = new FindOrdersQuery({
+      ...filter,
+      limit,
+      page,
+      orderBy: sort && {
+        field: sort[0],
+        param: sort[1] === 'ASC' ? 'asc' : 'desc',
+      },
+    });
+    const result: Result<
+      Paginated<OrderModel>,
+      Error
+    > = await this.queryBus.execute(query);
 
-    // // Whitelisting returned properties
-    // return new CategoryPaginatedResponseDto({
-    //   ...paginated,
-    //   data: paginated.data.map((category) => ({
-    //     ...new ResponseBase({
-    //       id: category.id,
-    //       createdAt: category.created_at,
-    //       updatedAt: category.updated_at,
-    //     }),
-    //     slug: category.slug,
-    //     name: category.name,
-    //     parentId: category.parent_id,
-    //   })),
-    // });
+    const paginated = result.unwrap();
+
+    // Whitelisting returned properties
+    return new OrderPaginatedResponseDto({
+      ...paginated,
+      data: paginated.data.map((order) => ({
+        ...new ResponseBase({
+          id: order.id,
+          createdAt: order.created_at,
+          updatedAt: order.updated_at,
+        }),
+        slug: order.slug,
+        status: order.status,
+        lineItems: order.line_items.map((lineItem) => ({
+          id: lineItem.id,
+          productId: lineItem.product_id,
+          productName: lineItem.product_name,
+          productImage: lineItem.product_image,
+          itemPrice: lineItem.item_price,
+          totalPrice: lineItem.total_price,
+          quantity: lineItem.quantity,
+        })),
+        contactInfo: {
+          firstName: order.first_name,
+          lastName: order.last_name,
+          email: order.email,
+          phone: order.phone,
+        },
+      })),
+    });
     return 'OK' as any;
   }
 

@@ -1,14 +1,5 @@
-import {
-  IsOptional,
-  IsString,
-  ValidateNested,
-  IsArray,
-  IsObject,
-  IsIn,
-  IsEmail,
-  Validate,
-} from 'class-validator';
-import { Transform, Type } from 'class-transformer';
+import { IsOptional, Validate } from 'class-validator';
+import { Transform } from 'class-transformer';
 import {
   ValidatorConstraint,
   ValidatorConstraintInterface,

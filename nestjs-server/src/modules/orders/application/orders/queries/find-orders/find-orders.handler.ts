@@ -5,11 +5,11 @@ import { DatabasePool, SchemaValidationError, sql } from 'slonik';
 import { FindOrdersQuery } from './find-orders.query';
 import { Paginated } from '@libs/ddd/index';
 import {
-  ProductModel,
-  productSchema,
-} from '@modules/product-catalog/infra/database/product.repository';
+  OrderModel,
+  orderSchema,
+} from '@modules/orders/infra/database/order.repository';
 
-export type FindOrdersResponse = Result<Paginated<ProductModel>, Error>;
+export type FindOrdersResponse = Result<Paginated<OrderModel>, Error>;
 
 // Mapping from API fields to database columns
 const fieldToColumnMapping: Record<string, string> = {
@@ -41,8 +41,12 @@ export class FindOrdersQueryHandler implements IQueryHandler {
     if (typeof query.orderBy.field === 'string') {
       const sortField = fieldToColumnMapping[query.orderBy.field];
       const sortOrder = query.orderBy.param;
-      if (sortField) {
-        sortClause = sql`ORDER BY ${sql.identifier([sortField])} ${sortOrder}`;
+      if (sortField && ['asc', 'desc'].includes(sortOrder)) {
+        console.log(sortOrder);
+        sortClause =
+          sortOrder === 'asc'
+            ? sql`ORDER BY ${sql.identifier([sortField])} ASC `
+            : sql`ORDER BY ${sql.identifier([sortField])} DESC `;
       }
     } // else: default to no sorting, or specify a default sort field here
 
@@ -50,9 +54,9 @@ export class FindOrdersQueryHandler implements IQueryHandler {
      * Constructing a query with Slonik.
      * More info: https://contra.com/p/AqZWWoUB-writing-composable-sql-using-java-script
      */
-    const statement = sql.type(productSchema)`
+    const statement = sql.type(orderSchema)`
          SELECT *
-         FROM products
+         FROM orders
          WHERE
            ${query.email ? sql`email = ${query.email}` : true} AND
            ${query.phoneNumber ? sql`phone = ${query.phoneNumber}` : true} AND
@@ -63,8 +67,10 @@ export class FindOrdersQueryHandler implements IQueryHandler {
          LIMIT ${query.limit}
          OFFSET ${query.offset}`;
 
+    console.log(statement.sql);
     try {
       const records = await this.pool.query(statement);
+      console.log(records);
       return Ok(
         new Paginated({
           data: records.rows,

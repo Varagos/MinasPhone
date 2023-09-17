@@ -1,7 +1,7 @@
 import { Mapper } from '@libs/ddd';
 import { Injectable } from '@nestjs/common';
 import { OrderModel, orderSchema } from '../database/order.repository';
-import { OrderEntity } from '@modules/orders/domain/order.entity';
+import { OrderEntity, OrderStatus } from '@modules/orders/domain/order.entity';
 import { OrderLineItemEntity } from '@modules/orders/domain/order-line-item.entity';
 import { ContactInfo } from '@modules/orders/domain/value-objects/contact-info.value-object';
 import { Email } from '@libs/ddd/standard-value-objects/email.value-object';
@@ -40,6 +40,7 @@ export class OrderMapper
       })),
       status: copy.status,
       slug: copy.slug,
+      total: copy.total,
     };
     return orderSchema.parse(record);
   }
@@ -72,6 +73,7 @@ export class OrderMapper
         }),
         status: record.status,
         slug: record.slug,
+        total: record.total,
       },
     });
     return entity;
@@ -97,6 +99,7 @@ export class OrderMapper
       email: props.contactInfo.email,
       phone: props.contactInfo.phone,
     };
+    response.total = props.total;
 
     return response;
   }

@@ -37,7 +37,7 @@ export interface Customer extends RaRecord {
   total_spent: number;
 }
 
-export type OrderStatus = 'Pending' | 'Completed' | 'Cancelled';
+export type OrderStatus = 'pending' | 'Completed' | 'Cancelled';
 
 export interface OrderItem {
   productId: string;

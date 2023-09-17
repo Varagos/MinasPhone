@@ -4,63 +4,55 @@ import { Fragment, useCallback } from 'react';
 import { DateField, NumberField, useGetList, useListContext } from 'react-admin';
 import { useMediaQuery, Divider, Tabs, Tab, Theme } from '@mui/material';
 import NbItemsField from './NbItemsField';
+import { OrderResponseDto } from '../dto/order';
 
 export const OrderList = () => (
-  <List>
-    <TabbedDatagrid />
-    {/* <Datagrid rowClick="edit">
-      <TextField source="id" />
-      <ChipField source="status" />
-
-      <SelectField
-        source="status"
-        choices={[
-          { id: 'Pending', name: 'Εκκρεμής' },
-          { id: 'Completed', name: 'Ολοκληρωμένη' },
-          { id: 'Cancelled', name: 'Ακυρωμένη' },
-        ]}
-      />
-      <FunctionField label="Name" render={(record: any) => `${record.firstName} ${record.lastName}`} />
-
-      <EmailField source="email" />
-      <TextField source="phone" />
-      <EditButton />
-    </Datagrid> */}
+  <List filterDefaultValues={{ status: 'pending' }}>
+    <TabbedDataGrid />
   </List>
 );
 
 const tabs = [
-  { id: 'Pending', name: 'Pending' },
-  { id: 'Completed', name: 'Completed' },
-  { id: 'Cancelled', name: 'Cancelled' },
+  { id: 'pending', name: 'pending' },
+  { id: 'delivered', name: 'Completed' },
+  { id: 'cancelled', name: 'Cancelled' },
 ];
 
+// Have to return tab[name] = total
 const useGetTotals = (filterValues: any) => {
-  const { total: totalOrdered, ...rest } = useGetList('orders', {
+  const {
+    total: totalOrdered,
+    data: pendingOrdersData,
+    ...rest
+  } = useGetList('orders', {
     pagination: { perPage: 1, page: 1 },
     sort: { field: 'id', order: 'ASC' },
-    filter: { ...filterValues, status: 'Pending' },
+    filter: { ...filterValues, status: 'pending' },
   });
   const { total: totalDelivered } = useGetList('orders', {
     pagination: { perPage: 1, page: 1 },
     sort: { field: 'id', order: 'ASC' },
-    filter: { ...filterValues, status: 'Completed' },
+    filter: { ...filterValues, status: 'delivered' },
   });
   const { total: totalCancelled } = useGetList('orders', {
     pagination: { perPage: 1, page: 1 },
     sort: { field: 'id', order: 'ASC' },
-    filter: { ...filterValues, status: 'Cancelled' },
+    filter: { ...filterValues, status: 'cancelled' },
   });
-  //   console.log('total', totalOrdered, rest, totalCancelled);
+  console.log('total', {
+    totalOrdered,
+    rest,
+    pendingOrdersData,
+  });
 
   return {
-    Pending: totalOrdered,
+    pending: totalOrdered,
     Completed: totalDelivered,
     Cancelled: totalCancelled,
   };
 };
 
-const TabbedDatagrid = () => {
+const TabbedDataGrid = () => {
   const listContext = useListContext();
   const { filterValues, setFilters, displayedFilters } = listContext;
   const isXSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
@@ -68,24 +60,30 @@ const TabbedDatagrid = () => {
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<{}>, value: any) => {
-      setFilters &&
+      if (setFilters) {
+        console.log('Setting filters', filterValues);
         setFilters(
           { ...filterValues, status: value },
           displayedFilters,
           false // no debounce, we want the filter to fire immediately
         );
+      }
     },
     [displayedFilters, filterValues, setFilters]
   );
+  console.log('Filter values', filterValues);
 
   return (
     <Fragment>
       <Tabs
         variant="fullWidth"
         centered
-        value={filterValues.status ?? 'Pending'}
+        value={filterValues?.status ?? tabs[0].id}
         indicatorColor="primary"
-        onChange={handleChange}
+        onChange={(e, v) => {
+          console.log('onChange');
+          handleChange(e, v);
+        }}
       >
         {tabs.map((choice) => (
           <Tab
@@ -101,11 +99,14 @@ const TabbedDatagrid = () => {
         //     <MobileGrid />
         //   ) :
         <>
-          {filterValues.status === 'Pending' && (
+          {filterValues.status === 'pending' && (
             <Datagrid rowClick="edit">
-              <DateField source="date" showTime />
+              <DateField source="createdAt" showTime />
               <TextField source="id" />
-              <FunctionField label="Customer" render={(record: any) => `${record.firstName} ${record.lastName}`} />
+              <FunctionField
+                label="Customer"
+                render={(record: OrderResponseDto) => `${record.contactInfo.firstName} ${record.contactInfo.lastName}`}
+              />
               <NbItemsField />
 
               <NumberField
@@ -118,11 +119,14 @@ const TabbedDatagrid = () => {
               />
             </Datagrid>
           )}
-          {filterValues.status === 'Completed' && (
+          {filterValues.status === 'delivered' && (
             <Datagrid rowClick="edit">
-              <DateField source="date" showTime />
+              <DateField source="createdAt" showTime />
               <TextField source="id" />
-              <FunctionField label="Customer" render={(record: any) => `${record.firstName} ${record.lastName}`} />
+              <FunctionField
+                label="Customer"
+                render={(record: OrderResponseDto) => `${record.contactInfo.firstName} ${record.contactInfo.lastName}`}
+              />
               <NbItemsField />
               <NumberField
                 source="total"
@@ -134,11 +138,14 @@ const TabbedDatagrid = () => {
               />
             </Datagrid>
           )}
-          {filterValues.status === 'Cancelled' && (
+          {filterValues.status === 'cancelled' && (
             <Datagrid rowClick="edit">
-              <DateField source="date" showTime />
+              <DateField source="createdAt" showTime />
               <TextField source="id" />
-              <FunctionField label="Customer" render={(record: any) => `${record.firstName} ${record.lastName}`} />
+              <FunctionField
+                label="Customer"
+                render={(record: OrderResponseDto) => `${record.contactInfo.firstName} ${record.contactInfo.lastName}`}
+              />
               <NbItemsField />
               <NumberField
                 source="total"

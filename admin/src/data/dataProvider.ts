@@ -16,6 +16,7 @@ const dataProvider: DataProvider = {
       filter: JSON.stringify(params.filter),
     };
     const url = `${apiUrl}/${resource}?${stringify(query)}`;
+    console.log(`getList: ${resource}`, url);
 
     return httpClient(url).then(({ headers, json }) => {
       const rangeHeader = headers.get('content-range');

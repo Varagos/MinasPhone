@@ -153,6 +153,7 @@ export class OrdersHttpController {
             email: order.email,
             phone: order.phone,
           },
+          total: order.total,
         };
       },
       Err: (error: Error) => {
@@ -207,6 +208,7 @@ export class OrdersHttpController {
             email: order.email,
             phone: order.phone,
           },
+          total: order.total,
         };
       },
       Err: (error: Error) => {
@@ -291,6 +293,7 @@ export class OrdersHttpController {
           totalPrice: lineItem.total_price,
           quantity: lineItem.quantity,
         })),
+        total: order.total,
         contactInfo: {
           firstName: order.first_name,
           lastName: order.last_name,

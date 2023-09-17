@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ResponseBase } from '@libs/api/response.base';
+import { OrderStatus } from '@modules/orders/domain/order.entity';
 
 export class OrderLineItemResponseDTO {
   @ApiProperty({
@@ -53,8 +54,9 @@ export class OrderResponseDto extends ResponseBase {
   @ApiProperty({
     example: 'pending',
     description: 'Order status',
+    enum: OrderStatus,
   })
-  status: string;
+  status: OrderStatus;
 
   @ApiProperty({
     description: 'Order line items',
@@ -70,4 +72,10 @@ export class OrderResponseDto extends ResponseBase {
     email: string;
     phone: string;
   };
+
+  @ApiProperty({
+    example: 100,
+    description: 'Order total',
+  })
+  total: number;
 }

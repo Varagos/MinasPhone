@@ -120,8 +120,8 @@ const OrderForm = () => {
                       source="status"
                       choices={[
                         {
-                          id: 'Pending',
-                          name: 'Pending',
+                          id: 'pending',
+                          name: 'pending',
                         },
                         {
                           id: 'Completed',

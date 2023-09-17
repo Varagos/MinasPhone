@@ -3,12 +3,22 @@ import { randomUUID } from 'crypto';
 import { ContactInfo } from './value-objects/contact-info.value-object';
 import { customAlphabet } from 'nanoid';
 import { OrderLineItemEntity } from './order-line-item.entity';
+import Decimal from 'decimal.js';
+
+export enum OrderStatus {
+  Pending = 'pending',
+  // Paid = 'paid',
+  // Shipped = 'shipped',
+  Delivered = 'delivered',
+  Cancelled = 'cancelled',
+}
 
 interface OrderProps {
   lineItems: OrderLineItemEntity[];
-  status: string;
+  status: OrderStatus;
   contactInfo: ContactInfo;
   slug: string;
+  total: number;
 }
 interface CreateOrderProps {
   lineItems: OrderLineItemEntity[];
@@ -43,18 +53,26 @@ export class OrderEntity extends AggregateRoot<OrderProps> {
     console.log('order id', id);
     const slug = OrderEntity.generateSlug();
 
-    const defaultProps = {
+    const total = props.lineItems
+      .reduce(
+        (acc, item) => new Decimal(item.totalPrice).plus(acc),
+        new Decimal(0),
+      )
+      .toNumber();
+
+    const defaultProps: OrderProps = {
       lineItems: props.lineItems,
-      status: 'pending',
+      status: OrderStatus.Pending,
       contactInfo: props.contactInfo,
       slug,
+      total,
     };
     const order = new OrderEntity({ props: defaultProps, id });
 
     return order;
   }
 
-  public updateStatus(status: string): void {
+  public updateStatus(status: OrderStatus): void {
     this.props.status = status;
   }
 

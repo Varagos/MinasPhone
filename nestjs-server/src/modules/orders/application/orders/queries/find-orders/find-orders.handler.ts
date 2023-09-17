@@ -67,10 +67,10 @@ export class FindOrdersQueryHandler implements IQueryHandler {
          LIMIT ${query.limit}
          OFFSET ${query.offset}`;
 
-    console.log(statement.sql);
+    // console.log(statement.sql);
     try {
       const records = await this.pool.query(statement);
-      console.log(records);
+      // console.log(records);
       return Ok(
         new Paginated({
           data: records.rows,

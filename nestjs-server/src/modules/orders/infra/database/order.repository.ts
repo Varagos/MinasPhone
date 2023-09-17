@@ -5,8 +5,16 @@ import { Injectable, Logger } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { SqlRepositoryBase } from '@libs/db/sql-repository.base';
 import { OrderMapper } from '../mappers/order.mapper';
-import { OrderEntity } from '@modules/orders/domain/order.entity';
+import { OrderEntity, OrderStatus } from '@modules/orders/domain/order.entity';
 import { OrderRepositoryPort } from '@modules/orders/domain/ports/order.repository.port';
+
+// export enum OrderStatus {
+//   Pending = 'pending',
+//   // Paid = 'paid',
+//   // Shipped = 'shipped',
+//   Delivered = 'delivered',
+//   Cancelled = 'cancelled',
+// }
 
 /**
  * Runtime validation of user object for extra safety (in case database schema changes).
@@ -21,7 +29,7 @@ export const orderSchema = z.object({
   last_name: z.string().min(1).max(255),
   email: z.string().email(),
   phone: z.string().min(1).max(255),
-  status: z.string().min(1).max(255),
+  status: z.nativeEnum(OrderStatus),
   line_items: z.array(
     z.object({
       id: z.string().uuid(),
@@ -34,6 +42,7 @@ export const orderSchema = z.object({
     }),
   ),
   slug: z.string().min(1).max(255),
+  total: z.number(),
 });
 
 export type OrderModel = z.TypeOf<typeof orderSchema>;

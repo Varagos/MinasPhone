@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Table, TableBody, TableCell, TableRow } from '@mui/material';
 import { useRecordContext, useTranslate } from 'react-admin';
 
-import { Order } from '../types';
 import { TableCellRight } from './TableCellRight';
+import { OrderResponseDto } from '../dto/order';
 
 const Totals = () => {
-  const record = useRecordContext<Order>();
+  const record = useRecordContext<OrderResponseDto>();
   const translate = useTranslate();
 
   return (

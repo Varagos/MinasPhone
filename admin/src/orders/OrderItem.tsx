@@ -4,20 +4,24 @@ import { Link, useTranslate, useRecordContext } from 'react-admin';
 
 import { Order, OrderItem as OrderItemType } from '../types';
 import { TableCellRight } from './TableCellRight';
+import { OrderLineItemResponseDTO, OrderResponseDto } from '../dto/order';
 
+type OrderLineItemsByProductId = {
+  [productId: string]: OrderLineItemResponseDTO;
+};
 const OrderItem = () => {
-  const record = useRecordContext<Order>();
+  const record = useRecordContext<OrderResponseDto>();
   const translate = useTranslate();
 
   //   const productIds = record ? record.basket.map((item) => item.product_id) : [];
 
   //   const { isLoading, data: products } = useGetMany<Product>('products', { ids: productIds }, { enabled: !!record });
-  const products = record ? record.items : [];
-  const productsById = products
+  const products = record ? record.lineItems : [];
+  const productsById: OrderLineItemsByProductId = products
     ? products.reduce((acc, product) => {
         acc[product.productId] = product;
         return acc;
-      }, {} as any)
+      }, {} as OrderLineItemsByProductId)
     : {};
 
   //   if (isLoading || !record || !products) return null;
@@ -33,20 +37,20 @@ const OrderItem = () => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {record.items.map((item: OrderItemType) => (
+        {record.lineItems.map((item) => (
           <TableRow key={item.productId}>
             <TableCell>
               <Link to={`/products/${item.productId}`}>{productsById[item.productId].productName}</Link>
             </TableCell>
             <TableCellRight>
-              {productsById[item.productId].unitPrice.toLocaleString(undefined, {
+              {productsById[item.productId].itemPrice.toLocaleString(undefined, {
                 style: 'currency',
                 currency: 'EUR',
               })}
             </TableCellRight>
             <TableCellRight>{item.quantity}</TableCellRight>
             <TableCellRight>
-              {(productsById[item.productId].unitPrice * item.quantity).toLocaleString(undefined, {
+              {productsById[item.productId].totalPrice.toLocaleString(undefined, {
                 style: 'currency',
                 currency: 'EUR',
               })}

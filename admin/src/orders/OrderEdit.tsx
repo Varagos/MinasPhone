@@ -16,7 +16,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import { Card, CardContent, Box, Grid, Typography, Link } from '@mui/material';
 
-import { Order, Customer } from '../types';
+import { Customer } from '../types';
 
 // export const OrderEdit = () => (
 //   <Edit>
@@ -40,6 +40,7 @@ import { Order, Customer } from '../types';
 
 import OrderItem from './OrderItem';
 import Totals from './Totals';
+import { OrderResponseDto } from '../dto/order';
 
 const OrderEdit = () => (
   <Edit title={<OrderTitle />} component="div">
@@ -49,11 +50,11 @@ const OrderEdit = () => (
 
 const OrderTitle = () => {
   const translate = useTranslate();
-  const record = useRecordContext<Order>();
+  const record = useRecordContext<OrderResponseDto>();
   return record ? (
     <span>
       {translate('resources.orders.title', {
-        reference: record.reference,
+        reference: record.slug,
       })}
     </span>
   ) : null;
@@ -104,13 +105,13 @@ const OrderForm = () => {
                 </Typography>
                 <Grid container>
                   <Grid item xs={12} sm={12} md={6}>
-                    <Labeled source="date">
-                      <DateField source="date" showTime />
+                    <Labeled source="createdAt">
+                      <DateField source="createdAt" showTime />
                     </Labeled>
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
-                    <Labeled source="reference">
-                      <TextField source="reference" />
+                    <Labeled source="slug">
+                      <TextField source="slug" />
                     </Labeled>
                   </Grid>
                 </Grid>
@@ -124,12 +125,12 @@ const OrderForm = () => {
                           name: 'pending',
                         },
                         {
-                          id: 'Completed',
-                          name: 'Completed',
+                          id: 'completed',
+                          name: 'completed',
                         },
                         {
-                          id: 'Cancelled',
-                          name: 'Cancelled',
+                          id: 'cancelled',
+                          name: 'cancelled',
                         },
                         {
                           id: 'unknown',
@@ -151,22 +152,26 @@ const OrderForm = () => {
                   {translate('resources.orders.section.customer')}
                 </Typography>
 
-                <FunctionField render={(record: any) => `${record?.firstName} ${record?.lastName}`} />
+                <FunctionField
+                  render={(record: OrderResponseDto) =>
+                    `${record.contactInfo.firstName} ${record.contactInfo.lastName}`
+                  }
+                />
                 <br />
-                <EmailField source="email" />
+                <EmailField source="contactInfo.email" />
                 <br />
-                <NumberField source="phone" />
-                <ReferenceField source="customer_id" reference="customers" link={false}>
+                <NumberField source="contactInfo.phone" />
+                {/* <ReferenceField source="customer_id" reference="customers" link={false}>
                   <CustomerDetails />
-                </ReferenceField>
+                </ReferenceField> */}
                 <Spacer />
 
-                <Typography variant="h6" gutterBottom>
+                {/* <Typography variant="h6" gutterBottom>
                   {translate('resources.orders.section.shipping_address')}
                 </Typography>
                 <ReferenceField source="customer_id" reference="customers" link={false}>
                   <CustomerAddress />
-                </ReferenceField>
+                </ReferenceField> */}
               </Grid>
             </Grid>
             <Spacer />

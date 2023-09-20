@@ -80,6 +80,10 @@ export class OrderEntity extends AggregateRoot<OrderProps> {
     this.props.slug = OrderEntity.generateSlug();
   }
 
+  public delete(): void {
+    // TODO
+  }
+
   private static generateSlug(): string {
     // TODO handle collisions
     return customAlphabet('0123456789', 8)();

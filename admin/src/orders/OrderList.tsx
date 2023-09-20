@@ -13,8 +13,8 @@ export const OrderList = () => (
 );
 
 const tabs = [
-  { id: 'pending', name: 'pending' },
-  { id: 'delivered', name: 'Completed' },
+  { id: 'pending', name: 'Pending' },
+  { id: 'delivered', name: 'Delivered' },
   { id: 'cancelled', name: 'Cancelled' },
 ];
 

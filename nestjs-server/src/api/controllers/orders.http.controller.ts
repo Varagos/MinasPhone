@@ -14,6 +14,8 @@ import {
   ValidationPipe,
   Query,
   BadRequestException,
+  Delete,
+  Put,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { routesV1 } from '@config/app.routes';
@@ -43,6 +45,11 @@ import { FindOrdersQuery } from '@modules/orders/application/orders/queries/find
 import { Paginated } from '@libs/ddd';
 import { CategoryModel } from '@modules/product-catalog/infra/database/category.repository';
 import { OrderModel } from '@modules/orders/infra/database/order.repository';
+import { UpdateOrderStatusRequestDto } from '@modules/orders/application/orders/commands/update-order-status/update-order-status.request.dto';
+import { UpdateOrderStatusCommand } from '@modules/orders/application/orders/commands/update-order-status/update-order-status.command';
+import { UpdateOrderStatusCommandResponse } from '@modules/orders/application/orders/commands/update-order-status/update-order-status.handler';
+import { DeleteOrderCommand } from '@modules/orders/application/orders/commands/delete-order/delete-order.command';
+import { DeleteOrderCommandResponse } from '@modules/orders/application/orders/commands/delete-order/delete-order.handler';
 
 @ApiTags('orders')
 @Controller(routesV1.version)
@@ -237,7 +244,7 @@ export class OrdersHttpController {
   async findOrders(
     @Query() queryParams: FindOrdersQueryDto,
   ): Promise<OrderPaginatedResponseDto> {
-    console.log({ queryParams });
+    // console.log({ queryParams });
     const { range, sort, filter } = queryParams;
     const start = range?.[0];
     const end = range?.[1];
@@ -251,12 +258,12 @@ export class OrdersHttpController {
 
     const page =
       start !== undefined && limit !== undefined ? start / limit : undefined;
-    console.log({
-      start,
-      end,
-      limit,
-      page,
-    });
+    // console.log({
+    //   start,
+    //   end,
+    //   limit,
+    //   page,
+    // });
     const query = new FindOrdersQuery({
       ...filter,
       limit,
@@ -302,7 +309,73 @@ export class OrdersHttpController {
         },
       })),
     });
-    return 'OK' as any;
+  }
+
+  @ApiOperation({
+    summary: 'Update Order Status',
+    description:
+      'This route can only be accessed by admins. It is used to update an order status',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: IdResponse,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    type: ApiErrorResponse,
+  })
+  @Put(routesV1.order.update)
+  @UseGuards(new RolesGuard())
+  async updateOne(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() body: UpdateOrderStatusRequestDto,
+  ): Promise<'OK'> {
+    const { status } = body;
+    const command = new UpdateOrderStatusCommand({ id, status });
+
+    const result: UpdateOrderStatusCommandResponse =
+      await this.commandBus.execute(command);
+
+    return match(result, {
+      Ok: () => 'OK',
+      Err: (error: Error) => {
+        if (error instanceof NotFoundException)
+          throw new HttpNotFoundException(error.message);
+        throw error;
+      },
+    });
+  }
+
+  @ApiOperation({
+    summary: 'Delete an Order',
+    description:
+      'This route can only be accessed by admins. It is used to delete an Order.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: IdResponse,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    type: ApiErrorResponse,
+  })
+  @Delete(routesV1.order.delete)
+  @UseGuards(new RolesGuard())
+  async delete(@Param('id', ParseUUIDPipe) id: string): Promise<boolean> {
+    const command = new DeleteOrderCommand(id);
+
+    const result: DeleteOrderCommandResponse = await this.commandBus.execute(
+      command,
+    );
+
+    return match(result, {
+      Ok: (deleted: boolean) => deleted,
+      Err: (error: Error) => {
+        if (error instanceof NotFoundException)
+          throw new HttpNotFoundException(error.message);
+        throw error;
+      },
+    });
   }
 
   private extractCartFromCookie(request: Request): CartPrimitives | null {

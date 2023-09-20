@@ -12,6 +12,8 @@ import { CheckoutOrderCommandHandler } from './application/orders/commands/check
 import { FindOrderByIdQueryHandler } from './application/orders/queries/find-order-by-id/find-order-by-id.handler';
 import { FindOrderBySlugQueryHandler } from './application/orders/queries/find-order-by-slug/find-order-by-slug.handler';
 import { FindOrdersQueryHandler } from './application/orders/queries/find-orders/find-orders.handler';
+import { UpdateOrderStatusCommandHandler } from './application/orders/commands/update-order-status/update-order-status.handler';
+import { DeleteOrderCommandHandler } from './application/orders/commands/delete-order/delete-order.handler';
 
 const commandHandlers: Provider[] = [
   // Cart
@@ -21,6 +23,8 @@ const commandHandlers: Provider[] = [
   AddCartLineItemCommandHandler,
   // Order
   CheckoutOrderCommandHandler,
+  UpdateOrderStatusCommandHandler,
+  DeleteOrderCommandHandler,
 ];
 
 const queryHandlers: Provider[] = [

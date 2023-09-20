@@ -43,6 +43,8 @@ export const routesV1 = {
     checkout: `/${ordersRoot}/checkout`,
     getOne: `/${ordersRoot}/:id`,
     getOneBySlug: `/${ordersRoot}/slug/:slug`,
+    update: `/${ordersRoot}/:id`,
+    delete: `/${ordersRoot}/:id`,
   },
   user: {
     root: usersRoot,

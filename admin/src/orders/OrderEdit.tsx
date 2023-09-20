@@ -125,8 +125,8 @@ const OrderForm = () => {
                           name: 'pending',
                         },
                         {
-                          id: 'completed',
-                          name: 'completed',
+                          id: 'delivered',
+                          name: 'delivered',
                         },
                         {
                           id: 'cancelled',

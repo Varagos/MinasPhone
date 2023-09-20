@@ -268,6 +268,8 @@ export abstract class SqlRepositoryBase<
         sqlValue = sql.timestamp(value);
       } else if (value instanceof Buffer) {
         sqlValue = sql.binary(value);
+      } else if (this.isValidJson(value)) {
+        sqlValue = sql.jsonb(value as SerializableValue);
       } else {
         sqlValue = sql`${value as ValueExpression}`;
       }

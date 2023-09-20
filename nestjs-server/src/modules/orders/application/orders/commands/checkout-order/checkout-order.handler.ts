@@ -1,4 +1,4 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
 import { Ok, Result } from 'oxide.ts';
 import { AggregateID } from '@libs/ddd';
 import { Inject } from '@nestjs/common';
@@ -9,6 +9,9 @@ import { ContactInfo } from '@modules/orders/domain/value-objects/contact-info.v
 import { Email, PhoneNumber } from '@libs/ddd/standard-value-objects';
 import { OrderRepositoryPort } from '@modules/orders/domain/ports/order.repository.port';
 import { ORDER_REPO } from '@modules/orders/constants';
+import { FindProductsByIdsQuery } from '@modules/product-catalog/application/products/queries/find-products-by-ids/find-products-by-ids.query';
+import { FindProductsByIdsQueryResponse } from '@modules/product-catalog/application/products/queries/find-products-by-ids/find-products-by-ids.handler';
+import { ProductModel } from '@modules/product-catalog/infra/database/product.repository';
 
 export type CheckoutOrderCommandResponse = Result<AggregateID, never>;
 
@@ -17,20 +20,34 @@ export class CheckoutOrderCommandHandler implements ICommandHandler {
   constructor(
     @Inject(ORDER_REPO)
     protected readonly orderRepo: OrderRepositoryPort,
+    private readonly queryBus: QueryBus,
   ) {}
 
   async execute(
     command: CheckoutOrderCommand,
   ): Promise<Result<AggregateID, never>> {
+    const productIds = command.lineItems.map((item) => item.productId);
+    const products: FindProductsByIdsQueryResponse =
+      await this.queryBus.execute(
+        new FindProductsByIdsQuery({ ids: productIds }),
+      );
+    if (products.isErr()) {
+      throw new Error('Products not found');
+    }
+    const productsByIds = products.unwrap().reduce((acc, product) => {
+      acc[product.id] = product;
+      return acc;
+    }, {} as Record<string, Readonly<ProductModel>>);
     const lineItems = command.lineItems.map((item) => {
       const { productId, quantity } = item;
+      const itemPrice = productsByIds[productId].price;
       return OrderLineItemEntity.create({
         productId,
         quantity,
-        itemPrice: 10,
-        totalPrice: 10,
-        productImage: 'image',
-        productName: 'name',
+        itemPrice,
+        totalPrice: itemPrice * quantity,
+        productImage: productsByIds[productId].image_uri,
+        productName: productsByIds[productId].name,
       });
     });
 

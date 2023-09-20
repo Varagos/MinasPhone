@@ -83,11 +83,17 @@ const dataProvider: DataProvider = {
     }));
   },
   // update a record based on a patch
-  update: (resource, params) =>
-    httpClient(`${apiUrl}/${resource}/${params.id}`, {
+  update: (resource, params) => {
+    console.log('update', {
+      url: `${apiUrl}/${resource}/${params.id}`,
       method: 'PUT',
       body: JSON.stringify(params.data),
-    }).then(({ json }) => ({ data: { id: params.id, ...(params.data as any) } })),
+    });
+    return httpClient(`${apiUrl}/${resource}/${params.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(params.data),
+    }).then(({ json }) => ({ data: { id: params.id, ...(params.data as any) } }));
+  },
 
   // update a list of records based on an array of ids and a common patch
   updateMany: (resource, params) => {

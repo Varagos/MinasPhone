@@ -110,6 +110,8 @@ const customEnglishMessages: TranslationMessages = {
         shipping_address: 'Shipping Address',
         items: 'Items',
         total: 'Totals',
+        order_date: 'Order date',
+        order_reference: 'Order reference',
       },
     },
     invoices: {

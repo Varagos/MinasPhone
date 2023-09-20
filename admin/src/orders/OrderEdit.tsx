@@ -105,12 +105,12 @@ const OrderForm = () => {
                 </Typography>
                 <Grid container>
                   <Grid item xs={12} sm={12} md={6}>
-                    <Labeled source="createdAt">
+                    <Labeled source="createdAt" label={translate('resources.orders.section.order_date')}>
                       <DateField source="createdAt" showTime />
                     </Labeled>
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
-                    <Labeled source="slug">
+                    <Labeled source="slug" label={translate('resources.orders.section.order_reference')}>
                       <TextField source="slug" />
                     </Labeled>
                   </Grid>

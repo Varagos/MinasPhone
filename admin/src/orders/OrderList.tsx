@@ -12,43 +12,41 @@ export const OrderList = () => (
   </List>
 );
 
-const tabs = [
+const tabs: Array<{ id: string; name: 'Pending' | 'Delivered' | 'Cancelled' }> = [
   { id: 'pending', name: 'Pending' },
   { id: 'delivered', name: 'Delivered' },
   { id: 'cancelled', name: 'Cancelled' },
 ];
 
 // Have to return tab[name] = total
-const useGetTotals = (filterValues: any) => {
-  const {
-    total: totalOrdered,
-    data: pendingOrdersData,
-    ...rest
-  } = useGetList('orders', {
+const useGetTotals = (
+  filterValues: any
+): {
+  Pending: number;
+  Delivered: number;
+  Cancelled: number;
+} => {
+  const { data: pendingOrders } = useGetList('orders', {
     pagination: { perPage: 1, page: 1 },
     sort: { field: 'id', order: 'ASC' },
     filter: { ...filterValues, status: 'pending' },
   });
-  const { total: totalDelivered } = useGetList('orders', {
+  const { data: deliveredOrders } = useGetList('orders', {
     pagination: { perPage: 1, page: 1 },
     sort: { field: 'id', order: 'ASC' },
     filter: { ...filterValues, status: 'delivered' },
   });
-  const { total: totalCancelled } = useGetList('orders', {
+  const { data: cancelledOrders } = useGetList('orders', {
     pagination: { perPage: 1, page: 1 },
     sort: { field: 'id', order: 'ASC' },
     filter: { ...filterValues, status: 'cancelled' },
   });
-  console.log('total', {
-    totalOrdered,
-    rest,
-    pendingOrdersData,
-  });
 
   return {
-    pending: totalOrdered,
-    Completed: totalDelivered,
-    Cancelled: totalCancelled,
+    // Keys must match tab names
+    Pending: pendingOrders?.length!,
+    Delivered: deliveredOrders?.length!,
+    Cancelled: cancelledOrders?.length!,
   };
 };
 
@@ -56,7 +54,7 @@ const TabbedDataGrid = () => {
   const listContext = useListContext();
   const { filterValues, setFilters, displayedFilters } = listContext;
   const isXSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
-  const totals = useGetTotals(filterValues) as any;
+  const totals = useGetTotals(filterValues);
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<{}>, value: any) => {
@@ -102,7 +100,7 @@ const TabbedDataGrid = () => {
           {filterValues.status === 'pending' && (
             <Datagrid rowClick="edit">
               <DateField source="createdAt" showTime />
-              <TextField source="id" />
+              <TextField source="slug" label="Code" />
               <FunctionField
                 label="Customer"
                 render={(record: OrderResponseDto) => `${record.contactInfo.firstName} ${record.contactInfo.lastName}`}

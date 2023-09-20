@@ -241,6 +241,7 @@ export class OrdersHttpController {
       // forbidNonWhitelisted: true,
     }),
   )
+  @UseGuards(new RolesGuard())
   async findOrders(
     @Query() queryParams: FindOrdersQueryDto,
   ): Promise<OrderPaginatedResponseDto> {

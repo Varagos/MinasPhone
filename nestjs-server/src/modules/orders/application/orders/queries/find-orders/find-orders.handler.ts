@@ -42,7 +42,7 @@ export class FindOrdersQueryHandler implements IQueryHandler {
       const sortField = fieldToColumnMapping[query.orderBy.field];
       const sortOrder = query.orderBy.param;
       if (sortField && ['asc', 'desc'].includes(sortOrder)) {
-        console.log(sortOrder);
+        // console.log(sortOrder);
         sortClause =
           sortOrder === 'asc'
             ? sql`ORDER BY ${sql.identifier([sortField])} ASC `

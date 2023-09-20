@@ -13,14 +13,14 @@ import {
   RecordContextProvider,
 } from 'react-admin';
 
-import { Order } from '../types';
+import { OrderResponseDto } from '../dto/order';
 
 interface MobileGridProps {
   data?: RaRecord[];
 }
 
 const MobileGrid = (props: MobileGridProps) => {
-  const { data, isLoading } = useListContext<Order>();
+  const { data, isLoading } = useListContext<OrderResponseDto>();
   const translate = useTranslate();
   if (isLoading || data.length === 0) {
     return null;

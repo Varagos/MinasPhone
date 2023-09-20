@@ -19,6 +19,9 @@ export class ExampleController {
   }
 }
  */
+/**
+ * Needs admin role to pass.
+ */
 @Injectable()
 export class RolesGuard extends AuthGuard {
   constructor(verifyOptions: VerifySessionOptions = {}) {

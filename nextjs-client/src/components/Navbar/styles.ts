@@ -1,10 +1,11 @@
+import theme from '@/lib/theme';
 import { alpha } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 const drawerWidth = 0;
 
 // https://stackoverflow.com/questions/69263383/what-is-the-alternative-of-makestyles-for-material-ui-v-5
-export default makeStyles((theme: any) => ({
+export default makeStyles<typeof theme>((theme) => ({
   helperBar: {
     minHeight: '48px',
   },
@@ -35,8 +36,9 @@ export default makeStyles((theme: any) => ({
     alignItems: 'flex-end',
   },
   navLinkHome: {
-    color: '#ffce2a',
+    color: theme.palette.secondary.main, // '#ffce2a',
     '&:hover': {
+      color: theme.palette.secondary.light,
       backgroundColor: '#ffff',
     },
   },

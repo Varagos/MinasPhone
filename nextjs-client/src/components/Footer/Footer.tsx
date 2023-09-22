@@ -47,6 +47,7 @@ const Footer = () => {
             </Grid>
 
             <Grid item xs={12} sm={4}>
+              {/* <address> */}
               <Box borderBottom={1} mb={4}>
                 ΕΠΙΚΟΙΝΩΝΗΣΤΕ ΜΑΖΙ ΜΑΣ
               </Box>
@@ -100,6 +101,7 @@ const Footer = () => {
                   </table>
                 }
               />
+              {/* </address> */}
             </Grid>
 
             <Grid

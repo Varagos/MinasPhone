@@ -52,6 +52,10 @@ export class CategoryEntity extends AggregateRoot<CategoryProps> {
     // entity business rules validation to protect it's invariant before saving entity to a database
   }
 
+  public updateSlug(slug: string): void {
+    this.props.slug = slug;
+  }
+
   public updateName(name: string): void {
     this.props.name = name;
   }

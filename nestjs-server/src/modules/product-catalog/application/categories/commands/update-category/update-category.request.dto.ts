@@ -5,6 +5,15 @@ import { IsOptional, IsString, IsUUID } from 'class-validator';
 export class UpdateCategoryRequestDto {
   @ApiProperty({
     required: false,
+    example: 'electronics',
+    description: 'The slug of the category to update',
+  })
+  @IsString()
+  @IsOptional()
+  slug?: string;
+
+  @ApiProperty({
+    required: false,
     example: 'Electronics',
     description: 'The name of the category to filter by',
   })

@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import { useTranslate, useLocaleState, useTheme, Title } from 'react-admin';
 
 import { darkTheme, lightTheme } from '../layout/themes';
+import { LocaleEnum } from '../i18n';
 
 const Configuration = () => {
   const translate = useTranslate();
@@ -39,16 +40,16 @@ const Configuration = () => {
         <Button
           variant="contained"
           sx={{ margin: '1em' }}
-          color={locale === 'en' ? 'primary' : 'secondary'}
-          onClick={() => setLocale('en')}
+          color={locale === LocaleEnum.EN ? 'primary' : 'secondary'}
+          onClick={() => setLocale(LocaleEnum.EN)}
         >
           en
         </Button>
         <Button
           variant="contained"
           sx={{ margin: '1em' }}
-          color={locale === 'gr' ? 'primary' : 'secondary'}
-          onClick={() => setLocale('gr')}
+          color={locale === LocaleEnum.GR ? 'primary' : 'secondary'}
+          onClick={() => setLocale(LocaleEnum.GR)}
         >
           gr
         </Button>

@@ -13,38 +13,22 @@ import {
   Pagination,
 } from 'react-admin';
 
-const Language: 'GR' | 'EN' = 'GR';
-const labels = {
-  GR: {
-    slug: 'Κωδικός',
-    name: 'Όνομα',
-    description: 'Περιγραφή',
-    price: 'Τιμή',
-    quantity: 'Ποσότητα',
-    image: 'Εικόνα',
-    available: 'Διαθέσιμο',
-    createdAt: 'Δημιουργήθηκε',
-    updatedAt: 'Ενημερώθηκε',
-    category: 'Κατηγορία',
-  },
-};
-
 type ProductListProps = {
   actions: JSX.Element;
 };
-export const ImageList = ({ actions }: ProductListProps) => {
+export const GridList = ({ actions }: ProductListProps) => {
   const translate = useTranslate();
   return (
-    <List pagination={<Pagination rowsPerPageOptions={[12, 24, 48, 72]} />} actions={actions}>
+    <List pagination={<Pagination rowsPerPageOptions={[10, 12, 24, 48, 72]} />} actions={actions}>
       <Datagrid rowClick="edit">
         <ImageField
           sx={{ '& img': { maxWidth: 100, maxHeight: 100, objectFit: 'contain' } }}
           source="imageUrl"
-          label="Image"
+          label={translate('resources.products.fields.image')}
           sortable={false}
         />
 
-        <TextField source="slug" label={labels[Language].slug} />
+        <TextField source="slug" label={translate('resources.products.fields.slug')} />
         <TextField source="name" label={translate('resources.products.fields.name')} />
         <ReferenceField
           label={translate('resources.products.fields.category')}
@@ -62,7 +46,7 @@ export const ImageList = ({ actions }: ProductListProps) => {
           }}
         />
         <NumberField source="quantity" label={translate('resources.products.fields.quantity')} />
-        <BooleanField source="active" label={labels[Language].available} />
+        <BooleanField source="active" label={translate('resources.products.fields.available')} />
       </Datagrid>
     </List>
   );

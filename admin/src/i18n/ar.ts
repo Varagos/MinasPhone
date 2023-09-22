@@ -1,48 +1,49 @@
-import englishMessages from 'ra-language-english';
+import { defaultArabicMessages } from './default-messages/arabic';
 import { MinasPhoneMessages } from './interface';
 
-const customEnglishMessages: MinasPhoneMessages = {
-  ...englishMessages,
+const customArabicMessages: MinasPhoneMessages = {
+  ...defaultArabicMessages,
   pos: {
-    search: 'Search',
-    configuration: 'Configuration',
-    language: 'Language',
+    // in arabic
+    search: 'بحث',
+    configuration: 'تكوين',
+    language: 'لغة',
     theme: {
-      name: 'Theme',
-      light: 'Light',
-      dark: 'Dark',
+      name: 'موضوع',
+      light: 'ضوء',
+      dark: 'داكن',
     },
     dashboard: {
-      monthly_revenue: 'Monthly Revenue',
-      month_history: '30 Day Revenue History',
-      new_orders: 'New Orders',
-      pending_reviews: 'Pending Reviews',
-      all_reviews: 'See all reviews',
-      new_customers: 'New Customers',
-      all_customers: 'See all customers',
-      pending_orders: 'Pending Orders',
+      monthly_revenue: 'الإيرادات الشهرية',
+      month_history: 'تاريخ الإيرادات لمدة 30 يومًا',
+      new_orders: 'طلبات جديدة',
+      pending_reviews: 'المراجعات المعلقة',
+      all_reviews: 'عرض جميع المراجعات',
+      new_customers: 'عملاء جدد',
+      all_customers: 'عرض جميع العملاء',
+      pending_orders: 'طلبات معلقة',
       order: {
-        items: 'by %{customer_name}, one item |||| by %{customer_name}, %{nb_items} items',
+        items: 'بواسطة %{customer_name}، منتج واحد |||| بواسطة %{customer_name}، %{nb_items} منتجات',
       },
       welcome: {
-        title: 'Welcome to the react-admin e-commerce demo',
+        title: 'مرحبًا بك في لوحة تحكم إدارة متجر Minas Phone',
         subtitle:
-          "This is the admin of an imaginary poster shop. Feel free to explore and modify the data - it's local to your computer, and will reset each time you reload.",
-        ra_button: 'website',
-        demo_button: 'Pending Button',
+          'هذا هو لوحة التحكم لمتجر ملصقات تخيلي. لا تتردد في استكشاف وتعديل البيانات - إنها محلية لجهاز الكمبيوتر الخاص بك ، وستعيد تعيين كل مرة تقوم فيها بإعادة تحميلها.',
+        ra_button: 'موقع الويب',
+        demo_button: 'زر معلق',
       },
     },
     menu: {
-      sales: 'Sales',
-      catalog: 'Catalog',
-      customers: 'Customers',
+      sales: 'مبيعات',
+      catalog: 'كتالوج',
+      customers: 'عملاء',
     },
   },
   resources: {
     customers: {
-      name: 'Customer |||| Customers',
+      name: 'عميل |||| عملاء',
       fields: {
-        time_joined: 'Customer since',
+        time_joined: 'العميل منذ',
       },
       filters: {
         last_visited: 'Last visited',
@@ -111,14 +112,14 @@ const customEnglishMessages: MinasPhoneMessages = {
       fields: {
         slug: 'Slug',
         name: 'Name',
-        description: 'Description',
-        price: 'Price',
-        quantity: 'Quantity',
-        image: 'Image',
-        available: 'Available',
-        createdAt: 'Created at',
-        updatedAt: 'Updated at',
-        category: 'Category',
+        description: 'Περιγραφή',
+        price: 'Τιμή',
+        quantity: 'Ποσότητα',
+        image: 'Φωτογραφία',
+        available: 'Διαθέσιμο',
+        createdAt: 'Δημιουργήθηκε στις',
+        updatedAt: 'Ενημερώθηκε στις',
+        category: 'Κατηγορία',
       },
       tabs: {
         image: 'Image',
@@ -151,4 +152,4 @@ const customEnglishMessages: MinasPhoneMessages = {
   },
 };
 
-export default customEnglishMessages;
+export default customArabicMessages;

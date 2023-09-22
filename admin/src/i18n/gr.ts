@@ -1,8 +1,9 @@
+import { MinasPhoneMessages } from './interface';
 import { TranslationMessages } from 'react-admin';
-import englishMessages from 'ra-language-english';
+import { greekMessages } from './default-messages/greek';
 
-const customGreeMessages: TranslationMessages = {
-  ...englishMessages,
+const customGreeMessages: MinasPhoneMessages = {
+  ...greekMessages,
   pos: {
     search: 'Αναζήτηση',
     configuration: 'Ρυθμίσεις',
@@ -42,25 +43,7 @@ const customGreeMessages: TranslationMessages = {
     customers: {
       name: 'Πελάτης |||| Πελάτες',
       fields: {
-        address: 'Διεύθυνση',
-        birthday: 'Γενέθλια',
-        city: 'Πόλη',
-        stateAbbr: 'Περιοχή',
-        orders: 'Παραγγελία',
-        first_name: 'Όνομα',
-        first_seen: 'Πρώτη επίσκεψη',
-        groups: 'Ομάδες',
-        has_newsletter: 'Εγγραφή στο Newsletter',
-        has_ordered: 'Έχει παραγγελία',
-        last_name: 'Επώνυμο',
-        last_seen: 'Τελευταία επίσκεψη',
-        last_seen_gte: 'Επισκέφτηκε από',
-        latest_purchase: 'Τελευταία αγορά',
-        name: 'Όνομα',
-        total_spent: 'Συνολικά έξοδα',
-        zipcode: 'Ταχ. Κώδικας',
-        password: 'Κωδικός',
-        confirm_password: 'Επιβεβαίωση Κωδικού',
+        time_joined: 'Ημερομηνία Εγγραφής',
       },
       filters: {
         last_visited: 'Επισκέφτηκε από',
@@ -124,37 +107,20 @@ const customGreeMessages: TranslationMessages = {
         order_reference: 'Κωδικός Παραγγελίας',
       },
     },
-    invoices: {
-      name: 'Facture |||| Factures',
-      fields: {
-        id: 'Numéro',
-        date: 'Date de facture',
-        customer_id: 'Client',
-        command_id: 'Commande',
-        date_gte: 'Emises depuis',
-        date_lte: 'Emises avant',
-        address: 'Adresse',
-        total_ex_taxes: 'Montant HT',
-        delivery_fees: 'Frais de livraison',
-        taxes: 'TVA',
-      },
-    },
+
     products: {
       name: 'Προϊόν |||| Προϊόντα',
       fields: {
-        category_id: 'Catégorie',
-        height_gte: 'Hauteur mini',
-        height_lte: 'Hauteur maxi',
-        height: 'Hauteur',
-        image: 'Photo',
+        slug: 'Slug',
         name: 'Όνομα',
-        category: 'Κατηγορία',
+        description: 'Περιγραφή',
         price: 'Τιμή',
         quantity: 'Ποσότητα',
-        reference: 'Référence',
-        sales: 'Ventes',
-        stock_lte: 'Stock faible',
-        stock: 'Stock',
+        image: 'Φωτογραφία',
+        available: 'Διαθέσιμο',
+        createdAt: 'Δημιουργήθηκε στις',
+        updatedAt: 'Ενημερώθηκε στις',
+        category: 'Κατηγορία',
       },
       tabs: {
         image: 'Φωτογραφία',
@@ -180,49 +146,8 @@ const customGreeMessages: TranslationMessages = {
       name: 'Κατηρορία |||| Κατηγορίες',
       fields: {
         name: 'Όνομα',
-        products: 'Προϊόντα',
-      },
-    },
-    reviews: {
-      name: 'Commentaire |||| Commentaires',
-      amount: '1 commentaire |||| %{smart_count} commentaires',
-      relative_to_poster: 'Commentaire sur',
-      detail: 'Détail du commentaire',
-      fields: {
-        customer_id: 'Client',
-        command_id: 'Commande',
-        product_id: 'Produit',
-        date_gte: 'Publié depuis',
-        date_lte: 'Publié avant',
-        date: 'Date',
-        comment: 'Texte',
-        status: 'Statut',
-        rating: 'Classement',
-      },
-      action: {
-        accept: 'Accepter',
-        reject: 'Rejeter',
-      },
-      notification: {
-        approved_success: 'Commentaire approuvé',
-        approved_error: 'Erreur: Commentaire non approuvé',
-        rejected_success: 'Commentaire rejeté',
-        rejected_error: 'Erreur: Commentaire non rejeté',
-      },
-    },
-    segments: {
-      name: 'Segment |||| Segments',
-      fields: {
-        customers: 'Clients',
-        name: 'Nom',
-      },
-      data: {
-        compulsive: 'Compulsif',
-        collector: 'Collectionneur',
-        ordered_once: 'A commandé',
-        regular: 'Régulier',
-        returns: 'A renvoyé',
-        reviewer: 'Commentateur',
+        slug: 'Slug',
+        parent: 'Γονέας',
       },
     },
   },

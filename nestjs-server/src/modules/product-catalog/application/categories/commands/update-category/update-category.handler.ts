@@ -32,6 +32,10 @@ export class UpdateCategoryCommandHandler {
     }
     const category = found.unwrap();
 
+    if (command.slug !== undefined) {
+      category.updateSlug(command.slug);
+    }
+
     if (command.name !== undefined) {
       category.updateName(command.name);
     }

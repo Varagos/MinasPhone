@@ -18,7 +18,7 @@ import {
   useGetResourceLabel,
 } from 'react-admin';
 
-import { ImageList } from './GridList';
+import { GridList } from './GridList';
 import Aside from './Aside';
 
 const ProductList = () => {
@@ -37,7 +37,7 @@ const ProductList = () => {
       <Box display="flex">
         <Aside />
         <Box width={isSmall ? 'auto' : 'calc(100% - 16em)'}>
-          <ImageList actions={<ListActions isSmall={isSmall} />} />
+          <GridList actions={<ListActions isSmall={isSmall} />} />
         </Box>
       </Box>
     </ListBase>

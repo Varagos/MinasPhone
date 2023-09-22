@@ -12,6 +12,7 @@ import HighlightOff from '@mui/icons-material/HighlightOff';
 import Slider from '@mui/material/Slider';
 import { Co2Sharp } from '@mui/icons-material';
 import { useRouter } from 'next/router';
+import PriceFilter from './PriceFilter';
 
 function valuetext(value: number) {
   return `${value}€`;
@@ -39,6 +40,11 @@ const Filter = () => {
   return (
     <div>
       <Box border={1} borderColor="grey.300" borderRadius="1%" p={4}>
+        <Typography variant="h5" gutterBottom color="black">
+          <strong>Φίλτρα</strong>
+        </Typography>
+        <hr />
+        <PriceFilter />
         {/* {search && (
           <Button
             variant="outlined"

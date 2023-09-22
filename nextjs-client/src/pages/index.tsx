@@ -35,7 +35,7 @@ export const getServerSideProps: GetServerSideProps<
 };
 
 export default function Landing({ categories, products }: LandingProps) {
-  console.log('Landing categories:', categories, 'products:', products);
+  // console.log('Landing categories:', categories, 'products:', products);
 
   const [shuffledProducts, setShuffledProducts] = useState<Product[]>([]);
 
@@ -54,10 +54,6 @@ export default function Landing({ categories, products }: LandingProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MainContainer>
-        {/* <Carousel>
-        {items.map((item, index) => (
-          <Item key={index} item={item} />
-        ))} */}
         <SimpleSlider />
         <section>
           <Container>

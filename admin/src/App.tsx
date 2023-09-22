@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { Admin, Resource, CustomRoutes } from 'react-admin';
-import polyglotI18nProvider from 'ra-i18n-polyglot';
 import UserIcon from '@mui/icons-material/Group';
 
 // Init SuperTokens
@@ -12,7 +11,6 @@ import { Dashboard } from './dashboard';
 import authProvider from './authProvider';
 import { Layout } from './layout';
 import { Login } from './pages';
-import englishMessages from './i18n/en';
 
 import dataProvider from './data/dataProvider';
 import myDataProvider from './data/addUploadCapabilities';
@@ -24,13 +22,8 @@ import users from './users';
 import Configuration from './configuration/Configuration';
 import { apiBaseUrl } from './config';
 import dataProviderForProductsBase64ImageHandling from './data/addUploadCapabilitiesbase64';
+import { i18nProvider } from './i18n';
 
-const i18nProvider = polyglotI18nProvider((locale) => {
-  if (locale === 'gr') {
-    return import('./i18n/gr').then((messages) => messages.default);
-  }
-  return englishMessages;
-}, 'en');
 console.log(apiBaseUrl);
 
 const App = () => {

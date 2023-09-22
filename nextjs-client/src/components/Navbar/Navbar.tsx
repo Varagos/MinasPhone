@@ -30,11 +30,31 @@ import LogoutButton from './Logout/LogoutButton';
 import { api } from '@/api';
 import { Cart } from '@/api/types/cart';
 import { useCart } from '@/hooks/useCart';
+import SimpleMenu from './SimpleMenu/SimpleMenu';
+
+const FEATURED_CATEGORIES = [
+  {
+    href: '/category/smartphones',
+    title: 'ΚΙΝΗΤΑ',
+  },
+  {
+    href: '/category/smartwatches',
+    title: 'SMARTWATCH',
+  },
+  {
+    href: '/category/tablets',
+    title: 'TABLET',
+  },
+  {
+    href: '/category/accessories',
+    title: 'ΑΞΕΣΟΥΑΡ',
+  },
+];
 
 const NewNavbar = () => {
   const classes = useStyles();
   const router = useRouter();
-  const currentPath = router.pathname;
+  const currentPath = router.asPath;
 
   const [anchor, setAnchor] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -92,23 +112,14 @@ const NewNavbar = () => {
   }
 
   //     {/* <AdminPanelSettingsIcon fontSize="medium" style={{ verticalAlign: 'bottom', paddingBottom: 1 }} /> */}
-  // {/* {authStatus === 'signedOut' && (
-  //   <IconButton aria-label="Login user" color="inherit" component={Link} to="/auth">
-  //     <PersonOutline
-  //       fontSize="medium"
-  //       // color="black"
-  //       style={{ verticalAlign: 'bottom', paddingBottom: 1 }}
-  //     />
-  //   </IconButton>
-  // )} */}
 
   return (
     <div>
       <AppBar
         position={currentPath === '/' ? 'sticky' : 'static'}
         className={classes.helperBar}
+        color="secondary"
         sx={{
-          backgroundColor: '#ffce2a',
           display: { xs: 'none', md: 'block' },
           px: 8,
         }}
@@ -134,30 +145,16 @@ const NewNavbar = () => {
             <LinkButton href="/" sx={activeClass('/')}>
               ΑΡΧΙΚΗ
             </LinkButton>
-            <LinkButton
-              href="/category/smartphones"
-              sx={activeClass('/category/smartphones')}
-            >
-              ΚΙΝΗΤΑ
-            </LinkButton>
-            <LinkButton
-              href="/category/smartwatches"
-              sx={activeClass('/category/smartwatches')}
-            >
-              SMARTWATCH
-            </LinkButton>
-            <LinkButton
-              href="/category/tablets"
-              sx={activeClass('/category/tablets')}
-            >
-              TABLET
-            </LinkButton>
-            <LinkButton
-              href="/category/accessories"
-              sx={activeClass('/category/accessories')}
-            >
-              ΑΞΕΣΟΥΑΡ
-            </LinkButton>
+            {FEATURED_CATEGORIES.map((category) => (
+              <LinkButton
+                key={category.title}
+                href={category.href}
+                sx={activeClass(category.href)}
+              >
+                {category.title}
+              </LinkButton>
+            ))}
+
             <LinkButton href="/products" sx={activeClass('/products')}>
               ΟΛΑ ΤΑ ΠΡΟΪΟΝΤΑ
             </LinkButton>
@@ -172,6 +169,8 @@ const NewNavbar = () => {
             )}
             {authStatus === 'signedIn' && <LogoutButton />}
           </div>
+
+          <SimpleMenu />
           {currentPath !== '/cart' && (
             <div>
               <IconLinkButton href="/cart" aria-label="Show cart items">

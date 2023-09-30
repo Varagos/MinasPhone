@@ -10,7 +10,6 @@ import { Inject } from '@nestjs/common';
 import { CreateProductCommand } from './create-product.command';
 import { ProductEntity } from '@modules/product-catalog/domain/product.entity';
 import { ProductRepositoryPort } from '@modules/product-catalog/domain/ports/product.repository.port';
-import { Image } from '@modules/product-catalog/domain/value-objects/image.value-object';
 import { ProductAlreadyExistsError } from '@modules/product-catalog/domain/product.errors';
 import { PRODUCT_REPO } from '@modules/product-catalog/constants';
 import { ForeignKeyIntegrityConstraintViolationError } from 'slonik';
@@ -41,12 +40,10 @@ export class CreateProductCommandHandler implements ICommandHandler {
 
       /* Wrapping operation in a transaction to make sure
          that all domain events are processed atomically */
-      console.log('Execute method called');
 
-      await this.productRepo.transaction(async () => {
-        console.log('Transaction method called');
-        return this.productRepo.insert(product);
-      });
+      await this.productRepo.transaction(async () =>
+        this.productRepo.insert(product),
+      );
 
       return Ok(product.id);
     } catch (error) {

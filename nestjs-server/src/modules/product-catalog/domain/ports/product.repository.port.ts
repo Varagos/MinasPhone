@@ -10,4 +10,6 @@ export interface FindProductParams extends PaginatedQueryParams {
 export interface ProductRepositoryPort extends RepositoryPort<ProductEntity> {
   findBySlug(slug: string): Promise<ProductEntity | null>;
   findByCategoryId(categoryId: string): Promise<ProductEntity[]>;
+  findManyByIds(ids: string[]): Promise<ProductEntity[]>;
+  updateMany(products: ProductEntity[]): Promise<void>;
 }

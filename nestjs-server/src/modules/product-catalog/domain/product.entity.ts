@@ -148,6 +148,14 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
     this.props.imageUri = imageUri;
   }
 
+  public reduceStock(quantity: number): void {
+    // TODO Add domain event && domain rules
+    if (this.props.quantity < quantity) {
+      throw new Error('Not enough stock');
+    }
+    this.props.quantity -= quantity;
+  }
+
   validate(): void {
     // const guardArgs: IGuardArgument[] = [
     //   { argument: this.props.slug, argumentName: 'slug' },

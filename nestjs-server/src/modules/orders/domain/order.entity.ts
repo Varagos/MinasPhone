@@ -4,6 +4,8 @@ import { ContactInfo } from './value-objects/contact-info.value-object';
 import { customAlphabet } from 'nanoid';
 import { OrderLineItemEntity } from './order-line-item.entity';
 import Decimal from 'decimal.js';
+import { OrderCreatedDomainEvent } from './events/order-created.domain-event';
+import { OrderCancelledDomainEvent } from './events/order-cancelled.domain-event';
 
 export enum OrderStatus {
   Pending = 'pending',
@@ -69,10 +71,23 @@ export class OrderEntity extends AggregateRoot<OrderProps> {
     };
     const order = new OrderEntity({ props: defaultProps, id });
 
+    order.addEvent(
+      new OrderCreatedDomainEvent({
+        aggregateId: id,
+        lineItems: props.lineItems.map((item) => ({
+          productId: item.productId,
+          quantity: item.quantity,
+        })),
+      }),
+    );
+
     return order;
   }
 
   public updateStatus(status: OrderStatus): void {
+    if (status === OrderStatus.Cancelled) {
+      this.cancel();
+    }
     this.props.status = status;
   }
 
@@ -82,6 +97,19 @@ export class OrderEntity extends AggregateRoot<OrderProps> {
 
   public delete(): void {
     // TODO
+  }
+
+  public cancel(): void {
+    this.props.status = OrderStatus.Cancelled;
+    this.addEvent(
+      new OrderCancelledDomainEvent({
+        aggregateId: this.id,
+        lineItems: this.lineItems.map((item) => ({
+          productId: item.productId,
+          quantity: item.quantity,
+        })),
+      }),
+    );
   }
 
   private static generateSlug(): string {

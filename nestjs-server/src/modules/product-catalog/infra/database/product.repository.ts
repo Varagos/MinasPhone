@@ -51,6 +51,19 @@ export class ProductRepository
     super(pool, mapper, eventEmitter, new Logger(ProductRepository.name));
   }
 
+  async findManyByIds(ids: string[]): Promise<ProductEntity[]> {
+    const products = await this.pool.any(
+      sql.type(
+        productSchema,
+      )`SELECT * FROM "products" WHERE id = ANY(${sql.array(ids, 'uuid')})`,
+    );
+
+    return products.map(this.mapper.toDomain);
+  }
+  async updateMany(products: ProductEntity[]): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+
   async findBySlug(slug: string): Promise<ProductEntity | null> {
     const product = await this.pool.maybeOne(
       sql.type(productSchema)`SELECT * FROM "products" WHERE slug = ${slug}`,

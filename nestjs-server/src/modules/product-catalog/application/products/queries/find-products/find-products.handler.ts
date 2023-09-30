@@ -8,11 +8,13 @@ import {
   ProductModel,
   productSchema,
 } from '@modules/product-catalog/infra/database/product.repository';
+import { Logger } from '@nestjs/common';
 
 export type FindProductsResponse = Result<Paginated<ProductModel>, Error>;
 
 @QueryHandler(FindProductsQuery)
 export class FindProductsQueryHandler implements IQueryHandler {
+  private readonly logger = new Logger(FindProductsQueryHandler.name);
   constructor(
     @InjectPool()
     private readonly pool: DatabasePool,
@@ -52,7 +54,7 @@ export class FindProductsQueryHandler implements IQueryHandler {
       if (e instanceof SchemaValidationError) {
         console.error(e.issues);
       }
-      console.log(e);
+      this.logger.error(e);
       throw e;
     }
   }

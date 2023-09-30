@@ -41,11 +41,16 @@ export class CreateProductCommandHandler implements ICommandHandler {
 
       /* Wrapping operation in a transaction to make sure
          that all domain events are processed atomically */
-      await this.productRepo.transaction(async () =>
-        this.productRepo.insert(product),
-      );
+      console.log('Execute method called');
+
+      await this.productRepo.transaction(async () => {
+        console.log('Transaction method called');
+        return this.productRepo.insert(product);
+      });
+
       return Ok(product.id);
     } catch (error) {
+      console.log('Error');
       if (error instanceof ArgumentInvalidException) {
         return Err(error);
       }

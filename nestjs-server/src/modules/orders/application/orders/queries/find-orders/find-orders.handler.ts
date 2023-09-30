@@ -8,6 +8,7 @@ import {
   OrderModel,
   orderSchema,
 } from '@modules/orders/infra/database/order.repository';
+import { Logger } from '@nestjs/common';
 
 export type FindOrdersResponse = Result<Paginated<OrderModel>, Error>;
 
@@ -25,6 +26,7 @@ const fieldToColumnMapping: Record<string, string> = {
 
 @QueryHandler(FindOrdersQuery)
 export class FindOrdersQueryHandler implements IQueryHandler {
+  private readonly logger = new Logger(FindOrdersQueryHandler.name);
   constructor(
     @InjectPool()
     private readonly pool: DatabasePool,
@@ -83,7 +85,8 @@ export class FindOrdersQueryHandler implements IQueryHandler {
       if (e instanceof SchemaValidationError) {
         console.error(e.issues);
       }
-      console.log(e);
+
+      this.logger.error(e);
       throw e;
     }
   }

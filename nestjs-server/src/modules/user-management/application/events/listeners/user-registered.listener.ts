@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { OnEvent } from '@nestjs/event-emitter';
 interface UserDTO {
@@ -15,9 +15,11 @@ export const USER_REGISTER_EVENT_NAME = 'super-tokens.user.registered';
  */
 @Injectable()
 export class UserRegisteredListener {
+  private readonly logger = new Logger(UserRegisteredListener.name);
   constructor(private readonly commandBus: CommandBus) {}
   @OnEvent('order.created')
   async handle(user: UserDTO) {
+    this.logger.log('AfterSignUpHandler');
     console.log('AfterSignUpHandler', user);
   }
 }

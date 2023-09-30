@@ -18,11 +18,12 @@
       "@libs/*": ["src/libs/*"],
       "@modules/*": ["src/modules/*"],
       "@config/*": ["src/configs/*"],
-      "@api/*": ["src/api/*"]
+      "@api/*": ["src/api/*"],
+      "@tests/*": ["tests/*"]
     },
     "incremental": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "tests/**/*"],
   "exclude": ["node_modules", "dist"]
 }

@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
 import { Ok, Result } from 'oxide.ts';
 import { AggregateID } from '@libs/ddd';
-import { Inject } from '@nestjs/common';
+import { Inject, Logger } from '@nestjs/common';
 import { CheckoutOrderCommand } from './checkout-order.command';
 import { OrderEntity } from '@modules/orders/domain/order.entity';
 import { OrderLineItemEntity } from '@modules/orders/domain/order-line-item.entity';
@@ -12,11 +12,14 @@ import { ORDER_REPO } from '@modules/orders/constants';
 import { FindProductsByIdsQuery } from '@modules/product-catalog/application/products/queries/find-products-by-ids/find-products-by-ids.query';
 import { FindProductsByIdsQueryResponse } from '@modules/product-catalog/application/products/queries/find-products-by-ids/find-products-by-ids.handler';
 import { ProductModel } from '@modules/product-catalog/infra/database/product.repository';
+import { RequestContextService } from '@libs/application/context/AppRequestContext';
 
 export type CheckoutOrderCommandResponse = Result<AggregateID, never>;
 
 @CommandHandler(CheckoutOrderCommand)
 export class CheckoutOrderCommandHandler implements ICommandHandler {
+  private readonly logger = new Logger(CheckoutOrderCommandHandler.name);
+
   constructor(
     @Inject(ORDER_REPO)
     protected readonly orderRepo: OrderRepositoryPort,
@@ -26,6 +29,9 @@ export class CheckoutOrderCommandHandler implements ICommandHandler {
   async execute(
     command: CheckoutOrderCommand,
   ): Promise<Result<AggregateID, never>> {
+    this.logger.log(
+      'Start executing CheckoutOrderCommand...' + JSON.stringify(command),
+    );
     const productIds = command.lineItems.map((item) => item.productId);
     const products: FindProductsByIdsQueryResponse =
       await this.queryBus.execute(
@@ -69,6 +75,11 @@ export class CheckoutOrderCommandHandler implements ICommandHandler {
          that all domain events are processed atomically */
       await this.orderRepo.transaction(async () =>
         this.orderRepo.insert(order),
+      );
+      this.logger.log(
+        `Order [id:${order.id},slug:${
+          order.slug
+        }] has been created, ${RequestContextService.getRequestId()}`,
       );
       return Ok(order.slug);
     } catch (error: any) {

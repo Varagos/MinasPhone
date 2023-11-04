@@ -12,7 +12,7 @@ import {
   AuthModuleConfig,
   ConfigInjectionToken,
   UserRegisterEventTopicToken,
-} from './config.interface.js';
+} from './config.interface';
 import { SupertokensUserRolesService } from './services/roles.service';
 import { SuperTokensAuthService } from './services/auth.service';
 import { RolesInitializerService } from './services/roles-init.service';

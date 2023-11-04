@@ -56,18 +56,46 @@ export class FindOrdersQueryHandler implements IQueryHandler {
      * Constructing a query with Slonik.
      * More info: https://contra.com/p/AqZWWoUB-writing-composable-sql-using-java-script
      */
+    // const statement = sql.type(orderSchema)`
+    //      SELECT *
+    //      FROM orders
+    //      WHERE
+    //        ${query.email ? sql`email = ${query.email}` : true} AND
+    //        ${query.phoneNumber ? sql`phone = ${query.phoneNumber}` : true} AND
+    //         ${query.firstName ? sql`first_name = ${query.firstName}` : true} AND
+    //         ${query.lastName ? sql`last_name = ${query.lastName}` : true} AND
+    //         ${query.status ? sql`status = ${query.status}` : true}
+    //      ${sortClause}
+    //      LIMIT ${query.limit}
+    //      OFFSET ${query.offset}`;
+
     const statement = sql.type(orderSchema)`
-         SELECT *
-         FROM orders
-         WHERE
-           ${query.email ? sql`email = ${query.email}` : true} AND
-           ${query.phoneNumber ? sql`phone = ${query.phoneNumber}` : true} AND
-            ${query.firstName ? sql`first_name = ${query.firstName}` : true} AND
-            ${query.lastName ? sql`last_name = ${query.lastName}` : true} AND
-            ${query.status ? sql`status = ${query.status}` : true}
-         ${sortClause}
-         LIMIT ${query.limit}
-         OFFSET ${query.offset}`;
+  SELECT o.*, 
+         array_agg(
+           json_build_object(
+             'id', oi.id, 
+             'product_id', oi.product_id, 
+             'quantity', oi.quantity, 
+             'item_price', oi.item_price, 
+             'total_price', oi.total_price,
+             'product_image', oi.product_image,
+             'product_name', oi.product_name,
+             'created_at', oi.created_at,
+             'updated_at', oi.updated_at
+           )
+         ) AS line_items
+  FROM orders o
+  LEFT JOIN order_items oi ON o.id = oi.order_id
+  WHERE
+    ${query.email ? sql`o.email = ${query.email}` : sql`TRUE`} AND
+    ${query.phoneNumber ? sql`o.phone = ${query.phoneNumber}` : sql`TRUE`} AND
+    ${query.firstName ? sql`o.first_name = ${query.firstName}` : sql`TRUE`} AND
+    ${query.lastName ? sql`o.last_name = ${query.lastName}` : sql`TRUE`} AND
+    ${query.status ? sql`o.status = ${query.status}` : sql`TRUE`}
+  GROUP BY o.id
+  ${sortClause}
+  LIMIT ${query.limit}
+  OFFSET ${query.offset}`;
 
     // console.log(statement.sql);
     try {

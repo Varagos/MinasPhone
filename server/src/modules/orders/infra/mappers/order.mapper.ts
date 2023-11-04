@@ -37,6 +37,8 @@ export class OrderMapper
         total_price: item.totalPrice,
         product_image: item.productImage,
         product_name: item.productName,
+        created_at: item.createdAt,
+        updated_at: item.updatedAt,
       })),
       status: copy.status,
       slug: copy.slug,
@@ -55,6 +57,8 @@ export class OrderMapper
           (item) =>
             new OrderLineItemEntity({
               id: item.id,
+              createdAt: new Date(item.created_at),
+              updatedAt: new Date(item.updated_at),
               props: {
                 productId: item.product_id,
                 quantity: item.quantity,

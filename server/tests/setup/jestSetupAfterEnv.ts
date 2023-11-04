@@ -5,6 +5,11 @@ import { createPool, DatabasePool } from 'slonik';
 import * as request from 'supertest';
 import { postgresConnectionUri } from '@config/database.config';
 import { ValidationPipe } from '@nestjs/common';
+import {
+  AuthGuard,
+  RolesGuard,
+} from '@modules/user-management/user-management.module';
+import { MockAuthGuard, MockRolesGuard } from './guards';
 
 // Setting up test server and utilities
 
@@ -39,11 +44,15 @@ let pool: DatabasePool;
 export async function generateTestingApplication(): Promise<{
   testServer: TestServer;
 }> {
-  const testServer = await TestServer.new(
-    Test.createTestingModule({
-      imports: [AppModule],
-    }),
-  );
+  const testingModuleBuilder = Test.createTestingModule({
+    imports: [AppModule],
+  })
+    .overrideGuard(AuthGuard) // Override AuthGuard with the mock
+    .useClass(MockAuthGuard)
+    .overrideGuard(RolesGuard) // Override RolesGuard with the mock
+    .useClass(MockRolesGuard);
+
+  const testServer = await TestServer.new(testingModuleBuilder);
 
   return {
     testServer,

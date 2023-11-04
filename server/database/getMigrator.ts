@@ -22,9 +22,14 @@ export async function getMigrator() {
   const dbPassword = process.env.DB_PASSWORD;
   const dbHost = process.env.DB_HOST;
   const dbName = process.env.DB_NAME;
+  const endpointId = process.env.DB_ENDPOINT_ID;
   console.log('env:', process.env.NODE_ENV);
 
-  const dbUrl = `postgres://${dbUsername}:${dbPassword}@${dbHost}/${dbName}`;
+  // const dbUrl = `postgres://${dbUsername}:${dbPassword}@${dbHost}/${dbName}`;
+
+  const dbUrl = !endpointId
+    ? `postgres://${dbUsername}:${dbPassword}@${dbHost}/${dbName}`
+    : `postgres://${dbUsername}:${dbPassword}@${dbHost}/${dbName}?options=project%3D${endpointId}&sslmode=require`;
 
   console.log('envPath', envPath);
   // console.log('dbUrl', dbUrl);

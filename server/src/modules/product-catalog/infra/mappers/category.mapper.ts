@@ -1,10 +1,7 @@
 import { Mapper } from '@libs/ddd';
 import { Injectable } from '@nestjs/common';
 import { CategoryEntity } from '@modules/product-catalog/domain/category.entity';
-import {
-  CategoryModel,
-  categorySchema,
-} from '../database/category.repository.js';
+import { CategoryModel, categorySchema } from '../database/category.repository';
 import { CategoryResponseDto } from '@modules/product-catalog/application/categories/dtos/category.response.dto';
 
 /**

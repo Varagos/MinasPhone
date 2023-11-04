@@ -32,10 +32,25 @@ export class FindOrderByIdQueryHandler implements IQueryHandler {
      * More info: https://contra.com/p/AqZWWoUB-writing-composable-sql-using-java-script
      */
     const statement = sql.type(orderSchema)`
-         SELECT *
-         FROM orders
-         WHERE
-          id = ${query.id}`;
+         SELECT o.*, 
+         array_agg(
+            json_build_object(
+              'id', oi.id,
+              'product_id', oi.product_id,
+              'quantity', oi.quantity,
+              'item_price', oi.item_price,
+              'total_price', oi.total_price,
+              'product_image', oi.product_image,
+              'product_name', oi.product_name,
+              'created_at', oi.created_at,
+              'updated_at', oi.updated_at
+            )
+        ) AS line_items
+        FROM orders o
+        LEFT JOIN order_items oi ON o.id = oi.order_id
+        WHERE
+          o.id = ${query.id}
+        GROUP BY o.id`;
 
     const result = await this.pool.maybeOne(statement);
     if (!result) {

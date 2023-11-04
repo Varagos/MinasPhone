@@ -7,7 +7,7 @@ import { SuperTokensAuthService } from './infra/services/super-tokens/services/a
 import {
   USER_REGISTER_EVENT_NAME,
   UserRegisteredListener,
-} from './application/events/listeners/user-registered.listener.js';
+} from './application/events/listeners/user-registered.listener';
 import { SupertokensUserRolesService } from './infra/services/super-tokens/services/roles.service';
 import { FindUsersQueryHandler } from './application/queries/find-users/find-users.handler';
 import { FindUserByIdQueryHandler } from './application/queries/find-user-by-id/find-user-by-id.handler';

@@ -399,6 +399,7 @@ Temporary Items
 .env.development
 .development.docker.env
 .env.prod
+.env.test
 dist
 
 /credentials/*

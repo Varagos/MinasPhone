@@ -50,7 +50,7 @@ export class SuperTokensInitService {
   }
 
   private async init() {
-    console.log({ apiKey: this.config.apiKey });
+    // console.log({ apiKey: this.config.apiKey });
     supertokens.init({
       appInfo: this.config.appInfo,
       supertokens: {

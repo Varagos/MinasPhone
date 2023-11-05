@@ -10,11 +10,18 @@ import {
   RolesGuard,
 } from '@modules/user-management/user-management.module';
 import { MockAuthGuard, MockRolesGuard } from './guards';
+import { GoogleCloudStorageServiceAdapter } from '@modules/product-catalog/infra/services/cloud-storage/google-cloud-storage.service';
 
 jest.mock(
   '@modules/user-management/infra/services/super-tokens/guards/roles.guard',
   () => {
     return require('@tests/__mocks__/roles.guard');
+  },
+);
+jest.mock(
+  '@modules/product-catalog/infra/services/cloud-storage/google-cloud-storage.service.ts',
+  () => {
+    return require('@tests/__mocks__/google-cloud-service');
   },
 );
 
@@ -53,6 +60,16 @@ export async function generateTestingApplication(): Promise<{
 }> {
   const testingModuleBuilder = Test.createTestingModule({
     imports: [AppModule],
+    providers: [
+      {
+        provide: GoogleCloudStorageServiceAdapter,
+        useValue: {
+          uploadImage: jest.fn().mockResolvedValue('mocked_public_url'),
+          deleteImage: jest.fn().mockResolvedValue(undefined),
+          // ... any other method
+        },
+      },
+    ],
   })
     .overrideGuard(AuthGuard) // Override AuthGuard with the mock
     .useClass(MockAuthGuard)

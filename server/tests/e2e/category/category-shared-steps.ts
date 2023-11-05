@@ -3,6 +3,7 @@ import { DefineStepFunction } from 'jest-cucumber';
 import { TestContext } from 'tests/test-utils/TestContext';
 import { ApiClient } from '@tests/test-utils/ApiClient';
 import { CreateCategoryRequestDto } from '@modules/product-catalog/application/categories/commands/create-category/create-category.request.dto';
+import { CategoryResponseDto } from '@modules/product-catalog/application/categories/dtos/category.response.dto';
 
 /**
  * Test steps that are shared between multiple category tests

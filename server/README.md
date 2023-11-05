@@ -27,10 +27,9 @@ $ npm run start:prod
 
 ```bash
 # unit tests
-$ npm run test
 
 # e2e tests
-$ npm run test:e2e
+$ yarn test tests/e2e --runInBand
 
 # test coverage
 $ npm run test:cov

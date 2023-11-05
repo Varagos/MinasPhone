@@ -4,6 +4,7 @@ import { RemoveCartLineItemRequestDto } from '@modules/orders/application/carts/
 import { CreateCategoryRequestDto } from '@modules/product-catalog/application/categories/commands/create-category/create-category.request.dto';
 import { UpdateCategoryRequestDto } from '@modules/product-catalog/application/categories/commands/update-category/update-category.request.dto';
 import { CategoryPaginatedResponseDto } from '@modules/product-catalog/application/categories/dtos/category.paginated.response.dto';
+import { ProductPaginatedResponseDto } from '@modules/product-catalog/application/categories/dtos/product.paginated.response.dto';
 import { CreateProductRequestDto } from '@modules/product-catalog/application/products/commands/create-product/create-product.request.dto';
 import { getHttpServer } from '@tests/setup/jestSetupAfterEnv';
 
@@ -57,7 +58,7 @@ export class ApiClient {
     return response.body;
   }
 
-  async findAllProducts(): Promise<CategoryPaginatedResponseDto> {
+  async findAllProducts(): Promise<ProductPaginatedResponseDto> {
     const response = await getHttpServer().get(this.productUrl);
     return response.body;
   }

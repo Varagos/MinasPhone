@@ -14,10 +14,10 @@ import {
   iSendARequestToCreateACategory,
 } from '@tests/e2e/category/category-shared-steps';
 import { IdResponse } from '@libs/api/id.response.dto';
-import { iReceiveAnErrorWithStatusCode } from '@tests/shared/shared-steps';
+import { ProductResponseDto } from '@modules/product-catalog/application/categories/dtos/product.response.dto';
 
 const feature = loadFeature(
-  'tests/e2e/product/create-product/create-product.feature',
+  'tests/e2e/product/delete-product/delete-product.feature',
 );
 
 defineFeature(feature, (test) => {
@@ -33,54 +33,33 @@ defineFeature(feature, (test) => {
     await pool.query(sql`TRUNCATE "products" CASCADE`);
   });
 
-  test('I can create a product with an existing category', ({
-    given,
-    when,
-    then,
-    and,
-  }) => {
+  test('I can delete a product', ({ given, when, then, and }) => {
     // Use TestContext to share state between steps
     const ctx = new TestContext<CreateProductTestContext>();
 
     const categoryCtx = new TestContext<CreateCategoryTestContext>();
 
     givenCategoryData(given, categoryCtx);
-    iSendARequestToCreateACategory(when, categoryCtx);
+    iSendARequestToCreateACategory(and, categoryCtx);
+    givenProductData(and, ctx);
 
-    givenProductData(given, ctx);
-    iSendARequestToCreateAProduct(when, ctx);
+    iSendARequestToCreateAProduct(and, ctx);
 
-    then('I receive the product ID', () => {
+    let productId = '';
+    given('I have a product ID', () => {
       const response = ctx.latestResponse as IdResponse;
-      expect(response).toBeDefined();
-      expect(typeof response.id).toBe('string');
-      ctx.context.productId = response.id; // Save product ID for further steps
+      productId = response.id;
     });
 
-    and('I can see my product in a list of all products', async () => {
+    when('I send a request to delete the product with that ID', async () => {
+      await apiClient.deleteProduct(productId);
+    });
+
+    then('I cannot see my product in a list of all products', async () => {
       const res = await apiClient.findAllProducts();
       expect(
-        res.data.some((product) => product.id === ctx.context.productId),
-      ).toBe(true);
+        res.data.some((item: ProductResponseDto) => item.id === productId),
+      ).toBe(false);
     });
-  });
-
-  test('I try to create a product with invalid data', ({
-    given,
-    when,
-    then,
-  }) => {
-    // Use TestContext to share state between steps
-    const ctx = new TestContext<CreateProductTestContext>();
-
-    const categoryCtx = new TestContext<CreateCategoryTestContext>();
-
-    givenCategoryData(given, categoryCtx);
-    iSendARequestToCreateACategory(when, categoryCtx);
-
-    givenProductData(given, ctx);
-    iSendARequestToCreateAProduct(when, ctx);
-
-    iReceiveAnErrorWithStatusCode(then, ctx);
   });
 });

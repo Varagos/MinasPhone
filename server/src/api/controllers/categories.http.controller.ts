@@ -75,11 +75,7 @@ export class CategoriesHttpController {
   })
   @Post(routesV1.category.root)
   @UseGuards(new RolesGuard())
-  async create(
-    @Body() body: CreateCategoryRequestDto,
-    @Session() session: SessionContainer,
-  ): Promise<IdResponse> {
-    console.log({ session: session });
+  async create(@Body() body: CreateCategoryRequestDto): Promise<IdResponse> {
     const { slug, name, parentId = null } = body;
     const command = new CreateCategoryCommand(slug, name, parentId);
 

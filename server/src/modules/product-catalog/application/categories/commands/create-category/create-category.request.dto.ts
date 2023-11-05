@@ -25,7 +25,7 @@ export class CreateCategoryRequestDto {
     example: 'c7b58d20-92a7-4e72-8da7-82971a1a9f4f',
     description: 'The UUID of the parent category to filter by',
   })
-  @IsOptional()
   @IsUUID()
+  @IsOptional()
   parentId?: string;
 }

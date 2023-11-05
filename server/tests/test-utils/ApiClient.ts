@@ -8,6 +8,7 @@ export class ApiClient {
   private url = `/${routesV1.version}/${routesV1.category.root}`;
 
   async createCategory(dto: CreateCategoryRequestDto): Promise<IdResponse> {
+    console.log({ dto });
     const response = await getHttpServer().post(this.url).send(dto);
     return response.body;
   }

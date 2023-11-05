@@ -11,6 +11,13 @@ import {
 } from '@modules/user-management/user-management.module';
 import { MockAuthGuard, MockRolesGuard } from './guards';
 
+jest.mock(
+  '@modules/user-management/infra/services/super-tokens/guards/roles.guard',
+  () => {
+    return require('@tests/__mocks__/roles.guard');
+  },
+);
+
 // Setting up test server and utilities
 
 export class TestServer {

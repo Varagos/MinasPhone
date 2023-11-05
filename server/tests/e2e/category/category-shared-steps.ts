@@ -17,6 +17,8 @@ export const givenUserProfileData = (
   ctx: TestContext<CreateCategoryTestContext>,
 ): void => {
   given(/^category data$/, (table: CreateCategoryRequestDto[]) => {
+    const data = table[0];
+    if (data.parentId === 'null') data.parentId = null as any;
     ctx.context.createCategoryDto = table[0];
   });
 };

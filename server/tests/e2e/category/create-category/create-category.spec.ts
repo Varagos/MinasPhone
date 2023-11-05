@@ -30,7 +30,7 @@ defineFeature(feature, (test) => {
   });
 
   afterEach(async () => {
-    await pool.query(sql`TRUNCATE "categories"`);
+    await pool.query(sql`TRUNCATE "categories" CASCADE`);
     // await pool.query(sql`TRUNCATE "wallets"`);
   });
 

@@ -2,11 +2,10 @@ import { get } from 'env-var';
 import './dotenv';
 
 // https://github.com/Sairyss/backend-best-practices#configuration
-console.log(
-  'SUPER_TOKENS_CONNECTION_URI:',
-  process.env.SUPER_TOKENS_CONNECTION_URI,
-  process.env,
-);
+// console.log(
+//   'SUPER_TOKENS_CONNECTION_URI:',
+//   process.env.SUPER_TOKENS_CONNECTION_URI,
+// );
 
 export const authConfig = {
   superTokens: {
@@ -18,4 +17,4 @@ export const authConfig = {
     // 'mark.girgis13@gmail.com', 'admin@minasphone.gr'
   },
 };
-console.log('authConfig', authConfig);
+// console.log('authConfig', authConfig);

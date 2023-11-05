@@ -13,7 +13,7 @@ export const databaseConfig = {
   database: get('DB_NAME').required().asString(),
   endpointId: get('DB_ENDPOINT_ID').asString(),
 };
-console.log({ databaseConfig });
+// console.log({ databaseConfig });
 
 const postgresConnectionUri = !databaseConfig.endpointId
   ? `postgres://${databaseConfig.username}:${databaseConfig.password}@${databaseConfig.host}/${databaseConfig.database}`

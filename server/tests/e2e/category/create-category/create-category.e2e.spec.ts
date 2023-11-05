@@ -2,8 +2,8 @@ import { defineFeature, loadFeature } from 'jest-cucumber';
 import { DatabasePool, sql } from 'slonik';
 import {
   CreateCategoryTestContext,
-  givenUserProfileData,
-  iSendARequestToCreateAUser,
+  givenCategoryData,
+  iSendARequestToCreateACategory,
 } from '../category-shared-steps';
 import { ApiClient } from '@tests/test-utils/ApiClient';
 import { iReceiveAnErrorWithStatusCode } from '@tests/shared/shared-steps';
@@ -37,9 +37,9 @@ defineFeature(feature, (test) => {
   test('I can create a category', ({ given, when, then, and }) => {
     const ctx = new TestContext<CreateCategoryTestContext>();
 
-    givenUserProfileData(given, ctx);
+    givenCategoryData(given, ctx);
 
-    iSendARequestToCreateAUser(when, ctx);
+    iSendARequestToCreateACategory(when, ctx);
 
     then('I receive the category ID', () => {
       const response = ctx.latestResponse as IdResponse;
@@ -63,9 +63,9 @@ defineFeature(feature, (test) => {
   }) => {
     const ctx = new TestContext<CreateCategoryTestContext>();
 
-    givenUserProfileData(given, ctx);
+    givenCategoryData(given, ctx);
 
-    iSendARequestToCreateAUser(when, ctx);
+    iSendARequestToCreateACategory(when, ctx);
 
     iReceiveAnErrorWithStatusCode(then, ctx);
   });

@@ -12,7 +12,7 @@ export type CreateCategoryTestContext = {
   createCategoryDto: Mutable<CreateCategoryRequestDto>;
 };
 
-export const givenUserProfileData = (
+export const givenCategoryData = (
   given: DefineStepFunction,
   ctx: TestContext<CreateCategoryTestContext>,
 ): void => {
@@ -23,7 +23,7 @@ export const givenUserProfileData = (
   });
 };
 
-export const iSendARequestToCreateAUser = (
+export const iSendARequestToCreateACategory = (
   when: DefineStepFunction,
   ctx: TestContext<CreateCategoryTestContext>,
 ): void => {

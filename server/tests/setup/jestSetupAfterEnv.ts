@@ -1,4 +1,5 @@
 import { Test, TestingModuleBuilder, TestingModule } from '@nestjs/testing';
+import * as cookieParser from 'cookie-parser';
 import { AppModule } from '../../src/app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { createPool, DatabasePool } from 'slonik';
@@ -45,6 +46,9 @@ export class TestServer {
     );
 
     app.enableShutdownHooks();
+
+    // Add cookie parser
+    app.use(cookieParser());
 
     await app.init();
 

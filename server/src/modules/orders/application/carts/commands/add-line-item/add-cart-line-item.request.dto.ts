@@ -17,5 +17,5 @@ export class AddCartItemRequestDto {
   })
   @IsInt()
   @IsPositive()
-  quantity: string;
+  quantity: number;
 }

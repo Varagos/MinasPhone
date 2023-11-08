@@ -34,6 +34,7 @@ export const iSendARequestToCreateAProduct = (
     const response = await new ApiClient().createProduct(
       ctx.context.createProductDto,
     );
+    ctx.context.productId = response.id;
     // console.log('response', response);
     ctx.latestResponse = response;
   });

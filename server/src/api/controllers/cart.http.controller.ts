@@ -262,6 +262,7 @@ export class CartHttpController {
   }
 
   private extractCartFromCookie(request: Request): CartPrimitives | null {
+    if (!request.cookies) return null;
     const cartCookie = request.cookies[COOKIE_KEY]
       ? JSON.parse(request.cookies[COOKIE_KEY])
       : null;

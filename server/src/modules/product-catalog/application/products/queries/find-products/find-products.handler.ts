@@ -12,6 +12,18 @@ import { Logger } from '@nestjs/common';
 
 export type FindProductsResponse = Result<Paginated<ProductModel>, Error>;
 
+// Mapping from API fields to database columns
+const fieldToColumnMapping: Record<string, string> = {
+  slug: 'slug',
+  name: 'name',
+  price: 'price',
+  quantity: 'quantity',
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  id: 'id',
+  reference: 'reference',
+};
+
 @QueryHandler(FindProductsQuery)
 export class FindProductsQueryHandler implements IQueryHandler {
   private readonly logger = new Logger(FindProductsQueryHandler.name);
@@ -27,6 +39,19 @@ export class FindProductsQueryHandler implements IQueryHandler {
    * and execute query directly
    */
   async execute(query: FindProductsQuery): Promise<FindProductsResponse> {
+    let sortClause = sql``;
+    if (typeof query.orderBy.field === 'string') {
+      const sortField = fieldToColumnMapping[query.orderBy.field];
+      const sortOrder = query.orderBy.param;
+      if (sortField && ['asc', 'desc'].includes(sortOrder)) {
+        // console.log(sortOrder);
+        sortClause =
+          sortOrder === 'asc'
+            ? sql`ORDER BY ${sql.identifier([sortField])} ASC `
+            : sql`ORDER BY ${sql.identifier([sortField])} DESC `;
+      }
+    } // else: default to no sorting, or specify a default sort field here
+
     /**
      * Constructing a query with Slonik.
      * More info: https://contra.com/p/AqZWWoUB-writing-composable-sql-using-java-script
@@ -37,6 +62,7 @@ export class FindProductsQueryHandler implements IQueryHandler {
          WHERE
            ${query.slug ? sql`slug = ${query.slug}` : true} AND
            ${query.categoryId ? sql`category_id = ${query.categoryId}` : true}
+           ${sortClause}
          LIMIT ${query.limit}
          OFFSET ${query.offset}`;
 

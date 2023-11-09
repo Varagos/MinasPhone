@@ -24,7 +24,10 @@ import { FindProductByIdQueryResponse } from '../../modules/product-catalog/appl
 import { ArgumentInvalidException, NotFoundException } from '@libs/exceptions';
 import { ProductResponseDto } from '@modules/product-catalog/application/categories/dtos/product.response.dto';
 import { ProductPaginatedResponseDto } from '@modules/product-catalog/application/categories/dtos/product.paginated.response.dto';
-import { FindProductsRequestDto } from '@modules/product-catalog/application/products/queries/find-products/find-products.request.dto';
+import {
+  FindProductsQueryDto,
+  FindProductsRequestDto,
+} from '@modules/product-catalog/application/products/queries/find-products/find-products.request.dto';
 import { Body, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Result } from 'oxide.ts';
 import { PaginatedQueryRequestDto } from '@libs/api/paginated-query.request.dto';
@@ -215,12 +218,33 @@ export class ProductsHttpController {
   @UsePipes(new ValidationPipe({ whitelist: true }))
   async findProducts(
     @Body() request: FindProductsRequestDto,
-    @Query() queryParams: PaginatedQueryRequestDto,
+    @Query() queryParams: FindProductsQueryDto, // PaginatedQueryRequestDto,
   ): Promise<ProductPaginatedResponseDto> {
+    const { range, sort, filter } = queryParams;
+    const start = range?.[0];
+    const end = range?.[1];
+    const limit =
+      start !== undefined && end !== undefined ? end - start + 1 : undefined;
+    if (start !== undefined && limit !== undefined && start % limit !== 0) {
+      throw new BadRequestException(
+        'Invalid range, does not align to a full page',
+      );
+    }
+
+    const page =
+      start !== undefined && limit !== undefined ? start / limit : undefined;
+
     const query = new FindProductsQuery({
       ...request,
-      limit: queryParams?.limit,
-      page: queryParams?.page,
+      ...filter,
+      limit,
+      page,
+      orderBy: sort && {
+        field: sort[0],
+        param: sort[1] === 'ASC' ? 'asc' : 'desc',
+      },
+      // limit: queryParams?.limit,
+      // page: queryParams?.page,
     });
     const result: Result<
       Paginated<ProductModel>,

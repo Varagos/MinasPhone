@@ -101,9 +101,10 @@ const Aside = () => {
 
         <FilterList label="resources.products.filters.categories" icon={<LocalOfferIcon />}>
           {data &&
-            data.map((record: any) => (
-              <FilterListItem label={record.name} key={record.id} value={{ category_id: record.id }} />
-            ))}
+            data.map((record) => {
+              console.log('recordd', record);
+              return <FilterListItem label={record.name} key={record.id} value={{ categoryId: record.id }} />;
+            })}
         </FilterList>
       </CardContent>
     </Card>

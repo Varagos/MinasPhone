@@ -51,7 +51,7 @@ const QuickFilter = ({ label }: InputProps) => {
 
 export const productFilters = [
   <SearchInput source="q" alwaysOn />,
-  <ReferenceInput source="category_id" reference="categories" sort={{ field: 'id', order: 'ASC' }}>
+  <ReferenceInput source="categoryId" reference="categories" sort={{ field: 'id', order: 'ASC' }}>
     <SelectInput source="name" />
   </ReferenceInput>,
   <NumberInput source="width_gte" />,

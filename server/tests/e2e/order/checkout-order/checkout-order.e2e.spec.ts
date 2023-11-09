@@ -1,5 +1,3 @@
-// ... other imports and setup ...
-
 import { getConnectionPool } from '@tests/setup/jestSetupAfterEnv';
 import { ApiClient } from '@tests/test-utils/ApiClient';
 import { defineFeature, loadFeature } from 'jest-cucumber';
@@ -22,8 +20,6 @@ import {
   givenProductData,
   iSendARequestToCreateAProduct,
 } from '@tests/e2e/product/product-shared-steps';
-import { CartPrimitives } from '@modules/orders/application/carts/commands/create-cart/create-cart.handler';
-import { iReceiveAnErrorWithStatusCode } from '@tests/shared/shared-steps';
 import {
   CreateOrderTestContext,
   givenCartDataAndOrderInformation,

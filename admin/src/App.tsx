@@ -15,7 +15,7 @@ import { Login } from './pages';
 import dataProvider from './data/dataProvider';
 import myDataProvider from './data/addUploadCapabilities';
 
-import orders from './orders';
+import orders from './orders/index';
 import products from './products';
 import categories from './categories';
 import users from './users';

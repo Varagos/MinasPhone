@@ -27,6 +27,8 @@ import { DeleteImageCommandHandler } from './application/images/commands/delete-
 import { DeleteOldImageAfterProductImageUpdateDomainEventHandler } from './application/images/event-handlers/delete-old-image-after-product-image-update.domain-event-handler';
 import { FindProductsByCategorySlugQueryHandler } from './application/products/queries/find-products-by-category-slug/find-products-by-category-slug.handler';
 import { FindProductsByIdsQueryHandler } from './application/products/queries/find-products-by-ids/find-products-by-ids.handler';
+import { UpdateStockAfterOrderCreationDomainEventHandler } from './application/products/event-handlers/update-stock-after-order-creation.domain-event-handler';
+import { ReduceProductsStockCommandHandler } from './application/products/commands/reduce-products-stock/reduce-products-stock.handler';
 
 const commandHandlers: Provider[] = [
   // Category
@@ -38,6 +40,7 @@ const commandHandlers: Provider[] = [
   CreateProductCommandHandler,
   DeleteProductCommandHandler,
   UpdateProductCommandHandler,
+  ReduceProductsStockCommandHandler,
   // Image
   UploadImageCommandHandler,
   DeleteImageCommandHandler,
@@ -56,6 +59,7 @@ const queryHandlers: Provider[] = [
 const eventHandlers: Provider[] = [
   DeleteImageAfterProductDeletionDomainEventHandler,
   DeleteOldImageAfterProductImageUpdateDomainEventHandler,
+  UpdateStockAfterOrderCreationDomainEventHandler,
 ];
 
 const mappers: Provider[] = [CategoryMapper, ProductMapper];

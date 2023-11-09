@@ -173,7 +173,7 @@ export class OrdersHttpController {
   }
 
   @Get(routesV1.order.getOneBySlug)
-  @ApiOperation({ summary: 'Find category by slug' })
+  @ApiOperation({ summary: 'Find order by slug' })
   @ApiResponse({
     status: HttpStatus.OK,
     type: OrderResponseDto,

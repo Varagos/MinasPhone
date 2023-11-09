@@ -169,6 +169,8 @@ export class OrderRepository
         }),
       );
     });
+
+    order.publishEvents(this.logger, this.eventEmitter);
   }
 
   override async update(order: OrderEntity): Promise<void> {

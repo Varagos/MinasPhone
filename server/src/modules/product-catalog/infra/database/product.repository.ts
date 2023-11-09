@@ -60,8 +60,23 @@ export class ProductRepository
 
     return products.map(this.mapper.toDomain);
   }
+
   async updateMany(products: ProductEntity[]): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.pool.transaction(async (transaction) => {
+      await transaction.query(sql`BEGIN`);
+      for (const product of products) {
+        const record = this.mapper.toPersistence(product);
+        const query = this.generateUpdateQuery(record);
+        await transaction.query(query);
+      }
+      await transaction.query(sql`COMMIT`);
+    });
+
+    await Promise.all(
+      products.map((entity) =>
+        entity.publishEvents(this.logger, this.eventEmitter),
+      ),
+    );
   }
 
   async findBySlug(slug: string): Promise<ProductEntity | null> {

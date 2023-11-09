@@ -10,6 +10,8 @@ import { CreateProductRequestDto } from '@modules/product-catalog/application/pr
 import { getHttpServer } from '@tests/setup/jestSetupAfterEnv';
 import { extractCookies } from '@tests/test-utils/cookies';
 import { CartPrimitives } from '@modules/orders/application/carts/commands/create-cart/create-cart.handler';
+import { CheckoutOrderRequestDto } from '@modules/orders/application/orders/commands/checkout-order/checkout-order.request.dto';
+import { OrderResponseDto } from '@modules/orders/application/orders/dtos/order.response.dto';
 
 type CartCookie = {
   value: CartPrimitives;
@@ -127,5 +129,29 @@ export class ApiClient {
       value: parsedCartCookieValue,
       setCookies,
     };
+  }
+
+  async checkoutOrder(
+    checkoutOrderRequestDto: CheckoutOrderRequestDto,
+    setCookie: string,
+  ): Promise<IdResponse> {
+    const route = this.v1Api(routesV1.order.checkout);
+    const response = await getHttpServer()
+      .post(route)
+      .set('Cookie', setCookie)
+      .send(checkoutOrderRequestDto);
+    return response.body;
+  }
+
+  async getOrderInfo(orderId: string): Promise<OrderResponseDto> {
+    const route = this.v1Api(routesV1.order.root);
+    const response = await getHttpServer().get(`${route}/${orderId}`);
+    return response.body;
+  }
+
+  async getOrderInfoBySlug(slug: string): Promise<OrderResponseDto> {
+    const route = this.v1Api(`/${routesV1.order.root}/slug`);
+    const response = await getHttpServer().get(`${route}/${slug}`);
+    return response.body;
   }
 }

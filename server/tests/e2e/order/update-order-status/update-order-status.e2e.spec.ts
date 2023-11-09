@@ -33,7 +33,7 @@ import {
 jest.setTimeout(5 * 60 * 1000);
 
 const feature = loadFeature(
-  'tests/e2e/order/create-order/checkout-order.feature',
+  'tests/e2e/order/update-order-status/update-order-status.feature',
 );
 
 defineFeature(feature, (test) => {
@@ -82,7 +82,7 @@ defineFeature(feature, (test) => {
     return { categoryCtx, productCtx, cartContext };
   };
 
-  test('Successfully creating an order', ({ given, when, and, then }) => {
+  test('Update order status', ({ given, when, and, then }) => {
     const { cartContext } = categoryProductAndCartBackground({
       given,
       and,
@@ -92,51 +92,31 @@ defineFeature(feature, (test) => {
 
     givenCartDataAndOrderInformation(given, ctx, cartContext);
 
-    iSendARequestToCheckoutTheOrder(when, ctx);
+    iSendARequestToCheckoutTheOrder(and, ctx);
 
-    then('an order should be created', () => {
-      expect(ctx.context.orderSlug).toBeDefined();
-      expect(ctx.context.orderSlug).not.toBe('');
-    });
-
-    and(
-      'the order should contain the correct items and quantities',
-      async () => {
+    when(
+      /^I send a request to update the order status$/,
+      async (table: { status: string }[]) => {
+        const data = table[0];
+        const { status } = data;
+        console.log('status', status);
         const order = await apiClient.getOrderInfoBySlug(ctx.context.orderSlug);
-        const cart = cartContext.context.cart;
 
-        const cartLineItems = cart.lineItems.map((item) => {
-          return {
-            productId: item.productId,
-            quantity: item.quantity,
-          };
+        const response = await apiClient.updateOrderStatus(order.id, {
+          status: status,
         });
-
-        const orderLineItems = order.lineItems.map((item) => {
-          return {
-            productId: item.productId,
-            quantity: item.quantity,
-          };
-        });
-
-        expect(orderLineItems).toEqual(cartLineItems);
+        console.log('response', response.status);
       },
     );
 
-    and(
-      /^the stock quantity of the product should become "([^"]*)"$/,
-      async (expectedQuantity) => {
-        const sleep = (ms: number) =>
-          new Promise((resolve) => setTimeout(resolve, ms));
-        // TODO: find a better way to wait for the event handler to finish(Choreography)
-        await sleep(3000);
-        const products = await apiClient.findAllProducts();
-        const product = products.data.find(
-          (item) => item.id === cartContext.context.addCartItemDto.productId,
-        );
+    then(
+      /^the order status should be updated$/,
+      async (table: { status: string }[]) => {
+        const data = table[0];
+        const { status } = data;
 
-        expect(product).toBeDefined();
-        expect(product?.quantity).toBe(+expectedQuantity);
+        const order = await apiClient.getOrderInfoBySlug(ctx.context.orderSlug);
+        expect(order.status).toBe(status);
       },
     );
   });

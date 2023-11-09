@@ -91,7 +91,7 @@ export class OrderRepository
         FROM ${sql.identifier([this.tableName])} o
         LEFT JOIN order_items oi ON o.id = oi.order_id
         WHERE
-          o.slug = ${id}
+          o.id = ${id}
         GROUP BY o.id`;
 
     const result = await this.pool.query(query);

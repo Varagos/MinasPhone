@@ -12,6 +12,7 @@ import { extractCookies } from '@tests/test-utils/cookies';
 import { CartPrimitives } from '@modules/orders/application/carts/commands/create-cart/create-cart.handler';
 import { CheckoutOrderRequestDto } from '@modules/orders/application/orders/commands/checkout-order/checkout-order.request.dto';
 import { OrderResponseDto } from '@modules/orders/application/orders/dtos/order.response.dto';
+import { UpdateOrderStatusRequestDto } from '@modules/orders/application/orders/commands/update-order-status/update-order-status.request.dto';
 
 type CartCookie = {
   value: CartPrimitives;
@@ -153,5 +154,15 @@ export class ApiClient {
     const route = this.v1Api(`/${routesV1.order.root}/slug`);
     const response = await getHttpServer().get(`${route}/${slug}`);
     return response.body;
+  }
+
+  updateOrderStatus(
+    orderId: string,
+    updateOrderStatusRequestDto: UpdateOrderStatusRequestDto,
+  ): Promise<any> {
+    const route = this.v1Api(`/${routesV1.order.root}`);
+    return getHttpServer()
+      .put(`${route}/${orderId}`)
+      .send(updateOrderStatusRequestDto);
   }
 }

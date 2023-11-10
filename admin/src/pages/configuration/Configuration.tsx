@@ -5,8 +5,8 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import { useTranslate, useLocaleState, useTheme, Title } from 'react-admin';
 
-import { darkTheme, lightTheme } from '../layout/themes';
-import { LocaleEnum } from '../i18n';
+import { darkTheme, lightTheme } from '../../layout/themes';
+import { LocaleEnum } from '../../i18n';
 
 const Configuration = () => {
   const translate = useTranslate();
@@ -52,6 +52,14 @@ const Configuration = () => {
           onClick={() => setLocale(LocaleEnum.GR)}
         >
           gr
+        </Button>
+        <Button
+          variant="contained"
+          sx={{ margin: '1em' }}
+          color={locale === LocaleEnum.GR ? 'primary' : 'secondary'}
+          onClick={() => setLocale(LocaleEnum.AR)}
+        >
+          ar
         </Button>
       </CardContent>
     </Card>

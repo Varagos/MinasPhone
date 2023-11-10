@@ -25,7 +25,7 @@ const ProductList = () => {
   const getResourceLabel = useGetResourceLabel();
   const isSmall: boolean = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
   return (
-    <ListBase perPage={24} sort={{ field: 'reference', order: 'ASC' }}>
+    <ListBase perPage={24} sort={{ field: 'id', order: 'ASC' }}>
       <Title defaultTitle={getResourceLabel('products', 2)} />
       <FilterContext.Provider value={productFilters}>
         {isSmall && (
@@ -50,15 +50,15 @@ const QuickFilter = ({ label }: InputProps) => {
 };
 
 export const productFilters = [
-  <SearchInput source="q" alwaysOn />,
-  <ReferenceInput source="categoryId" reference="categories" sort={{ field: 'id', order: 'ASC' }}>
-    <SelectInput source="name" />
-  </ReferenceInput>,
-  <NumberInput source="width_gte" />,
-  <NumberInput source="width_lte" />,
-  <NumberInput source="height_gte" />,
-  <NumberInput source="height_lte" />,
-  <QuickFilter label="resources.products.fields.stock_lte" source="stock_lte" defaultValue={10} />,
+  // <SearchInput source="name" alwaysOn />,
+  // <ReferenceInput source="categoryId" reference="categories">
+  //   <SelectInput source="name" />
+  // </ReferenceInput>,
+  // <NumberInput source="width_gte" />,
+  // <NumberInput source="width_lte" />,
+  // <NumberInput source="height_gte" />,
+  // <NumberInput source="height_lte" />,
+  // <QuickFilter label="resources.products.fields.stock_lte" source="stock_lte" defaultValue={10} />,
 ];
 
 const ListActions = ({ isSmall }: any) => (

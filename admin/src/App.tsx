@@ -7,7 +7,7 @@ import UserIcon from '@mui/icons-material/Group';
 import './pages/Login/superTokensInit';
 
 // import Dashboard from './Dashboard';
-import { Dashboard } from './dashboard';
+import { Dashboard } from './pages/dashboard';
 import authProvider from './authProvider';
 import { Layout } from './layout';
 import { Login } from './pages';
@@ -15,11 +15,11 @@ import { Login } from './pages';
 import dataProvider from './data/dataProvider';
 import myDataProvider from './data/addUploadCapabilities';
 
-import orders from './orders/index';
-import products from './products';
-import categories from './categories';
-import users from './users';
-import Configuration from './configuration/Configuration';
+import orders from './resources/orders';
+import products from './resources/products';
+import categories from './resources/categories';
+import users from './resources/users';
+import Configuration from './pages/configuration/Configuration';
 import { apiBaseUrl } from './config';
 import dataProviderForProductsBase64ImageHandling from './data/addUploadCapabilitiesbase64';
 import { i18nProvider } from './i18n';

@@ -10,7 +10,7 @@ import Welcome from './Welcome';
 // import NewCustomers from './NewCustomers';
 // import OrderChart from './OrderChart';
 
-import { Order } from '../types';
+import { Order } from '../../types';
 import { DashboardContent } from './OldDashboard/DashboardContent';
 
 interface OrderStats {

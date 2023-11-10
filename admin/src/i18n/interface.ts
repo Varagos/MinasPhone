@@ -111,6 +111,8 @@ interface Orders extends StringMap {
     total_gte: string;
     status: string;
     returned: string;
+    created_at: string;
+    updated_at: string;
   };
   section: {
     order: string;
@@ -157,6 +159,7 @@ interface Products extends StringMap {
     reviews: string;
   };
   filters: {
+    search: string;
     categories: string;
     stock: string;
     no_stock: string;

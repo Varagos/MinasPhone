@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableRow } from '@mui/material';
 import { useRecordContext, useTranslate } from 'react-admin';
 
 import { TableCellRight } from './TableCellRight';
-import { OrderResponseDto } from '../dto/order';
+import { OrderResponseDto } from '../../dto/order';
 
 const Totals = () => {
   const record = useRecordContext<OrderResponseDto>();

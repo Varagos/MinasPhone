@@ -96,6 +96,8 @@ const customGreeMessages: MinasPhoneMessages = {
         returned: 'Επιστροφή',
         status: 'Κατάσταση',
         total_gte: 'Ελάχιστο σύνολο',
+        created_at: 'Δημιουργήθηκε στις',
+        updated_at: 'Ενημερώθηκε στις',
       },
       section: {
         order: 'Παραγγελία',
@@ -129,6 +131,7 @@ const customGreeMessages: MinasPhoneMessages = {
         reviews: 'Commentaires',
       },
       filters: {
+        search: 'Αναζήτηση',
         categories: 'Κατηγορίες',
         stock: 'Κατάσταση Αποθέματος',
         no_stock: 'Δεν υπάρχει απόθεμα',

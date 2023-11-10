@@ -95,6 +95,8 @@ const customEnglishMessages: MinasPhoneMessages = {
         total_gte: 'Min amount',
         status: 'Status',
         returned: 'Returned',
+        created_at: 'Created at',
+        updated_at: 'Updated at',
       },
       section: {
         order: 'Order',
@@ -127,6 +129,7 @@ const customEnglishMessages: MinasPhoneMessages = {
         reviews: 'Reviews',
       },
       filters: {
+        search: 'Search',
         categories: 'Categories',
         stock: 'Stock',
         no_stock: 'Out of stock',

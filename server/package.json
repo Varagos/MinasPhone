@@ -46,7 +46,9 @@
     "decimal.js": "^10.4.3",
     "dotenv": "^16.0.3",
     "env-var": "^7.3.0",
+    "helmet": "^7.1.0",
     "nanoid": "3.3.4",
+    "nest-winston": "^1.9.4",
     "nestjs-request-context": "^2.1.0",
     "nestjs-slonik": "^9",
     "oxide.ts": "^1.1.0",
@@ -54,6 +56,7 @@
     "rxjs": "^7.5.5",
     "slonik": "^31",
     "supertokens-node": "^13",
+    "winston": "^3.11.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {

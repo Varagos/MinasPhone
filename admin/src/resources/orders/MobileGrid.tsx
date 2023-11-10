@@ -13,7 +13,7 @@ import {
   RecordContextProvider,
 } from 'react-admin';
 
-import { OrderResponseDto } from '../dto/order';
+import { OrderResponseDto } from '../../dto/order';
 
 interface MobileGridProps {
   data?: RaRecord[];

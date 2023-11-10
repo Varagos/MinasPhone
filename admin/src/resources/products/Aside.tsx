@@ -3,9 +3,9 @@ import { Card, CardContent } from '@mui/material';
 import LocalOfferIcon from '@mui/icons-material/LocalOfferOutlined';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { FilterList, FilterListItem, FilterLiveSearch, SavedQueriesList, useGetList } from 'react-admin';
+import { FilterList, FilterListItem, FilterLiveSearch, SavedQueriesList, useGetList, useTranslate } from 'react-admin';
 
-import { Category } from '../types';
+import { Category } from '../../types';
 // import * as inflection from 'inflection';
 
 const Aside = () => {
@@ -13,6 +13,7 @@ const Aside = () => {
     pagination: { page: 1, perPage: 100 },
     sort: { field: 'name', order: 'ASC' },
   });
+  const translate = useTranslate();
 
   return (
     <Card
@@ -25,10 +26,9 @@ const Aside = () => {
       }}
     >
       <CardContent sx={{ pt: 1 }}>
-        <FilterLiveSearch />
+        <FilterLiveSearch label={translate('resources.products.filters.search')} source="name" />
 
         <SavedQueriesList />
-        {/* Value, is that is merged in the filter */}
         <FilterList label="resources.products.filters.sales" icon={<AttachMoneyIcon />}>
           <FilterListItem
             label="resources.products.filters.best_sellers"

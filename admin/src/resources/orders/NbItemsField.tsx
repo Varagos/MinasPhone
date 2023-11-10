@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FunctionField } from 'react-admin';
-import { Order } from '../types';
-import { OrderResponseDto } from '../dto/order';
+import { Order } from '../../types';
+import { OrderResponseDto } from '../../dto/order';
 
 const render = (record?: OrderResponseDto) => record && record.lineItems.length;
 

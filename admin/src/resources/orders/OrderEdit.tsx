@@ -16,7 +16,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import { Card, CardContent, Box, Grid, Typography, Link } from '@mui/material';
 
-import { Customer } from '../types';
+import { Customer } from '../../types';
 
 // export const OrderEdit = () => (
 //   <Edit>
@@ -40,7 +40,7 @@ import { Customer } from '../types';
 
 import OrderItem from './OrderItem';
 import Totals from './Totals';
-import { OrderResponseDto } from '../dto/order';
+import { OrderResponseDto } from '../../dto/order';
 
 const OrderEdit = () => (
   <Edit title={<OrderTitle />} component="div">

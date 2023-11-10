@@ -61,7 +61,10 @@ export class FindProductsQueryHandler implements IQueryHandler {
          FROM products
          WHERE
            ${query.slug ? sql`slug = ${query.slug}` : true} AND
-           ${query.categoryId ? sql`category_id = ${query.categoryId}` : true}
+           ${
+             query.categoryId ? sql`category_id = ${query.categoryId}` : true
+           } AND
+           ${query.name ? sql`name ILIKE ${'%' + query.name + '%'}` : true}
            ${sortClause}
          LIMIT ${query.limit}
          OFFSET ${query.offset}`;

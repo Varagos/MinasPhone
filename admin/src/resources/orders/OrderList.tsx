@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Datagrid, FunctionField, List, TextField } from 'react-admin';
+import { Datagrid, FunctionField, List, TextField, useTranslate } from 'react-admin';
 import { Fragment, useCallback } from 'react';
 import { DateField, NumberField, useGetList, useListContext } from 'react-admin';
 import { useMediaQuery, Divider, Tabs, Tab, Theme } from '@mui/material';
 import NbItemsField from './NbItemsField';
-import { OrderResponseDto } from '../dto/order';
+import { OrderResponseDto } from '../../dto/order';
 
 export const OrderList = () => (
   <List filterDefaultValues={{ status: 'pending' }}>
@@ -55,6 +55,7 @@ const TabbedDataGrid = () => {
   const { filterValues, setFilters, displayedFilters } = listContext;
   const isXSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
   const totals = useGetTotals(filterValues);
+  const translate = useTranslate();
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<{}>, value: any) => {
@@ -99,7 +100,7 @@ const TabbedDataGrid = () => {
         <>
           {filterValues.status === 'pending' && (
             <Datagrid rowClick="edit">
-              <DateField source="createdAt" showTime />
+              <DateField source="createdAt" showTime label={translate('resources.orders.fields.created_at')} />
               <TextField source="slug" label="Code" />
               <FunctionField
                 label="Customer"

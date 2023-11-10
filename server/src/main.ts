@@ -6,6 +6,9 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { json, urlencoded } from 'express';
 import { SupertokensExceptionFilter } from '@modules/user-management/infra/services/super-tokens/filters/auth.filter';
+import { WinstonModule } from 'nest-winston';
+import { loggerInstance } from './logger/winston.logger';
+import helmet from 'helmet';
 
 const setupSwagger = (app: INestApplication) => {
   const config = new DocumentBuilder()
@@ -23,7 +26,11 @@ const setupSwagger = (app: INestApplication) => {
 };
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: WinstonModule.createLogger({
+      instance: loggerInstance,
+    }),
+  });
   app.enableCors({
     origin: [
       'http://localhost:3000',
@@ -46,6 +53,7 @@ async function bootstrap() {
   app.use(json({ limit: '50mb' }));
   app.use(urlencoded({ limit: '50mb', extended: true }));
   app.use(cookieParser());
+  app.use(helmet());
 
   setupSwagger(app);
 

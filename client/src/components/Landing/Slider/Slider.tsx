@@ -6,7 +6,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Slick.module.css';
 import PocoBanner from '../../../../public/poco_x3_banner_1-1920x800.jpg';
-import RedMiBanner from '../../../../public/redmi note 9 pro-1920x800.jpg';
+// import RedMiBanner from '../../../../public/redmi_note_9_pro-1920x800.jpg';
+import RedMiBanner from '../../../../public/redmi_note_9_pro-1920x800.jpg';
 import useStyles from './styles';
 
 const items: Array<{ name: string; description: string; url: any }> = [

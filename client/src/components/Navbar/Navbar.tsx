@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import newLogo from '../../../public/free-logo-design (1).png';
+import newLogo from '../../../public/free-logo-design_1.png';
 import useStyles from './styles';
 import AppDrawer from './AppDrawer/AppDrawer';
 import {

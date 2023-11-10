@@ -34,9 +34,6 @@
     "react-hook-form": "^7",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
-    "supertokens-auth-react": "^0.35.1",
-    "supertokens-node": "^15.2.1",
-    "supertokens-web-js": "^0.8.0",
     "typescript": "5.0.3",
     "uuid": "^9.0.0"
   },

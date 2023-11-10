@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
+import Image, { StaticImageData } from 'next/image';
+import { useEffect, useState } from 'react';
 import { Container, Typography, Grid, Box } from '@mui/material';
 
 import { MainContainer, SectionTitle } from '@/components/Landing/styles';
@@ -34,6 +34,38 @@ export const getServerSideProps: GetServerSideProps<
   return { props: { categories, products } };
 };
 
+const LandingPageCategories: Array<{
+  src: StaticImageData;
+  heading: string;
+  dest: string;
+  alt: string;
+}> = [
+  {
+    src: PhonesCategory,
+    heading: 'SMARTPHONES',
+    dest: '/category/smartphones',
+    alt: 'smartphones',
+  },
+  {
+    src: TabletCategory,
+    heading: 'TABLETS',
+    dest: '/category/tablets',
+    alt: 'tablets',
+  },
+  {
+    src: AccessoriesCategory,
+    heading: 'ACCESSORIES',
+    dest: '/category/accessories',
+    alt: 'accessories',
+  },
+  {
+    src: SmartWatchCategory,
+    heading: 'SMARTWATCHES',
+    dest: '/category/smartwatches',
+    alt: 'smartwatches',
+  },
+];
+
 export default function Landing({ categories, products }: LandingProps) {
   // console.log('Landing categories:', categories, 'products:', products);
 
@@ -55,6 +87,7 @@ export default function Landing({ categories, products }: LandingProps) {
       </Head>
       <MainContainer>
         <SimpleSlider />
+
         <section>
           <Container>
             <Box my={8}>
@@ -63,29 +96,19 @@ export default function Landing({ categories, products }: LandingProps) {
               </Typography>
             </Box>
             <Grid container justifyContent="center" spacing={3}>
-              <CategoryItem
-                src={PhonesCategory} //"https://www.brokencare.in/images/iphone/iphone-12-service.png"
-                heading="SMARTPHONES"
-                dest="/category/smartphones"
-              />
-              <CategoryItem
-                src={TabletCategory}
-                heading="TABLETS"
-                dest="/category/tablets"
-              />
-              <CategoryItem
-                src={AccessoriesCategory}
-                heading="ACCESSORIES"
-                dest="/category/accessories"
-              />
-              <CategoryItem
-                src={SmartWatchCategory}
-                heading="SMARTWATCHES"
-                dest="/category/smartwatches"
-              />
+              {LandingPageCategories.map((category) => (
+                <CategoryItem
+                  key={category.heading}
+                  src={category.src}
+                  heading={category.heading}
+                  dest={category.dest}
+                  alt={category.alt}
+                />
+              ))}
             </Grid>
           </Container>
         </section>
+
         <section>
           <Container>
             <Box my={8}>
@@ -108,6 +131,7 @@ export default function Landing({ categories, products }: LandingProps) {
             </Grid>
           </Container>
         </section>
+
         <section>
           <Box py={16}>
             <Typography variant="h4" align="center" gutterBottom>

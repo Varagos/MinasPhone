@@ -53,7 +53,8 @@ async function bootstrap() {
   app.use(json({ limit: '50mb' }));
   app.use(urlencoded({ limit: '50mb', extended: true }));
   app.use(cookieParser());
-  app.use(helmet());
+  // Disabled for now, conflict with supertokens dashboard
+  // app.use(helmet());
 
   setupSwagger(app);
 

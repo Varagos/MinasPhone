@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react';
 import { Container, Typography, Button, Grid, Box } from '@mui/material';
 import Link from 'next/link';
-import useStyles from './_styles';
 import LinkButton from '@/components/custom-components/LinkButton';
 import Spinner from '@/components/Spinner/Spinner';
 import CartItem from '@/components/CartItem/CartItem';
@@ -11,8 +9,6 @@ import { formatPriceWithSymbol } from '@/utils/prices';
 import { useCart } from '@/hooks/useCart';
 
 const CartPage = () => {
-  const classes = useStyles();
-
   const { cart, setCart } = useCart();
 
   const handleEmptyCart = async () => {
@@ -28,7 +24,12 @@ const CartPage = () => {
       <Typography variant="subtitle1">
         Κάποιος πρέπει να ψωνίσει αυτά τα υπέροχα προϊόντα!
         <br />
-        <Link href="/" className={classes.link}>
+        <Link
+          href="/"
+          style={{
+            textDecoration: 'none',
+          }}
+        >
           {' '}
           Ανακάλυψε τα!
         </Link>
@@ -49,31 +50,36 @@ const CartPage = () => {
           ))
         )}
       </Grid>
-      <div className={classes.cardDetails}>
+      <div
+        style={{
+          display: 'flex',
+          marginTop: '10%',
+          width: '100%',
+          justifyContent: 'space-between',
+        }}
+      >
         <Typography variant="h4">
           Σύνολο: {formatPriceWithSymbol(cart.subtotal)}
         </Typography>
         <div>
           <Button
-            className={classes.emptyButton}
             size="large"
             type="button"
             variant="outlined"
             color="primary"
             onClick={handleEmptyCart}
-            sx={{ textTransform: 'none' }}
+            sx={{ textTransform: 'none', minWidth: '150px' }}
           >
             Άδειασε το καλάθι
           </Button>
           <LinkButton
             href="/checkout"
-            className={classes.checkoutButton}
             size="large"
             type="button"
             variant="contained"
             color="primary"
             disabled={cart === null || cart.lineItems.length === 0}
-            sx={{ ml: 5, textTransform: 'none' }}
+            sx={{ ml: 5, textTransform: 'none', minWidth: '150px' }}
           >
             Ολοκλήρωση παραγγελίας
           </LinkButton>
@@ -85,7 +91,13 @@ const CartPage = () => {
   return (
     <Container sx={{ pt: 2, pb: 20 }}>
       {/* <div className={classes.toolbar} /> */}
-      <Typography className={classes.title} variant="h3" gutterBottom>
+      <Typography
+        variant="h3"
+        gutterBottom
+        sx={{
+          marginTop: '5%',
+        }}
+      >
         Καλάθι Αγορών
       </Typography>
       {!cart.lineItems.length ? <EmptyCart /> : <FilledCart />}

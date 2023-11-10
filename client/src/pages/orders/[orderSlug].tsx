@@ -9,7 +9,6 @@ import { Order } from '@/api/types/orders';
 import LinkButton from '@/components/custom-components/LinkButton';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import useStyles from './_styles';
 
 interface OrderProps {
   data: Order;
@@ -24,7 +23,6 @@ export const getServerSideProps: GetServerSideProps<OrderProps> = async (
 };
 
 const Order = ({ data }: OrderProps) => {
-  const classes = useStyles();
   // console.log('Product params', params);
   const router = useRouter();
   console.log('Order data', data);
@@ -39,7 +37,7 @@ const Order = ({ data }: OrderProps) => {
           Σας ευχαριστούμε για την παραγγελία, {data.contactInfo?.firstName}{' '}
           {data.contactInfo?.lastName}
         </Typography>
-        <Divider className={classes.divider} />
+        <Divider sx={{ margin: '20px 0' }} />
         <Typography variant="subtitle2">
           Κωδικός παραγγελίας: {data.slug}
         </Typography>

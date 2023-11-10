@@ -1,8 +1,10 @@
 {
   "extends": [
+    "next",
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
-    "eslint-config-prettier"
+    "eslint-config-prettier",
+    "prettier"
   ],
   "root": true,
   "parser": "@typescript-eslint/parser",
@@ -10,6 +12,7 @@
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/no-explicit-any": "warn"
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": "warn"
   }
 }

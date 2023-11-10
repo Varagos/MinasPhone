@@ -6,11 +6,11 @@ import {
   Step,
   StepLabel,
   Stepper,
+  Toolbar,
   Typography,
 } from '@mui/material';
 import Link from 'next/link';
 
-import useStyles from './_styles';
 import { CheckoutCapture } from '@/types/checkout-capture';
 import LinkButton from '@/components/custom-components/LinkButton';
 import Account from '@/components/CheckoutForm/Account';
@@ -53,8 +53,6 @@ export default function Checkout() {
     Partial<CheckoutOrderInfo>
   >({});
   const [error, setErrorMessage] = useState('');
-
-  const classes = useStyles();
 
   const { cart, setCart } = useCart();
 
@@ -155,13 +153,20 @@ export default function Checkout() {
       </Head>
       <main>
         <CssBaseline />
-        <div className={classes.toolbar} />
-        <main className={classes.layout}>
-          <Paper className={classes.paper} sx={{ mx: 20 }}>
+        <Toolbar />
+        <main style={{ marginTop: '5%', width: 'auto' }}>
+          <Paper
+            sx={{
+              mx: 20,
+              marginTop: '5%',
+              marginBottom: '5%',
+              padding: '0 10%',
+            }}
+          >
             <Typography variant="h4" align="center">
               Ολοκλήρωση Παραγγελίας
             </Typography>
-            <Stepper activeStep={activeStep} className={classes.stepper}>
+            <Stepper activeStep={activeStep} sx={{ padding: '0 10%' }}>
               {steps.map((step) => (
                 <Step key={step}>
                   <StepLabel>{step}</StepLabel>

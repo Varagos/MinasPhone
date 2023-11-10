@@ -4,7 +4,7 @@ import { EmailPasswordPreBuiltUI } from 'supertokens-auth-react/recipe/emailpass
 import { redirectToAuth } from 'supertokens-auth-react';
 import { canHandleRoute, getRoutingComponent } from 'supertokens-auth-react/ui';
 
-const SuperTokensComponentNoSSR = dynamic<{}>(
+const SuperTokensComponentNoSSR = dynamic<any>(
   new Promise((res) =>
     res(() => getRoutingComponent([EmailPasswordPreBuiltUI]))
   ),

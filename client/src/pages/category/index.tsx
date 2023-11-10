@@ -1,6 +1,5 @@
 import { Container, Typography, Grid, Box } from '@mui/material';
 
-import useStyles from './_styles';
 import TabletCategory from '../../../public/tablet-category.jpg';
 import SmartWatchCategory from '../../../public/smartwatch-category.jpg';
 
@@ -9,13 +8,21 @@ import AccessoriesCategory from '../../../public/Hnet-com-image.png';
 import CategoryItem from '@/components/Landing/CategoryItem/CategoryItem';
 
 export default function Categories() {
-  const classes = useStyles();
   return (
     <div>
       <Container>
         <Box my={8}>
           <Typography variant="h4" align="center" gutterBottom>
-            <span className={classes.sectionTitle}>ΚΑΤΗΓΟΡΙΕΣ</span>
+            <span
+              style={{
+                fontWeight: '900',
+                borderBottom: 'thick solid #6A2C70',
+                paddingBottom: '3px',
+                marginBottom: '40px',
+              }}
+            >
+              ΚΑΤΗΓΟΡΙΕΣ
+            </span>
           </Typography>
         </Box>
         <Grid container justifyContent="center" spacing={3}>

@@ -214,6 +214,20 @@ Replace <docker_hub_username>, <repository_name>, and <tag> with the correspondi
 
 Docker will start pushing the image to Docker Hub, and the progress will be displayed in the terminal.
 
+### Notes:
+
+If you are using an ARM-based processor, and your production server is probably AMD-based(most are), then you need to tell docker to build the image for AMD. You can do this by adding the `--platform linux/amd64` flag to the `docker build` command.
+
+```bash
+docker buildx build --platform linux/amd64 \
+    -t <docker_hub_username>/<repository_name>:<tag> \
+    -f Dockerfile \
+    --push \
+    --no-cache \
+    .
+
+```
+
 ## Publish using CI/CD
 
 - To create a Git tag, you typically use the following command:

@@ -1,29 +1,24 @@
-FROM node as builder
+# Stage 1: Build Using also dev dependencies(like rimraf, typescript, etc)
+FROM node:18 AS build
 
-# Create app directory
-WORKDIR /usr/app
+WORKDIR /app
 
-# Install app dependencies
-COPY package.json yarn.lock ./
+COPY package.json .
+COPY yarn.lock .
 
 RUN yarn install --frozen-lockfile
-
 COPY . .
-
 RUN yarn build
 
-FROM node:slim
+# Stage 2: Production
+FROM node:18-alpine
 
-# Create app directory
-WORKDIR /usr/app
+WORKDIR /app
 
-# Install app dependencies
-COPY package.json yarn.lock ./
-COPY templates ./templates
+COPY --from=build /app/dist ./dist
+COPY package.json .
+COPY yarn.lock .
 
-RUN yarn install --production --frozen-lockfile
+RUN yarn install --production --immutable
 
-COPY --from=builder /usr/app/dist ./dist
-
-EXPOSE 8080
-CMD [ "node", "dist/index.js" ]
+CMD ["yarn", "start"]

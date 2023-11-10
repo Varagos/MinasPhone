@@ -7,8 +7,8 @@ export interface CheckoutCapture {
   extra_fields?: Extrafield[];
   customer: {
     id?: string;
-    firstname?: string;
-    lastname?: string;
+    first_name: string;
+    last_name: string;
     email: string;
     phoneNumber: string;
     meta?: any;
@@ -19,7 +19,16 @@ export interface CheckoutCapture {
   };
   billing?: Partial<Address>;
   payment: {
-    gateway: 'braintree' | 'manual' | 'omise' | 'paypal' | 'razorpay' | 'stripe' | 'square' | 'test_gateway' | string;
+    gateway:
+      | 'braintree'
+      | 'manual'
+      | 'omise'
+      | 'paypal'
+      | 'razorpay'
+      | 'stripe'
+      | 'square'
+      | 'test_gateway'
+      | string;
     card?:
       | {
           token?: string;

@@ -4,11 +4,11 @@ import Box from '@mui/material/Box';
 
 import { useTranslate, DashboardMenuItem, MenuItemLink, MenuProps, useSidebarState } from 'react-admin';
 
-import users from '../users/index';
-import orders from '../orders';
+import users from '../resources/users/index';
+import orders from '../resources/orders/index';
 // import invoices from '../invoices';
-import products from '../products';
-import categories from '../categories';
+import products from '../resources/products';
+import categories from '../resources/categories';
 // import reviews from '../reviews';
 import SubMenu from './SubMenu';
 

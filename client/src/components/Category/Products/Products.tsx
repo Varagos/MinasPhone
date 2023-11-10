@@ -1,23 +1,24 @@
 import { Box, Container, Grid, Typography } from '@mui/material';
 
 import ProductCard from './ProductCard/ProductCard';
-import useStyles from './styles';
-import EmptyLogo from '../../../assets/undraw_empty_xct9.svg';
+import { MainContainer, ToolBar } from './styles';
+import EmptyLogo from '../../../../public/undraw_empty_xct9.svg';
 import Filter from '../Filter/Filter';
-import { Link } from 'react-router-dom';
+import { Product } from '@/api/types/types';
 
 type ProductsType = {
-  products: any[];
+  products: Product[];
 };
 
 function Products({ products }: ProductsType) {
-  const classes = useStyles();
-
   if (!products.length) {
     return (
       <main>
         <Box ml={4} py={6}>
-          <Typography variant="h5" style={{ display: 'inline-block', verticalAlign: 'top' }}>
+          <Typography
+            variant="h5"
+            style={{ display: 'inline-block', verticalAlign: 'top' }}
+          >
             Η κατηγορία είναι άδεια!
           </Typography>
           <Typography>Δοκιμάστε να επιλέξετε κάποια εναλλακτική.</Typography>
@@ -28,12 +29,17 @@ function Products({ products }: ProductsType) {
   }
 
   return (
-    <main className={classes.content} style={{ minHeight: '80vh' }}>
-      <div className={classes.toolbar} />
+    <MainContainer>
+      <ToolBar />
       <Container sx={{ pb: 20 }}>
         <Grid container justifyContent="center" spacing={4}>
           {/* <Hidden xsDown> */}
-          <Grid item xs={0} sm={3} sx={{ display: { xs: 'none', md: 'block' } }}>
+          <Grid
+            item
+            xs={0}
+            sm={3}
+            sx={{ display: { xs: 'none', md: 'block' } }}
+          >
             <Filter />
           </Grid>
           <Grid item container xs={12} sm={9} spacing={4}>
@@ -52,7 +58,7 @@ function Products({ products }: ProductsType) {
           </Grid>
         </Grid>
       </Container>
-    </main>
+    </MainContainer>
   );
 }
 

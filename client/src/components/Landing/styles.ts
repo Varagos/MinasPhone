@@ -1,23 +1,12 @@
-import { makeStyles } from '@mui/styles';
-import { theme } from '../../App';
+import { styled } from '@mui/material/styles';
 
-export default makeStyles<typeof theme>((theme) => ({
-  // toolbar: theme.mixins.toolbar,
-  content: {
-    backgroundColor: theme.palette.background.default,
-    // backgroundColor: 'black',
-    // padding: 2000,
-  },
-  media: {
-    width: '100%',
-    height: 'auto',
-  },
-  sectionTitle: {
-    fontWeight: '900',
-    borderBottom: 'thick solid #6A2C70',
-    paddingBottom: '3px',
-    marginBottom: '40px',
-  },
-  stretch: { height: '100%' },
-  item: { display: 'flex', flexDirection: 'column' }, // KEY CHANGES
+export const MainContainer = styled('main')(({ theme }) => ({
+  backgroundColor: theme.palette.background.default,
+}));
+
+export const SectionTitle = styled('span')(({ theme }) => ({
+  fontWeight: '900',
+  borderBottom: 'thick solid #6A2C70',
+  paddingBottom: '3px',
+  marginBottom: '40px',
 }));

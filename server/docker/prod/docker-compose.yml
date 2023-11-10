@@ -1,0 +1,23 @@
+version: '3'
+name: minas_phone_prod
+
+services:
+  api:
+    image: varagos/minas-phone-api:0.0.5
+    # build:
+    #   context: ../..
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - app_network
+    environment:
+      - NODE_ENV=production
+      # - DB_DOCKER_HOST=db
+      # - ST_DOCKER_URI=http://supertokens:3567
+    env_file:
+      - '../../.env.prod'
+
+networks:
+  app_network:
+    driver: bridge

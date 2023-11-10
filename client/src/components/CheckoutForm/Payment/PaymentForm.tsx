@@ -1,15 +1,25 @@
 import React from 'react';
-import { Typography, Button, Divider, Box, Tabs, Tab, Card, CardContent, CardActions } from '@mui/material';
+import {
+  Typography,
+  Button,
+  Divider,
+  Box,
+  Tabs,
+  Tab,
+  Card,
+  CardContent,
+  CardActions,
+} from '@mui/material';
 // import { CardElement } from '@stripe/react-stripe-js';
 // import { loadStripe } from '@stripe/stripe-js';
 import PaymentsSharpIcon from '@mui/icons-material/PaymentsSharp';
 import CreditCardSharpIcon from '@mui/icons-material/CreditCardSharp';
 
-import Review from '../components/Review';
+import Review from '../Review';
 import CardPayment from './CardPayment';
 import { CheckoutToken } from '../../../types/checkout-token';
-import { CheckoutOrderInfo } from '../Checkout/Checkout';
 import { CheckoutCapture } from '../../../types/checkout-capture';
+import { CheckoutOrderInfo } from '@/pages/checkout';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -30,7 +40,14 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }} display="flex" justifyContent="center" alignItems="center" minHeight="20vh" minWidth="70%">
+        <Box
+          sx={{ p: 3 }}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="20vh"
+          minWidth="70%"
+        >
           {children}
         </Box>
       )}
@@ -51,9 +68,15 @@ type PaymentFormProps = {
   shippingData: CheckoutOrderInfo;
   backStep: any;
   nextStep: any;
-  onCaptureCheckout: (checkoutTokenId: string, newOrder: CheckoutCapture) => Promise<void>;
+  onCaptureCheckout: (newOrder: CheckoutCapture) => Promise<void>;
 };
-const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout, nextStep }: PaymentFormProps) => {
+const PaymentForm = ({
+  checkoutToken,
+  shippingData,
+  backStep,
+  onCaptureCheckout,
+  nextStep,
+}: PaymentFormProps) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -63,11 +86,11 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    const orderData = {
+    const orderData: CheckoutCapture = {
       line_items: checkoutToken.line_items,
       customer: {
-        firstname: shippingData.firstName,
-        lastname: shippingData.lastName,
+        first_name: shippingData.firstName,
+        last_name: shippingData.lastName,
         email: shippingData.email,
         phoneNumber: shippingData.phoneNumber,
       },
@@ -93,7 +116,7 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
     };
     // console.log(orderData);
 
-    onCaptureCheckout(checkoutToken.id, orderData);
+    onCaptureCheckout(orderData);
 
     nextStep();
   };
@@ -107,7 +130,14 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
         Τρόποι Πληρωμής
       </Typography>
 
-      <Box sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', minHeight: 224 }}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          bgcolor: 'background.paper',
+          display: 'flex',
+          minHeight: 224,
+        }}
+      >
         <Tabs
           orientation="vertical"
           // variant="scrollable"
@@ -151,12 +181,21 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
         <TabPanel value={value} index={0}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+              <Typography
+                sx={{ fontSize: 14 }}
+                color="text.secondary"
+                gutterBottom
+              >
                 Η παραγγελία σας θα πληρωθεί στο κατάστημα μας με μετρητά.
               </Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: 'center' }}>
-              <Button variant="contained" size="large" color="secondary" onClick={handleSubmit}>
+              <Button
+                variant="contained"
+                size="large"
+                color="secondary"
+                onClick={handleSubmit}
+              >
                 Επιβεβαίωση παραγγελίας
               </Button>
             </CardActions>
@@ -165,12 +204,22 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
         <TabPanel value={value} index={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                Η παραγγελία σας θα πληρωθεί στο κατάστημα μας με χρήση πιστωτικής ή χρεωστικής κάρτας.
+              <Typography
+                sx={{ fontSize: 14 }}
+                color="text.secondary"
+                gutterBottom
+              >
+                Η παραγγελία σας θα πληρωθεί στο κατάστημα μας με χρήση
+                πιστωτικής ή χρεωστικής κάρτας.
               </Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: 'center' }}>
-              <Button variant="contained" size="large" color="secondary" onClick={handleSubmit}>
+              <Button
+                variant="contained"
+                size="large"
+                color="secondary"
+                onClick={handleSubmit}
+              >
                 Επιβεβαίωση παραγγελίας
               </Button>
             </CardActions>

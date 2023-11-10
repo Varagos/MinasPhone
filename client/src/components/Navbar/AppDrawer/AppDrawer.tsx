@@ -1,16 +1,23 @@
+/* eslint-disable react/jsx-key */
 import React from 'react';
 import clsx from 'clsx';
 
 import { makeStyles } from '@mui/styles';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Home, Smartphone, Watch, TabletMac, Headset, Storefront, Lock, PersonAdd } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import Home from '@mui/icons-material/Home';
+import Smartphone from '@mui/icons-material/Smartphone';
+import Watch from '@mui/icons-material/Watch';
+import TabletMac from '@mui/icons-material/TabletMac';
+import Headset from '@mui/icons-material/Headset';
+import Storefront from '@mui/icons-material/Storefront';
+import Lock from '@mui/icons-material/Lock';
+import PersonAdd from '@mui/icons-material/PersonAdd';
 import Drawer from '@mui/material/Drawer';
 import { SwipeableDrawer } from '@mui/material';
+import LinkListItem from '@/components/custom-components/LinkListItem';
 
 const useStyles = makeStyles({
   list: {
@@ -52,19 +59,19 @@ const AppDrawer = ({ anchor, toggleDrawer }: any) => {
           >
             <List>
               {drawerItems.map(([text, to, icon], index) => (
-                <ListItem button key={text} component={Link} to={to}>
+                <LinkListItem key={text} href={to}>
                   <ListItemIcon>{icon}</ListItemIcon>
                   <ListItemText primary={text} />
-                </ListItem>
+                </LinkListItem>
               ))}
             </List>
             <Divider />
             <List>
               {drawerUtilities.map(([text, to, icon], index) => (
-                <ListItem button key={text} component={Link} to={to}>
+                <LinkListItem key={text} href={to}>
                   <ListItemIcon>{icon}</ListItemIcon>
                   <ListItemText primary={text} />
-                </ListItem>
+                </LinkListItem>
               ))}
             </List>
           </div>

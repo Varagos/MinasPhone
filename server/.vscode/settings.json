@@ -1,11 +1,3 @@
 {
-  "sqltools.useNodeRuntime": true,
-  "sqltools.connections": [
-    {
-      "previewLimit": 50,
-      "driver": "SQLite",
-      "database": "${workspaceFolder:server}/database.sqlite",
-      "name": "Minas phone"
-    }
-  ]
+  "cSpell.words": ["Slonik"]
 }

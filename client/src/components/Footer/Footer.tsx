@@ -1,22 +1,34 @@
 import { Container, Grid, Box, Link, Divider, Typography } from '@mui/material';
-import { Home, Email, Phone, Schedule } from '@mui/icons-material';
-import ContactRow from './ContactRow/ContatctRow';
+import Home from '@mui/icons-material/Home';
+import Email from '@mui/icons-material/Email';
+import Phone from '@mui/icons-material/Phone';
+import Schedule from '@mui/icons-material/Schedule';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import ContactRow from './ContactRow/ContactRow';
 
 const Footer = () => {
   return (
     <footer
     // style={{ position: 'absolute', bottom: 0 }}
     >
-      <Box px={{ xs: 3, sm: 10 }} py={{ xs: 5, sm: 10 }} bgcolor="text.primary" color="white">
+      <Box
+        px={{ xs: 3, sm: 10 }}
+        py={{ xs: 5, sm: 10 }}
+        bgcolor="text.primary"
+        color="white"
+      >
         <Container maxWidth="lg">
           <Grid container spacing={5}>
             {/* on mobile screen, each col -> full screen */}
             <Grid item xs={12} sm={4}>
               <Box borderBottom={1}>ΧΡΗΣΙΜΟΙ ΣΥΝΔΕΣΜΟΙ</Box>
               <Box sx={{ my: 2 }}>
-                <Link href="/information/user-terms" color="inherit" sx={{ textDecoration: 'none' }}>
+                <Link
+                  href="/information/user-terms"
+                  color="inherit"
+                  sx={{ textDecoration: 'none' }}
+                >
                   Όροι χρήσης
                 </Link>
               </Box>
@@ -38,6 +50,7 @@ const Footer = () => {
             </Grid>
 
             <Grid item xs={12} sm={4}>
+              {/* <address> */}
               <Box borderBottom={1} mb={4}>
                 ΕΠΙΚΟΙΝΩΝΗΣΤΕ ΜΑΖΙ ΜΑΣ
               </Box>
@@ -91,9 +104,17 @@ const Footer = () => {
                   </table>
                 }
               />
+              {/* </address> */}
             </Grid>
 
-            <Grid item container xs={12} sm={4} alignContent="center" justifyContent="center">
+            <Grid
+              item
+              container
+              xs={12}
+              sm={4}
+              alignContent="center"
+              justifyContent="center"
+            >
               <FacebookIcon fontSize="large" sx={{ mr: 2 }} />
               <LinkedInIcon fontSize="large" sx={{ mr: 2 }} />
             </Grid>
@@ -103,7 +124,13 @@ const Footer = () => {
 
       <Divider light={true} />
 
-      <Box textAlign="center" bgcolor="text.primary" color="white" pt={{ xs: 5, sm: 5 }} pb={{ xs: 5, sm: 5 }}>
+      <Box
+        textAlign="center"
+        bgcolor="text.primary"
+        color="white"
+        pt={{ xs: 5, sm: 5 }}
+        pb={{ xs: 5, sm: 5 }}
+      >
         <strong>MINAS PHONE</strong> &reg; {new Date().getFullYear()}
       </Box>
     </footer>

@@ -1,15 +1,22 @@
 import React from 'react';
 import useStyles from './styles';
 import { Grid, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+import Image from 'next/image';
 
-const CategoryItem = ({ src, heading, dest }: any) => {
+interface CategoryItemProps {
+  src: any;
+  heading: string;
+  dest: string;
+}
+
+const CategoryItem = ({ src, heading, dest }: CategoryItemProps) => {
   const classes = useStyles();
   return (
     <Grid container item xs={12} md={3} alignContent="center" justifyContent="center" className={classes.item}>
-      <Link to={dest} style={{ height: '100%', textDecoration: 'none' }}>
+      <Link href={dest} style={{ height: '100%', textDecoration: 'none' }}>
         <div className={classes.main}>
-          <img src={src} className={classes.bannerImg} alt="smartphones" />
+          <Image src={src} className={classes.bannerImg} alt="smartphones" />
           <div className={classes.bannerText} style={{ marginTop: 'auto' }}>
             <Typography variant="h6" align="center">
               {heading}

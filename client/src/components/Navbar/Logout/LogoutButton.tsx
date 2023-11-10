@@ -1,29 +1,32 @@
 import React from 'react';
 import { IconButton } from '@mui/material';
-import { Logout as LogoutIcon } from '@mui/icons-material';
-import { signOut } from 'supertokens-auth-react/recipe/emailpassword';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../../redux/store';
-import { userSignedOut } from '../../../redux/userSlice';
+import LogoutIcon from '@mui/icons-material/Logout';
+// import { signOut } from 'supertokens-auth-react/recipe/emailpassword';
+import IconLinkButton from '@/components/custom-components/IconLinkButton';
+import { useRouter } from 'next/router';
 
 const LogoutButton = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const onLogout = async () => {
-    await signOut();
-    navigate('/');
-    dispatch(userSignedOut());
+    // await signOut();
+    router.push('/');
+    // dispatch(userSignedOut());
   };
 
   return (
-    <IconButton aria-label="Logout user" color="inherit" component={Link} to="/" onClick={onLogout}>
+    <IconLinkButton
+      aria-label="Logout user"
+      color="inherit"
+      href="/"
+      onClick={onLogout}
+    >
       <LogoutIcon
         fontSize="medium"
         // color="black"
         style={{ verticalAlign: 'bottom', paddingBottom: 1 }}
       />
-    </IconButton>
+    </IconLinkButton>
   );
 };
 

@@ -1,25 +1,34 @@
-import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@mui/material';
-import { AddShoppingCart } from '@mui/icons-material';
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Typography,
+  IconButton,
+} from '@mui/material';
+import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
 
 import useStyles from './styles';
-import { Link } from 'react-router-dom';
-import { Product as ProductType } from '@chec/commerce.js/types/product';
-import { useAppDispatch } from '../../../../redux/store';
-import { addedToCart, addToCart } from '../../../../redux/slices/cart';
+import Link from 'next/link';
 import { useState } from 'react';
+import { Product } from '@/api/types/products';
+import { formatPriceWithSymbol } from '@/utils/prices';
+import { api } from '@/api';
+import { useCart } from '@/hooks/useCart';
 
 type ProductProps = {
-  product: ProductType;
+  product: Product;
 };
 
 function ProductCard({ product }: ProductProps) {
   const classes = useStyles();
-  const dispatch = useAppDispatch();
   const [raised, setRaised] = useState<boolean>(false);
 
-  const handleAddToCart = (id: string, quantity = 1) => {
-    dispatch(addedToCart({ productId: id, quantity: 1 }));
-    dispatch(addToCart({ productId: id, quantity }));
+  const { setCart } = useCart();
+
+  const handleAddToCart = async (id: string, quantity = 1) => {
+    const cart = await api.cart.addToCart(id, quantity);
+    setCart(cart);
   };
 
   return (
@@ -34,7 +43,7 @@ function ProductCard({ product }: ProductProps) {
       }}
     >
       <Link
-        to={`/products/${product.id}`}
+        href={`/products/${product.id}`}
         style={{
           paddingTop: 2,
         }}
@@ -43,7 +52,7 @@ function ProductCard({ product }: ProductProps) {
           These are small (100 x 100 or 200 x 200)  */}
         <CardMedia
           component="img"
-          image={product.media.source}
+          image={product.imageUrl}
           title={product.name}
           sx={{
             objectFit: 'contain',
@@ -63,36 +72,46 @@ function ProductCard({ product }: ProductProps) {
         }}
       >
         <div>
-          <Typography
-            display="block"
-            color="textSecondary"
-            variant="body1"
-            gutterBottom
-            // noWrap
-            component={Link}
-            to={`/products/${product.id}`}
-            sx={{
-              textDecoration: 'none',
-              height: 50, // need fixed height to keep all cards same height
-              // textOverflow: 'ellipsis',
-              // overflow: 'hidden',
-              width: '100%',
-              // whiteSpace: 'noWrap',
-              // Ellipsis on 2 lines attempt...
-              display: '-webkit-box',
-              boxOrient: 'vertical',
-              lineClamp: 2,
-              wordBreak: 'break-all',
-              overflow: 'hidden',
-            }}
+          <Link
+            href={`/products/${product.id}`}
+            passHref
+            style={{ textDecoration: 'none' }}
           >
-            {product.name}
-          </Typography>
-          <CardActions disableSpacing className={classes.cardActions}>
-            <Typography style={{ marginRight: 'auto', color: '#69b67c' }} variant="h6">
-              {product.price.formatted_with_symbol}
+            <Typography
+              display="block"
+              color="textSecondary"
+              variant="body1"
+              gutterBottom
+              // noWrap
+              sx={{
+                textDecoration: 'none',
+                height: 50, // need fixed height to keep all cards same height
+                // textOverflow: 'ellipsis',
+                // overflow: 'hidden',
+                width: '100%',
+                // whiteSpace: 'noWrap',
+                // Ellipsis on 2 lines attempt...
+                display: '-webkit-box',
+                boxOrient: 'vertical',
+                lineClamp: 2,
+                wordBreak: 'break-all',
+                overflow: 'hidden',
+              }}
+            >
+              {product.name}
             </Typography>
-            <IconButton aria-label="Add to Card" onClick={() => handleAddToCart(product.id, 1)}>
+          </Link>
+          <CardActions disableSpacing className={classes.cardActions}>
+            <Typography
+              style={{ marginRight: 'auto', color: '#69b67c' }}
+              variant="h6"
+            >
+              {formatPriceWithSymbol(product.price)}
+            </Typography>
+            <IconButton
+              aria-label="Add to Card"
+              onClick={() => handleAddToCart(product.id, 1)}
+            >
               <AddShoppingCart />
             </IconButton>
           </CardActions>

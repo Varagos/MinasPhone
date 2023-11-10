@@ -1,16 +1,29 @@
 {
   "compilerOptions": {
-    "module": "ES2020",
-    "moduleResolution": "Node16",
-    "target": "ES2020",
-    "sourceMap": true,
-    "outDir": "dist",
+    "target": "es2018",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./dist",
     "strict": true,
-    "esModuleInterop": true,
+    "strictPropertyInitialization": false,
+    "strictNullChecks": true,
+    "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "strictPropertyInitialization": false
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["src/shared/*"],
+      "@libs/*": ["src/libs/*"],
+      "@modules/*": ["src/modules/*"],
+      "@config/*": ["src/configs/*"],
+      "@api/*": ["src/api/*"],
+      "@tests/*": ["tests/*"]
+    },
+    "incremental": true,
+    "skipLibCheck": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "src/__tests__"]
+  "include": ["src/**/*", "tests/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

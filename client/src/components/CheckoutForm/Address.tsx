@@ -1,7 +1,15 @@
 import React from 'react';
-import { Typography, Button, Divider, FormControl, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import {
+  Typography,
+  Button,
+  Divider,
+  FormControl,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+} from '@mui/material';
 
-import Review from './components/Review';
+import Review from './Review';
 import { Controller, useForm } from 'react-hook-form';
 import { CheckoutToken } from '../../types/checkout-token';
 
@@ -15,7 +23,12 @@ type AddressProps = {
 type FormValues = {
   receiptMethod: 'store' | 'courier';
 };
-const Address = ({ checkoutToken, shippingData, backStep, next }: AddressProps) => {
+const Address = ({
+  checkoutToken,
+  shippingData,
+  backStep,
+  next,
+}: AddressProps) => {
   const { register, handleSubmit, control } = useForm();
 
   // const handleSubmit = async (event: any, elements: any, stripe: any) => {
@@ -62,8 +75,17 @@ const Address = ({ checkoutToken, shippingData, backStep, next }: AddressProps) 
                   // console.log(e.target.value); // will be called this time
                 }}
               >
-                <FormControlLabel value="store" control={<Radio />} label="Παραλαβή από το κατάστημα" />
-                <FormControlLabel value="courier" control={<Radio />} label="Αποστολή στο χώρο σας" disabled />
+                <FormControlLabel
+                  value="store"
+                  control={<Radio />}
+                  label="Παραλαβή από το κατάστημα"
+                />
+                <FormControlLabel
+                  value="courier"
+                  control={<Radio />}
+                  label="Αποστολή στο χώρο σας"
+                  disabled
+                />
               </RadioGroup>
             )}
             // as={
@@ -75,7 +97,13 @@ const Address = ({ checkoutToken, shippingData, backStep, next }: AddressProps) 
           />
         </FormControl>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 20 }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: 20,
+          }}
+        >
           <Button variant="outlined" onClick={backStep}>
             Back
           </Button>

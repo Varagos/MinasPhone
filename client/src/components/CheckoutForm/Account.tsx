@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Button, Grid, Typography } from '@mui/material';
 import { useForm, FormProvider } from 'react-hook-form';
-import { Link } from 'react-router-dom';
 
-import FormInput from './components/FormInput';
+import FormInput from './FormInput';
+import LinkButton from '../custom-components/LinkButton';
 
 type AccountProps = {
   next: (data: AccountFormData & CommerceJsAddress) => void;
@@ -82,7 +82,10 @@ const Account = ({ next }: AccountProps) => {
                 required: 'Υποχρεωτικό πεδίο',
                 validate: {
                   isNumber: (value: string) => {
-                    return value.match(/\d/g)?.length === 10 || 'Πρέπει να είναι 10-ψήφιος αριθμός';
+                    return (
+                      value.match(/\d/g)?.length === 10 ||
+                      'Πρέπει να είναι 10-ψήφιος αριθμός'
+                    );
                   },
                 },
               }}
@@ -125,9 +128,9 @@ const Account = ({ next }: AccountProps) => {
           </Grid>
           <br />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button component={Link} to="/cart" variant="outlined">
+            <LinkButton href="/cart" variant="outlined">
               Πίσω στο καλάθι
-            </Button>
+            </LinkButton>
 
             <Button type="submit" variant="contained" color="primary">
               Συνέχεια

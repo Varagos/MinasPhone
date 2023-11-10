@@ -10,7 +10,6 @@ import {
 } from '@mui/material';
 import HighlightOff from '@mui/icons-material/HighlightOff';
 import Slider from '@mui/material/Slider';
-import { Co2Sharp } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import PriceFilter from './PriceFilter';
 

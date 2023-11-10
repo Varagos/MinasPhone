@@ -6,7 +6,7 @@ import {
   Typography,
   IconButton,
 } from '@mui/material';
-import { AddShoppingCart } from '@mui/icons-material';
+import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
 
 import useStyles from './styles';
 import Link from 'next/link';

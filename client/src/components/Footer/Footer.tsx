@@ -1,5 +1,8 @@
 import { Container, Grid, Box, Link, Divider, Typography } from '@mui/material';
-import { Home, Email, Phone, Schedule } from '@mui/icons-material';
+import Home from '@mui/icons-material/Home';
+import Email from '@mui/icons-material/Email';
+import Phone from '@mui/icons-material/Phone';
+import Schedule from '@mui/icons-material/Schedule';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import ContactRow from './ContactRow/ContactRow';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton } from '@mui/material';
-import { Logout as LogoutIcon } from '@mui/icons-material';
+import LogoutIcon from '@mui/icons-material/Logout';
 // import { signOut } from 'supertokens-auth-react/recipe/emailpassword';
 import IconLinkButton from '@/components/custom-components/IconLinkButton';
 import { useRouter } from 'next/router';

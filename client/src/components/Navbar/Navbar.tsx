@@ -17,12 +17,9 @@ import {
   Typography,
 } from '@mui/material';
 
-import {
-  PersonOutline,
-  Phone,
-  ShoppingCart,
-  Menu as MenuIcon,
-} from '@mui/icons-material';
+import Phone from '@mui/icons-material/Phone';
+import ShoppingCart from '@mui/icons-material/ShoppingCart';
+import MenuIcon from '@mui/icons-material/Menu';
 import Image from 'next/image';
 import IconLinkButton from '../custom-components/IconLinkButton';
 import LinkButton from '../custom-components/LinkButton';

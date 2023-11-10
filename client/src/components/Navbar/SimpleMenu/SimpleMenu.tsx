@@ -4,12 +4,10 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import { useRouter } from 'next/router';
-import {
-  PersonOutline,
-  LocalShipping,
-  Person,
-  Settings,
-} from '@mui/icons-material';
+import PersonOutline from '@mui/icons-material/PersonOutline';
+import LocalShipping from '@mui/icons-material/LocalShipping';
+import Person from '@mui/icons-material/Person';
+import Settings from '@mui/icons-material/Settings';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
 const SimpleMenu: React.FC = () => {

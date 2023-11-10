@@ -30,21 +30,25 @@ export default function Categories() {
             src={PhonesCategory}
             heading="ΚΙΝΗΤΑ ΤΗΛΕΦΩΝΑ"
             dest="/category/smartphones"
+            alt="smartphones"
           />
           <CategoryItem
             src={TabletCategory}
             heading="TABLETS"
             dest="/category/tablets"
+            alt="tablets"
           />
           <CategoryItem
             src={AccessoriesCategory}
             heading="ΑΞΕΣΟΥΑΡ"
             dest="/category/accessories"
+            alt="accessories"
           />
           <CategoryItem
             src={SmartWatchCategory}
             heading="SMARTWATCHES"
             dest="/category/smartwatches"
+            alt="smartwatches"
           />
         </Grid>
       </Container>

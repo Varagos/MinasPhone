@@ -13,8 +13,8 @@ interface CategoryItemProps {
 }
 
 const Card = styled(Grid)({
-  // display: 'flex',
-  // flexDirection: 'column',
+  display: 'flex',
+  flexDirection: 'column',
 });
 
 const CardContent = styled('div')({
@@ -52,14 +52,7 @@ const CardTextContainer = styled('div')({
 
 const CategoryItem = ({ src, heading, dest, alt }: CategoryItemProps) => {
   return (
-    <Card
-      item
-      xs={12}
-      md={3}
-      direction={'column'}
-      alignContent="center"
-      justifyContent="center"
-    >
+    <Card item xs={12} md={3} alignContent="center" justifyContent="center">
       <Link href={dest} style={{ height: '100%', textDecoration: 'none' }}>
         <CardContent>
           <CardImage src={src} alt="smartphones" />

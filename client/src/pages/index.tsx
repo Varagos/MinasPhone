@@ -19,6 +19,10 @@ import {
   Product,
   ProductPaginatedResponse,
 } from '@/api/types/types';
+import Hero from '@/components/Landing/HeroSection';
+import StoreLocation from '@/components/Landing/StoreLocation';
+import ServicesSection from '@/components/Landing/Services';
+import ContactUsSection from '@/components/Landing/ContactUs';
 
 interface LandingProps {
   categories: CategoryPaginatedResponse;
@@ -86,7 +90,9 @@ export default function Landing({ categories, products }: LandingProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MainContainer>
-        <SimpleSlider />
+        <Hero />
+
+        {/* <SimpleSlider /> */}
 
         <section>
           <Container>
@@ -195,6 +201,9 @@ export default function Landing({ categories, products }: LandingProps) {
             </Grid>
           </Box>
         </section>
+        <ServicesSection />
+        <StoreLocation />
+        <ContactUsSection />
       </MainContainer>
     </>
   );

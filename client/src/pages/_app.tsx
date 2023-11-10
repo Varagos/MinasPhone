@@ -13,8 +13,7 @@ import SuperTokensWebJs from 'supertokens-web-js';
 
 if (typeof window !== 'undefined') {
   // we only want to call this init function on the frontend, so we check typeof window !== 'undefined'
-  SuperTokensReact.init(frontendConfig());
-  // SuperTokensWebJs.init(frontendConfig());
+  // SuperTokensReact.init(frontendConfig());
 }
 
 function MyApp({ Component, pageProps }: AppProps) {

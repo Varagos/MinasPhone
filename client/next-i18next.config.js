@@ -5,5 +5,7 @@ module.exports = {
         locales: ['el', 'en', 'ar'],
         defaultLocale: 'el',
         keySeparator: '.',
+        // For now ignore the Accept-Language header
+        localeDetection: false
     },
 }

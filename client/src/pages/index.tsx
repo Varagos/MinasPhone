@@ -109,7 +109,7 @@ export default function Landing({ categories, products }: LandingProps) {
         {/* <SimpleSlider /> */}
 
         <section>
-          <Container>
+          <Container maxWidth={'lg'}>
             <Box my={8}>
               <Typography variant="h4" align="center" gutterBottom>
                 <SectionTitle>ΔΗΜΟΦΙΛΕΙΣ ΚΑΤΗΓΟΡΙΕΣ</SectionTitle>
@@ -144,7 +144,7 @@ export default function Landing({ categories, products }: LandingProps) {
               alignItems="stretch"
             >
               {shuffledProducts.slice(0, 4).map((product) => (
-                <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+                <Grid item key={product.id} xs={8} sm={6} md={4} lg={3}>
                   <ProductCard product={product} />
                 </Grid>
               ))}

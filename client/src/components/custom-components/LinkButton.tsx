@@ -10,12 +10,13 @@ const LinkButton = ({ href, children, ...rest }: CustomButtonProps) => {
     <Button
       {...(rest as any)}
       component="a"
-      sx={{
-        textDecoration: 'none',
-        color: 'inherit',
-        '&:hover': { backgroundColor: 'primary.main' },
-        ...rest?.sx,
-      }}
+      sx={[
+        {
+          textDecoration: 'none',
+          color: 'inherit',
+        },
+        rest.sx,
+      ]}
       href={href}
       LinkComponent={Link}
     >

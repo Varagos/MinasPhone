@@ -18,8 +18,8 @@ const StoreLocation = () => {
   const { t } = useTranslation();
 
   return (
-    <section style={{ padding: 30 }}>
-      <Container maxWidth={false}>
+    <section style={{ padding: '50px 0' }}>
+      <Container maxWidth="lg">
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Box

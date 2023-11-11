@@ -1,5 +1,8 @@
 {
   "HELLO_WORLD": "Hello, World!",
+  "NAVBAR": {
+    "SEARCH_PLACEHOLDER": "Αναζήτηση"
+  },
   "LANDING": {
     "CTA_TITLE1": "Αναβαθμίστε το",
     "CTA_TITLE2": "Κινητό σας",
@@ -7,6 +10,7 @@
     "CTA_BUTTON": "Αγοράστε Τώρα"
   },
   "SERVICES": {
+    "TITLE": "Οι Υπηρεσίες μας",
     "SMARTPHONE_REPAIRS": {
       "TITLE": "Επισκευές Κινητών",
       "DESCRIPTION": "Ειδικευμένες υπηρεσίες επισκευής για να αντιμετωπίσουμε άμεσα τα τεχνικά και λογισμικά προβλήματα του κινητού σας."

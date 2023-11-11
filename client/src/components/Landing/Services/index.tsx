@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Grid, Paper, Typography, Button } from '@mui/material';
+import Container from '@mui/material/Container';
 import repairs from '../../../../public/services-repair.jpg';
 import upgrades from '../../../../public/services-upgrade.jpg';
 import screen from '../../../../public/services-screen.jpg';
@@ -124,33 +125,34 @@ const ServicesSection = () => {
     <section
       style={{
         position: 'relative',
-        padding: 30,
         backgroundColor: '#f5f5f5',
       }}
     >
-      <Grid container spacing={2} sx={{ paddingBottom: 20 }}>
-        <Grid item xs={12}>
-          <Typography variant="h2" align="center" gutterBottom>
-            Services
-          </Typography>
-        </Grid>
-        {services.map((service, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <ServiceItem>
-              <ServiceImage src={service.imageUrl} alt={service.title} />
-              <Box sx={{ display: 'flex' }}>
-                <Box marginRight={2}>{service.icon}</Box>
-                <Typography variant="h6" gutterBottom>
-                  {service.title}
-                </Typography>
-              </Box>
-              <Typography variant="body1" align="center" gutterBottom>
-                {service.description}
-              </Typography>
-            </ServiceItem>
+      <Container maxWidth="lg">
+        <Grid container spacing={4} sx={{ paddingBottom: 20 }}>
+          <Grid item xs={12}>
+            <Typography variant="h2" align="center" gutterBottom>
+              {t('SERVICES.TITLE')}
+            </Typography>
           </Grid>
-        ))}
-      </Grid>
+          {services.map((service, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <ServiceItem>
+                <ServiceImage src={service.imageUrl} alt={service.title} />
+                <Box sx={{ display: 'flex' }}>
+                  <Box marginRight={2}>{service.icon}</Box>
+                  <Typography variant="h6" gutterBottom>
+                    {service.title}
+                  </Typography>
+                </Box>
+                <Typography variant="body1" align="center" gutterBottom>
+                  {service.description}
+                </Typography>
+              </ServiceItem>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
       {/* TODO add a nice curve here */}
       <ShapeDivider />
     </section>

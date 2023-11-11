@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import newLogo from '../../../public/free-logo-design_1.png';
-import useStyles from './styles';
 import AppDrawer from './AppDrawer/AppDrawer';
 import {
   AppBar,
@@ -12,11 +11,9 @@ import {
   Box,
   ClickAwayListener,
   IconButton,
-  InputBase,
+  SxProps,
   Toolbar,
   Typography,
-  alpha,
-  styled,
 } from '@mui/material';
 
 import Phone from '@mui/icons-material/Phone';
@@ -25,13 +22,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Image from 'next/image';
 import IconLinkButton from '../custom-components/IconLinkButton';
 import LinkButton from '../custom-components/LinkButton';
-import LogoutButton from './Logout/LogoutButton';
-import { api } from '@/api';
-import { Cart } from '@/api/types/cart';
 import { useCart } from '@/hooks/useCart';
 import SimpleMenu from './SimpleMenu/SimpleMenu';
-import SearchIcon from '@mui/icons-material/Search';
 import { SearchInputField, SearchPromptIcon } from './Search';
+import AppTheme from '@/lib/theme';
+import theme from '@/lib/theme';
 
 const FEATURED_CATEGORIES = [
   {
@@ -53,7 +48,6 @@ const FEATURED_CATEGORIES = [
 ];
 
 const NewNavbar = () => {
-  const classes = useStyles();
   const router = useRouter();
   const currentPath = router.asPath;
   const [anchor, setAnchor] = useState(false);
@@ -81,78 +75,145 @@ const NewNavbar = () => {
     setAnchor(open);
   };
 
-  function activeClass(path: any): any {
-    if (currentPath === path) {
-      return {
-        color: '#ffce2a',
-        '&:hover': {
-          backgroundColor: '#ffff',
-        },
-      };
-    }
+  function activeClass(
+    path: string,
+    theme: typeof AppTheme
+  ): Record<string, any> {
+    const isActive = currentPath === path;
 
     return {
       textDecoration: 'none',
-      color: 'black',
-      transition: 'all .5s ease-in-out',
+      color: isActive
+        ? theme.palette.primary.dark
+        : theme.palette.primary.contrastText,
+      borderBottom: isActive
+        ? `4.5px solid ${theme.palette.primary.contrastText}`
+        : 'none', // Highlight the active item with an underline
+      paddingBottom: '0.5rem',
+      transition: 'all .7s ease-in-out',
+      fontWeight: isActive ? 'bold' : 'normal',
       '&:hover': {
-        color: '#ffce2a',
-        backgroundColor: '#ffff',
+        color: isActive
+          ? theme.palette.primary.dark
+          : theme.palette.primary.dark,
+        backgroundColor: isActive
+          ? 'transparent'
+          : theme.palette.secondary.main,
       },
     };
   }
 
+  // if (currentPath === path) {
+  //   return {
+  //     color: '#ffce2a',
+  //     '&:hover': {
+  //       backgroundColor: '#ffff',
+  //     },
+  //   };
+  // }
+
+  // return {
+  //   textDecoration: 'none',
+  //   color: 'black',
+  //   transition: 'all .5s ease-in-out',
+  //   '&:hover': {
+  //     color: '#ffce2a',
+  //     backgroundColor: '#ffff',
+  //   },
+  // };
+  // }
+
   return (
-    <div>
+    <nav>
       <AppBar
         position={currentPath === '/' ? 'sticky' : 'static'}
-        className={classes.helperBar}
-        color="secondary"
+        color="secondary" // This will use the styleOverrides for colorSecondary
         sx={{
           display: { xs: 'none', md: 'block' },
           px: 8,
+          minHeight: '48px',
         }}
       >
-        <Toolbar variant="dense" className={classes.helperToolBar}>
+        <Toolbar
+          variant="dense"
+          sx={{
+            justifyContent: 'space-between',
+          }}
+        >
           <Box>
             <Phone fontSize="inherit" color="primary" sx={{ color: 'black' }} />
             <Box pl={2} style={{ display: 'inline-block' }}>
-              <Typography variant="h6">210 9224 764</Typography>
+              <Typography
+                variant="h6"
+                sx={(theme) => ({
+                  color: theme.palette.secondary.contrastText,
+                })}
+              >
+                210 9224 764
+              </Typography>
             </Box>
           </Box>
         </Toolbar>
       </AppBar>
       <ClickAwayListener onClickAway={handleCloseSearch}>
-        <AppBar position="static" className={classes.appBar} color="inherit">
+        <AppBar
+          position="static"
+          color="inherit" // This will use the styleOverrides for colorInherit
+          sx={(theme) => ({
+            boxShadow: 'none',
+            borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+            [theme.breakpoints.up('sm')]: {
+              width: `calc(100% - ${0}px)`, // 0 = drawerWidth
+              marginLeft: 0,
+            },
+          })}
+        >
           <Toolbar>
-            <Box className={classes.title} color="inherit">
+            <Box
+              color="inherit"
+              sx={{ flexGrow: 1, display: 'flex', alignItems: 'flex-end' }}
+            >
               <Link href="/">
                 <Image
                   src={newLogo}
                   alt="MinasPhone"
-                  className={classes.image}
+                  style={{ marginRight: '10px', display: 'block' }}
                 />
               </Link>
             </Box>
 
             {!searchActive && (
               <>
-                <div className={classes.grow} />
-                <Box mr={12} className={classes.standardNavLinks}>
-                  <LinkButton href="/" sx={activeClass('/')}>
+                <div
+                  style={{
+                    flexGrow: 1,
+                  }}
+                />
+                <Box
+                  mr={12}
+                  sx={(theme) => ({
+                    [theme.breakpoints.down('sm')]: {
+                      display: 'none',
+                    },
+                  })}
+                >
+                  <LinkButton href="/" sx={(theme) => activeClass('/', theme)}>
                     ΑΡΧΙΚΗ
                   </LinkButton>
                   {FEATURED_CATEGORIES.map((category) => (
                     <LinkButton
                       key={category.title}
                       href={category.href}
-                      sx={activeClass(category.href)}
+                      sx={(theme) => activeClass(category.href, theme)}
                     >
                       {category.title}
                     </LinkButton>
                   ))}
 
-                  <LinkButton href="/products" sx={activeClass('/products')}>
+                  <LinkButton
+                    href="/products"
+                    sx={(theme) => activeClass('/products', theme)}
+                  >
                     ΟΛΑ ΤΑ ΠΡΟΪΟΝΤΑ
                   </LinkButton>
                 </Box>
@@ -168,8 +229,18 @@ const NewNavbar = () => {
             {currentPath !== '/cart' && (
               <div>
                 <IconLinkButton href="/cart" aria-label="Show cart items">
-                  <Badge badgeContent={cart?.totalItems} color="secondary">
-                    <ShoppingCart style={{ color: 'black' }} />
+                  <Badge
+                    badgeContent={cart?.totalItems}
+                    color="secondary"
+                    sx={(theme) => ({
+                      '& .MuiBadge-badge': {
+                        backgroundColor: theme.palette.primary.dark, // SpaceCadetNavy
+                        color: theme.palette.primary.contrastText, // Assuming CulturedWhite
+                        // Additional styling to adjust the position or size of the badge
+                      },
+                    })}
+                  >
+                    <ShoppingCart color="secondary" />
                   </Badge>
                 </IconLinkButton>
               </div>
@@ -177,11 +248,13 @@ const NewNavbar = () => {
             <IconButton
               color="inherit"
               aria-label="menu"
-              className={classes.menuButton}
               onClick={toggleDrawer(true)}
-              sx={{
+              sx={(theme) => ({
                 display: { xs: 'block', md: 'none' },
-              }}
+                [theme.breakpoints.up('md')]: {
+                  display: 'none',
+                },
+              })}
             >
               <Badge>
                 <MenuIcon fontSize="large" />
@@ -191,7 +264,7 @@ const NewNavbar = () => {
           </Toolbar>
         </AppBar>
       </ClickAwayListener>
-    </div>
+    </nav>
   );
 };
 

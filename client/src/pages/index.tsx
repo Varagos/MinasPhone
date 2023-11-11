@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image, { StaticImageData } from 'next/image';
 import { useEffect, useState } from 'react';
-import { Container, Typography, Grid, Box } from '@mui/material';
+import { Typography, Grid, Box } from '@mui/material';
 
 import { MainContainer, SectionTitle } from '@/components/Landing/styles';
 import CategoryItem from '@/components/Landing/CategoryItem/CategoryItem';
@@ -11,11 +11,9 @@ import TabletCategory from '../../public/tablet-category.jpg';
 import SmartWatchCategory from '../../public/smartwatch-category.jpg';
 import PhonesCategory from '../../public/iphone-12-service.png';
 import AccessoriesCategory from '../../public/Hnet-com-image.png';
-import SimpleSlider from '../components/Landing/Slider/Slider';
 import { api } from '@/api/index';
-import { GetServerSideProps, GetStaticPropsContext } from 'next';
+import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
 import {
   CategoryPaginatedResponse,
   Product,
@@ -25,6 +23,7 @@ import Hero from '@/components/Landing/HeroSection';
 import StoreLocation from '@/components/Landing/StoreLocation';
 import ServicesSection from '@/components/Landing/Services';
 import ContactUsSection from '@/components/Landing/ContactUs';
+import Container from '@mui/material/Container';
 
 interface LandingProps {
   categories: CategoryPaginatedResponse;
@@ -154,67 +153,69 @@ export default function Landing({ categories, products }: LandingProps) {
         </section>
 
         <section>
-          <Box py={16}>
-            <Typography variant="h4" align="center" gutterBottom>
-              <SectionTitle>ΕΠΙΣΚΕΥΕΣ ΤΗΛΕΦΩΝΩΝ</SectionTitle>
-            </Typography>
-            <Grid container justifyContent="center" spacing={3}>
-              <Grid
-                container
-                item
-                xs={12}
-                md={6}
-                alignContent="center"
-                justifyContent="center"
-              >
-                <Image
-                  src={PhoneFix}
-                  alt="phone repairs"
-                  style={{ width: '90%', height: 'auto' }}
-                />
-              </Grid>
-              <Grid
-                container
-                item
-                xs={12}
-                md={6}
-                alignContent="center"
-                justifyContent="center"
-              >
-                <Container>
-                  <Typography variant="h6" align="left" gutterBottom>
-                    ΕΠΙΣΚΕΥΕΣ ΤΗΛΕΦΩΝΩΝ
-                  </Typography>
-                  <Typography>
-                    Σε μια εποχή όπου κυριαρχούν τα πανάκριβα smartphones με τις
-                    αμέτρητες λειτουργίες, το παραδοσιακό κλασικό κινητό
-                    τηλέφωνο καταφέρνει να διατηρεί την αξία του, κι αυτό δεν
-                    είναι καθόλου τυχαίο.
-                  </Typography>
-                  <Typography variant="h6" align="left" gutterBottom>
-                    Υψηλής ποιότητας ανταλλακτικά
-                  </Typography>
-                  <Typography>
-                    Χρησιμοποιούμε για την επισκευή κινητών πάντα τα καλύτερα
-                    ανταλλακτικά που υπάρχουν στην αγορά. Κριτήρια για την
-                    επιλογή τους, είναι η απόδοση και η αντοχή. Ο λόγος είναι
-                    πως επιθυμούμε σε κάθε μας επισκευή το καλύτερο δυνατό
-                    αποτέλεσμα και με διάρκεια στο χρόνο.
-                  </Typography>
+          <Container>
+            <Box my={16}>
+              <Typography variant="h4" align="center" gutterBottom>
+                <SectionTitle>ΕΠΙΣΚΕΥΕΣ ΤΗΛΕΦΩΝΩΝ</SectionTitle>
+              </Typography>
+              <Grid container justifyContent="center" spacing={3}>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  md={6}
+                  alignContent="center"
+                  justifyContent="center"
+                >
+                  <Image
+                    src={PhoneFix}
+                    alt="phone repairs"
+                    style={{ width: '90%', height: 'auto' }}
+                  />
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  md={6}
+                  alignContent="center"
+                  justifyContent="center"
+                >
+                  <Container>
+                    <Typography variant="h6" align="left" gutterBottom>
+                      ΕΠΙΣΚΕΥΕΣ ΤΗΛΕΦΩΝΩΝ
+                    </Typography>
+                    <Typography>
+                      Σε μια εποχή όπου κυριαρχούν τα πανάκριβα smartphones με
+                      τις αμέτρητες λειτουργίες, το παραδοσιακό κλασικό κινητό
+                      τηλέφωνο καταφέρνει να διατηρεί την αξία του, κι αυτό δεν
+                      είναι καθόλου τυχαίο.
+                    </Typography>
+                    <Typography variant="h6" align="left" gutterBottom>
+                      Υψηλής ποιότητας ανταλλακτικά
+                    </Typography>
+                    <Typography>
+                      Χρησιμοποιούμε για την επισκευή κινητών πάντα τα καλύτερα
+                      ανταλλακτικά που υπάρχουν στην αγορά. Κριτήρια για την
+                      επιλογή τους, είναι η απόδοση και η αντοχή. Ο λόγος είναι
+                      πως επιθυμούμε σε κάθε μας επισκευή το καλύτερο δυνατό
+                      αποτέλεσμα και με διάρκεια στο χρόνο.
+                    </Typography>
 
-                  <Typography variant="h6" align="left" gutterBottom>
-                    Οικονομικές τιμές
-                  </Typography>
-                  <Typography>
-                    Τις ποιοτικές μας υπηρεσίες έχουμε φροντίσει και τις
-                    προσφέρουμε στις καλύτερες δυνατές τιμές της αγοράς. Στο
-                    κατάστημα μας πραγματοποιούμε τις πιο συμφέρουσες επισκευές
-                    κινητών τηλεφώνων.
-                  </Typography>
-                </Container>
+                    <Typography variant="h6" align="left" gutterBottom>
+                      Οικονομικές τιμές
+                    </Typography>
+                    <Typography>
+                      Τις ποιοτικές μας υπηρεσίες έχουμε φροντίσει και τις
+                      προσφέρουμε στις καλύτερες δυνατές τιμές της αγοράς. Στο
+                      κατάστημα μας πραγματοποιούμε τις πιο συμφέρουσες
+                      επισκευές κινητών τηλεφώνων.
+                    </Typography>
+                  </Container>
+                </Grid>
               </Grid>
-            </Grid>
-          </Box>
+            </Box>
+          </Container>
         </section>
         <ServicesSection />
         <StoreLocation />

@@ -42,8 +42,8 @@ const SimpleMenu: React.FC = () => {
           style={{
             verticalAlign: 'bottom',
             paddingBottom: 1,
-            color: 'black',
           }}
+          color="secondary"
         />
       </IconButton>
       <Menu

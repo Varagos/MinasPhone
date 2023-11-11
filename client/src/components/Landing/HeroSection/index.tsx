@@ -9,7 +9,7 @@ const HeroSection = styled('section')(({ theme }) => ({
   backgroundImage: `url(${bg.src})`,
   backgroundSize: '100% auto',
   backgroundRepeat: 'no-repeat',
-  minHeight: '80vh',
+  // minHeight: '80vh',
   display: 'flex',
   flexDirection: 'row',
   padding: '7%',
@@ -32,6 +32,7 @@ const HeroSection = styled('section')(({ theme }) => ({
 
   [theme.breakpoints.down('md')]: {
     padding: theme.spacing(0), // Smaller padding on smaller screens
+    // minHeight: '60vh',
   },
 }));
 

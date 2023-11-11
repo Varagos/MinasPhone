@@ -1,5 +1,8 @@
 {
   "HELLO_WORLD": "Hello, World!",
+  "NAVBAR": {
+    "SEARCH_PLACEHOLDER": "Search for products..."
+  },
   "LANDING": {
     "CTA_TITLE1": "Upgrade Your",
     "CTA_TITLE2": "Smartphone",
@@ -7,6 +10,7 @@
     "CTA_BUTTON": "Shop Now"
   },
   "SERVICES": {
+    "TITLE": "Our Services",
     "SMARTPHONE_REPAIRS": {
       "TITLE": "Smartphone Repairs",
       "DESCRIPTION": "Expert repair services to fix your smartphone's hardware and software issues promptly."

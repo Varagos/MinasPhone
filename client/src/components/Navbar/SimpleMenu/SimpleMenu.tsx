@@ -27,6 +27,8 @@ const SimpleMenu: React.FC = () => {
     handleClose();
   };
 
+  // {authStatus === 'signedIn' && <LogoutButton />}
+
   return (
     <div>
       <IconButton

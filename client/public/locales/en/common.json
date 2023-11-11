@@ -1,0 +1,49 @@
+{
+  "HELLO_WORLD": "Hello, World!",
+  "LANDING": {
+    "CTA_TITLE1": "Upgrade Your",
+    "CTA_TITLE2": "Smartphone",
+    "CTA_DESCRIPTION": "Discover the latest electronics at MinasPhone and enhance your mobile experience.",
+    "CTA_BUTTON": "Shop Now"
+  },
+  "SERVICES": {
+    "SMARTPHONE_REPAIRS": {
+      "TITLE": "Smartphone Repairs",
+      "DESCRIPTION": "Expert repair services to fix your smartphone's hardware and software issues promptly."
+    },
+    "DEVICE_UPGRADES": {
+      "TITLE": "Device Upgrades",
+      "DESCRIPTION": "Elevate your tech experience with our latest device upgrades for improved performance and features."
+    },
+    "SCREEN_REPLACEMENTS": {
+      "TITLE": "Screen Replacements",
+      "DESCRIPTION": "Get quick and reliable screen replacement services for cracked or unresponsive touchscreens."
+    },
+    "BATTERY_REPLACEMENTS": {
+      "TITLE": "Battery Replacements",
+      "DESCRIPTION": "Extend the life of your devices with our professional battery replacement services."
+    },
+    "ACCESSORIES": {
+      "TITLE": "Accessories",
+      "DESCRIPTION": "Discover a wide range of accessories to complement and enhance your electronic devices."
+    },
+    "TRADE_INS": {
+      "TITLE": "Trade-Ins",
+      "DESCRIPTION": "Swap your old devices for store credit towards cutting-edge tech, or simply sell them for a hassle-free cash return."
+    }
+  },
+  "LOCATION": {
+    "TITLE": "Location",
+    "CONTENT": "Athens, Koukaki"
+  },
+  "CONTACT_US": {
+    "TITLE": "Contact Us Today",
+    "DESCRIPTION": "Fill out the form below to get in touch with our team. We're here to answer any questions you may have and provide expert advice for all your electronics smartphone needs.",
+    "FORM": {
+      "NAME_LABEL": "Name",
+      "EMAIL_LABEL": "E-mail",
+      "MESSAGE_LABEL": "Message",
+      "SEND_BUTTON": "Send"
+    }
+  }
+}

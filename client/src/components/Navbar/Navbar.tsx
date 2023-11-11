@@ -10,11 +10,13 @@ import {
   AppBar,
   Badge,
   Box,
-  Button,
+  ClickAwayListener,
   IconButton,
-  Snackbar,
+  InputBase,
   Toolbar,
   Typography,
+  alpha,
+  styled,
 } from '@mui/material';
 
 import Phone from '@mui/icons-material/Phone';
@@ -28,6 +30,8 @@ import { api } from '@/api';
 import { Cart } from '@/api/types/cart';
 import { useCart } from '@/hooks/useCart';
 import SimpleMenu from './SimpleMenu/SimpleMenu';
+import SearchIcon from '@mui/icons-material/Search';
+import { SearchInputField, SearchPromptIcon } from './Search';
 
 const FEATURED_CATEGORIES = [
   {
@@ -52,29 +56,19 @@ const NewNavbar = () => {
   const classes = useStyles();
   const router = useRouter();
   const currentPath = router.asPath;
-
   const [anchor, setAnchor] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const user = { role: 'notAdmin' };
-  const authStatus: string = 'todo';
-  const { cart, setCart } = useCart();
 
-  // const authStatus = useAppSelector((state) => state.user.status);
-  // const user = useAppSelector((state) => state.user.data);
-  //   const dispatch = useAppDispatch();
-  useEffect(() => {
-    (async () => {
-      //   const res = await doesSessionExist();
-      //   setIsLoggedIn(res);
-      // console.log('RES IS ', res);
-      //   if (res === true) {
-      //     dispatch(userSignedIn());
-      //     const userId = await Session.getUserId();
-      //     const accessTokenPayload = await Session.getAccessTokenPayloadSecurely();
-      //     dispatch(userFetched({ ...accessTokenPayload, userId }));
-      //   } else dispatch(userSignedOut());
-    })();
-  }, []);
+  const [searchActive, setSearchActive] = useState(false);
+
+  const handleSearchToggle = () => {
+    setSearchActive((prev) => !prev);
+  };
+
+  const handleCloseSearch = () => {
+    setSearchActive(false);
+  };
+
+  const { cart } = useCart();
 
   const toggleDrawer = (open: any) => (event: any) => {
     if (
@@ -108,8 +102,6 @@ const NewNavbar = () => {
     };
   }
 
-  //     {/* <AdminPanelSettingsIcon fontSize="medium" style={{ verticalAlign: 'bottom', paddingBottom: 1 }} /> */}
-
   return (
     <div>
       <AppBar
@@ -130,69 +122,75 @@ const NewNavbar = () => {
           </Box>
         </Toolbar>
       </AppBar>
-      <AppBar position="static" className={classes.appBar} color="inherit">
-        <Toolbar>
-          <Box className={classes.title} color="inherit">
-            <Link href="/">
-              <Image src={newLogo} alt="MinasPhone" className={classes.image} />
-            </Link>
-          </Box>
-          <div className={classes.grow} />
-          <Box mr={12} className={classes.standardNavLinks}>
-            <LinkButton href="/" sx={activeClass('/')}>
-              ΑΡΧΙΚΗ
-            </LinkButton>
-            {FEATURED_CATEGORIES.map((category) => (
-              <LinkButton
-                key={category.title}
-                href={category.href}
-                sx={activeClass(category.href)}
-              >
-                {category.title}
-              </LinkButton>
-            ))}
+      <ClickAwayListener onClickAway={handleCloseSearch}>
+        <AppBar position="static" className={classes.appBar} color="inherit">
+          <Toolbar>
+            <Box className={classes.title} color="inherit">
+              <Link href="/">
+                <Image
+                  src={newLogo}
+                  alt="MinasPhone"
+                  className={classes.image}
+                />
+              </Link>
+            </Box>
 
-            <LinkButton href="/products" sx={activeClass('/products')}>
-              ΟΛΑ ΤΑ ΠΡΟΪΟΝΤΑ
-            </LinkButton>
-          </Box>
-          <div>
-            {user?.role === 'admin' && (
-              <IconLinkButton
-                aria-label="Admin panel"
-                color="inherit"
-                href="/dashboard"
-              ></IconLinkButton>
+            {!searchActive && (
+              <>
+                <div className={classes.grow} />
+                <Box mr={12} className={classes.standardNavLinks}>
+                  <LinkButton href="/" sx={activeClass('/')}>
+                    ΑΡΧΙΚΗ
+                  </LinkButton>
+                  {FEATURED_CATEGORIES.map((category) => (
+                    <LinkButton
+                      key={category.title}
+                      href={category.href}
+                      sx={activeClass(category.href)}
+                    >
+                      {category.title}
+                    </LinkButton>
+                  ))}
+
+                  <LinkButton href="/products" sx={activeClass('/products')}>
+                    ΟΛΑ ΤΑ ΠΡΟΪΟΝΤΑ
+                  </LinkButton>
+                </Box>
+              </>
             )}
-            {authStatus === 'signedIn' && <LogoutButton />}
-          </div>
+            {searchActive ? (
+              <SearchInputField />
+            ) : (
+              <SearchPromptIcon handleSearchToggle={handleSearchToggle} />
+            )}
 
-          <SimpleMenu />
-          {currentPath !== '/cart' && (
-            <div>
-              <IconLinkButton href="/cart" aria-label="Show cart items">
-                <Badge badgeContent={cart?.totalItems} color="secondary">
-                  <ShoppingCart style={{ color: 'black' }} />
-                </Badge>
-              </IconLinkButton>
-            </div>
-          )}
-          <IconButton
-            color="inherit"
-            aria-label="menu"
-            className={classes.menuButton}
-            onClick={toggleDrawer(true)}
-            sx={{
-              display: { xs: 'block', md: 'none' },
-            }}
-          >
-            <Badge>
-              <MenuIcon fontSize="large" />
-            </Badge>
-          </IconButton>
-          <AppDrawer anchor={anchor} toggleDrawer={toggleDrawer} />
-        </Toolbar>
-      </AppBar>
+            <SimpleMenu />
+            {currentPath !== '/cart' && (
+              <div>
+                <IconLinkButton href="/cart" aria-label="Show cart items">
+                  <Badge badgeContent={cart?.totalItems} color="secondary">
+                    <ShoppingCart style={{ color: 'black' }} />
+                  </Badge>
+                </IconLinkButton>
+              </div>
+            )}
+            <IconButton
+              color="inherit"
+              aria-label="menu"
+              className={classes.menuButton}
+              onClick={toggleDrawer(true)}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              <Badge>
+                <MenuIcon fontSize="large" />
+              </Badge>
+            </IconButton>
+            <AppDrawer anchor={anchor} toggleDrawer={toggleDrawer} />
+          </Toolbar>
+        </AppBar>
+      </ClickAwayListener>
     </div>
   );
 };

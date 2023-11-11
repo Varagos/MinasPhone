@@ -1,5 +1,14 @@
 import { createTheme } from '@mui/material/styles';
 
+//  New color theme Pallete (Winter),
+
+// https://colorhunt.co/palette/f9f7f7dbe2ef3f72af112d4e
+
+const C1 = '#F9F7F7'; // Whitish
+const C2 = '#DBE2EF'; // Very light blue
+const C3 = '#3F72AF'; // Blue
+const C4 = '#112D4E'; // Navy
+
 const theme = createTheme({
   palette: {
     // Primary color - used mainly for navigation, buttons, etc.

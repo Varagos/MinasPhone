@@ -24,7 +24,7 @@ const CardContent = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: 'white',
-  '-webkit-transition': 'transform 1s, color .4s',
+  WebkitTransition: 'transform 1s, color .4s',
   '&:hover': {
     borderColor: '#ffce2a',
     transform: 'translateY(-10px)',

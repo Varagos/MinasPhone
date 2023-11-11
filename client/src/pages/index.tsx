@@ -13,7 +13,9 @@ import PhonesCategory from '../../public/iphone-12-service.png';
 import AccessoriesCategory from '../../public/Hnet-com-image.png';
 import SimpleSlider from '../components/Landing/Slider/Slider';
 import { api } from '@/api/index';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, GetStaticPropsContext } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 import {
   CategoryPaginatedResponse,
   Product,
@@ -29,13 +31,26 @@ interface LandingProps {
   products: ProductPaginatedResponse;
 }
 
-export const getServerSideProps: GetServerSideProps<
-  LandingProps
-> = async () => {
+export const getServerSideProps: GetServerSideProps<LandingProps> = async (
+  context
+) => {
   const categories = await api.categories.findMany({ limit: 10, page: 0 });
   console.log({ categories });
   const products = await api.products.findMany({ limit: 10, page: 0 });
-  return { props: { categories, products } };
+
+  const { locale } = context;
+  if (!locale) {
+    throw new Error('locale is undefined');
+  }
+
+  return {
+    props: {
+      categories,
+      products,
+      // pass the translation props to the page component
+      ...(await serverSideTranslations(locale)),
+    },
+  };
 };
 
 const LandingPageCategories: Array<{

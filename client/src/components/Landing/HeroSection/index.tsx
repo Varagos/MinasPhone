@@ -2,6 +2,7 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Typography, Button } from '@mui/material';
 import bg from '../../../../public/hero-section-apple-standing.jpeg';
+import { useTranslation } from 'next-i18next';
 
 const HeroSection = styled('section')(({ theme }) => ({
   width: '100%',
@@ -146,18 +147,20 @@ export function ShapeDividerBottom() {
 }
 
 export default function Hero() {
+  const { t } = useTranslation();
   return (
     <HeroSection>
       <HeroContent>
         <HeroText variant="h2">
-          Upgrade Your <DesktopLineBreak /> Smartphone
+          {t('LANDING.CTA_TITLE1')} <DesktopLineBreak />{' '}
+          {t('LANDING.CTA_TITLE2')}
+          {/* Upgrade Your <DesktopLineBreak /> Smartphone */}
         </HeroText>
 
         <HeroSubText variant="subtitle1">
-          Discover the latest electronics at MinasPhone and enhance your mobile
-          experience.
+          {t('LANDING.CTA_DESCRIPTION')}
         </HeroSubText>
-        <HeroButton variant="contained">Shop Now</HeroButton>
+        <HeroButton variant="contained">{t('LANDING.CTA_BUTTON')}</HeroButton>
       </HeroContent>
       <ShapeDividerBottom />
     </HeroSection>

@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { useTranslation } from 'next-i18next';
 
 // Import the MapComponent with no SSR
 const StoreMap = dynamic(
@@ -14,6 +15,8 @@ const StoreMap = dynamic(
 );
 
 const StoreLocation = () => {
+  const { t } = useTranslation();
+
   return (
     <section style={{ padding: 30 }}>
       <Container maxWidth={false}>
@@ -29,9 +32,9 @@ const StoreLocation = () => {
               }}
             >
               <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
-                Τοποθεσία
+                {t('LOCATION.TITLE')}
               </Typography>
-              <Typography>Αθήνα, Κουκάκι</Typography>
+              <Typography>{t('LOCATION.CONTENT')}</Typography>
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>

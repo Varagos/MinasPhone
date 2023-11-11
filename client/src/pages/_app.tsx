@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import { appWithTranslation } from 'next-i18next';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/lib/theme';
@@ -23,4 +24,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);

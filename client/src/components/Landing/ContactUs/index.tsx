@@ -8,6 +8,7 @@ import {
   Box,
   FormLabel,
 } from '@mui/material';
+import { useTranslation } from 'next-i18next';
 
 // Styled Components
 const ContactSection = styled(Box)(({ theme }) => ({
@@ -48,18 +49,16 @@ const ContactInfo = styled(Grid)(({ theme }) => ({
 
 // Component
 const ContactUsSection = () => {
+  const { t } = useTranslation();
+
   return (
     <ContactSection>
       <ContactGrid container spacing={2}>
         <ContactInfo item xs={12} md={5} paddingTop={8}>
           <Typography variant="h4" gutterBottom align="left">
-            Contact Us Today
+            {t('CONTACT_US.TITLE')}
           </Typography>
-          <Typography align="left">
-            Fill out the form below to get in touch with our team. We&apos;re
-            here to answer any questions you may have and provide expert advice
-            for all your electronics smartphone needs.
-          </Typography>
+          <Typography align="left">{t('CONTACT_US.DESCRIPTION')}</Typography>
         </ContactInfo>
         <Grid item xs={12} md={7}>
           <ContactForm>
@@ -70,18 +69,24 @@ const ContactUsSection = () => {
                 alignItems: 'stretch',
               }}
             >
-              <StyledTextField label="Name" variant="outlined" />
+              <StyledTextField
+                label={t('CONTACT_US.FORM.NAME_LABEL')}
+                variant="outlined"
+              />
               <div style={{ width: '40px' }}></div>
-              <StyledTextField label="E-mail" variant="outlined" />
+              <StyledTextField
+                label={t('CONTACT_US.FORM.EMAIL_LABEL')}
+                variant="outlined"
+              />
             </Box>
             <StyledTextField
-              label="Message"
+              label={t('CONTACT_US.FORM.MESSAGE_LABEL')}
               variant="outlined"
               multiline
               rows={4}
             />
             <SendButton variant="contained" color="primary">
-              Send
+              {t('CONTACT_US.FORM.SEND_BUTTON')}
             </SendButton>
           </ContactForm>
         </Grid>

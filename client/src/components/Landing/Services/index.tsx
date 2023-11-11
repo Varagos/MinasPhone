@@ -15,6 +15,7 @@ import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 import HeadsetIcon from '@mui/icons-material/Headset';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import Box from '@mui/system/Box';
+import { useTranslation } from 'next-i18next';
 
 const ServiceItem = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -36,51 +37,6 @@ const ServiceImage = styled('img')(({ theme }) => ({
 const StyledButton = styled(Button)(({ theme }) => ({
   marginTop: theme.spacing(1),
 }));
-
-const services = [
-  {
-    title: 'Smartphone Repairs',
-    imageUrl: repairs.src,
-    icon: <SmartphoneIcon />,
-    description:
-      "Expert repair services to fix your smartphone's hardware and software issues promptly.",
-  },
-  {
-    title: 'Device Upgrades',
-    imageUrl: upgrades.src,
-    icon: <UpgradeIcon />,
-    description:
-      'Elevate your tech experience with our latest device upgrades for improved performance and features.',
-  },
-  {
-    title: 'Screen Replacements',
-    imageUrl: screen.src,
-    description:
-      'Get quick and reliable screen replacement services for cracked or unresponsive touchscreens.',
-    icon: <ScreenReplacementIcon />,
-  },
-  {
-    title: 'Battery Replacements',
-    imageUrl: battery.src,
-    description:
-      'Extend the life of your devices with our professional battery replacement services.',
-    icon: <BatteryChargingFullIcon />,
-  },
-  {
-    title: 'Accessories',
-    imageUrl: accessories.src,
-    description:
-      'Discover a wide range of accessories to complement and enhance your electronic devices.',
-    icon: <HeadsetIcon />,
-  },
-  {
-    title: 'Trade-Ins',
-    imageUrl: tradeins.src,
-    description:
-      'Swap your old devices for store credit towards cutting-edge tech, or simply sell them for a hassle-free cash return.',
-    icon: <SwapHorizIcon />,
-  },
-];
 
 // Styled component for the shape divider container
 const CustomShapeDividerBottom = styled('div')({
@@ -122,6 +78,47 @@ const ShapeDivider = () => {
 };
 
 const ServicesSection = () => {
+  const { t } = useTranslation();
+
+  const services = [
+    {
+      title: t('SERVICES.SMARTPHONE_REPAIRS.TITLE'),
+      imageUrl: repairs.src,
+      icon: <SmartphoneIcon />,
+      description: t('SERVICES.SMARTPHONE_REPAIRS.DESCRIPTION'),
+    },
+    {
+      title: t('SERVICES.DEVICE_UPGRADES.TITLE'),
+      imageUrl: upgrades.src,
+      icon: <UpgradeIcon />,
+      description: t('SERVICES.DEVICE_UPGRADES.DESCRIPTION'),
+    },
+    {
+      title: t('SERVICES.SCREEN_REPLACEMENTS.TITLE'),
+      imageUrl: screen.src,
+      icon: <ScreenReplacementIcon />,
+      description: t('SERVICES.SCREEN_REPLACEMENTS.DESCRIPTION'),
+    },
+    {
+      title: t('SERVICES.BATTERY_REPLACEMENTS.TITLE'),
+      imageUrl: battery.src,
+      icon: <BatteryChargingFullIcon />,
+      description: t('SERVICES.BATTERY_REPLACEMENTS.DESCRIPTION'),
+    },
+    {
+      title: t('SERVICES.ACCESSORIES.TITLE'),
+      imageUrl: accessories.src,
+      icon: <HeadsetIcon />,
+      description: t('SERVICES.ACCESSORIES.DESCRIPTION'),
+    },
+    {
+      title: t('SERVICES.TRADE_INS.TITLE'),
+      imageUrl: tradeins.src,
+      icon: <SwapHorizIcon />,
+      description: t('SERVICES.TRADE_INS.DESCRIPTION'),
+    },
+  ];
+
   return (
     // Add very light gray background color
     <section

@@ -49,5 +49,10 @@
       "MESSAGE_LABEL": "Message",
       "SEND_BUTTON": "Send"
     }
+  },
+  "CHECKOUT": {
+    "NEXT_BUTTON": "Next",
+    "PREVIOUS_BUTTON": "Back",
+    "BACK_TO_CART": "Back to Cart"
   }
 }

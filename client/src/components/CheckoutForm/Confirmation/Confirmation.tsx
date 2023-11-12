@@ -6,17 +6,26 @@ import useStyles from './styles';
 import LinkButton from '@/components/custom-components/LinkButton';
 import { CheckoutCaptureResponse } from '@/types/checkout-capture-response';
 
-const Confirmation = () => {
+export type CheckoutOrderResponse = {
+  customer: {
+    firstName: string;
+    lastName: string;
+  };
+  orderReference: string;
+};
+
+type ConfirmationProps = {
+  orderResponse: CheckoutOrderResponse | null;
+};
+const Confirmation = ({ orderResponse }: ConfirmationProps) => {
   const classes = useStyles();
-  const orderResponse: CheckoutCaptureResponse | null = {
-    customer: {
-      firstname: 'Γιάννης',
-      lastname: 'Παπαδόπουλος',
-    },
-    customer_reference: '123456789',
-  } as CheckoutCaptureResponse;
-  const orderStatus: 'idle' | 'loading' | 'success' | 'failed' = 'success';
-  const errorMessage = '';
+  // const orderResponse: CheckoutCaptureResponse | null = {
+  //   customer: {
+  //     firstname: 'Γιάννης',
+  //     lastname: 'Παπαδόπουλος',
+  //   },
+  //   customer_reference: '123456789',
+  // } as CheckoutCaptureResponse;
   // const orderResponse = useAppSelector((state) => state.checkout.orderResponse);
   // const orderStatus = useAppSelector((state) => state.checkout.status);
   // const errorMessage = useAppSelector((state) => state.checkout.error);
@@ -30,16 +39,16 @@ const Confirmation = () => {
   //   );
   // }
 
-  return orderResponse?.customer ? (
+  return orderResponse !== null ? (
     <>
       <div>
         <Typography variant="h5">
           Σας ευχαριστούμε για την παραγγελία,{' '}
-          {orderResponse.customer.firstname} {orderResponse.customer.lastname}
+          {orderResponse.customer.firstName} {orderResponse.customer.lastName}
         </Typography>
         <Divider className={classes.divider} />
         <Typography variant="subtitle2">
-          Κωδικός παραγγελίας: {orderResponse.customer_reference}
+          Κωδικός παραγγελίας: {orderResponse.orderReference}
         </Typography>
       </div>
       <br />

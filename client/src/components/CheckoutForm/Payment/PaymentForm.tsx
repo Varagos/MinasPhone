@@ -16,7 +16,7 @@ import PaymentsSharpIcon from '@mui/icons-material/PaymentsSharp';
 import CreditCardSharpIcon from '@mui/icons-material/CreditCardSharp';
 
 import Review from '../Review';
-import CardPayment from './CardPayment';
+// import CardPayment from './CardPayment';
 import { CheckoutToken } from '../../../types/checkout-token';
 import { CheckoutCapture } from '../../../types/checkout-capture';
 import { CheckoutOrderInfo } from '@/pages/checkout';
@@ -158,7 +158,7 @@ const PaymentForm = ({
             icon={<CreditCardSharpIcon />}
             iconPosition="end"
             label="Κάρτα στο κατάστημα"
-            disabled
+            // disabled
             sx={{ textTransform: 'none', justifyContent: 'start' }}
             {...a11yProps(1)}
           />
@@ -193,7 +193,7 @@ const PaymentForm = ({
               <Button
                 variant="contained"
                 size="large"
-                color="secondary"
+                color="primary"
                 onClick={handleSubmit}
               >
                 Επιβεβαίωση παραγγελίας
@@ -217,7 +217,7 @@ const PaymentForm = ({
               <Button
                 variant="contained"
                 size="large"
-                color="secondary"
+                color="primary"
                 onClick={handleSubmit}
               >
                 Επιβεβαίωση παραγγελίας
@@ -226,12 +226,12 @@ const PaymentForm = ({
           </Card>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <CardPayment
+          {/* <CardPayment
             checkoutToken={checkoutToken}
             onCaptureCheckout={onCaptureCheckout}
             shippingData={shippingData}
             nextStep={nextStep}
-          />
+          /> */}
         </TabPanel>
         {/* <TabPanel value={value} index={3}>
           Item Four

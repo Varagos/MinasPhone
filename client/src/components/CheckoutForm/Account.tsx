@@ -4,9 +4,10 @@ import { useForm, FormProvider } from 'react-hook-form';
 
 import FormInput from './FormInput';
 import LinkButton from '../custom-components/LinkButton';
+import { useTranslation } from 'next-i18next';
 
 type AccountProps = {
-  next: (data: AccountFormData & CommerceJsAddress) => void;
+  next: (data: AccountFormData) => void;
 };
 
 export type AccountFormData = {
@@ -16,16 +17,11 @@ export type AccountFormData = {
   phoneNumber: string;
 };
 
-type CommerceJsAddress = {
-  shippingCountry: string;
-  shippingSubdivision: string;
-  shippingOption: string;
-};
-
 const Account = ({ next }: AccountProps) => {
   const methods = useForm();
-  const { errors } = methods.formState;
+  const { t } = useTranslation();
 
+  const { errors } = methods.formState;
   // useEffect(() => {
   //   console.error('Errors:::', errors);
   // }, [errors]);
@@ -41,9 +37,6 @@ const Account = ({ next }: AccountProps) => {
             console.log(data);
             next({
               ...(data as AccountFormData),
-              shippingCountry: 'GR',
-              shippingSubdivision: 'GR-I',
-              shippingOption: 'ship_L1vOoZqyWwRa8Z',
             });
           })}
         >
@@ -62,7 +55,6 @@ const Account = ({ next }: AccountProps) => {
                 required: 'Υποχρεωτικό πεδίο',
               }}
             />
-            {/* <FormInput name="address1" label="Address" required /> */}
             <FormInput
               name="email"
               label="Email"
@@ -90,50 +82,15 @@ const Account = ({ next }: AccountProps) => {
                 },
               }}
             />
-            {/* <FormInput name="city" label="City" required />
-            <FormInput name="zip" label="ZIP / Postal code" required /> */}
-
-            {/* <Grid item xs={12} sm={6}>
-              <InputLabel>Shipping Country</InputLabel>
-              <Select value={shippingCountry} fullWidth onChange={(e) => setShippingCountry(e.target.value)}>
-                {countries.map((country) => (
-                  <MenuItem key={country.id} value={country.id}>
-                    {country.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <InputLabel>Shipping Subdivision</InputLabel>
-              <Select value={shippingSubdivision} fullWidth onChange={(e) => setShippingSubdivision(e.target.value)}>
-                {subdivisions.map((subdivision) => (
-                  <MenuItem key={subdivision.id} value={subdivision.id}>
-                    {subdivision.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <InputLabel>Shipping Options</InputLabel>
-              <Select value={shippingOption} fullWidth onChange={(e) => setShippingOption(e.target.value)}>
-                {options.map((option) => (
-                  <MenuItem key={option.id} value={option.id}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid> */}
           </Grid>
           <br />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <LinkButton href="/cart" variant="outlined">
-              Πίσω στο καλάθι
+              {t('CHECKOUT.BACK_TO_CART')}
             </LinkButton>
 
             <Button type="submit" variant="contained" color="primary">
-              Συνέχεια
+              {t('CHECKOUT.NEXT_BUTTON')}
             </Button>
           </div>
         </form>

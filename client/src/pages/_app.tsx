@@ -8,17 +8,20 @@ import Footer from '@/components/Footer/Footer';
 import { CartProvider } from '@/context/CartProvider';
 import '../styles/globals.css';
 import React from 'react';
+import { MessageProvider } from '@/context/messages/Messages';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <CartProvider>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Navbar />
-        <main style={{ minHeight: '80vh' }}>
-          <Component {...pageProps} />
-        </main>
-        <Footer />
+        <MessageProvider>
+          <CssBaseline />
+          <Navbar />
+          <main style={{ minHeight: '80vh' }}>
+            <Component {...pageProps} />
+          </main>
+          <Footer />
+        </MessageProvider>
       </ThemeProvider>
     </CartProvider>
   );

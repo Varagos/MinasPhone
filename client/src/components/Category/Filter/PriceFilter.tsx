@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
@@ -7,72 +7,79 @@ import Grid from '@mui/material/Grid';
 import Slider from '@mui/material/Slider';
 import { Typography } from '@mui/material';
 import { PriceInputField } from './styles';
-import { createUrl } from '@/lib/utils';
+import useUrl from '@/hooks/useUrl';
+import { PriceFiltersFilterKeys, PriceOption } from './definitions';
 
-enum PriceFilters {
-  GREATER_EQUAL_THAN = 'price_gte',
-  LESS_EQUAL_THAN = 'price_lte',
-  EQUAL_TO = 'price',
-}
+type PriceFilterProps = {
+  priceFilters: PriceOption[];
+  activate: () => void;
+};
 
-const PriceFilter: React.FC = () => {
-  const [minPrice, setMinPrice] = useState<number | null>(null);
-  const [maxPrice, setMaxPrice] = useState<number | null>(null);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+export function PriceFilter({ priceFilters, activate }: PriceFilterProps) {
+  const { asPath } = useRouter();
+  const { filter, addFilter, removeFilter } = useUrl(asPath);
+  console.log('Price filter from URL:', filter);
 
-  const searchParams = useSearchParams();
+  // Extract price range from URL filters
+  const minPrice =
+    (filter[PriceFiltersFilterKeys.GREATER_EQUAL_THAN] as number) ?? undefined;
+  const maxPrice =
+    (filter[PriceFiltersFilterKeys.LESS_EQUAL_THAN] as number) ?? undefined;
 
-  const min = searchParams.get('min');
-  const max = searchParams.get('max');
-  const selected = searchParams.get('selected');
-  const router = useRouter();
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const val = e.target as HTMLFormElement;
-    const min = val.min as HTMLInputElement;
-
-    const newParams = new URLSearchParams(searchParams.toString());
-
-    if (min.value) {
-      newParams.set('min', min.value);
-    } else {
-      newParams.delete('min');
-    }
-
-    router.push(createUrl('/products', newParams));
+  const findSelectedOption = () => {
+    const selectedPriceOption = priceFilters.find(
+      (priceFilter) =>
+        priceFilter.lower === minPrice && priceFilter.upper === maxPrice
+    );
+    return selectedPriceOption?.value || null;
   };
 
+  const [selectedOption, setSelectedOption] = useState<string | null>(
+    findSelectedOption()
+  );
+
+  useEffect(() => {
+    setSelectedOption(findSelectedOption());
+  }, [minPrice, maxPrice]);
+
+  // Handler functions
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     const [newMin, newMax] = newValue as number[];
-    setMinPrice(newMin);
-    setMaxPrice(newMax);
+    addFilter({
+      [PriceFiltersFilterKeys.GREATER_EQUAL_THAN]: newMin,
+      [PriceFiltersFilterKeys.LESS_EQUAL_THAN]: newMax,
+    });
+    activate();
+  };
+
+  const handleMinPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newMin = Number(event.target.value);
+    activate();
+    addFilter({ [PriceFiltersFilterKeys.GREATER_EQUAL_THAN]: newMin });
+  };
+
+  const handleMaxPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newMax = Number(event.target.value);
+    activate();
+    addFilter({ [PriceFiltersFilterKeys.LESS_EQUAL_THAN]: newMax });
   };
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
+    activate();
 
-    switch (event.target.value) {
-      case 'option1':
-        setMinPrice(0);
-        setMaxPrice(150);
-        break;
-      case 'option2':
-        setMinPrice(150);
-        setMaxPrice(400);
-        break;
-      case 'option3':
-        setMinPrice(400);
-        setMaxPrice(850);
-        break;
-      case 'option4':
-        setMinPrice(850);
-        setMaxPrice(null);
-        break;
-      default:
-        setMinPrice(null);
-        setMaxPrice(null);
+    const priceOption = priceFilters.find(
+      (priceFilter) => priceFilter.value === event.target.value
+    );
+    if (!priceOption) {
+      removeFilter(PriceFiltersFilterKeys.GREATER_EQUAL_THAN);
+      removeFilter(PriceFiltersFilterKeys.LESS_EQUAL_THAN);
+      return;
     }
+    addFilter({
+      [PriceFiltersFilterKeys.GREATER_EQUAL_THAN]: priceOption.lower,
+      [PriceFiltersFilterKeys.LESS_EQUAL_THAN]: priceOption.upper,
+    });
   };
 
   return (
@@ -89,7 +96,7 @@ const PriceFilter: React.FC = () => {
             variant="outlined"
             type="number"
             value={minPrice || ''}
-            onChange={(e) => setMinPrice(Number(e.target.value))}
+            onChange={handleMinPriceChange}
           />
         </Grid>
         <Grid item xs={6}>
@@ -98,41 +105,29 @@ const PriceFilter: React.FC = () => {
             variant="outlined"
             type="number"
             value={maxPrice || ''}
-            onChange={(e) => setMaxPrice(Number(e.target.value))}
+            onChange={handleMaxPriceChange}
           />
         </Grid>
       </Grid>
       <Slider
-        value={[minPrice || 0, maxPrice || 1000]}
+        value={[minPrice || 0, maxPrice || 1500]}
         onChange={handleSliderChange}
         valueLabelDisplay="auto"
         min={0}
-        max={1000}
+        max={1500}
       />
       <RadioGroup value={selectedOption || ''} onChange={handleRadioChange} row>
-        <FormControlLabel
-          value="option1"
-          control={<Radio />}
-          label="'Εως 150 €"
-        />
-        <FormControlLabel
-          value="option2"
-          control={<Radio />}
-          label="150 - 400 €"
-        />
-        <FormControlLabel
-          value="option3"
-          control={<Radio />}
-          label="400 - 850 €"
-        />
-        <FormControlLabel
-          value="option4"
-          control={<Radio />}
-          label="Από 850 € και άνω"
-        />
+        {priceFilters.map((priceFilter) => (
+          <FormControlLabel
+            key={priceFilter.value}
+            value={priceFilter.value}
+            control={<Radio />}
+            label={priceFilter.label}
+          />
+        ))}
       </RadioGroup>
     </div>
   );
-};
+}
 
 export default PriceFilter;

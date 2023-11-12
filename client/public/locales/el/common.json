@@ -49,5 +49,10 @@
       "MESSAGE_LABEL": "Μήνυμα",
       "SEND_BUTTON": "Αποστολή"
     }
+  },
+  "CHECKOUT": {
+    "NEXT_BUTTON": "Συνέχεια",
+    "PREVIOUS_BUTTON": "Προηγούμενο",
+    "BACK_TO_CART": "Πίσω στο καλάθι"
   }
 }

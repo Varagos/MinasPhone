@@ -517,6 +517,11 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
 
+"@types/jsurl@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@types/jsurl/-/jsurl-0.1.2.tgz#779ef07e7446c4ec8c78df71a8f276076527dd2f"
+  integrity sha512-uZOjZDzB0x48XKmMvykALaLWZ1xF85BcoI/7K6f+oqNdYtnomXVfQJC7CdJER4GTlgli5zA+QwZc82JulVw4xg==
+
 "@types/leaflet@^1.9.8":
   version "1.9.8"
   resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.9.8.tgz#32162a8eaf305c63267e99470b9603b5883e63e8"
@@ -2118,6 +2123,11 @@ jss@10.10.0, jss@^10.10.0:
     csstype "^3.0.2"
     is-in-browser "^1.1.3"
     tiny-warning "^1.0.2"
+
+jsurl@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/jsurl/-/jsurl-0.1.5.tgz#2a5c8741de39cacafc12f448908bf34e960dcee8"
+  integrity sha512-HyrafsIRCa+VlJAsvuvxWUM0iMeZd6+2J4JngECGF0JTRi5moUFV/mLxgyYfDizGF4ofLLYRpvD/Kt1d9wlUUg==
 
 "jsx-ast-utils@^2.4.1 || ^3.0.0", jsx-ast-utils@^3.3.3:
   version "3.3.3"

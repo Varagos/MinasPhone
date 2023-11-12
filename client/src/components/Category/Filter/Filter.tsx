@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   Box,
   Divider,
@@ -10,31 +11,51 @@ import {
 } from '@mui/material';
 import HighlightOff from '@mui/icons-material/HighlightOff';
 import Slider from '@mui/material/Slider';
-import { useRouter } from 'next/router';
 import PriceFilter from './PriceFilter';
+import { PriceOption } from './definitions';
+import useUrl from '@/hooks/useUrl';
 
-function valuetext(value: number) {
-  return `${value}€`;
-}
+const priceFilters: PriceOption[] = [
+  {
+    value: 'option1',
+    label: 'Εως 150 €',
+    lower: 0,
+    upper: 150,
+  },
+  {
+    value: 'option2',
+    label: '150 - 400 €',
+    lower: 150,
+    upper: 400,
+  },
+  {
+    value: 'option3',
+    label: '400 - 850 €',
+    lower: 400,
+    upper: 850,
+  },
+  {
+    value: 'option4',
+    label: 'Από 850 € και άνω',
+    lower: 850,
+    upper: 1500,
+  },
+];
 
 const Filter = () => {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
-  const router = useRouter();
-  // console.log('paramsss', search);
-
-  const [value, setValue] = useState<number[]>([0, 200]);
-
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number[]);
-  };
-
-  const handleListItemClick = (event: any, index: number) => {
-    setSelectedIndex(index);
-  };
+  const { asPath } = useRouter();
+  const { clearFilters, filter } = useUrl(asPath);
+  const [activeFilters, setActiveFilters] = useState<{
+    price?: boolean;
+  }>({});
 
   const handleClear = () => {
-    setSelectedIndex(null);
+    // setActiveFilters({});
+    clearFilters();
+  };
+
+  const activatePriceFilter = () => {
+    setActiveFilters({ ...activeFilters, price: true });
   };
   return (
     <div>
@@ -42,9 +63,8 @@ const Filter = () => {
         <Typography variant="h5" gutterBottom color="black">
           <strong>Φίλτρα</strong>
         </Typography>
-        <hr />
-        <PriceFilter />
-        {/* {search && (
+
+        {activeFilters?.price && (
           <Button
             variant="outlined"
             size="small"
@@ -59,19 +79,22 @@ const Filter = () => {
               backgroundColor: 'black',
               borderColor: 'black',
               '&:hover': {
-                // color: 'black',
                 borderColor: 'black',
                 backgroundColor: '#3A3845',
               },
             }}
             color="primary"
             onClick={handleClear}
-            component={Link}
-            to={pathname}
           >
             Απαλοιφή φίλτρων
           </Button>
         )}
+        <hr />
+        <PriceFilter
+          priceFilters={priceFilters}
+          activate={activatePriceFilter}
+        />
+        {/* {}
         <Typography variant="h6" gutterBottom>
           <strong>Κατασκευαστής</strong>
         </Typography>

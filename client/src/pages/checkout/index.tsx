@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import {
   CssBaseline,
@@ -9,19 +9,20 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import Link from 'next/link';
 
 import { CheckoutCapture } from '@/types/checkout-capture';
 import LinkButton from '@/components/custom-components/LinkButton';
-import Account from '@/components/CheckoutForm/Account';
-import PaymentForm from '@/components/CheckoutForm/Payment/PaymentForm';
-import Confirmation from '@/components/CheckoutForm/Confirmation/Confirmation';
+import Confirmation, {
+  CheckoutOrderResponse,
+} from '@/components/CheckoutForm/Confirmation/Confirmation';
 import Form from '@/components/CheckoutForm/Form/Form';
 import { useCart } from '@/hooks/useCart';
 import { api } from '@/api';
 import { CheckoutToken } from '@/types/checkout-token';
 import { Cart } from '@/api/types/types';
 import { Price } from '@/types/price';
+import { GetStaticProps } from 'next/types';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export const priceNumberToFormattedPrice = (price: number): Price => ({
   raw: price,
@@ -47,6 +48,20 @@ export type CheckoutOrderInfo = {
   postal_zip_code: string;
 };
 
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { locale } = context;
+  if (!locale) {
+    throw new Error('locale is undefined');
+  }
+
+  return {
+    props: {
+      // pass the translation props to the page component
+      ...(await serverSideTranslations(locale)),
+    },
+  };
+};
+
 export default function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutOrderInfo, setCheckoutOrderInfo] = useState<
@@ -54,17 +69,28 @@ export default function Checkout() {
   >({});
   const [error, setErrorMessage] = useState('');
 
+  const [orderResponse, setOrderResponse] =
+    useState<CheckoutOrderResponse | null>(null);
+
   const { cart, setCart } = useCart();
 
   const handleCaptureCheckout = async (newOrder: CheckoutCapture) => {
     try {
-      const { orderId } = await api.orders.checkoutOrder({
+      const orderResult = await api.orders.checkoutOrder({
         contactInfo: {
           firstName: newOrder.customer.first_name,
           lastName: newOrder.customer.last_name,
           email: newOrder.customer.email,
           phone: `+30${newOrder.customer.phoneNumber}`,
         },
+      });
+      console.log('orderResult', orderResult);
+      setOrderResponse({
+        customer: {
+          firstName: newOrder.customer.first_name,
+          lastName: newOrder.customer.last_name,
+        },
+        orderReference: orderResult.orderId,
       });
       console.log('phoneNumber', newOrder.customer.phoneNumber);
 
@@ -79,16 +105,7 @@ export default function Checkout() {
   };
   if (!cart) return <div>No cart</div>;
 
-  // useEffect(() => {
-  //   dispatch(generateCheckoutToken({ cartId: cart.id }));
-  // }, []);
-
-  // useEffect(() => {
-  //   return () => {
-  //     // // console.log('cleaned up');
-  //     dispatch(checkoutEnded());
-  //   };
-  // }, []);
+  if (!cart.lineItems) return <div>No line items</div>;
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -156,12 +173,18 @@ export default function Checkout() {
         <Toolbar />
         <main style={{ marginTop: '5%', width: 'auto' }}>
           <Paper
-            sx={{
-              mx: 20,
+            sx={(theme) => ({
+              marginX: 20,
               marginTop: '5%',
               marginBottom: '5%',
-              padding: '0 10%',
-            }}
+              padding: '10%',
+              [theme.breakpoints.down('sm')]: {
+                marginX: 2,
+                // marginTop: '10%',
+                // marginBottom: '10%',
+                padding: 2,
+              },
+            })}
           >
             <Typography variant="h4" align="center">
               Ολοκλήρωση Παραγγελίας
@@ -174,7 +197,7 @@ export default function Checkout() {
               ))}
             </Stepper>
             {activeStep === steps.length ? (
-              <Confirmation />
+              <Confirmation orderResponse={orderResponse} />
             ) : (
               <Form
                 activeStep={activeStep}

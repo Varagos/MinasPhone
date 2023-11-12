@@ -10,22 +10,26 @@ type ProductsType = {
   products: Product[];
 };
 
+function EmptyProducts() {
+  return (
+    <main>
+      <Box ml={4} py={6}>
+        <Typography
+          variant="h5"
+          style={{ display: 'inline-block', verticalAlign: 'top' }}
+        >
+          Η κατηγορία είναι άδεια!
+        </Typography>
+        <Typography>Δοκιμάστε να επιλέξετε κάποια εναλλακτική.</Typography>
+      </Box>
+      <img src={EmptyLogo} style={{ width: '50%', height: 'auto' }} />
+    </main>
+  );
+}
+
 function Products({ products }: ProductsType) {
   if (!products.length) {
-    return (
-      <main>
-        <Box ml={4} py={6}>
-          <Typography
-            variant="h5"
-            style={{ display: 'inline-block', verticalAlign: 'top' }}
-          >
-            Η κατηγορία είναι άδεια!
-          </Typography>
-          <Typography>Δοκιμάστε να επιλέξετε κάποια εναλλακτική.</Typography>
-        </Box>
-        <img src={EmptyLogo} style={{ width: '50%', height: 'auto' }} />
-      </main>
-    );
+    return <EmptyProducts />;
   }
 
   return (
@@ -38,7 +42,11 @@ function Products({ products }: ProductsType) {
             item
             xs={0}
             sm={3}
-            sx={{ display: { xs: 'none', md: 'block' } }}
+            sx={(theme) => ({
+              [theme.breakpoints.down('md')]: {
+                display: 'none',
+              },
+            })}
           >
             <Filter />
           </Grid>

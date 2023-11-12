@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps<
   return { props: { products } };
 };
 
-export default function Landing({ products }: ProductsProps) {
+export default function ProductsPage({ products }: ProductsProps) {
   return (
     <>
       <Head>

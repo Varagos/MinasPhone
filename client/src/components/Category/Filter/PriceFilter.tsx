@@ -1,20 +1,47 @@
 import { useState } from 'react';
-import TextField from '@mui/material/TextField';
+import { useRouter, useSearchParams } from 'next/navigation';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import Grid from '@mui/material/Grid';
 import Slider from '@mui/material/Slider';
-import { makeStyles } from '@mui/styles';
 import { Typography } from '@mui/material';
-import useStyles from './styles';
+import { PriceInputField } from './styles';
+import { createUrl } from '@/lib/utils';
+
+enum PriceFilters {
+  GREATER_EQUAL_THAN = 'price_gte',
+  LESS_EQUAL_THAN = 'price_lte',
+  EQUAL_TO = 'price',
+}
 
 const PriceFilter: React.FC = () => {
   const [minPrice, setMinPrice] = useState<number | null>(null);
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
-  const classes = useStyles();
+  const searchParams = useSearchParams();
+
+  const min = searchParams.get('min');
+  const max = searchParams.get('max');
+  const selected = searchParams.get('selected');
+  const router = useRouter();
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const val = e.target as HTMLFormElement;
+    const min = val.min as HTMLInputElement;
+
+    const newParams = new URLSearchParams(searchParams.toString());
+
+    if (min.value) {
+      newParams.set('min', min.value);
+    } else {
+      newParams.delete('min');
+    }
+
+    router.push(createUrl('/products', newParams));
+  };
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     const [newMin, newMax] = newValue as number[];
@@ -57,21 +84,19 @@ const PriceFilter: React.FC = () => {
           </Typography>
         </Grid>
         <Grid item xs={6}>
-          <TextField
+          <PriceInputField
             label="Min"
             variant="outlined"
             type="number"
-            className={classes.hideArrows}
             value={minPrice || ''}
             onChange={(e) => setMinPrice(Number(e.target.value))}
           />
         </Grid>
         <Grid item xs={6}>
-          <TextField
+          <PriceInputField
             label="Max"
             variant="outlined"
             type="number"
-            className={classes.hideArrows}
             value={maxPrice || ''}
             onChange={(e) => setMaxPrice(Number(e.target.value))}
           />
@@ -89,33 +114,21 @@ const PriceFilter: React.FC = () => {
           value="option1"
           control={<Radio />}
           label="'Εως 150 €"
-          sx={{
-            color: 'black',
-          }}
         />
         <FormControlLabel
           value="option2"
           control={<Radio />}
           label="150 - 400 €"
-          sx={{
-            color: 'black',
-          }}
         />
         <FormControlLabel
           value="option3"
           control={<Radio />}
           label="400 - 850 €"
-          sx={{
-            color: 'black',
-          }}
         />
         <FormControlLabel
           value="option4"
           control={<Radio />}
           label="Από 850 € και άνω"
-          sx={{
-            color: 'black',
-          }}
         />
       </RadioGroup>
     </div>

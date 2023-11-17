@@ -43,7 +43,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VM_HOST }}
-          username: your-vm-username
+          username: ubuntu
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
             echo "SSH connection established to $(hostname)"

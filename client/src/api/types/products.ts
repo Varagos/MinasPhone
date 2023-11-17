@@ -28,16 +28,7 @@ export interface IProductsApi {
     limit: number;
     page: number;
     slug: string;
+    range: [number, number];
   }): Promise<ProductPaginatedResponse>;
   findOneById(id: string): Promise<Product>;
-  useProducts(params: ProductRequest): {
-    products: ProductPaginatedResponse | null;
-    isLoading: boolean;
-    isError: any;
-  };
-  useProduct(id: string): {
-    product: Product | null;
-    isLoading: boolean;
-    isError: any;
-  };
 }

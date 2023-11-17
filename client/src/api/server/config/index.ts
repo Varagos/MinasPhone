@@ -17,8 +17,11 @@ const routes = {
         limit: number;
         page: number;
         slug: string;
+        range: [number, number];
       }) =>
-        `${API_BASE_URL}/api/v1/products/category/${params.slug}?limit=${params.limit}&page=${params.page}`,
+        `${API_BASE_URL}/api/v1/products?range=[${params.range[0]}, ${params.range[1]}]&filter={"categorySlug":"${params.slug}"}`,
+
+      // `${API_BASE_URL}/api/v1/products/category/${params.slug}?limit=${params.limit}&page=${params.page}`,
     },
     cart: {
       retrieve: () => `${API_BASE_URL}/api/v1/cart/fetch`,

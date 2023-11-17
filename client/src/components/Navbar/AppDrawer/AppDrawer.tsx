@@ -17,7 +17,7 @@ import Lock from '@mui/icons-material/Lock';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Drawer from '@mui/material/Drawer';
 import { SwipeableDrawer } from '@mui/material';
-import LinkListItem from '@/components/custom-components/LinkListItem';
+import LinkListItem from '@/components/common/LinkListItem';
 
 const useStyles = makeStyles({
   list: {
@@ -30,10 +30,10 @@ const useStyles = makeStyles({
 
 const drawerItems: [string, string, JSX.Element][] = [
   ['ΑΧΙΚΉ', '/', <Home />],
-  ['ΚΙΝΗΤΑ', '/category/smartphones', <Smartphone />],
-  ['SMARTWATCH', '/category/smartwatches', <Watch />],
-  ['TABLET', '/category/tablets', <TabletMac />],
-  ['ACCESSORIES', '/category/accessories', <Headset />],
+  ['ΚΙΝΗΤΑ', '/categories/smartphones', <Smartphone />],
+  ['SMARTWATCH', '/categories/smartwatches', <Watch />],
+  ['TABLET', '/categories/tablets', <TabletMac />],
+  ['ACCESSORIES', '/categories/accessories', <Headset />],
   ['ALL PRODUCTS', '/products', <Storefront />],
 ];
 

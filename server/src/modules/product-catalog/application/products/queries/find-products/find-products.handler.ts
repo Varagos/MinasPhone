@@ -8,7 +8,8 @@ import {
   ProductModel,
   productSchema,
 } from '@modules/product-catalog/infra/database/product.repository';
-import { Logger } from '@nestjs/common';
+import { Logger, NotFoundException } from '@nestjs/common';
+import { categorySchema } from '@modules/product-catalog/infra/database/category.repository';
 
 export type FindProductsResponse = Result<Paginated<ProductModel>, Error>;
 
@@ -51,6 +52,10 @@ export class FindProductsQueryHandler implements IQueryHandler {
             : sql`ORDER BY ${sql.identifier([sortField])} DESC `;
       }
     } // else: default to no sorting, or specify a default sort field here
+    let categoryId = query.categoryId;
+    if (!categoryId && query.categorySlug) {
+      categoryId = await this.findCategoryIdBySlug(query.categorySlug);
+    }
 
     /**
      * Constructing a query with Slonik.
@@ -61,9 +66,7 @@ export class FindProductsQueryHandler implements IQueryHandler {
          FROM products
          WHERE
            ${query.slug ? sql`slug = ${query.slug}` : true} AND
-           ${
-             query.categoryId ? sql`category_id = ${query.categoryId}` : true
-           } AND
+           ${categoryId ? sql`category_id = ${categoryId}` : true} AND
            ${query.name ? sql`name ILIKE ${'%' + query.name + '%'}` : true}
            ${sortClause}
          LIMIT ${query.limit}
@@ -86,5 +89,20 @@ export class FindProductsQueryHandler implements IQueryHandler {
       this.logger.error(e);
       throw e;
     }
+  }
+
+  private async findCategoryIdBySlug(slug: string): Promise<string> {
+    const categoryStatement = sql.type(categorySchema)`
+    SELECT *
+    FROM categories
+    WHERE
+      ${sql`slug = ${slug}`}`;
+
+    const categoryResult = await this.pool.maybeOne(categoryStatement);
+    if (!categoryResult) {
+      throw new NotFoundException();
+    }
+    const categoryId = categoryResult.id;
+    return categoryId;
   }
 }

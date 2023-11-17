@@ -9,20 +9,6 @@ import { PaginatedRequest } from '../types/common';
 import { FindCategoriesDto } from '../types/categories';
 
 export class CategoriesApi implements ICategoriesApi {
-  useCategories(params: PaginatedRequest<FindCategoriesDto>): {
-    categories: CategoryPaginatedResponse | null;
-    isLoading: boolean;
-    isError: any;
-  } {
-    throw new Error('Method not implemented.');
-  }
-  useCategory(id: string): {
-    category: Category | null;
-    isLoading: boolean;
-    isError: any;
-  } {
-    throw new Error('Method not implemented.');
-  }
   async findMany(
     params: PaginatedRequest<FindCategoriesDto>
   ): Promise<CategoryPaginatedResponse> {
@@ -39,42 +25,4 @@ export class CategoriesApi implements ICategoriesApi {
 
     return res.json();
   }
-  // useCategories({
-  //   limit,
-  //   page,
-  //   slug,
-  //   name,
-  //   parentId,
-  // }: PaginatedRequest<FindCategoriesDto>) {
-  //   const { data, error, isLoading } = useSWR<CategoryPaginatedResponse>(
-  //     [
-  //       routes.v1.categories.findMany(limit, page),
-  //       {
-  //         slug,
-  //         name,
-  //         parentId,
-  //       },
-  //     ],
-  //     fetcher
-  //   );
-
-  //   return {
-  //     categories: data ?? null,
-  //     isLoading,
-  //     isError: error,
-  //   };
-  // }
-
-  // useCategory(id: string) {
-  //   const { data, error, isLoading } = useSWR<Category>(
-  //     routes.v1.categories.fineOne(id),
-  //     fetcher
-  //   );
-
-  //   return {
-  //     category: data ?? null,
-  //     isLoading,
-  //     isError: error,
-  //   };
-  // }
 }

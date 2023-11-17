@@ -1,6 +1,6 @@
 import { Container, Typography, Button, Grid, Box } from '@mui/material';
 import Link from 'next/link';
-import LinkButton from '@/components/custom-components/LinkButton';
+import LinkButton from '@/components/common/LinkButton';
 import Spinner from '@/components/Spinner/Spinner';
 import CartItem from '@/components/CartItem/CartItem';
 import { api } from '@/api';

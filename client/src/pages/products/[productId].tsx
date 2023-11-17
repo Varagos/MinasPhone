@@ -113,7 +113,7 @@ Every product needs good product page-quality images. These images (usually 640 
             </Box>
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               size="large"
               sx={{ py: 2, px: 10, textTransform: 'none' }}
               onClick={() => handleAddToCart(product.id)}

@@ -61,6 +61,11 @@ export class FindProductsQueryDto {
   })
   @IsOptional()
   @TransformJSON()
-  @Validate(CustomFilterParam, ['categoryId', 'category_id', 'name'])
+  @Validate(CustomFilterParam, [
+    'categoryId',
+    'category_id',
+    'name',
+    'categorySlug',
+  ])
   filter?: Record<string, string | number>;
 }

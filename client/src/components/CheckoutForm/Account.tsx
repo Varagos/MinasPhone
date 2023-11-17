@@ -3,7 +3,7 @@ import { Button, Grid, Typography } from '@mui/material';
 import { useForm, FormProvider } from 'react-hook-form';
 
 import FormInput from './FormInput';
-import LinkButton from '../custom-components/LinkButton';
+import LinkButton from '../common/LinkButton';
 import { useTranslation } from 'next-i18next';
 
 type AccountProps = {

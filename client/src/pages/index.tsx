@@ -5,7 +5,7 @@ import { Typography, Grid, Box } from '@mui/material';
 
 import { MainContainer, SectionTitle } from '@/components/Landing/styles';
 import CategoryItem from '@/components/Landing/CategoryItem/CategoryItem';
-import ProductCard from '@/components/Category/Products/ProductCard/ProductCard';
+import ProductCard from '@/components/Products/ProductCard/ProductCard';
 import PhoneFix from '../../public/undraw_phone_fix.svg';
 import TabletCategory from '../../public/tablet-category.jpg';
 import SmartWatchCategory from '../../public/smartwatch-category.jpg';
@@ -61,25 +61,25 @@ const LandingPageCategories: Array<{
   {
     src: PhonesCategory,
     heading: 'SMARTPHONES',
-    dest: '/category/smartphones',
+    dest: '/categories/smartphones',
     alt: 'smartphones',
   },
   {
     src: TabletCategory,
     heading: 'TABLETS',
-    dest: '/category/tablets',
+    dest: '/categories/tablets',
     alt: 'tablets',
   },
   {
     src: AccessoriesCategory,
     heading: 'ACCESSORIES',
-    dest: '/category/accessories',
+    dest: '/categories/accessories',
     alt: 'accessories',
   },
   {
     src: SmartWatchCategory,
     heading: 'SMARTWATCHES',
-    dest: '/category/smartwatches',
+    dest: '/categories/smartwatches',
     alt: 'smartwatches',
   },
 ];

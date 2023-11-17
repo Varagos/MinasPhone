@@ -3,7 +3,7 @@ import { Typography, CircularProgress, Divider, Button } from '@mui/material';
 
 import useStyles from './styles';
 
-import LinkButton from '@/components/custom-components/LinkButton';
+import LinkButton from '@/components/common/LinkButton';
 import { CheckoutCaptureResponse } from '@/types/checkout-capture-response';
 
 export type CheckoutOrderResponse = {

@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 
 import { CheckoutCapture } from '@/types/checkout-capture';
-import LinkButton from '@/components/custom-components/LinkButton';
+import LinkButton from '@/components/common/LinkButton';
 import Confirmation, {
   CheckoutOrderResponse,
 } from '@/components/CheckoutForm/Confirmation/Confirmation';

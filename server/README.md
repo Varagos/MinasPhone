@@ -272,3 +272,16 @@ Note: Make sure to run the `git tag` command on the commit you want to mark as a
 1. **PR Approval:** Once the PR is approved and all checks pass, merge it into `main`.
 2. **Tagging:** Create a new release tag following semantic versioning (e.g., `nestjs-server-v1.0.0`).
 3. **Push Tag:** Push the tag to the remote repository to trigger the deployment pipeline.
+
+# Commands step-by-step
+
+```bash
+# Git checkout
+gco main
+
+git tag nestjs-server-v1.2.3
+
+git push --tags
+
+# Done! :)
+```

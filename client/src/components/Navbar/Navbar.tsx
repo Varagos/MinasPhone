@@ -20,8 +20,8 @@ import Phone from '@mui/icons-material/Phone';
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import MenuIcon from '@mui/icons-material/Menu';
 import Image from 'next/image';
-import IconLinkButton from '../custom-components/IconLinkButton';
-import LinkButton from '../custom-components/LinkButton';
+import IconLinkButton from '../common/IconLinkButton';
+import LinkButton from '../common/LinkButton';
 import { useCart } from '@/hooks/useCart';
 import SimpleMenu from './SimpleMenu/SimpleMenu';
 import { SearchInputField, SearchPromptIcon } from './Search';
@@ -30,19 +30,19 @@ import theme from '@/lib/theme';
 
 const FEATURED_CATEGORIES = [
   {
-    href: '/category/smartphones',
+    href: '/categories/smartphones',
     title: 'ΚΙΝΗΤΑ',
   },
   {
-    href: '/category/smartwatches',
+    href: '/categories/smartwatches',
     title: 'SMARTWATCH',
   },
   {
-    href: '/category/tablets',
+    href: '/categories/tablets',
     title: 'TABLET',
   },
   {
-    href: '/category/accessories',
+    href: '/categories/accessories',
     title: 'ΑΞΕΣΟΥΑΡ',
   },
 ];

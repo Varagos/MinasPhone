@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import Products from '@/components/Category/Products/Products';
+import ProductsLayout from '@/components/Products/ProductsLayout';
 import { useRouter } from 'next/router';
 import Spinner from '@/components/Spinner/Spinner';
 import { ProductPaginatedResponse } from '@/api/types/products';
 import { api } from '@/api';
 import { GetServerSideProps } from 'next';
 import { Order } from '@/api/types/orders';
-import LinkButton from '@/components/custom-components/LinkButton';
+import LinkButton from '@/components/common/LinkButton';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 

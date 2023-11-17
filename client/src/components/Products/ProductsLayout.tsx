@@ -2,8 +2,8 @@ import { Box, Container, Grid, Typography } from '@mui/material';
 
 import ProductCard from './ProductCard/ProductCard';
 import { MainContainer, ToolBar } from './styles';
-import EmptyLogo from '../../../../public/undraw_empty_xct9.svg';
-import Filter from '../Filter/Filter';
+import EmptyLogo from '../../../public/undraw_empty_xct9.svg';
+import Filter from './Filter/Filter';
 import { Product } from '@/api/types/types';
 
 type ProductsType = {
@@ -27,7 +27,7 @@ function EmptyProducts() {
   );
 }
 
-function Products({ products }: ProductsType) {
+export default function ProductsLayout({ products }: ProductsType) {
   if (!products.length) {
     return <EmptyProducts />;
   }
@@ -69,5 +69,3 @@ function Products({ products }: ProductsType) {
     </MainContainer>
   );
 }
-
-export default Products;

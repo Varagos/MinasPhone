@@ -2,14 +2,14 @@ import Head from 'next/head';
 import { useEffect } from 'react';
 import { Container, Grid } from '@mui/material';
 
-import { MainContainer, ToolBar } from '@/components/Category/Products/styles';
-import ProductCard from '@/components/Category/Products/ProductCard/ProductCard';
+import { MainContainer, ToolBar } from '@/components/Products/styles';
+import ProductCard from '@/components/Products/ProductCard/ProductCard';
 import Spinner from '@/components/Spinner/Spinner';
-import Filter from '@/components/Category/Filter/Filter';
+import Filter from '@/components/Products/Filter/Filter';
 import { api } from '@/api';
 import { ProductPaginatedResponse } from '@/api/types/products';
 import { GetServerSideProps } from 'next';
-import Products from '@/components/Category/Products/Products';
+import ProductsLayout from '@/components/Products/ProductsLayout';
 
 interface ProductsProps {
   products: ProductPaginatedResponse;
@@ -34,7 +34,7 @@ export default function ProductsPage({ products }: ProductsProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Products products={products.data} />
+      <ProductsLayout products={products.data} />
     </>
   );
 }

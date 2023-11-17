@@ -20,11 +20,13 @@ jobs:
 
       - name: Extract tag name
         id: tag-name
-        run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
+        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+        # run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
 
       - name: Extract version from tag name
         id: tag-version
-        run: echo "::set-output name=version::$(echo ${{ steps.tag-name.outputs.tag }} | sed 's/nestjs-server-v//')"
+        run: echo "version=$(echo ${{ env.tag }} | sed 's/nestjs-server-v//')" >> $GITHUB_ENV
+        # run: echo "::set-output name=version::$(echo ${{ steps.tag-name.outputs.tag }} | sed 's/nestjs-server-v//')"
 
       - name: Docker login
         uses: docker/login-action@v1
@@ -37,7 +39,7 @@ jobs:
         with:
           context: ./server
           push: true
-          tags: varagos/minas-phone-api:${{ steps.tag-version.outputs.version }}
+          tags: varagos/minas-phone-api:${{ env.version }}
 
       - name: SSH and Deploy to VM
         uses: appleboy/ssh-action@master
@@ -51,7 +53,7 @@ jobs:
             # Deployment commands
             # E.g., pull the latest Docker image, restart services, etc.
             # Updating the docker-compose.yml with the new image tag
-            sed -i 's/varagos\/minas-phone-api:.*/varagos\/minas-phone-api:${{ steps.tag-version.outputs.version }}/g' ./MinasPhone/server/docker-compose.yml
+            sed -i 's/varagos\/minas-phone-api:.*/varagos\/minas-phone-api:${{ env.version }}/g' ./MinasPhone/server/docker-compose.yml
 
             # Navigate to the directory containing your docker-compose.yml
             cd ./MinasPhone/server
@@ -63,3 +65,9 @@ jobs:
             # docker-compose up -d --no-deps --build --force-recreate api
 
             echo "Deployment completed"
+
+            echo "Starting cleanup of old Docker images"
+            # Remove unused images
+            docker image prune -f
+
+            echo "Cleanup completed"

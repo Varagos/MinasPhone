@@ -38,3 +38,28 @@ jobs:
           context: ./nestjs-server
           push: true
           tags: varagos/minas-phone-api:${{ steps.tag-version.outputs.version }}
+
+      - name: SSH and Deploy to VM
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: your-vm-username
+          key: ${{ secrets.VM_SSH_KEY }}
+          script: |
+            echo "SSH connection established to $(hostname)"
+            # Further deployment commands...
+            # Deployment commands
+            # E.g., pull the latest Docker image, restart services, etc.
+            # Updating the docker-compose.yml with the new image tag
+            sed -i 's/varagos\/minas-phone-api:.*/varagos\/minas-phone-api:${{ steps.tag-version.outputs.version }}/g' ./MinasPhone/server/docker-compose.yml
+
+            # Navigate to the directory containing your docker-compose.yml
+            cd ./MinasPhone/server
+            echo "Current directory: $(pwd)"
+
+            # Recreate the specific service with the new image
+            docker-compose up -d --no-deps --build api
+            # Use --force-recreate if needed
+            # docker-compose up -d --no-deps --build --force-recreate api
+
+            echo "Deployment completed"

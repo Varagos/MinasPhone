@@ -249,8 +249,26 @@ After creating the tag, you would need to push it to the remote repository. You 
 ```bash
 
 git push origin nestjs-server-v1.2.3
+# or
+git push --tags
 ```
 
 This will push the specific tag `nestjs-server-v1.2.3` to the remote repository, and if your GitHub Actions workflow is configured as I described earlier, it will trigger the build and publish process.
 
 Note: Make sure to run the `git tag` command on the commit you want to mark as a release. Typically, this would be the latest commit on your main branch or another branch you're using for production releases, but you can also tag previous commits if needed.
+
+# Project Deployment Workflow
+
+## Development and Pull Request
+
+1. **Branching:** For new features or fixes, create a new branch from `main` (e.g., `feature/your-feature`).
+2. **Development:** Implement your changes in the feature branch.
+3. **Commit:** Regularly commit your changes and push the branch to the remote repository.
+4. **Pull Request:** Once development is complete, open a Pull Request (PR) against the `main` branch.
+5. **Review and Tests:** Ensure your PR passes all reviews and automated tests.
+
+## Merging and Release
+
+1. **PR Approval:** Once the PR is approved and all checks pass, merge it into `main`.
+2. **Tagging:** Create a new release tag following semantic versioning (e.g., `nestjs-server-v1.0.0`).
+3. **Push Tag:** Push the tag to the remote repository to trigger the deployment pipeline.

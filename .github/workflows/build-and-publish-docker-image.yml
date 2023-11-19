@@ -60,9 +60,9 @@ jobs:
             echo "Current directory: $(pwd)"
 
             # Recreate the specific service with the new image
-            docker-compose up -d --no-deps --build api
+            docker compose up -d --no-deps --build api
             # Use --force-recreate if needed
-            # docker-compose up -d --no-deps --build --force-recreate api
+            # docker compose up -d --no-deps --build --force-recreate api
 
             echo "Deployment completed"
 

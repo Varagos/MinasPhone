@@ -5,8 +5,8 @@ if (!API_BASE_URL) {
 const routes = {
   v1: {
     categories: {
-      findMany: (limit: number, page: number) =>
-        `${API_BASE_URL}/api/v1/categories?limit=${limit}&page=${page}`,
+      findMany: (range: [number, number]) =>
+        `${API_BASE_URL}/api/v1/categories?range=[${range[0]}, ${range[1]}]`,
       fineOne: (id: string) => `${API_BASE_URL}/api/v1/categories/${id}`,
     },
     products: {

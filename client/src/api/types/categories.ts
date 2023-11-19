@@ -19,6 +19,6 @@ export type CategoryPaginatedResponse = PaginatedResponse<Category>;
 
 export interface ICategoriesApi {
   findMany(
-    params: PaginatedRequest<FindCategoriesDto>
+    params: PaginatedRequest<FindCategoriesDto, FindCategoriesDto>
   ): Promise<CategoryPaginatedResponse>;
 }

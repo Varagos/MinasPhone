@@ -9,7 +9,7 @@ import {
 // TODO add setTimeout to simulate network latency
 export class CategoriesApi implements ICategoriesApi {
   findMany(
-    params: PaginatedRequest<FindCategoriesDto>
+    params: PaginatedRequest<FindCategoriesDto, FindCategoriesDto>
   ): Promise<CategoryPaginatedResponse> {
     throw new Error('Method not implemented.');
   }

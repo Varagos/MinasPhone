@@ -33,7 +33,7 @@ interface LandingProps {
 export const getServerSideProps: GetServerSideProps<LandingProps> = async (
   context
 ) => {
-  const categories = await api.categories.findMany({ limit: 10, page: 0 });
+  const categories = await api.categories.findMany({ range: [0, 9] });
   console.log({ categories });
   const products = await api.products.findMany({ range: [0, 9] });
 

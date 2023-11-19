@@ -3,7 +3,7 @@ import Image, { StaticImageData } from 'next/image';
 import { useEffect, useState } from 'react';
 import { Typography, Grid, Box } from '@mui/material';
 
-import { MainContainer, SectionTitle } from '@/components/Landing/styles';
+import { MainContainer, ThickBottomBorder } from '@/components/Landing/styles';
 import CategoryItem from '@/components/Landing/CategoryItem/CategoryItem';
 import ProductCard from '@/components/Products/ProductCard/ProductCard';
 import PhoneFix from '../../public/undraw_phone_fix.svg';
@@ -111,8 +111,13 @@ export default function Landing({ categories, products }: LandingProps) {
         <section>
           <Container maxWidth={'lg'}>
             <Box my={8}>
-              <Typography variant="h4" align="center" gutterBottom>
-                <SectionTitle>ΔΗΜΟΦΙΛΕΙΣ ΚΑΤΗΓΟΡΙΕΣ</SectionTitle>
+              <Typography
+                variant="h4"
+                align="center"
+                gutterBottom
+                fontWeight={900}
+              >
+                <ThickBottomBorder>ΔΗΜΟΦΙΛΕΙΣ ΚΑΤΗΓΟΡΙΕΣ</ThickBottomBorder>
               </Typography>
             </Box>
             <Grid container justifyContent="center" spacing={3}>
@@ -131,9 +136,14 @@ export default function Landing({ categories, products }: LandingProps) {
 
         <section>
           <Container>
-            <Box my={8}>
-              <Typography variant="h4" align="center" gutterBottom>
-                <SectionTitle>ΠΡΟΤΕΙΝΟΥΜΕ</SectionTitle>
+            <Box my={8} alignItems={'center'}>
+              <Typography
+                variant="h4"
+                align="center"
+                gutterBottom
+                fontWeight={900}
+              >
+                <ThickBottomBorder>ΠΡΟΤΕΙΝΟΥΜΕ</ThickBottomBorder>
               </Typography>
             </Box>
 
@@ -155,10 +165,15 @@ export default function Landing({ categories, products }: LandingProps) {
         <section>
           <Container>
             <Box my={16}>
-              <Typography variant="h4" align="center" gutterBottom>
-                <SectionTitle>ΕΠΙΣΚΕΥΕΣ ΤΗΛΕΦΩΝΩΝ</SectionTitle>
+              <Typography
+                variant="h4"
+                align="center"
+                gutterBottom
+                fontWeight={900}
+              >
+                <ThickBottomBorder>ΕΠΙΣΚΕΥΕΣ ΤΗΛΕΦΩΝΩΝ</ThickBottomBorder>
               </Typography>
-              <Grid container justifyContent="center" spacing={3}>
+              <Grid container justifyContent="center" spacing={3} mt={2}>
                 <Grid
                   container
                   item

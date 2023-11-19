@@ -85,7 +85,7 @@ export class CustomFilterParam implements ValidatorConstraintInterface {
       ', ',
     )} with either string or number values, received: ${Object.keys(
       args.value,
-    ).join(', ')})`;
+    ).join(', ')}`;
   }
 }
 

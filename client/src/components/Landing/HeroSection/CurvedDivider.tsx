@@ -1,6 +1,6 @@
 import { styled } from '@mui/styles';
 
-const CustomShapeDividerBottom = styled('div')({
+const CustomShapeDividerBottom = styled('div')(({ theme }: any) => ({
   position: 'absolute',
   bottom: 0,
   left: 0,
@@ -18,7 +18,10 @@ const CustomShapeDividerBottom = styled('div')({
   '& .shape-fill': {
     fill: '#FFFFFF',
   },
-});
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
+}));
 
 export default function ShapeDividerBottom() {
   return (

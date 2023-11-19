@@ -1,13 +1,23 @@
-import { Box, Container, Grid, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Image from 'next/image';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Pagination from '@mui/material/Pagination';
 
 import ProductCard from './ProductCard/ProductCard';
 import { MainContainer, ToolBar } from './styles';
 import EmptyLogo from '../../../public/undraw_empty_xct9.svg';
 import Filter from './Filter/Filter';
 import { Product } from '@/api/types/types';
+import useUrl from '@/hooks/useUrl';
+import { useRouter } from 'next/router';
 
-type ProductsType = {
+type ProductsLayoutProps = {
   products: Product[];
+  totalPages: number;
+  page: number;
+  onPageChange: (page: number) => void;
 };
 
 function EmptyProducts() {
@@ -22,13 +32,25 @@ function EmptyProducts() {
         </Typography>
         <Typography>Δοκιμάστε να επιλέξετε κάποια εναλλακτική.</Typography>
       </Box>
-      <img src={EmptyLogo} style={{ width: '50%', height: 'auto' }} />
+      <Image
+        src={EmptyLogo}
+        style={{ width: '50%', height: 'auto' }}
+        alt="Empty products"
+      />
     </main>
   );
 }
 
-export default function ProductsLayout({ products }: ProductsType) {
-  if (!products.length) {
+export default function ProductsLayout({
+  products,
+  totalPages,
+  page,
+  onPageChange,
+}: ProductsLayoutProps) {
+  const { asPath } = useRouter();
+  const { filter } = useUrl(asPath);
+  const emptyFilters = !filter || Object.keys(filter).length === 0;
+  if (!products.length && emptyFilters) {
     return <EmptyProducts />;
   }
 
@@ -64,6 +86,15 @@ export default function ProductsLayout({ products }: ProductsType) {
               </Grid>
             ))}
           </Grid>
+        </Grid>
+        {/* Pagination */}
+        <Grid container justifyContent="flex-end">
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={(event, newPage) => onPageChange(newPage)}
+            sx={{ pt: 2 }} // Add some padding-top for spacing
+          />
         </Grid>
       </Container>
     </MainContainer>

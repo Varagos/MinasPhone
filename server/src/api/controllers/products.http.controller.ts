@@ -274,49 +274,49 @@ export class ProductsHttpController {
     });
   }
 
-  @Get(routesV1.product.findByCategorySlug)
-  @ApiOperation({ summary: 'Find products by Category Slug' })
-  @ApiResponse({
-    status: HttpStatus.OK,
-    type: ProductPaginatedResponseDto,
-  })
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  async findProductsByCategorySlug(
-    @Param('slug') slug: string,
-    @Query() queryParams: PaginatedQueryRequestDto,
-  ): Promise<ProductPaginatedResponseDto> {
-    const query = new FindProductsByCategorySlugQuery({
-      slug,
-      limit: queryParams?.limit,
-      page: queryParams?.page,
-    });
-    const result: Result<
-      Paginated<ProductModel>,
-      Error
-    > = await this.queryBus.execute(query);
+  // @Get(routesV1.product.findByCategorySlug)
+  // @ApiOperation({ summary: 'Find products by Category Slug' })
+  // @ApiResponse({
+  //   status: HttpStatus.OK,
+  //   type: ProductPaginatedResponseDto,
+  // })
+  // @UsePipes(new ValidationPipe({ whitelist: true }))
+  // async findProductsByCategorySlug(
+  //   @Param('slug') slug: string,
+  //   @Query() queryParams: PaginatedQueryRequestDto,
+  // ): Promise<ProductPaginatedResponseDto> {
+  //   const query = new FindProductsByCategorySlugQuery({
+  //     slug,
+  //     limit: queryParams?.limit,
+  //     page: queryParams?.page,
+  //   });
+  //   const result: Result<
+  //     Paginated<ProductModel>,
+  //     Error
+  //   > = await this.queryBus.execute(query);
 
-    const paginated = result.unwrap();
+  //   const paginated = result.unwrap();
 
-    // Whitelisting returned properties
-    return new ProductPaginatedResponseDto({
-      ...paginated,
-      data: paginated.data.map((product) => ({
-        ...new ResponseBase({
-          id: product.id,
-          createdAt: product.created_at,
-          updatedAt: product.updated_at,
-        }),
-        slug: product.slug,
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        quantity: product.quantity,
-        active: product.active,
-        imageUrl: product.image_uri,
-        categoryId: product.category_id,
-      })),
-    });
-  }
+  //   // Whitelisting returned properties
+  //   return new ProductPaginatedResponseDto({
+  //     ...paginated,
+  //     data: paginated.data.map((product) => ({
+  //       ...new ResponseBase({
+  //         id: product.id,
+  //         createdAt: product.created_at,
+  //         updatedAt: product.updated_at,
+  //       }),
+  //       slug: product.slug,
+  //       name: product.name,
+  //       description: product.description,
+  //       price: product.price,
+  //       quantity: product.quantity,
+  //       active: product.active,
+  //       imageUrl: product.image_uri,
+  //       categoryId: product.category_id,
+  //     })),
+  //   });
+  // }
 
   @Get(routesV1.product.getOne)
   @ApiOperation({ summary: 'Find product by id' })

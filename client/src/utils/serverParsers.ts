@@ -1,6 +1,7 @@
 // utils/serverParsers.js
 
 import JSURL from 'jsurl';
+import { DEFAULT_ITEMS_PER_PAGE } from './pagination';
 
 // Inclusive range
 export type Range = [number, number];
@@ -14,7 +15,7 @@ export type Range = [number, number];
  */
 export function parseRangeFromQuery(
   rangeQuery: string | string[] | undefined,
-  defaultRange: Range = [0, 24]
+  defaultRange: Range = [0, DEFAULT_ITEMS_PER_PAGE - 1]
 ): Range {
   if (typeof rangeQuery === 'string') {
     try {
@@ -31,4 +32,20 @@ export function parseRangeFromQuery(
     }
   }
   return defaultRange;
+}
+
+export function parseFilterFromQuery(
+  filterQuery: string | string[] | undefined
+): Record<string, string> {
+  if (typeof filterQuery === 'string') {
+    try {
+      const parsedFilter = JSURL.tryParse(filterQuery);
+      return parsedFilter as Record<string, string>;
+    } catch (error) {
+      // Log the error and fall back to the default range
+      console.error('Error parsing filter parameter:', error);
+    }
+    return {};
+  }
+  return {};
 }

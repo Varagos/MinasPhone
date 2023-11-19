@@ -3,6 +3,13 @@ import { PaginatedRequest, PaginatedResponse } from './common';
 export type FindProductsDto = {
   slug?: string;
   categoryId?: string;
+  categorySlug?: string;
+};
+
+export type FindProductsFilter = {
+  slug?: string;
+  categoryId?: string;
+  categorySlug?: string;
 };
 
 export interface Product {
@@ -19,16 +26,15 @@ export interface Product {
   categoryId: string;
 }
 
-export type ProductRequest = PaginatedRequest<FindProductsDto>;
+export type ProductRequest = PaginatedRequest<
+  FindProductsDto,
+  FindProductsFilter
+>;
 export type ProductPaginatedResponse = PaginatedResponse<Product>;
+
+//  * http://domain.com/posts?sort=["title","ASC"]&range=[0, 24]&filter={"title":"bar"}
 
 export interface IProductsApi {
   findMany(params: ProductRequest): Promise<ProductPaginatedResponse>;
-  findManyByCategorySlug(params: {
-    limit: number;
-    page: number;
-    slug: string;
-    range: [number, number];
-  }): Promise<ProductPaginatedResponse>;
   findOneById(id: string): Promise<Product>;
 }

@@ -66,6 +66,8 @@ export class FindProductsQueryDto {
     'category_id',
     'name',
     'categorySlug',
+    'price_gte',
+    'price_lte',
   ])
   filter?: Record<string, string | number>;
 }

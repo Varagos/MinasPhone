@@ -35,7 +35,7 @@ export const getServerSideProps: GetServerSideProps<LandingProps> = async (
 ) => {
   const categories = await api.categories.findMany({ limit: 10, page: 0 });
   console.log({ categories });
-  const products = await api.products.findMany({ limit: 10, page: 0 });
+  const products = await api.products.findMany({ range: [0, 9] });
 
   const { locale } = context;
   if (!locale) {

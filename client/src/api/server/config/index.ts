@@ -10,18 +10,22 @@ const routes = {
       fineOne: (id: string) => `${API_BASE_URL}/api/v1/categories/${id}`,
     },
     products: {
-      findMany: (limit: number, page: number) =>
-        `${API_BASE_URL}/api/v1/products?limit=${limit}&page=${page}`,
+      // url: `${API_BASE_URL}/api/v1/products?range=[0,10]&sort=["name","ASC"]&filter={"name":"bar"}`
+      findMany: (
+        range: [number, number],
+        sortBy?: [string, 'ASC' | 'DESC'] | undefined,
+        filter?: Record<string, string>
+      ) => {
+        let baseUrl = `${API_BASE_URL}/api/v1/products?range=[${range[0]}, ${range[1]}]`;
+        if (sortBy) {
+          baseUrl += `&sort=${sortBy}`;
+        }
+        if (filter) {
+          baseUrl += `&filter=${JSON.stringify(filter)}`;
+        }
+        return baseUrl;
+      },
       fineOne: (id: string) => `${API_BASE_URL}/api/v1/products/${id}`,
-      findManyByCategorySlug: (params: {
-        limit: number;
-        page: number;
-        slug: string;
-        range: [number, number];
-      }) =>
-        `${API_BASE_URL}/api/v1/products?range=[${params.range[0]}, ${params.range[1]}]&filter={"categorySlug":"${params.slug}"}`,
-
-      // `${API_BASE_URL}/api/v1/products/category/${params.slug}?limit=${params.limit}&page=${params.page}`,
     },
     cart: {
       retrieve: () => `${API_BASE_URL}/api/v1/cart/fetch`,

@@ -285,3 +285,108 @@ git push --tags
 
 # Done! :)
 ```
+
+# Slonik, Write safe SQL queries
+
+Here's a guide to help you understand the use cases for each utility:
+
+1. `sql.array`
+   Use when you need to pass an array of values to a query. It creates an array value binding, ensuring that the array is safely formatted for SQL.
+
+```javascript
+sql`SELECT * FROM users WHERE id = ANY(${sql.array([1, 2, 3], 'int4')})`;
+```
+
+2. `sql.binary`
+   Use for binding binary data (like Buffer objects) in your queries.
+
+```javascript
+sql`INSERT INTO files (data) VALUES (${sql.binary(buffer)})`;
+```
+
+3. `sql.date`
+   Use to safely insert a JavaScript Date object.
+
+```javascript
+sql`INSERT INTO events (date) VALUES (${sql.date(new Date())})`;
+```
+
+4. `sql.fragment`
+   Use to build complex or conditional SQL fragments.
+
+```javascript
+const condition = sql.fragment`price > ${100}`;
+sql`SELECT * FROM products WHERE ${condition}`;
+```
+
+5. `sql.identifier`
+   Use for safely including identifiers (like table or column names) in your query, especially if they are dynamic.
+
+```javascript
+const columnName = 'username';
+sql`SELECT ${sql.identifier([columnName])} FROM users`;
+```
+
+6. `sql.interval`
+   Use for inserting interval values, particularly for date and time arithmetic.
+
+```javascript
+sql`SELECT NOW() - ${sql.interval({ days: 7 })}`;
+```
+
+7. `sql.join`
+   Use for joining SQL fragments or values with a delimiter, such as in IN clauses.
+
+```javascript
+sql`SELECT * FROM users WHERE id IN (${sql.join([1, 2, 3], sql`, `)})`;
+```
+
+8. `sql.json and sql.jsonb`
+   Use these to insert JSON or JSONB values. They ensure the value is serialized correctly for PostgreSQL.
+
+```javascript
+sql`INSERT INTO documents (data) VALUES (${sql.json({ key: 'value' })})`;
+```
+
+9. `sql.literalValue`
+   Use with caution. This allows inserting raw values into queries and is typically used for building utility statements where parameterized queries aren't feasible. Avoid using it with user-supplied data to prevent SQL injection.
+
+```javascript
+sql`CREATE USER ${sql.identifier(['user'])} WITH PASSWORD ${sql.literalValue(
+  'secret',
+)}`;
+```
+
+10. `sql.timestamp`
+    Use for inserting timestamps.
+
+```javascript
+sql`INSERT INTO events (timestamp) VALUES (${sql.timestamp(new Date())})`;
+```
+
+11. `sql.unnest`
+    Use for creating an unnest expression, typically for bulk insert operations or complex queries.
+
+```javascript
+sql`INSERT INTO users (id, name) SELECT * FROM ${sql.unnest(
+  [
+    [1, 'Alice'],
+    [2, 'Bob'],
+  ],
+  ['int4', 'text'],
+)}`;
+```
+
+12. `sql.unsafe`
+    Use only when necessary and with extreme caution. This allows executing raw SQL queries but bypasses Slonik's safety mechanisms. Avoid using it with user inputs.
+
+```javascript
+sql.unsafe`SELECT * FROM users WHERE id = ${rawUserId}`;
+```
+
+### Summary
+
+- For most cases, use sql for queries with values to ensure safe parameter binding.
+- Use sql.identifier for dynamic table or column names.
+- Use sql.fragment for complex SQL snippets and sql.join for combining multiple conditions or values.
+- Reserve sql.literalValue and sql.unsafe for special cases where other utilities don't fit, and never use them with direct user input to prevent SQL injections.

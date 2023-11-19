@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Grid } from '@mui/material';
 
 import { MainContainer, ToolBar } from '@/components/Products/styles';
@@ -10,22 +10,48 @@ import { api } from '@/api';
 import { ProductPaginatedResponse } from '@/api/types/products';
 import { GetServerSideProps } from 'next';
 import ProductsLayout from '@/components/Products/ProductsLayout';
+import { parseRangeFromQuery } from '@/utils/serverParsers';
+import { useRouter } from 'next/router';
+import useUrl from '@/hooks/useUrl';
+import { parseUrlRange } from '@/utils/pagination';
 
 interface ProductsProps {
   products: ProductPaginatedResponse;
 }
 
-export const getServerSideProps: GetServerSideProps<
-  ProductsProps
-> = async () => {
+export const getServerSideProps: GetServerSideProps<ProductsProps> = async (
+  context
+) => {
+  const { query } = context;
+
+  // Use the utility function to parse the range parameter
+  const [start, end] = parseRangeFromQuery(query.range);
   const products = await api.products.findMany({
-    limit: 10,
-    page: 0,
+    range: [start, end],
   });
   return { props: { products } };
 };
 
 export default function ProductsPage({ products }: ProductsProps) {
+  const router = useRouter();
+  const url = router.asPath;
+  const { setRange, range } = useUrl(url);
+
+  const { initialPage, itemsPerPage, totalPages } = parseUrlRange(
+    range as any,
+    products.count
+  );
+  const [page, setPage] = useState(initialPage);
+
+  const onPageChange = (newPage: number) => {
+    setPage(newPage);
+    const newRange: [number, number] = [
+      (newPage - 1) * itemsPerPage,
+      newPage * itemsPerPage - 1,
+    ]; // Adjust based on your items per page
+    setRange(newRange);
+  };
+
   return (
     <>
       <Head>
@@ -34,7 +60,12 @@ export default function ProductsPage({ products }: ProductsProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ProductsLayout products={products.data} />
+      <ProductsLayout
+        products={products.data}
+        totalPages={totalPages}
+        page={page}
+        onPageChange={onPageChange}
+      />
     </>
   );
 }

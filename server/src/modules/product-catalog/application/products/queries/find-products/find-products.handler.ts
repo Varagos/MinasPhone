@@ -1,7 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Ok, Result } from 'oxide.ts';
 import { InjectPool } from 'nestjs-slonik';
-import { DatabasePool, SchemaValidationError, sql } from 'slonik';
+import {
+  DatabasePool,
+  ListSqlToken,
+  QueryResultRow,
+  SchemaValidationError,
+  SqlSqlToken,
+  sql,
+} from 'slonik';
 import { FindProductsQuery } from './find-products.query';
 import { Paginated } from '@libs/ddd/index';
 import {
@@ -61,23 +68,41 @@ export class FindProductsQueryHandler implements IQueryHandler {
      * Constructing a query with Slonik.
      * More info: https://contra.com/p/AqZWWoUB-writing-composable-sql-using-java-script
      */
+    const whereClauses = [];
+    if (query.slug) {
+      whereClauses.push(sql`slug = ${query.slug}`);
+    }
+    if (categoryId) {
+      whereClauses.push(sql`category_id = ${categoryId}`);
+    }
+    const priceWhereClause = await this.calculatePriceWhereClause(query);
+    if (priceWhereClause) {
+      whereClauses.push(priceWhereClause);
+    }
+    if (query.name) {
+      whereClauses.push(sql`name ILIKE ${'%' + query.name + '%'}`);
+    }
+
+    // Join all where clauses with AND
+    const whereClause =
+      whereClauses.length === 0
+        ? sql`TRUE`
+        : sql.join(whereClauses, sql` AND `);
     const statement = sql.type(productSchema)`
          SELECT *
          FROM products
-         WHERE
-           ${query.slug ? sql`slug = ${query.slug}` : true} AND
-           ${categoryId ? sql`category_id = ${categoryId}` : true} AND
-           ${query.name ? sql`name ILIKE ${'%' + query.name + '%'}` : true}
+         WHERE ${whereClause}
            ${sortClause}
          LIMIT ${query.limit}
          OFFSET ${query.offset}`;
 
     try {
       const records = await this.pool.query(statement);
+      const count = await this.getTotalProductsCount(whereClause);
       return Ok(
         new Paginated({
           data: records.rows,
-          count: records.rowCount,
+          count,
           limit: query.limit,
           page: query.page,
         }),
@@ -89,6 +114,19 @@ export class FindProductsQueryHandler implements IQueryHandler {
       this.logger.error(e);
       throw e;
     }
+  }
+
+  private async getTotalProductsCount(
+    whereClause: ListSqlToken | SqlSqlToken<QueryResultRow>,
+  ): Promise<number> {
+    const totalProductsStatement = sql`
+          SELECT COUNT(*)
+          FROM products
+          WHERE ${whereClause}
+    `;
+
+    const totalProducts = await this.pool.query(totalProductsStatement);
+    return totalProducts.rows[0].count as number;
   }
 
   private async findCategoryIdBySlug(slug: string): Promise<string> {
@@ -104,5 +142,19 @@ export class FindProductsQueryHandler implements IQueryHandler {
     }
     const categoryId = categoryResult.id;
     return categoryId;
+  }
+
+  private async calculatePriceWhereClause(
+    query: FindProductsQuery,
+  ): Promise<SqlSqlToken<QueryResultRow> | null> {
+    if (query.price_gte !== undefined && query.price_lte !== undefined) {
+      return sql`price BETWEEN ${query.price_gte} AND ${query.price_lte}`;
+    } else if (query.price_gte !== undefined) {
+      return sql`price >= ${query.price_gte}`;
+    } else if (query.price_lte !== undefined) {
+      return sql`price <= ${query.price_lte}`;
+    }
+    // null when no price constraints are specified
+    return null;
   }
 }

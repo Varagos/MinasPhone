@@ -79,7 +79,8 @@ const NewNavbar = () => {
     path: string,
     theme: typeof AppTheme
   ): Record<string, any> {
-    const isActive = currentPath === path;
+    const basePathWithOutQuery = currentPath.split('?')[0];
+    const isActive = basePathWithOutQuery === path;
 
     return {
       textDecoration: 'none',

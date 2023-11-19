@@ -29,24 +29,29 @@ const useUrl = (baseUrl: string) => {
   // Function to update the query parameters
   const updateUrl = useCallback(
     (newQueryParams: UpdateUrlParams) => {
-      console.log(`currentUrl`, searchParams.toString());
+      console.log(
+        `Start of updateURL: [searchParams]`,
+        searchParams.toString()
+      );
       const newParams = new URLSearchParams(searchParams.toString());
 
       // Update each parameter
       for (const [key, value] of Object.entries(newQueryParams)) {
         if (value !== null && value !== undefined) {
-          console.log(`Setting ${key} to ${JSON.stringify(value)}`);
-          newParams.set(key, JSURL.stringify(value));
+          const jsurlValue = JSURL.stringify(value);
+          console.log(`Setting ${key} to ${jsurlValue}`);
+          newParams.set(key, jsurlValue);
         } else {
           console.log(`Deleting ${key}`);
           newParams.delete(key);
         }
       }
 
-      // console.info('newParams', newParams.toString());
-      // console.info('Received newQueryParams', newQueryParams);
+      console.info('newParams', newParams.toString());
+      console.info('Received newQueryParams', newQueryParams);
       // Create the new URL
-      const newUrl = createUrl(baseUrl, newParams);
+      const objectParams = Object.fromEntries(newParams);
+      const newUrl = createUrl(baseUrl, objectParams);
       console.log(`newUrl`, newUrl);
       router.push(newUrl);
     },
@@ -54,34 +59,40 @@ const useUrl = (baseUrl: string) => {
   );
 
   // Function to parse JSURL query parameters
-  const parseJsurlQueryParam = (
-    paramValue: string | null
-  ): ObjectLike | null => {
+  const parseJsurlQueryParam = <T>(paramValue: string | null): T | null => {
     if (!paramValue) return null;
-    return JSURL.tryParse(paramValue) as ObjectLike;
+    return JSURL.tryParse(paramValue) as T;
   };
+
+  /**
+   * RANGE
+   */
+
+  // Memoize the range parameter
+  const range: Range | null = useMemo(() => {
+    const rangeParam = searchParams.get(URL_PARAM.RANGE);
+    if (!rangeParam) return null;
+    const parsedRange = parseJsurlQueryParam<Range>(rangeParam);
+    return parsedRange;
+  }, [searchParams]);
+
+  // Function to set the range parameter
+  const setRange = useCallback(
+    (newRange: Range) => {
+      updateUrl({ [URL_PARAM.RANGE]: newRange });
+    },
+    [updateUrl]
+  );
+
+  /**
+   * SORT
+   */
 
   // Memoize the sort parameter
   const sort = useMemo(() => {
     return (
       parseJsurlQueryParam(searchParams.get(URL_PARAM.SORT)) ||
       ([] as any as Sort)
-    );
-  }, [searchParams]);
-
-  // Memoize the range parameter
-  const range = useMemo(() => {
-    return (
-      parseJsurlQueryParam(searchParams.get(URL_PARAM.RANGE)) ||
-      ([] as any as Range)
-    );
-  }, [searchParams]);
-
-  // Memoize the filter parameter
-  const filter = useMemo(() => {
-    return (
-      parseJsurlQueryParam(searchParams.get(URL_PARAM.FILTER)) ||
-      ({} as any as Filter)
     );
   }, [searchParams]);
 
@@ -93,13 +104,12 @@ const useUrl = (baseUrl: string) => {
     [updateUrl]
   );
 
-  // Function to set the range parameter
-  const setRange = useCallback(
-    (newRange: Range) => {
-      updateUrl({ [URL_PARAM.RANGE]: newRange });
-    },
-    [updateUrl]
-  );
+  // Memoize the filter parameter
+  const filter = useMemo(() => {
+    return (
+      parseJsurlQueryParam<Filter>(searchParams.get(URL_PARAM.FILTER)) || {}
+    );
+  }, [searchParams]);
 
   // Function to set the filter parameter
   const setFilter = useCallback(
@@ -120,7 +130,7 @@ const useUrl = (baseUrl: string) => {
       console.log(`currentFilters`, currentFilters);
       const updatedFilters = { ...currentFilters, ...newFilter };
       console.log(`updatedFilters`, updatedFilters);
-      updateUrl({ filter: updatedFilters });
+      updateUrl({ [URL_PARAM.FILTER]: updatedFilters });
     },
     [updateUrl]
   );
@@ -129,11 +139,11 @@ const useUrl = (baseUrl: string) => {
   const removeFilter = useCallback(
     (filterKey: string) => {
       console.log('[REMOVE FILTER]');
-      const currentFilters =
-        parseJsurlQueryParam(searchParams.get('filter')) || {};
+      const currentFilters: Filter =
+        parseJsurlQueryParam<Filter>(searchParams.get(URL_PARAM.FILTER)) || {};
       const updatedFilters = { ...currentFilters };
       delete updatedFilters[filterKey];
-      updateUrl({ filter: updatedFilters });
+      updateUrl({ [URL_PARAM.FILTER]: updatedFilters });
     },
     [updateUrl]
   );

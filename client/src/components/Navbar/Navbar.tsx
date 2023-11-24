@@ -105,36 +105,20 @@ const NewNavbar = () => {
     };
   }
 
-  // if (currentPath === path) {
-  //   return {
-  //     color: '#ffce2a',
-  //     '&:hover': {
-  //       backgroundColor: '#ffff',
-  //     },
-  //   };
-  // }
-
-  // return {
-  //   textDecoration: 'none',
-  //   color: 'black',
-  //   transition: 'all .5s ease-in-out',
-  //   '&:hover': {
-  //     color: '#ffce2a',
-  //     backgroundColor: '#ffff',
-  //   },
-  // };
-  // }
-
   return (
     <nav>
       <AppBar
         position={currentPath === '/' ? 'sticky' : 'static'}
         color="secondary" // This will use the styleOverrides for colorSecondary
-        sx={{
-          display: { xs: 'none', md: 'block' },
-          px: 8,
+        sx={(theme) => ({
+          display: 'block',
+          [theme.breakpoints.down('sm')]: {
+            display: 'none',
+          },
+          // display: { xs: 'none', md: 'block' },
+          px: 2,
           minHeight: '48px',
-        }}
+        })}
       >
         <Toolbar
           variant="dense"
@@ -195,7 +179,7 @@ const NewNavbar = () => {
                 <Box
                   mr={12}
                   sx={(theme) => ({
-                    [theme.breakpoints.down('sm')]: {
+                    [theme.breakpoints.down('md')]: {
                       display: 'none',
                     },
                   })}

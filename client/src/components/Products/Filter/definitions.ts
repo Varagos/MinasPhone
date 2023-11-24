@@ -10,7 +10,11 @@ export type PriceOption = {
   lower: number;
   upper: number;
 };
+export type PriceFilters = {
+  options: PriceOption[];
+  minMax: [number, number];
+};
 
 export type Filters = {
-  priceFilters: PriceOption[];
+  priceFilters: PriceFilters;
 };

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import ProductsLayout from '@/components/Products/ProductsLayout';
 import { useRouter } from 'next/router';
 import Spinner from '@/components/Spinner/Spinner';
 import { ProductPaginatedResponse } from '@/api/types/products';

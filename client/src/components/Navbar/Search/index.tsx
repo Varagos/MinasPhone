@@ -31,6 +31,11 @@ const SearchPromptIcon = (props: SearchPromptIconProps) => {
       color="inherit"
       aria-label="open search"
       onClick={handleSearchToggle}
+      sx={(theme) => ({
+        [theme.breakpoints.down('sm')]: {
+          display: 'none', // Hide on small screens
+        },
+      })}
     >
       <SearchIcon />
     </IconButton>

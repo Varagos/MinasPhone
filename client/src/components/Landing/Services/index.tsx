@@ -128,10 +128,30 @@ const ServicesSection = () => {
         backgroundColor: '#f5f5f5',
       }}
     >
-      <Container maxWidth="lg">
+      <Container
+        maxWidth="lg"
+        sx={(theme) => ({
+          py: 15,
+          [theme.breakpoints.down('sm')]: {
+            py: 10,
+          },
+        })}
+      >
         <Grid container spacing={4} sx={{ paddingBottom: 20 }}>
           <Grid item xs={12}>
-            <Typography variant="h2" align="center" gutterBottom>
+            <Typography
+              variant="h2"
+              // on mobile make this smaller
+              sx={(theme) => {
+                return {
+                  [theme.breakpoints.down('sm')]: {
+                    fontSize: '2rem',
+                  },
+                };
+              }}
+              align="center"
+              gutterBottom
+            >
               {t('SERVICES.TITLE')}
             </Typography>
           </Grid>

@@ -1,7 +1,10 @@
 import Head from 'next/head';
 import Image, { StaticImageData } from 'next/image';
 import { useEffect, useState } from 'react';
-import { Typography, Grid, Box } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
 
 import { MainContainer, ThickBottomBorder } from '@/components/Landing/styles';
 import CategoryItem from '@/components/Landing/CategoryItem/CategoryItem';
@@ -23,7 +26,6 @@ import Hero from '@/components/Landing/HeroSection';
 import StoreLocation from '@/components/Landing/StoreLocation';
 import ServicesSection from '@/components/Landing/Services';
 import ContactUsSection from '@/components/Landing/ContactUs';
-import Container from '@mui/material/Container';
 
 interface LandingProps {
   categories: CategoryPaginatedResponse;

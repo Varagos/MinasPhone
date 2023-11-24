@@ -65,6 +65,7 @@ export default function ProductsPage({ products }: ProductsProps) {
         totalPages={totalPages}
         page={page}
         onPageChange={onPageChange}
+        totalProducts={products.count}
       />
     </>
   );

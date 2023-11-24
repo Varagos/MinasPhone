@@ -12,11 +12,15 @@ import Filter from './Filter/Filter';
 import { Product } from '@/api/types/types';
 import useUrl from '@/hooks/useUrl';
 import { useRouter } from 'next/router';
+import FloatingActionButton from './Filter/mobile/FloatingActionButton';
+import { useState } from 'react';
+import FilterModal from './Filter/mobile/FilterModal';
 
 type ProductsLayoutProps = {
   products: Product[];
   totalPages: number;
   page: number;
+  totalProducts: number;
   onPageChange: (page: number) => void;
 };
 
@@ -46,19 +50,35 @@ export default function ProductsLayout({
   totalPages,
   page,
   onPageChange,
+  totalProducts,
 }: ProductsLayoutProps) {
   const { asPath } = useRouter();
   const { filter } = useUrl(asPath);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const emptyFilters = !filter || Object.keys(filter).length === 0;
   if (!products.length && emptyFilters) {
     return <EmptyProducts />;
   }
+
+  const handleOpenFilters = () => {
+    setIsMobileFilterOpen(true);
+  };
 
   return (
     <MainContainer>
       <ToolBar />
       <Container sx={{ pb: 20 }}>
         <Grid container justifyContent="center" spacing={4}>
+          {/* Title etc */}
+          <Grid item xs={12}>
+            <Typography variant="h4" gutterBottom color="black">
+              <strong>Προϊόντα</strong>
+            </Typography>
+            {/* Total products */}
+            <Typography variant="body1" gutterBottom>
+              Βρέθηκαν {totalProducts} προϊόντα
+            </Typography>
+          </Grid>
           {/* <Hidden xsDown> */}
           <Grid
             item
@@ -72,6 +92,14 @@ export default function ProductsLayout({
           >
             <Filter />
           </Grid>
+          {/* Mobile Filter - START */}
+          <FloatingActionButton handleOpenFilters={handleOpenFilters} />
+          <FilterModal
+            open={isMobileFilterOpen}
+            onClose={() => setIsMobileFilterOpen(false)}
+          />
+          {/* Mobile Filter - END */}
+
           <Grid item container xs={12} sm={9} spacing={4}>
             {products.map((product) => (
               <Grid

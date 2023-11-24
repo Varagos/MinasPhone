@@ -1,46 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import {
-  Box,
-  Divider,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Button,
-} from '@mui/material';
-import HighlightOff from '@mui/icons-material/HighlightOff';
-import Slider from '@mui/material/Slider';
+import { Box, Typography, Button } from '@mui/material';
 import PriceFilter from './PriceFilter';
-import { PriceOption } from './definitions';
 import useUrl from '@/hooks/useUrl';
-
-const priceFilters: PriceOption[] = [
-  {
-    value: 'option1',
-    label: 'Εως 150 €',
-    lower: 0,
-    upper: 150,
-  },
-  {
-    value: 'option2',
-    label: '150 - 400 €',
-    lower: 150,
-    upper: 400,
-  },
-  {
-    value: 'option3',
-    label: '400 - 850 €',
-    lower: 400,
-    upper: 850,
-  },
-  {
-    value: 'option4',
-    label: 'Από 850 € και άνω',
-    lower: 850,
-    upper: 2000,
-  },
-];
+import { priceFilters } from './contants';
 
 const Filter = () => {
   const { asPath } = useRouter();
@@ -48,6 +11,12 @@ const Filter = () => {
   const [activeFilters, setActiveFilters] = useState<{
     price?: boolean;
   }>({});
+
+  useEffect(() => {
+    if (filter && Object.keys(filter).length > 0) {
+      setActiveFilters({ price: true });
+    }
+  }, [filter]);
 
   const handleClear = () => {
     // setActiveFilters({});
@@ -91,9 +60,9 @@ const Filter = () => {
         )}
         <hr />
         <PriceFilter
-          priceFilters={priceFilters}
+          priceFilters={priceFilters.options}
           activate={activatePriceFilter}
-          minMaxPrice={[0, 2000]}
+          minMaxPrice={priceFilters.minMax}
         />
         {/* {}
         <Typography variant="h6" gutterBottom>

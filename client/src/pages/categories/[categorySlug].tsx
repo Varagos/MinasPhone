@@ -73,6 +73,7 @@ const Category = ({ products }: CategoryProps) => {
       totalPages={totalPages}
       page={page}
       onPageChange={onPageChange}
+      totalProducts={products.count}
     />
   );
   // );

@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import newLogo from '../../../public/free-logo-design_1.png';
+import newLogo from '../../../public/free-logo-design.png';
+import svgLogo from '../../../public/free-logo.svg';
 import AppDrawer from './AppDrawer/AppDrawer';
 import {
   AppBar,
@@ -176,7 +177,8 @@ const NewNavbar = () => {
             >
               <Link href="/">
                 <Image
-                  src={newLogo}
+                  src={svgLogo}
+                  // src={newLogo}
                   alt="MinasPhone"
                   style={{ marginRight: '10px', display: 'block' }}
                 />

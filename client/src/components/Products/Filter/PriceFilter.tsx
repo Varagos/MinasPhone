@@ -13,9 +13,15 @@ import { PriceFiltersFilterKeys, PriceOption } from './definitions';
 type PriceFilterProps = {
   priceFilters: PriceOption[];
   activate: () => void;
+  minMaxPrice: [number, number];
 };
 
-export function PriceFilter({ priceFilters, activate }: PriceFilterProps) {
+export function PriceFilter({
+  priceFilters,
+  activate,
+  minMaxPrice,
+}: PriceFilterProps) {
+  const [sliderMinPrice, sliderMaxPrice] = minMaxPrice;
   const { asPath } = useRouter();
   const { filter, addFilter, removeFilter } = useUrl(asPath);
   console.log('Price filter from URL:', filter);
@@ -110,11 +116,11 @@ export function PriceFilter({ priceFilters, activate }: PriceFilterProps) {
         </Grid>
       </Grid>
       <Slider
-        value={[minPrice || 0, maxPrice || 1500]}
+        value={[minPrice || sliderMinPrice, maxPrice || sliderMaxPrice]}
         onChange={handleSliderChange}
         valueLabelDisplay="auto"
-        min={0}
-        max={1500}
+        min={sliderMinPrice}
+        max={sliderMaxPrice}
       />
       <RadioGroup value={selectedOption || ''} onChange={handleRadioChange} row>
         {priceFilters.map((priceFilter) => (

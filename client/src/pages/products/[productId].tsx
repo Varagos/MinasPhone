@@ -32,10 +32,7 @@ export default function ProductPage({ product }: ProductsPageProps) {
     return <div style={{ minHeight: '70vh' }}>Error finding product</div>;
 
   return (
-    <Container
-      maxWidth="lg"
-      sx={{ pt: 10, pb: 20, bgcolor: 'background.paper' }}
-    >
+    <Container maxWidth="lg" sx={{ pt: 10, pb: 20 }}>
       <Grid container spacing={2}>
         <Grid
           container

@@ -38,7 +38,7 @@ const priceFilters: PriceOption[] = [
     value: 'option4',
     label: 'Από 850 € και άνω',
     lower: 850,
-    upper: 1500,
+    upper: 2000,
   },
 ];
 
@@ -93,6 +93,7 @@ const Filter = () => {
         <PriceFilter
           priceFilters={priceFilters}
           activate={activatePriceFilter}
+          minMaxPrice={[0, 2000]}
         />
         {/* {}
         <Typography variant="h6" gutterBottom>
@@ -117,21 +118,7 @@ const Filter = () => {
           </ListItem>
         </List>
 
-        <Typography variant="body1" gutterBottom>
-          Τιμή
-        </Typography>
-        <Divider />
-        <Box>
-          <Slider
-            getAriaLabel={() => 'Value range'}
-            value={value}
-            onChange={handleChange}
-            valueLabelDisplay="auto"
-            getAriaValueText={valuetext}
-            min={0}
-            max={2000}
-          />
-        </Box> */}
+       
         {/* <Typography variant="body2" onClick={handleClear} component={Link}>
           <HighlightOff fontSize="inherit" /> Clear all
         </Typography> */}

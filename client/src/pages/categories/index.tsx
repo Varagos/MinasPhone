@@ -1,10 +1,10 @@
 import { Container, Typography, Grid, Box } from '@mui/material';
 
-import TabletCategory from '../../../public/tablet-category.jpg';
-import SmartWatchCategory from '../../../public/smartwatch-category.jpg';
+import TabletCategory from '../../../public/categories_tablet.jpg';
 
-import PhonesCategory from '../../../public/iphone-12-service.png';
-import AccessoriesCategory from '../../../public/Hnet-com-image.png';
+import PhonesCategory from '../../../public/categories_smartphones.png';
+import AccessoriesCategory from '../../../public/categories_accessories.png';
+import SmartWatchCategory from '../../../public/categories_smartwatch.jpg';
 import CategoryItem from '@/components/Landing/CategoryItem/CategoryItem';
 
 export default function Categories() {

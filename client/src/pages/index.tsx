@@ -202,7 +202,7 @@ export default function Landing({ categories, products }: LandingProps) {
                     <Typography variant="h6" align="left" gutterBottom>
                       ΕΠΙΣΚΕΥΕΣ ΤΗΛΕΦΩΝΩΝ
                     </Typography>
-                    <Typography>
+                    <Typography gutterBottom>
                       Σε μια εποχή όπου κυριαρχούν τα πανάκριβα smartphones με
                       τις αμέτρητες λειτουργίες, το παραδοσιακό κλασικό κινητό
                       τηλέφωνο καταφέρνει να διατηρεί την αξία του, κι αυτό δεν
@@ -211,7 +211,7 @@ export default function Landing({ categories, products }: LandingProps) {
                     <Typography variant="h6" align="left" gutterBottom>
                       Υψηλής ποιότητας ανταλλακτικά
                     </Typography>
-                    <Typography>
+                    <Typography gutterBottom>
                       Χρησιμοποιούμε για την επισκευή κινητών πάντα τα καλύτερα
                       ανταλλακτικά που υπάρχουν στην αγορά. Κριτήρια για την
                       επιλογή τους, είναι η απόδοση και η αντοχή. Ο λόγος είναι
@@ -222,7 +222,7 @@ export default function Landing({ categories, products }: LandingProps) {
                     <Typography variant="h6" align="left" gutterBottom>
                       Οικονομικές τιμές
                     </Typography>
-                    <Typography>
+                    <Typography gutterBottom>
                       Τις ποιοτικές μας υπηρεσίες έχουμε φροντίσει και τις
                       προσφέρουμε στις καλύτερες δυνατές τιμές της αγοράς. Στο
                       κατάστημα μας πραγματοποιούμε τις πιο συμφέρουσες

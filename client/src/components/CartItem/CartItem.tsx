@@ -1,33 +1,37 @@
-import {
-  Typography,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Box,
-  IconButton,
-} from '@mui/material';
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Grid from '@mui/material/Grid';
+
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import useStyles from './styles';
 import Link from 'next/link';
 import { api } from '@/api';
 import { CartLineItem } from '@/api/types/cart';
 import { formatPriceWithSymbol } from '@/utils/prices';
 import { useCart } from '@/hooks/useCart';
+import { useTheme } from '@mui/material/styles';
 
-type CartItemProps = {
+type CartItemWrapperProps = {
   item: CartLineItem;
 };
 
-const CartItem = ({ item }: CartItemProps) => {
-  const classes = useStyles();
+type CartItemProps = {
+  item: CartLineItem;
+  handleRemoveFromCart: (lineItemId: string) => void;
+  onUpdateCartQty: (lineItemId: string, quantity: number) => Promise<void>;
+};
+
+const CartItem = ({ item }: CartItemWrapperProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const { setCart } = useCart();
 
@@ -45,6 +49,99 @@ const CartItem = ({ item }: CartItemProps) => {
   };
 
   return (
+    <div>
+      {isMobile ? (
+        <MobileCartItem
+          item={item}
+          handleRemoveFromCart={handleRemoveFromCart}
+          onUpdateCartQty={onUpdateCartQty}
+        />
+      ) : (
+        <DesktopCartItem
+          item={item}
+          handleRemoveFromCart={handleRemoveFromCart}
+          onUpdateCartQty={onUpdateCartQty}
+        />
+      )}
+    </div>
+  );
+};
+
+const MobileCartItem = ({
+  item,
+  handleRemoveFromCart,
+  onUpdateCartQty,
+}: CartItemProps) => {
+  return (
+    <Card sx={{ margin: 'auto' }}>
+      <Grid container>
+        <Grid item xs={4}>
+          <CardMedia
+            component="img"
+            image={item.productImage}
+            alt={item.productName}
+            sx={{ width: '100%', height: 'auto', p: 2 }}
+          />
+        </Grid>
+        <Grid item xs={8}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {item.productName}
+            </Typography>
+            <Link href={`/products/${item.productId}`} passHref>
+              <Typography variant="body2" color="text.secondary">
+                Λεπτομέρειες
+              </Typography>
+            </Link>
+          </CardContent>
+        </Grid>
+      </Grid>
+
+      <Grid container>
+        <Grid
+          item
+          xs={6}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <IconButton
+            onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}
+          >
+            <RemoveIcon />
+          </IconButton>
+          <Typography sx={{ marginX: 2 }}>{item.quantity}</Typography>
+          <IconButton
+            onClick={() => onUpdateCartQty(item.id, item.quantity + 1)}
+          >
+            <AddIcon />
+          </IconButton>
+        </Grid>
+        <Grid item xs={6} sx={{ textAlign: 'center' }}>
+          <Typography variant="h6">
+            {formatPriceWithSymbol(item.quantity * item.productPrice)}
+          </Typography>
+          <IconButton
+            aria-label="remove item"
+            sx={{ color: 'error.main' }}
+            onClick={() => handleRemoveFromCart(item.id)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Grid>
+      </Grid>
+    </Card>
+  );
+};
+
+const DesktopCartItem = ({
+  item,
+  handleRemoveFromCart,
+  onUpdateCartQty,
+}: CartItemProps) => {
+  return (
     <Card sx={{ display: 'flex' }}>
       <CardMedia
         component="img"
@@ -52,7 +149,7 @@ const CartItem = ({ item }: CartItemProps) => {
         image={item.productImage}
         alt="Live from space album cover"
       />
-      <Box sx={{ display: 'flex', flexDirection: 'column', flex: 3 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h5">
             {item.productName}
@@ -69,8 +166,14 @@ const CartItem = ({ item }: CartItemProps) => {
         </CardContent>
       </Box>
 
-      <CardActions className={classes.cartActions} sx={{ flex: 2 }}>
-        <div className={classes.buttons}>
+      <CardActions
+        sx={{
+          flex: 2,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <IconButton
             aria-label="remove item"
             onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}
@@ -94,6 +197,7 @@ const CartItem = ({ item }: CartItemProps) => {
           flexDirection: 'column',
           justifyContent: 'space-evenly',
           alignItems: 'center',
+          // border: 'solid 1px',
         }}
       >
         <Typography variant="h5" align="center">
@@ -103,7 +207,7 @@ const CartItem = ({ item }: CartItemProps) => {
         <IconButton
           size="medium"
           aria-label="remove item"
-          color="secondary"
+          sx={(theme) => ({ color: theme.palette.error.main })}
           onClick={() => handleRemoveFromCart(item.id)}
         >
           <DeleteIcon />

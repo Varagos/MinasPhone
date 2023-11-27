@@ -1,4 +1,12 @@
-import { Container, Typography, Button, Grid, Box } from '@mui/material';
+import {
+  Container,
+  Typography,
+  Button,
+  Grid,
+  Box,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import Link from 'next/link';
 import LinkButton from '@/components/common/LinkButton';
 import Spinner from '@/components/Spinner/Spinner';
@@ -7,6 +15,77 @@ import { api } from '@/api';
 import type { Cart } from '@/api/types/cart';
 import { formatPriceWithSymbol } from '@/utils/prices';
 import { useCart } from '@/hooks/useCart';
+
+type CartPageProps = {
+  cart: Cart;
+  handleEmptyCart: () => void;
+};
+
+const FilledCart = ({ cart, handleEmptyCart }: CartPageProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  return (
+    <Container sx={{ mb: 6 }}>
+      <Grid container spacing={3} gap={3}>
+        {cart.lineItems.map((item) => (
+          <Grid item xs={12} key={item.id}>
+            <CartItem item={item} />
+          </Grid>
+        ))}
+      </Grid>
+      <Grid
+        container
+        spacing={isMobile ? 2 : 0}
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{ marginTop: '10%' }}
+      >
+        <Grid item xs={12} sm={6}>
+          <Typography variant="h4" align={isMobile ? 'center' : 'left'}>
+            Σύνολο: {formatPriceWithSymbol(cart.subtotal)}
+          </Typography>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          sx={{ textAlign: isMobile ? 'center' : 'right' }}
+        >
+          <Button
+            size="large"
+            type="button"
+            variant="outlined"
+            color="primary"
+            onClick={handleEmptyCart}
+            sx={{
+              textTransform: 'none',
+              minWidth: isMobile ? '100%' : '150px', // full width on mobile
+              my: isMobile ? 1 : 0,
+            }}
+          >
+            Άδειασε το καλάθι
+          </Button>
+          <LinkButton
+            href="/checkout"
+            size="large"
+            type="button"
+            variant="contained"
+            color="primary"
+            disabled={cart === null || cart.lineItems.length === 0}
+            sx={{
+              textTransform: 'none',
+              minWidth: isMobile ? '100%' : '150px', // full width on mobile
+              mt: isMobile ? 2 : 0,
+              ml: isMobile ? 0 : 5,
+            }}
+          >
+            Ολοκλήρωση παραγγελίας
+          </LinkButton>
+        </Grid>
+      </Grid>
+    </Container>
+  );
+};
 
 const CartPage = () => {
   const { cart, setCart } = useCart();
@@ -37,57 +116,6 @@ const CartPage = () => {
     </div>
   );
 
-  const FilledCart = () => (
-    <Box mb={6}>
-      <Grid container spacing={3}>
-        {cart === null ? (
-          <Spinner />
-        ) : (
-          cart.lineItems.map((item) => (
-            <Grid item sm={12} key={item.id}>
-              <CartItem item={item} />
-            </Grid>
-          ))
-        )}
-      </Grid>
-      <div
-        style={{
-          display: 'flex',
-          marginTop: '10%',
-          width: '100%',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Typography variant="h4">
-          Σύνολο: {formatPriceWithSymbol(cart.subtotal)}
-        </Typography>
-        <div>
-          <Button
-            size="large"
-            type="button"
-            variant="outlined"
-            color="primary"
-            onClick={handleEmptyCart}
-            sx={{ textTransform: 'none', minWidth: '150px' }}
-          >
-            Άδειασε το καλάθι
-          </Button>
-          <LinkButton
-            href="/checkout"
-            size="large"
-            type="button"
-            variant="contained"
-            color="primary"
-            disabled={cart === null || cart.lineItems.length === 0}
-            sx={{ ml: 5, textTransform: 'none', minWidth: '150px' }}
-          >
-            Ολοκλήρωση παραγγελίας
-          </LinkButton>
-        </div>
-      </div>
-    </Box>
-  );
-
   return (
     <Container sx={{ pt: 2, pb: 20 }}>
       {/* <div className={classes.toolbar} /> */}
@@ -100,7 +128,11 @@ const CartPage = () => {
       >
         Καλάθι Αγορών
       </Typography>
-      {!cart.lineItems.length ? <EmptyCart /> : <FilledCart />}
+      {!cart.lineItems.length ? (
+        <EmptyCart />
+      ) : (
+        <FilledCart cart={cart} handleEmptyCart={handleEmptyCart} />
+      )}
     </Container>
   );
 };

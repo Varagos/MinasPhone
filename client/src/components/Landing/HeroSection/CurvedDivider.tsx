@@ -7,7 +7,7 @@ const CustomShapeDividerBottom = styled('div')(({ theme }: any) => ({
   width: '100%',
   overflow: 'hidden',
   lineHeight: 0,
-  zIndex: 2,
+  zIndex: 3,
   '& svg': {
     position: 'relative',
     display: 'block',

@@ -1,7 +1,13 @@
 import * as React from 'react';
 import { AppBar, Logout, UserMenu, useTranslate } from 'react-admin';
 import { Link } from 'react-router-dom';
-import { Box, MenuItem, ListItemIcon, ListItemText, Typography, useMediaQuery, Theme } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 import SettingsIcon from '@mui/icons-material/Settings';
 
 import Logo from './Logo';
@@ -31,7 +37,7 @@ const CustomUserMenu = () => (
 );
 
 const CustomAppBar = (props: any) => {
-  const isLargeEnough = useMediaQuery<Theme>((theme) => theme.breakpoints.up('sm'));
+  const isLargeEnough = useMediaQuery((theme: any) => theme.breakpoints.up('sm'));
   return (
     <AppBar {...props} color="secondary" elevation={1} userMenu={<CustomUserMenu />}>
       <Typography

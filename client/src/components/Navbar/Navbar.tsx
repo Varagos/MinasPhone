@@ -3,19 +3,16 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import newLogo from '../../../public/free-logo-design.png';
 import svgLogo from '../../../public/free-logo.svg';
 import AppDrawer from './AppDrawer/AppDrawer';
-import {
-  AppBar,
-  Badge,
-  Box,
-  ClickAwayListener,
-  IconButton,
-  SxProps,
-  Toolbar,
-  Typography,
-} from '@mui/material';
+import ClickAwayListener from '@mui/base/ClickAwayListener';
+import AppBar from '@mui/material/AppBar';
+import Badge from '@mui/material/Badge';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+
+import Toolbar from '@mui/material/Toolbar';
 
 import Phone from '@mui/icons-material/Phone';
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
@@ -31,21 +28,21 @@ import theme from '@/lib/theme';
 
 const FEATURED_CATEGORIES = [
   {
-    href: '/categories/smartphones',
-    title: 'ΚΙΝΗΤΑ',
+    href: '/categories/accessories',
+    title: 'ΑΞΕΣΟΥΑΡ',
   },
   {
-    href: '/categories/smartwatches',
-    title: 'SMARTWATCH',
+    href: '/categories/smartphones',
+    title: 'ΚΙΝΗΤΑ',
   },
   {
     href: '/categories/tablets',
     title: 'TABLET',
   },
-  {
-    href: '/categories/accessories',
-    title: 'ΑΞΕΣΟΥΑΡ',
-  },
+  // {
+  //   href: '/categories/smartwatches',
+  //   title: 'SMARTWATCH',
+  // },
 ];
 
 const NewNavbar = () => {

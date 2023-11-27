@@ -1,23 +1,9 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import {
-  AppBar,
-  Badge,
-  Box,
-  IconButton,
-  Toolbar,
-  Typography,
-  InputBase,
-  ClickAwayListener,
-  alpha,
-} from '@mui/material';
+import React from 'react';
+import { alpha } from '@mui/system';
+import IconButton from '@mui/material/IconButton';
+import InputBase from '@mui/material/InputBase';
 import { styled } from '@mui/material/styles';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import ShoppingCart from '@mui/icons-material/ShoppingCart';
-import Phone from '@mui/icons-material/Phone';
-import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 
 type SearchPromptIconProps = {

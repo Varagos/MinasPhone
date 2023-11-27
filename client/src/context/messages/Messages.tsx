@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useCallback } from 'react';
 import MessageDisplay, { Message } from './MessageDisplay';
-import { SnackbarCloseReason } from '@mui/material';
+import { SnackbarCloseReason } from '@mui/material/Snackbar';
 
 type MessageContextType = (msg: Message) => void;
 const MessageContext = createContext<MessageContextType | null>(null);

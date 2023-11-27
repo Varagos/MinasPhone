@@ -1,5 +1,8 @@
 import React from 'react';
-import { Typography, List, ListItem, ListItemText } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import { CheckoutToken } from '@/types/checkout-token';
 
 type ReviewProps = {

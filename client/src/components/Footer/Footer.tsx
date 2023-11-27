@@ -1,4 +1,9 @@
-import { Container, Grid, Box, Link, Divider, Typography } from '@mui/material';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 import Home from '@mui/icons-material/Home';
 import Email from '@mui/icons-material/Email';
 import Phone from '@mui/icons-material/Phone';

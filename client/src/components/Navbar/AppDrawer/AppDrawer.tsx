@@ -10,13 +10,14 @@ import ListItemText from '@mui/material/ListItemText';
 import Home from '@mui/icons-material/Home';
 import Smartphone from '@mui/icons-material/Smartphone';
 import Watch from '@mui/icons-material/Watch';
+import SearchIcon from '@mui/icons-material/Search';
+import LocalShipping from '@mui/icons-material/LocalShipping';
 import TabletMac from '@mui/icons-material/TabletMac';
 import Headset from '@mui/icons-material/Headset';
 import Storefront from '@mui/icons-material/Storefront';
 import Lock from '@mui/icons-material/Lock';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Drawer from '@mui/material/Drawer';
-import { SwipeableDrawer } from '@mui/material';
 import LinkListItem from '@/components/common/LinkListItem';
 
 const useStyles = makeStyles({
@@ -30,14 +31,16 @@ const useStyles = makeStyles({
 
 const drawerItems: [string, string, JSX.Element][] = [
   ['ΑΧΙΚΉ', '/', <Home />],
-  ['ΚΙΝΗΤΑ', '/categories/smartphones', <Smartphone />],
-  ['SMARTWATCH', '/categories/smartwatches', <Watch />],
-  ['TABLET', '/categories/tablets', <TabletMac />],
   ['ACCESSORIES', '/categories/accessories', <Headset />],
+  ['ΚΙΝΗΤΑ', '/categories/smartphones', <Smartphone />],
+  ['TABLET', '/categories/tablets', <TabletMac />],
+  ['SMARTWATCH', '/categories/smartwatches', <Watch />],
   ['ALL PRODUCTS', '/products', <Storefront />],
 ];
 
 const drawerUtilities: [string, string, JSX.Element][] = [
+  ['ΑΝΑΖΗΤΗΣΗ', '/search', <SearchIcon />],
+  ['ORDER TRACKING', '/order-tracking', <LocalShipping />],
   ['ΣΥΝΔΕΣΗ', '/login', <Lock />],
   ['ΕΓΓΡΑΦΗ', '/signup', <PersonAdd />],
 ];

@@ -5,7 +5,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import Grid from '@mui/material/Grid';
 import Slider from '@mui/material/Slider';
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import { PriceInputField } from './styles';
 import useUrl from '@/hooks/useUrl';
 import { PriceFiltersFilterKeys, PriceOption } from './definitions';

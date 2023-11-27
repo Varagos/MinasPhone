@@ -1,5 +1,5 @@
 import React, { useMemo, CSSProperties } from 'react';
-import { useMediaQuery, Theme } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { subDays, startOfDay } from 'date-fns';
 
 import Welcome from './Welcome';
@@ -38,8 +38,8 @@ const Spacer = () => <span style={{ width: '1em' }} />;
 const VerticalSpacer = () => <span style={{ height: '1em' }} />;
 
 const Dashboard = () => {
-  const isXSmall = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
-  const isSmall = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
+  const isXSmall = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
+  const isSmall = useMediaQuery((theme: any) => theme.breakpoints.down('lg'));
   const aMonthAgo = useMemo(() => subDays(startOfDay(new Date()), 30), []);
 
   //   const { data: orders } = useGetList<Order>('orders', {

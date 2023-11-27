@@ -1,15 +1,14 @@
 import React from 'react';
-import {
-  Typography,
-  Button,
-  Divider,
-  Box,
-  Tabs,
-  Tab,
-  Card,
-  CardContent,
-  CardActions,
-} from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+
 // import { CardElement } from '@stripe/react-stripe-js';
 // import { loadStripe } from '@stripe/stripe-js';
 import PaymentsSharpIcon from '@mui/icons-material/PaymentsSharp';

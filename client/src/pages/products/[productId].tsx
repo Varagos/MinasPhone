@@ -1,4 +1,8 @@
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 

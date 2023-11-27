@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton, IconButtonProps } from '@mui/material';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import NextLink from 'next/link';
 
 type CustomIconButtonProps = {

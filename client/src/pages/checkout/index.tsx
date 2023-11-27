@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
-import {
-  CssBaseline,
-  Paper,
-  Step,
-  StepLabel,
-  Stepper,
-  Toolbar,
-  Typography,
-} from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
 
 import { CheckoutCapture } from '@/types/checkout-capture';
 import LinkButton from '@/components/common/LinkButton';

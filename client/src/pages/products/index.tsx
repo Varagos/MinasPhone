@@ -1,11 +1,5 @@
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
-import { Container, Grid } from '@mui/material';
-
-import { MainContainer, ToolBar } from '@/components/Products/styles';
-import ProductCard from '@/components/Products/ProductCard/ProductCard';
-import Spinner from '@/components/Spinner/Spinner';
-import Filter from '@/components/Products/Filter/Filter';
+import { useState } from 'react';
 import { api } from '@/api';
 import { ProductPaginatedResponse } from '@/api/types/products';
 import { GetServerSideProps } from 'next';

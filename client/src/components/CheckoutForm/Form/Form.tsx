@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography, CircularProgress } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import useStyles from './styles';
 import { CheckoutCapture } from '@/types/checkout-capture';

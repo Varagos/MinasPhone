@@ -1,12 +1,8 @@
-import {
-  Container,
-  Typography,
-  Button,
-  Grid,
-  Box,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Link from 'next/link';
 import LinkButton from '@/components/common/LinkButton';
 import Spinner from '@/components/Spinner/Spinner';
@@ -15,6 +11,7 @@ import { api } from '@/api';
 import type { Cart } from '@/api/types/cart';
 import { formatPriceWithSymbol } from '@/utils/prices';
 import { useCart } from '@/hooks/useCart';
+import useTheme from '@mui/styles/useTheme';
 
 type CartPageProps = {
   cart: Cart;
@@ -22,7 +19,7 @@ type CartPageProps = {
 };
 
 const FilledCart = ({ cart, handleEmptyCart }: CartPageProps) => {
-  const theme = useTheme();
+  const theme = useTheme<any>();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Container sx={{ mb: 6 }}>
@@ -118,7 +115,6 @@ const CartPage = () => {
 
   return (
     <Container sx={{ pt: 2, pb: 20 }}>
-      {/* <div className={classes.toolbar} /> */}
       <Typography
         variant="h3"
         gutterBottom

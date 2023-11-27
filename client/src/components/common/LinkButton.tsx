@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Button, ButtonProps } from '@mui/material';
+import Button, { ButtonProps } from '@mui/material/Button';
 interface CustomButtonProps extends ButtonProps {
   href: string;
 }

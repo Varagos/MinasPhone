@@ -1,6 +1,8 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { Grid, Paper, Typography, Button } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import repairs from '../../../../public/services-repair.jpg';
 import upgrades from '../../../../public/services-upgrade.jpg';

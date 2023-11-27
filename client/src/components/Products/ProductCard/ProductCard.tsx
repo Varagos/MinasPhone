@@ -1,12 +1,11 @@
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Typography,
-  IconButton,
-} from '@mui/material';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
+import Image from 'next/image';
 
 import useStyles from './styles';
 import Link from 'next/link';
@@ -48,19 +47,24 @@ function ProductCard({ product }: ProductProps) {
           paddingTop: 2,
         }}
       >
-        {/* Small: Thumbnails
-          These are small (100 x 100 or 200 x 200)  */}
-        <CardMedia
-          component="img"
-          image={product.imageUrl}
-          title={product.name}
-          sx={{
-            objectFit: 'contain',
-            width: 200,
-            height: 200,
-            mx: 'auto',
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
           }}
-        />
+        >
+          {/* Small: Thumbnails
+          These are small (100 x 100 or 200 x 200)  */}
+          <Image
+            src={product.imageUrl}
+            width={200}
+            height={200}
+            style={{
+              objectFit: 'contain',
+            }}
+            alt={product.name}
+          />
+        </div>
       </Link>
       <CardContent
         sx={{

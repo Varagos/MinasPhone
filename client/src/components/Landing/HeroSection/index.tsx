@@ -1,27 +1,22 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import { Box, Typography, Button } from '@mui/material';
-import bg from '../../../../public/hero-section-apple-standing.jpeg';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import bg from '../../../../public/hero-section-apple-standing.webp';
 import { useTranslation } from 'next-i18next';
 import ShapeDividerBottom from './CurvedDivider';
+import Image from 'next/image';
 
 const HeroSection = styled('section')(({ theme }) => ({
   width: '100%',
-  backgroundImage: `url(${bg.src})`,
-  backgroundSize: '100% auto',
-  backgroundRepeat: 'no-repeat',
-
-  backgroundPosition: 'center top', // Focus on the center on all screens
-
-  minHeight: '80vh',
+  backgroundColor: '#f5f5f5',
   display: 'flex',
   flexDirection: 'row',
   padding: '7%',
   textAlign: 'left',
-
   position: 'relative', // Needed for absolute positioning of pseudo-elements
   overflow: 'hidden', // Prevents content from spilling out
-
   [theme.breakpoints.down('md')]: {
     padding: theme.spacing(2), // Smaller padding on smaller screens
     minHeight: '60vh',
@@ -29,8 +24,6 @@ const HeroSection = styled('section')(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     padding: theme.spacing(1), // Even smaller padding on small devices
     minHeight: '40vh',
-    backgroundSize: 'cover', // Adjust the size to cover the whole area
-    backgroundPosition: 'center top', // Move the focus to the top
   },
 }));
 
@@ -122,6 +115,20 @@ export default function Hero() {
   return (
     <HeroSection>
       <HeroOverlay />
+      {/* We need to use Image, not background css */}
+      <Image
+        alt="Mountains"
+        src={bg}
+        placeholder="blur"
+        quality={100}
+        fill
+        sizes="100vw"
+        style={{
+          objectFit: 'cover',
+        }}
+        priority
+      />
+
       <HeroContent>
         <HeroText variant="h2">
           {t('LANDING.CTA_TITLE1')} <DesktopLineBreak />{' '}

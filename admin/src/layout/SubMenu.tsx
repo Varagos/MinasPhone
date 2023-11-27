@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { ReactElement, ReactNode } from 'react';
-import { List, MenuItem, ListItemIcon, Typography, Collapse, Tooltip } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import List from '@mui/material/List';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Typography from '@mui/material/Typography';
+import Collapse from '@mui/material/Collapse';
+import Tooltip from '@mui/material/Tooltip';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useTranslate, useSidebarState } from 'react-admin';
 

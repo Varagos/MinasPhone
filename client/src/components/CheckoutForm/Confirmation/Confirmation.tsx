@@ -1,10 +1,11 @@
 import React from 'react';
-import { Typography, CircularProgress, Divider, Button } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import useStyles from './styles';
 
 import LinkButton from '@/components/common/LinkButton';
-import { CheckoutCaptureResponse } from '@/types/checkout-capture-response';
 
 export type CheckoutOrderResponse = {
   customer: {

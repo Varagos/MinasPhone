@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
-import { Button, Grid, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import { useForm, FormProvider } from 'react-hook-form';
 
 import FormInput from './FormInput';

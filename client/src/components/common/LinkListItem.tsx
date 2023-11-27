@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import ListItem from '@mui/material/ListItem';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -11,7 +11,9 @@ interface LinkListItemProps {
 const LinkListItem: React.FC<LinkListItemProps> = ({ href, children }) => {
   const router = useRouter();
 
-  const handleClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
     event.preventDefault();
     router.push(href);
   };

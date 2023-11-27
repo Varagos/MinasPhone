@@ -1,6 +1,10 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
-import { Grid, Typography, TextField, Button, Box } from '@mui/material';
+import { styled } from '@mui/system';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { useTranslation } from 'next-i18next';
 

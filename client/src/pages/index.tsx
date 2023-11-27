@@ -61,6 +61,12 @@ const LandingPageCategories: Array<{
   alt: string;
 }> = [
   {
+    src: AccessoriesCategory,
+    heading: 'ACCESSORIES',
+    dest: '/categories/accessories',
+    alt: 'accessories',
+  },
+  {
     src: PhonesCategory,
     heading: 'SMARTPHONES',
     dest: '/categories/smartphones',
@@ -71,12 +77,6 @@ const LandingPageCategories: Array<{
     heading: 'TABLETS',
     dest: '/categories/tablets',
     alt: 'tablets',
-  },
-  {
-    src: AccessoriesCategory,
-    heading: 'ACCESSORIES',
-    dest: '/categories/accessories',
-    alt: 'accessories',
   },
   {
     src: SmartWatchCategory,
@@ -110,7 +110,9 @@ export default function Landing({ categories, products }: LandingProps) {
 
         {/* <SimpleSlider /> */}
 
-        <section>
+        <ServicesSection />
+
+        <section style={{ paddingBottom: 20 }}>
           <Container maxWidth={'lg'}>
             <Box my={8}>
               <Typography
@@ -187,6 +189,7 @@ export default function Landing({ categories, products }: LandingProps) {
                   <Image
                     src={PhoneFix}
                     alt="phone repairs"
+                    sizes="100vw"
                     style={{ width: '90%', height: 'auto' }}
                   />
                 </Grid>
@@ -234,7 +237,6 @@ export default function Landing({ categories, products }: LandingProps) {
             </Box>
           </Container>
         </section>
-        <ServicesSection />
         <StoreLocation />
         <ContactUsSection />
       </MainContainer>

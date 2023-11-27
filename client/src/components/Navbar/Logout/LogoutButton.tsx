@@ -1,5 +1,4 @@
 import React from 'react';
-import { IconButton } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 // import { signOut } from 'supertokens-auth-react/recipe/emailpassword';
 import IconLinkButton from '@/components/common/IconLinkButton';

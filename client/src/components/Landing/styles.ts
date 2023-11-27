@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/system';
 
 export const MainContainer = styled('main')(({ theme }) => ({
   backgroundColor: theme.palette.background.default,

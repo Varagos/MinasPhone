@@ -11,7 +11,7 @@ import { LocaleEnum } from '../../i18n';
 const Configuration = () => {
   const translate = useTranslate();
   const [locale, setLocale] = useLocaleState();
-  const [theme, setTheme] = useTheme();
+  const [theme, setTheme] = useTheme<any>();
 
   return (
     <Card>

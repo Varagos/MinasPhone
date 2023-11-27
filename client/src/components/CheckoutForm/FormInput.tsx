@@ -1,5 +1,6 @@
 import React from 'react';
-import { TextField, Grid } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
 import { useFormContext, Controller } from 'react-hook-form';
 
 const FormInput = ({ name, label, required, rules }: any) => {

@@ -1,11 +1,31 @@
 import React from 'react';
-import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
-import { Elements, CardElement, ElementsConsumer, PaymentElement, CardExpiryElement } from '@stripe/react-stripe-js';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+
+import {
+  Elements,
+  CardElement,
+  ElementsConsumer,
+  PaymentElement,
+  CardExpiryElement,
+} from '@stripe/react-stripe-js';
 import { loadStripe, Stripe, StripeElements } from '@stripe/stripe-js';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY!);
-const CardPayment = ({ checkoutToken, shippingData, onCaptureCheckout, nextStep }: any) => {
-  const handleSubmit = async (event: any, elements: StripeElements | null, stripe: Stripe | null) => {
+const CardPayment = ({
+  checkoutToken,
+  shippingData,
+  onCaptureCheckout,
+  nextStep,
+}: any) => {
+  const handleSubmit = async (
+    event: any,
+    elements: StripeElements | null,
+    stripe: Stripe | null
+  ) => {
     event.preventDefault();
 
     if (!stripe || !elements) return;
@@ -59,7 +79,11 @@ const CardPayment = ({ checkoutToken, shippingData, onCaptureCheckout, nextStep 
           <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
             <Card sx={{ minWidth: 400 }}>
               <CardContent>
-                <Typography sx={{ fontSize: 14, mb: 3 }} color="text.secondary" gutterBottom>
+                <Typography
+                  sx={{ fontSize: 14, mb: 3 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
                   Πληρωμή με κάρτα
                 </Typography>
                 <CardElement />
@@ -67,7 +91,12 @@ const CardPayment = ({ checkoutToken, shippingData, onCaptureCheckout, nextStep 
               </CardContent>
               <CardActions sx={{ justifyContent: 'center' }}>
                 <div style={{ display: 'flex', justifyContent: 'end' }}>
-                  <Button type="submit" variant="contained" disabled={!stripe} color="secondary">
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    disabled={!stripe}
+                    color="secondary"
+                  >
                     Pay {checkoutToken.live.subtotal.formatted_with_symbol}
                   </Button>
                 </div>

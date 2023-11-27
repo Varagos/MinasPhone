@@ -8,6 +8,7 @@ const CustomShapeDividerBottom = styled('div')(({ theme }: any) => ({
   overflow: 'hidden',
   lineHeight: 0,
   zIndex: 3,
+
   '& svg': {
     position: 'relative',
     display: 'block',
@@ -16,7 +17,8 @@ const CustomShapeDividerBottom = styled('div')(({ theme }: any) => ({
   },
 
   '& .shape-fill': {
-    fill: '#FFFFFF',
+    fill: '#f5f5f5',
+    // fill: '#FFFFFF',
   },
   [theme.breakpoints.down('sm')]: {
     display: 'none',

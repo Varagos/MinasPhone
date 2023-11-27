@@ -9,6 +9,7 @@ import { CartProvider } from '@/context/CartProvider';
 import '../styles/globals.css';
 import React from 'react';
 import { MessageProvider } from '@/context/messages/Messages';
+import { GoogleAnalytics } from 'nextjs-google-analytics';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -18,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <CssBaseline />
           <Navbar />
           <main style={{ minHeight: '80vh' }}>
+            <GoogleAnalytics trackPageViews />
             <Component {...pageProps} />
           </main>
           <Footer />

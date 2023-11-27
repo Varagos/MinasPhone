@@ -10,6 +10,9 @@ const HeroSection = styled('section')(({ theme }) => ({
   backgroundImage: `url(${bg.src})`,
   backgroundSize: '100% auto',
   backgroundRepeat: 'no-repeat',
+
+  backgroundPosition: 'center top', // Focus on the center on all screens
+
   minHeight: '80vh',
   display: 'flex',
   flexDirection: 'row',
@@ -19,32 +22,31 @@ const HeroSection = styled('section')(({ theme }) => ({
   position: 'relative', // Needed for absolute positioning of pseudo-elements
   overflow: 'hidden', // Prevents content from spilling out
 
-  '&::before': {
-    // This is the pseudo-element for the white overlay
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.7)', // Adjust the opacity as needed
-    zIndex: 1, // Ensure it's above the background image but below the content
-  },
-
   [theme.breakpoints.down('md')]: {
     padding: theme.spacing(2), // Smaller padding on smaller screens
     minHeight: '60vh',
   },
-
   [theme.breakpoints.down('sm')]: {
     padding: theme.spacing(1), // Even smaller padding on small devices
-    minHeight: '30vh',
+    minHeight: '40vh',
+    backgroundSize: 'cover', // Adjust the size to cover the whole area
+    backgroundPosition: 'center top', // Move the focus to the top
   },
+}));
+
+const HeroOverlay = styled('div')(({ theme }) => ({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'rgba(255, 255, 255, 0.7)', // Adjust the opacity as needed
+  zIndex: 1, // Ensure it's above the background image but below the content
 }));
 
 const HeroContent = styled(Box)(({ theme }) => ({
   zIndex: 2,
-  width: '50%', // Full width by default
+  width: '50%', // Half width on desktop screens
   height: '100%',
   [theme.breakpoints.down('md')]: {
     width: '100%', // Full width on medium devices and down
@@ -119,6 +121,7 @@ export default function Hero() {
   const { t } = useTranslation();
   return (
     <HeroSection>
+      <HeroOverlay />
       <HeroContent>
         <HeroText variant="h2">
           {t('LANDING.CTA_TITLE1')} <DesktopLineBreak />{' '}

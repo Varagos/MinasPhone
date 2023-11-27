@@ -6,10 +6,10 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import repairs from '../../../../public/services-repair.jpg';
 import upgrades from '../../../../public/services-upgrade.jpg';
-import screen from '../../../../public/services-screen.jpg';
-import battery from '../../../../public/services-battery.jpg';
-import accessories from '../../../../public/services-accessories.jpg';
-import tradeins from '../../../../public/services-trade.jpg';
+import screen from '../../../../public/services-screen.webp';
+import battery from '../../../../public/services-battery.webp';
+import accessories from '../../../../public/services-accessories.webp';
+import tradeins from '../../../../public/services-trade.webp';
 
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import UpgradeIcon from '@mui/icons-material/SystemUpdateAlt';

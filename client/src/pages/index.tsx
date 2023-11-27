@@ -27,6 +27,15 @@ import StoreLocation from '@/components/Landing/StoreLocation';
 import ServicesSection from '@/components/Landing/Services';
 import ContactUsSection from '@/components/Landing/ContactUs';
 
+import dynamic from 'next/dynamic';
+
+const DynamicStoreLocation = dynamic(
+  () => import('@/components/Landing/StoreLocation'),
+  {
+    loading: () => <p>Loading...</p>,
+  }
+);
+
 interface LandingProps {
   categories: CategoryPaginatedResponse;
   products: ProductPaginatedResponse;
@@ -237,7 +246,8 @@ export default function Landing({ categories, products }: LandingProps) {
             </Box>
           </Container>
         </section>
-        <StoreLocation />
+        {/* <StoreLocation /> */}
+        <DynamicStoreLocation />
         <ContactUsSection />
       </MainContainer>
     </>

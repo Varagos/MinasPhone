@@ -3,6 +3,10 @@
 
 const { i18n } = require('./next-i18next.config')
 
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 const nextConfig = {
   reactStrictMode: true,
   i18n,
@@ -37,4 +41,4 @@ See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host
 };
 require('dotenv').config();
 
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(nextConfig)

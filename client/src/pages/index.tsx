@@ -28,6 +28,7 @@ import ServicesSection from '@/components/Landing/Services';
 import ContactUsSection from '@/components/Landing/ContactUs';
 
 import dynamic from 'next/dynamic';
+import RepairsSection from '@/components/Landing/RepairsSection/RepairsSection';
 
 const DynamicStoreLocation = dynamic(
   () => import('@/components/Landing/StoreLocation'),
@@ -175,78 +176,7 @@ export default function Landing({ categories, products }: LandingProps) {
           </Container>
         </section>
 
-        <section>
-          <Container>
-            <Box my={16}>
-              <Typography
-                variant="h4"
-                align="center"
-                gutterBottom
-                fontWeight={900}
-              >
-                <ThickBottomBorder>ΕΠΙΣΚΕΥΕΣ ΤΗΛΕΦΩΝΩΝ</ThickBottomBorder>
-              </Typography>
-              <Grid container justifyContent="center" spacing={3} mt={2}>
-                <Grid
-                  container
-                  item
-                  xs={12}
-                  md={6}
-                  alignContent="center"
-                  justifyContent="center"
-                >
-                  <Image
-                    src={PhoneFix}
-                    alt="phone repairs"
-                    sizes="100vw"
-                    style={{ width: '90%', height: 'auto' }}
-                  />
-                </Grid>
-                <Grid
-                  container
-                  item
-                  xs={12}
-                  md={6}
-                  alignContent="center"
-                  justifyContent="center"
-                >
-                  <Container>
-                    <Typography variant="h6" align="left" gutterBottom>
-                      ΕΠΙΣΚΕΥΕΣ ΤΗΛΕΦΩΝΩΝ
-                    </Typography>
-                    <Typography gutterBottom>
-                      Σε μια εποχή όπου κυριαρχούν τα πανάκριβα smartphones με
-                      τις αμέτρητες λειτουργίες, το παραδοσιακό κλασικό κινητό
-                      τηλέφωνο καταφέρνει να διατηρεί την αξία του, κι αυτό δεν
-                      είναι καθόλου τυχαίο.
-                    </Typography>
-                    <Typography variant="h6" align="left" gutterBottom>
-                      Υψηλής ποιότητας ανταλλακτικά
-                    </Typography>
-                    <Typography gutterBottom>
-                      Χρησιμοποιούμε για την επισκευή κινητών πάντα τα καλύτερα
-                      ανταλλακτικά που υπάρχουν στην αγορά. Κριτήρια για την
-                      επιλογή τους, είναι η απόδοση και η αντοχή. Ο λόγος είναι
-                      πως επιθυμούμε σε κάθε μας επισκευή το καλύτερο δυνατό
-                      αποτέλεσμα και με διάρκεια στο χρόνο.
-                    </Typography>
-
-                    <Typography variant="h6" align="left" gutterBottom>
-                      Οικονομικές τιμές
-                    </Typography>
-                    <Typography gutterBottom>
-                      Τις ποιοτικές μας υπηρεσίες έχουμε φροντίσει και τις
-                      προσφέρουμε στις καλύτερες δυνατές τιμές της αγοράς. Στο
-                      κατάστημα μας πραγματοποιούμε τις πιο συμφέρουσες
-                      επισκευές κινητών τηλεφώνων.
-                    </Typography>
-                  </Container>
-                </Grid>
-              </Grid>
-            </Box>
-          </Container>
-        </section>
-        {/* <StoreLocation /> */}
+        <RepairsSection />
         <DynamicStoreLocation />
         <ContactUsSection />
       </MainContainer>

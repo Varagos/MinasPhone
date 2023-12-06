@@ -23,17 +23,17 @@
       "TITLE": "Screen Replacements",
       "DESCRIPTION": "Get quick and reliable screen replacement services for cracked or unresponsive touchscreens."
     },
-    "BATTERY_REPLACEMENTS": {
-      "TITLE": "Battery Replacements",
-      "DESCRIPTION": "Extend the life of your devices with our professional battery replacement services."
-    },
     "ACCESSORIES": {
       "TITLE": "Accessories",
       "DESCRIPTION": "Discover a wide range of accessories to complement and enhance your electronic devices."
     },
-    "TRADE_INS": {
-      "TITLE": "Trade-Ins",
-      "DESCRIPTION": "Swap your old devices for store credit towards cutting-edge tech, or simply sell them for a hassle-free cash return."
+    "MONEYGRAM_SERVICES": {
+      "TITLE": "MoneyGram Partner",
+      "DESCRIPTION": "As an official MoneyGram partner, we offer a reliable and fast international money transfer service to send or receive money worldwide."
+    },
+    "RIA_MONEY_TRANSFER": {
+      "TITLE": "Ria Partner",
+      "DESCRIPTION": "In partnership with Ria, we provide fast and secure solutions for your international transactions, making sending and receiving money easier than ever."
     }
   },
   "LOCATION": {

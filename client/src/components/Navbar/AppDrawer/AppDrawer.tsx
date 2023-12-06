@@ -19,6 +19,7 @@ import Lock from '@mui/icons-material/Lock';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Drawer from '@mui/material/Drawer';
 import LinkListItem from '@/components/common/LinkListItem';
+import LanguageSelector from '../LanguageSelector';
 
 const useStyles = makeStyles({
   list: {
@@ -76,6 +77,9 @@ const AppDrawer = ({ anchor, toggleDrawer }: any) => {
                   <ListItemText primary={text} />
                 </LinkListItem>
               ))}
+              <div style={{ marginLeft: 14, marginTop: 30 }}>
+                <LanguageSelector />
+              </div>
             </List>
           </div>
         </Drawer>

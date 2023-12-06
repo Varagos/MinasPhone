@@ -25,6 +25,8 @@ import SimpleMenu from './SimpleMenu/SimpleMenu';
 import { SearchInputField, SearchPromptIcon } from './Search';
 import AppTheme from '@/lib/theme';
 import theme from '@/lib/theme';
+import LanguageSelector from './LanguageSelector';
+import MobileSearch from './Search/MobileSearch';
 
 const FEATURED_CATEGORIES = [
   {
@@ -136,8 +138,10 @@ const NewNavbar = () => {
               </Typography>
             </Box>
           </Box>
+          <LanguageSelector />
         </Toolbar>
       </AppBar>
+      <MobileSearch />
       <ClickAwayListener onClickAway={handleCloseSearch}>
         <AppBar
           position="static"

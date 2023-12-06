@@ -7,11 +7,24 @@ import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import { CartProvider } from '@/context/CartProvider';
 import '../styles/globals.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MessageProvider } from '@/context/messages/Messages';
 import { GoogleAnalytics } from 'nextjs-google-analytics';
+import { useRouter } from 'next/router';
+
+function useDirection(language: string) {
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      'dir',
+      language === 'ar' ? 'rtl' : 'ltr'
+    );
+  }, [language]);
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const { locale } = useRouter();
+  useDirection(locale || 'en');
+
   return (
     <CartProvider>
       <ThemeProvider theme={theme}>

@@ -5991,7 +5991,7 @@ mz@^2.7.0:
 
 nanoid@3.3.4:
   version "3.3.4"
-  resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.4.tgz"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
 
 nanomatch@^1.2.9:
@@ -6040,13 +6040,13 @@ nest-winston@^1.9.4:
 
 nestjs-request-context@^2.1.0:
   version "2.1.0"
-  resolved "https://registry.npmjs.org/nestjs-request-context/-/nestjs-request-context-2.1.0.tgz"
+  resolved "https://registry.yarnpkg.com/nestjs-request-context/-/nestjs-request-context-2.1.0.tgz#097808447193770eab24e1f46366047c1a8866eb"
   integrity sha512-XSZ4CGjgVetyP0q6TSgu+urpUhS8hlY4UxDenPioqEhwpiLCjYFnWrp8NSJctn6NdON5d45LLKz/TN/5ZppL9w==
 
-nestjs-slonik@^9:
-  version "9.0.0"
-  resolved "https://registry.npmjs.org/nestjs-slonik/-/nestjs-slonik-9.0.0.tgz"
-  integrity sha512-K377DoP7KRmaXIUGxyWDne+BkWfS+/Ln99MCDd+t+4I2H9ClQwRLROqztKGpCgWsvfy74aSR4LqVmfu/EXqIWg==
+nestjs-slonik@^10:
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/nestjs-slonik/-/nestjs-slonik-10.0.2.tgz#67f25a5d77932332b170709d77f3216554a05dd0"
+  integrity sha512-/PQGB6ptzkdRMpGWV58JLtpGyOswQxGLZZBIweVHptOMk15iuo5NUst0DDD14GC9iVmFYLLSyH1k127/hp2hAw==
   dependencies:
     uuid "8.3.2"
 

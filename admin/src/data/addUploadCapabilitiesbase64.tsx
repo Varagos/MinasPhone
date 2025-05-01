@@ -16,7 +16,6 @@ const httpClient = fetchUtils.fetchJson;
  */
 const dataProviderForProductsBase64ImageHandling = (dataProvider: DataProvider): DataProvider => ({
   ...dataProvider,
-
   create: async (resource, params) => {
     if (resource !== 'products') {
       // fallback to the default implementation

@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-$ npm install
+$ yarn install
 ```
 
 ## Running the app
@@ -34,6 +34,43 @@ $ yarn test tests/e2e --runInBand
 # test coverage
 $ npm run test:cov
 ```
+
+### First time Setup
+
+Before running the app for the first time, you need to:
+
+1. **Create environment files**
+
+   - `.env.development` for development (`start:dev`)
+   - `.env.prod` for production (`start:prod`)
+   - `.env.test` for testing
+
+   These files should contain the required environment variables for your setup (e.g., database connection string, secrets, etc).
+
+2. **Run database migrations**
+
+   If your database schema is empty or you have just spun up a new database, run:
+
+   ```bash
+   NODE_ENV=development yarn migration:up
+   ```
+
+   This will apply all pending migrations and initialize your database schema.
+
+   To check executed or pending migrations:
+
+   ```bash
+   NODE_ENV=development yarn migration:executed
+   NODE_ENV=development yarn migration:pending
+   ```
+
+3. **(Optional) Seed the database**
+
+   If you want to populate the database with initial data (if seeds are provided):
+
+   ```bash
+   NODE_ENV=development yarn seed:up
+   ```
 
 ## Deployment
 

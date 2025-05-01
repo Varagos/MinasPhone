@@ -115,7 +115,7 @@ export class ApiClient {
     }
     const { value, setCookies } = this.extractCartCookie(response);
     // console.log('cartCookie::', cartCookie);
-    console.log('addItemCookies::', value);
+    // console.log('addItemCookies::', value);
     return { value, setCookies };
   }
 

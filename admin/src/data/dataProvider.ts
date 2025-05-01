@@ -21,9 +21,15 @@ const dataProvider: DataProvider = {
     return httpClient(url).then(({ headers, json }) => {
       const rangeHeader = headers.get('content-range');
       console.log('getList', json);
+      let total = rangeHeader ? parseInt(rangeHeader.split('/')?.pop()!, 10) : json.length;
+      if (total === undefined) {
+        // My backend returns a count
+        total = json.count;
+      }
+      console.log({ total });
       return {
         data: json.data,
-        total: rangeHeader ? parseInt(rangeHeader.split('/')?.pop()!, 10) : json.length,
+        total,
       };
     });
   },
@@ -113,13 +119,24 @@ const dataProvider: DataProvider = {
     }).then(({ json }) => ({ data: json })),
 
   // delete a list of records based on an array of ids
-  deleteMany: (resource, params) => {
-    const query = {
-      filter: JSON.stringify({ id: params.ids }),
+  deleteMany: async (resource, params) => {
+    // const query = {
+    //   filter: JSON.stringify({ id: params.ids }),
+    // };
+    // return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
+    //   method: 'DELETE',
+    // }).then(({ json }) => ({ data: json }));
+    // Call delete for each id
+    const promises = params.ids.map((id) =>
+      httpClient(`${apiUrl}/${resource}/${id}`, {
+        method: 'DELETE',
+      })
+    );
+    const responses = await Promise.all(promises);
+    console.log('DeteleMany responses', responses);
+    return {
+      data: params.ids,
     };
-    return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
-      method: 'DELETE',
-    }).then(({ json }) => ({ data: json }));
   },
 };
 export default dataProvider;

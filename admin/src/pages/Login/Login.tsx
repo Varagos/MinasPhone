@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 
 import { Avatar, Button, Card, CardActions, CircularProgress } from '@mui/material';
@@ -46,9 +45,10 @@ const Login = () => {
           alignItems: 'center',
           justifyContent: 'flex-start',
           // background: 'url(https://placeimg.com/1600/900/nature)',
-          background: 'url(https://source.unsplash.com/random/1600x900)',
+          // background: 'url(https://source.unsplash.com/random/1600x900)',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
+          background: 'url(https://picsum.photos/1600/900)',
         }}
       >
         <Card sx={{ minWidth: 300, marginTop: '6em' }}>
@@ -105,11 +105,6 @@ const Login = () => {
       </Box>
     </Form>
   );
-};
-
-Login.propTypes = {
-  authProvider: PropTypes.func,
-  previousRoute: PropTypes.string,
 };
 
 export default Login;

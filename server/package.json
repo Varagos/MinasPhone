@@ -1,8 +1,8 @@
 {
-  "name": "nest-typescript-starter",
+  "name": "minasphone-backend",
   "private": true,
   "version": "0.0.13",
-  "description": "Nest TypeScript starter repository",
+  "description": "MinasPhone Backend",
   "license": "MIT",
   "scripts": {
     "build": "nest build",

@@ -72,41 +72,6 @@ Before running the app for the first time, you need to:
    NODE_ENV=development yarn seed:up
    ```
 
-## Deployment
-
-### Azure
-
-```bash
-az acr create --resource-group minas-phone --name minasphonecontainerregistry --sku Basic
-
-# Update backend tag, then
-docker compose -f docker-compose.prod.yml up --build -d
-
-docker images
-
-# Push changes to registry
-docker compose -f docker-compose.prod.yml push
-
-# Verify image is stored, (based on docker images above)
-az acr repository show --name minasphonecontainerregistry --repository minas_phone_backend
-
-docker login azure
-
-# Skip if previously done
-docker context create aci minasphoneacicontext
-
-docker context ls
-
-docker context use minasphoneacicontext
-
-docker compose -f docker-compose.prod.yml up
-
-```
-
-### Neon
-
-the postgres db is currently hosted on `neon.tech`
-
 ### Notes
 
 Some potential bounded contexts/modules
@@ -265,7 +230,9 @@ docker buildx build --platform linux/amd64 \
 
 ```
 
-## Publish using CI/CD
+## Deployment
+
+### Publish using CI/CD
 
 - To create a Git tag, you typically use the following command:
 
@@ -322,6 +289,10 @@ git push --tags
 
 # Done! :)
 ```
+
+### Neon
+
+the postgres db is currently hosted on `neon.tech`
 
 # Slonik, Write safe SQL queries
 

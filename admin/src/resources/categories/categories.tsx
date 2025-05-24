@@ -39,8 +39,8 @@ export const CategoryEdit = () => {
     <Edit>
       <SimpleForm>
         <TextInput disabled source="id" />
-        <TextInput source="slug" label={translate('resources.categories.fields.slug')} />
         <TextInput source="name" label={translate('resources.categories.fields.name')} />
+        <TextInput source="slug" label={translate('resources.categories.fields.slug')} />
         <ReferenceInput
           source="parentId"
           reference="categories"
@@ -59,8 +59,8 @@ export const CategoryCreate = () => {
   return (
     <Create>
       <SimpleForm sanitizeEmptyValues>
-        <TextInput source="slug" label={translate('resources.categories.fields.slug')} />
         <TextInput source="name" label={translate('resources.categories.fields.name')} />
+        <TextInput source="slug" label={translate('resources.categories.fields.slug')} />
         <ReferenceInput
           source="parentId"
           reference="categories"

@@ -32,10 +32,9 @@ const useStyles = makeStyles({
 
 const drawerItems: [string, string, JSX.Element][] = [
   ['ΑΧΙΚΉ', '/', <Home />],
-  ['ACCESSORIES', '/categories/accessories', <Headset />],
   ['ΚΙΝΗΤΑ', '/categories/smartphones', <Smartphone />],
-  ['TABLET', '/categories/tablets', <TabletMac />],
-  ['SMARTWATCH', '/categories/smartwatches', <Watch />],
+  ['ACCESSORIES', '/categories/accessories', <Headset />],
+  ['ΜΕΤΑΧΕΙΡΙΣΜΕΝΑ', '/categories/used-smartphones', <Smartphone />],
   ['ALL PRODUCTS', '/products', <Storefront />],
 ];
 

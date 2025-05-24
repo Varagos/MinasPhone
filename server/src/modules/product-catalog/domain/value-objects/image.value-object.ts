@@ -6,6 +6,26 @@ export enum MimeType {
   JPEG = 'image/jpeg',
   PNG = 'image/png',
   GIF = 'image/gif',
+
+  WEBP = 'image/webp',
+  AVIF = 'image/avif',
+  SVG = 'image/svg+xml',
+
+  // High-Efficiency Formats
+  HEIC = 'image/heic',
+  HEIF = 'image/heif',
+
+  // Legacy & Specialized Formats
+  BMP = 'image/bmp',
+  TIFF = 'image/tiff',
+  ICO = 'image/x-icon',
+  ICNS = 'image/x-icns',
+  APNG = 'image/apng',
+  JP2 = 'image/jp2',
+  JXL = 'image/jxl',
+  PSD = 'image/vnd.adobe.photoshop',
+  DDS = 'image/vnd.ms-dds',
+  TGA = 'image/x-tga',
   // add other MIME types as needed
 }
 

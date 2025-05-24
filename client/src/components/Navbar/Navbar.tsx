@@ -30,22 +30,26 @@ import MobileSearch from './Search/MobileSearch';
 
 const FEATURED_CATEGORIES = [
   {
-    href: '/categories/accessories',
-    title: 'ΑΞΕΣΟΥΑΡ',
-  },
-  {
     href: '/categories/smartphones',
     title: 'ΚΙΝΗΤΑ',
   },
   {
-    href: '/categories/tablets',
-    title: 'TABLET',
+    href: '/categories/accessories',
+    title: 'ΑΞΕΣΟΥΑΡ',
   },
+  {
+    href: '/categories/used-smartphones',
+    title: 'ΜΕΤΑΧΕΙΡΙΣΜΕΝΑ',
+  },
+  // {
+  //   href: '/categories/tablets',
+  //   title: 'TABLET',
+  // },
   // {
   //   href: '/categories/smartwatches',
   //   title: 'SMARTWATCH',
   // },
-];
+] as const;
 
 const NewNavbar = () => {
   const router = useRouter();

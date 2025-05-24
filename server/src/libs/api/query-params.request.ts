@@ -68,7 +68,7 @@ export class CustomFilterParam implements ValidatorConstraintInterface {
         if (!validFields.includes(key)) {
           return false; // invalid key found
         }
-        console.log('RECEIVED VALUE', value);
+        // console.log('RECEIVED VALUE', value);
         if (typeof value[key] !== 'number' && typeof value[key] !== 'string') {
           return false; // invalid value type found
         }

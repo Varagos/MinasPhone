@@ -1,4 +1,3 @@
-version: '3'
 name: minas_phone_dev
 
 services:

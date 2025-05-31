@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 const languages: Record<string, { label: string; flag: string }> = {
   el: { label: 'el', flag: '/flags/gr.webp' },
   en: { label: 'en', flag: '/flags/us.webp' },
-  ar: { label: 'ar', flag: '/flags/eg.webp' },
+  // ar: { label: 'ar', flag: '/flags/eg.webp' },
   // Add other languages here
 };
 

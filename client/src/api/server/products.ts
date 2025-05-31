@@ -25,7 +25,7 @@ class ProductsApi implements IProductsApi {
 
     const json = await res.json();
 
-    console.log(json);
+    // console.log(json);
     return json;
   }
 

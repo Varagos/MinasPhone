@@ -3,11 +3,10 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
-import TabletCategory from '../../../public/categories_tablet.jpg';
-
-import PhonesCategory from '../../../public/categories_smartphones.png';
-import AccessoriesCategory from '../../../public/categories_accessories.png';
-import SmartWatchCategory from '../../../public/categories_smartwatch.jpg';
+import TabletCategory from '../../../public/categories_tablet.webp';
+import PhonesCategory from '../../../public/categories_smartphones.webp';
+import AccessoriesCategory from '../../../public/categories_accessories.webp';
+import SmartWatchCategory from '../../../public/categories_smartwatch.webp';
 import CategoryItem from '@/components/Landing/CategoryItem/CategoryItem';
 
 export default function Categories() {

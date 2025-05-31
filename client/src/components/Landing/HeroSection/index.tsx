@@ -130,7 +130,7 @@ export default function Hero() {
       />
 
       <HeroContent>
-        <HeroText variant="h2">
+        <HeroText variant="h1">
           {t('LANDING.CTA_TITLE1')} <DesktopLineBreak />{' '}
           {t('LANDING.CTA_TITLE2')}
         </HeroText>

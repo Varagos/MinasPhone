@@ -19,7 +19,9 @@ class ProductsApi implements IProductsApi {
     // You can return Date, Map, Set, etc.
 
     if (!res.ok) {
+      console.error('Failed to fetch data from', res);
       // This will activate the closest `error.js` Error Boundary
+
       throw new Error('Failed to fetch data');
     }
 
@@ -29,10 +31,15 @@ class ProductsApi implements IProductsApi {
     return json;
   }
 
-  async findOneById(id: string): Promise<Product> {
+  async findOneById(id: string): Promise<Product | null> {
     const res = await fetch(routes.v1.products.fineOne(id));
 
     if (!res.ok) {
+      if (res.status === 404) {
+        return null; // Not found
+      }
+
+      console.error('Failed to fetch data from', res);
       throw new Error('Failed to fetch data');
     }
 

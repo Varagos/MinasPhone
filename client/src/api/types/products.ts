@@ -36,5 +36,5 @@ export type ProductPaginatedResponse = PaginatedResponse<Product>;
 
 export interface IProductsApi {
   findMany(params: ProductRequest): Promise<ProductPaginatedResponse>;
-  findOneById(id: string): Promise<Product>;
+  findOneById(id: string): Promise<Product | null>;
 }

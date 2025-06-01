@@ -5,6 +5,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { notFound } from 'next/navigation';
+import EmptyLogo from '/public/undraw_empty_xct9.svg';
 
 import StoreMallDirectoryTwoToneIcon from '@mui/icons-material/StoreMallDirectoryTwoTone';
 import Spinner from '@/components/Spinner/Spinner';
@@ -12,9 +14,11 @@ import { api } from '@/api';
 import { Product, ProductPaginatedResponse } from '@/api/types/products';
 import { GetServerSideProps } from 'next';
 import { formatPriceWithSymbol } from '@/utils/prices';
+import Link from 'next/link';
+import Image from 'next/image';
 
 interface ProductsPageProps {
-  product: Product;
+  product: Product | null;
 }
 
 export const getServerSideProps: GetServerSideProps<ProductsPageProps> = async (
@@ -32,8 +36,36 @@ export default function ProductPage({ product }: ProductsPageProps) {
     return api.cart.addToCart(id, 1);
   };
 
-  if (!product)
-    return <div style={{ minHeight: '70vh' }}>Error finding product</div>;
+  {
+    /* Product not found */
+  }
+  if (!product) {
+    return (
+      <div style={{ minHeight: '70vh' }}>
+        <Box sx={{ textAlign: 'center', mt: 10 }}>
+          <Typography variant="h5" gutterBottom>
+            Το προϊόν δεν βρέθηκε
+          </Typography>
+          <Image
+            src={EmptyLogo.src}
+            alt="Product not found"
+            width={300}
+            height={300}
+          />
+          <Typography variant="body1" color="textSecondary">
+            Δοκιμάστε να επιλέξετε κάποιο άλλο προϊόν.
+            {/* Link to homepage */}
+            <Link
+              href="/"
+              style={{ color: '#1976d2', textDecoration: 'underline' }}
+            >
+              Επιστροφή στην αρχική σελίδα
+            </Link>
+          </Typography>
+        </Box>
+      </div>
+    );
+  }
 
   return (
     <Container maxWidth="lg" sx={{ pt: 10, pb: 20 }}>

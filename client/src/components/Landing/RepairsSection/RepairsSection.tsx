@@ -15,7 +15,13 @@ const RepairsSection = () => {
     <section>
       <Container>
         <Box my={16}>
-          <Typography variant="h4" align="center" gutterBottom fontWeight={900}>
+          <Typography
+            component="h3" // Semantic HTML
+            variant="h4" // Visual style
+            align="center"
+            gutterBottom
+            fontWeight={900}
+          >
             <ThickBottomBorder>{t('REPAIRS.TITLE')}</ThickBottomBorder>
           </Typography>
           <Grid container justifyContent="center" spacing={3} mt={2}>

@@ -31,7 +31,7 @@ const StoreLocation = () => {
                 justifyContent: 'center',
               }}
             >
-              <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
+              <Typography variant="h3" gutterBottom sx={{ fontWeight: 700 }}>
                 {t('LOCATION.TITLE')}
               </Typography>
               <Typography>{t('LOCATION.CONTENT')}</Typography>

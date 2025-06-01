@@ -33,7 +33,7 @@ export const ProductCreate = () => {
         <ReferenceInput source="categoryId" reference="categories">
           <SelectInput optionText="name" label={translate('resources.products.fields.category')} />
         </ReferenceInput>
-        <NumberInput source="quantity" label={translate('resources.products.fields.quantity')} />
+        <NumberInput source="quantity" label={translate('resources.products.fields.quantity')} defaultValue={1} />
         <ImageInput
           source="media"
           label={translate('resources.products.fields.image')}
@@ -46,7 +46,7 @@ export const ProductCreate = () => {
             sx={{ '& img': { maxWidth: 400, maxHeight: 400, objectFit: 'contain' } }}
           />
         </ImageInput>
-        <TextInput source="sku" />
+        {/* <TextInput source="sku" /> */}
         {/* <NumberInput source="price" /> */}
         <TextInput
           label={translate('resources.products.fields.price')}
@@ -54,7 +54,6 @@ export const ProductCreate = () => {
           type="number"
           parse={convertStringToNumber}
         />
-        ,
       </SimpleForm>
     </Create>
   );

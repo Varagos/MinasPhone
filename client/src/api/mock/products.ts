@@ -3,11 +3,15 @@ import {
   IProductsApi,
   ProductPaginatedResponse,
   ProductRequest,
+  ProductSlug,
 } from '../types/types';
 import { v4 as uuidv4 } from 'uuid';
 
 // TODO add setTimeout to simulate network latency
 export class ProductsApi implements IProductsApi {
+  findAllProductSlugs(): Promise<ProductSlug[]> {
+    throw new Error('Method not implemented.');
+  }
   findMany(params: ProductRequest): Promise<ProductPaginatedResponse> {
     throw new Error('Method not implemented.');
   }

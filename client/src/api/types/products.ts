@@ -33,8 +33,14 @@ export type ProductRequest = PaginatedRequest<
 export type ProductPaginatedResponse = PaginatedResponse<Product>;
 
 //  * http://domain.com/posts?sort=["title","ASC"]&range=[0, 24]&filter={"title":"bar"}
+export type ProductSlug = {
+  id: string;
+  slug: string;
+  updatedAt: string;
+};
 
 export interface IProductsApi {
   findMany(params: ProductRequest): Promise<ProductPaginatedResponse>;
   findOneById(id: string): Promise<Product | null>;
+  findAllProductSlugs(): Promise<ProductSlug[]>;
 }

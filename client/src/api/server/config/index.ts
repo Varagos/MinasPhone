@@ -4,6 +4,7 @@ if (!API_BASE_URL) {
 }
 const routes = {
   v1: {
+    baseUrl: API_BASE_URL,
     categories: {
       findMany: (range: [number, number]) =>
         `${API_BASE_URL}/api/v1/categories?range=[${range[0]}, ${range[1]}]`,

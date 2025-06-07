@@ -5,9 +5,35 @@ import {
   ProductPaginatedResponse,
   Product,
   IProductsApi,
+  ProductSlug,
 } from '../types/types';
+import {
+  Api,
+  HttpClient,
+  ProductPaginatedResponseDto,
+  ProductSlugsPaginatedResponseDto,
+} from './api';
 
 class ProductsApi implements IProductsApi {
+  private httpClient: Api<any>;
+
+  constructor() {
+    console.log('baseUrl', routes.v1.baseUrl);
+    this.httpClient = new Api({
+      baseUrl: routes.v1.baseUrl,
+    });
+  }
+  async findAllProductSlugs(): Promise<ProductSlug[]> {
+    const response =
+      await this.httpClient.api.productsHttpControllerFindAllProductSlugs();
+
+    if (!response.ok) {
+      console.error('Failed to fetch product slugs', response);
+      throw new Error('Failed to fetch product slugs');
+    }
+    const data = (await response.json()) as ProductSlugsPaginatedResponseDto;
+    return data.data;
+  }
   // return { useProducts, useProduct };
   async findMany(params: ProductRequest): Promise<ProductPaginatedResponse> {
     const { range, order, filter } = params;

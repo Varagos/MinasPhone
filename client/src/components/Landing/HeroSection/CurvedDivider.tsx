@@ -1,6 +1,7 @@
-import { styled } from '@mui/styles';
+import { styled } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 
-const CustomShapeDividerBottom = styled('div')(({ theme }: any) => ({
+const CustomShapeDividerBottom = styled('div')(({ theme }: { theme: Theme }) => ({
   position: 'absolute',
   bottom: 0,
   left: 0,

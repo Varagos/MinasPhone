@@ -27,7 +27,7 @@ const HeroSection = styled('section')(({ theme }) => ({
   },
 }));
 
-const HeroOverlay = styled('div')(({ theme }) => ({
+const HeroOverlay = styled('div')(() => ({
   position: 'absolute',
   top: 0,
   left: 0,
@@ -117,7 +117,7 @@ export default function Hero() {
       <HeroOverlay />
       {/* We need to use Image, not background css */}
       <Image
-        alt="Mountains"
+        alt="Affordable smartphones and accessories at MinasPhone"
         src={bg}
         placeholder="blur"
         quality={100}

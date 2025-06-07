@@ -29,6 +29,7 @@ import { FindProductsByCategorySlugQueryHandler } from './application/products/q
 import { FindProductsByIdsQueryHandler } from './application/products/queries/find-products-by-ids/find-products-by-ids.handler';
 import { UpdateStockAfterOrderCreationDomainEventHandler } from './application/products/event-handlers/update-stock-after-order-creation.domain-event-handler';
 import { ReduceProductsStockCommandHandler } from './application/products/commands/reduce-products-stock/reduce-products-stock.handler';
+import { FindAllProductSlugsQueryHandler } from './application/products/queries/find-all-product-slugs/find-all-product-slugs.handler';
 
 const commandHandlers: Provider[] = [
   // Category
@@ -47,13 +48,16 @@ const commandHandlers: Provider[] = [
 ];
 
 const queryHandlers: Provider[] = [
+  // Category
   FindCategoriesQueryHandler,
   FindCategoryByIdQueryHandler,
   FindProductsQueryHandler,
+  // Product
   FindProductImageQueryHandler,
   FindProductByIdQueryHandler,
   FindProductsByCategorySlugQueryHandler,
   FindProductsByIdsQueryHandler,
+  FindAllProductSlugsQueryHandler,
 ];
 
 const eventHandlers: Provider[] = [

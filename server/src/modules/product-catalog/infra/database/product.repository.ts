@@ -30,6 +30,14 @@ export const productSchema = z.object({
 
 export type ProductModel = z.TypeOf<typeof productSchema>;
 
+export const productSitemapSchema = z.object({
+  id: z.string().uuid(),
+  slug: z.string().min(1).max(255),
+  updated_at: z.preprocess((val: any) => new Date(val), z.date()),
+});
+
+export type ProductSitemapModel = z.TypeOf<typeof productSitemapSchema>;
+
 /**
  *  Repository is used for retrieving/saving domain entities
  * */

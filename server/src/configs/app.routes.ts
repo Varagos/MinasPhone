@@ -29,6 +29,7 @@ export const routesV1 = {
     delete: `/${productsRoot}/:id`,
     update: `/${productsRoot}/:id`,
     findByCategorySlug: `/${productsRoot}/category/:slug`,
+    findAllSlugs: `/${productsRoot}/slugs`,
   },
   cart: {
     // Fetch cart from cookie or create a new one

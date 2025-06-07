@@ -23,7 +23,10 @@ import { FindProductByIdQuery } from '../../modules/product-catalog/application/
 import { FindProductByIdQueryResponse } from '../../modules/product-catalog/application/products/queries/find-product-by-id/find-product-by-id.handler';
 import { ArgumentInvalidException, NotFoundException } from '@libs/exceptions';
 import { ProductResponseDto } from '@modules/product-catalog/application/categories/dtos/product.response.dto';
-import { ProductPaginatedResponseDto } from '@modules/product-catalog/application/categories/dtos/product.paginated.response.dto';
+import {
+  ProductPaginatedResponseDto,
+  ProductSlugsPaginatedResponseDto,
+} from '@modules/product-catalog/application/categories/dtos/product.paginated.response.dto';
 import {
   FindProductsQueryDto,
   FindProductsRequestDto,
@@ -32,7 +35,10 @@ import { Body, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Result } from 'oxide.ts';
 import { PaginatedQueryRequestDto } from '@libs/api/paginated-query.request.dto';
 import { Paginated } from '@libs/ddd';
-import { ProductModel } from '@modules/product-catalog/infra/database/product.repository';
+import {
+  ProductModel,
+  ProductSitemapModel,
+} from '@modules/product-catalog/infra/database/product.repository';
 import { FindProductsQuery } from '@modules/product-catalog/application/products/queries/find-products/find-products.query';
 import { FindProductImageQuery } from '@modules/product-catalog/application/products/queries/find-image/find-product-image.query';
 import { IdResponse } from '@libs/api/id.response.dto';
@@ -50,6 +56,9 @@ import { UploadImageCommand } from '@modules/product-catalog/application/images/
 import { UploadImageCommandResponse } from '@modules/product-catalog/application/images/commands/upload-image/upload-image.handler';
 import { RolesGuard } from '@modules/user-management/user-management.module';
 import { FindProductsByCategorySlugQuery } from '@modules/product-catalog/application/products/queries/find-products-by-category-slug/find-products-by-category-slug.query';
+import { FindAllProductSlugsQueryDto } from '@modules/product-catalog/application/products/queries/find-all-product-slugs/find-all-product-slugs.request.dto';
+import { FindAllProductSlugsQuery } from '@modules/product-catalog/application/products/queries/find-all-product-slugs/find-all-product-slugs.query';
+import { ProductSlugResponseDto } from '@modules/product-catalog/application/categories/dtos/product-slug.response.dto';
 
 @ApiTags('products')
 @Controller(routesV1.version)
@@ -271,6 +280,37 @@ export class ProductsHttpController {
         imageUrl: product.image_uri,
         categoryId: product.category_id,
       })),
+    });
+  }
+
+  @Get(routesV1.product.findAllSlugs)
+  @ApiOperation({ summary: 'Find all product slugs for Sitemap' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: ProductSlugsPaginatedResponseDto,
+  })
+  @UsePipes(new ValidationPipe({ whitelist: true }))
+  async findAllProductSlugs(): Promise<ProductSlugsPaginatedResponseDto> {
+    const query = new FindAllProductSlugsQuery();
+
+    const result: Result<
+      Paginated<ProductSitemapModel>,
+      Error
+    > = await this.queryBus.execute(query);
+
+    const paginated = result.unwrap();
+
+    // Whitelisting returned properties
+    return new ProductSlugsPaginatedResponseDto({
+      ...paginated,
+      data: paginated.data.map(
+        (product) =>
+          new ProductSlugResponseDto({
+            id: product.id,
+            updatedAt: product.updated_at,
+            slug: product.slug,
+          }),
+      ),
     });
   }
 

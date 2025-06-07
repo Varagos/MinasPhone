@@ -52,11 +52,11 @@ const SearchDiv = styled('div')(({ theme }) => ({
 }));
 
 const SearchInputField = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('navbar');
   return (
     <SearchDiv>
       <InputBase
-        placeholder={t('NAVBAR.SEARCH_PLACEHOLDER')}
+        placeholder={t('SEARCH_PLACEHOLDER')}
         inputProps={{ 'aria-label': 'search' }}
         autoFocus
       />

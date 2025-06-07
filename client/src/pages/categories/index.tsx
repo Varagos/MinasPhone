@@ -8,6 +8,16 @@ import PhonesCategory from '../../../public/categories_smartphones.webp';
 import AccessoriesCategory from '../../../public/categories_accessories.webp';
 import SmartWatchCategory from '../../../public/categories_smartwatch.webp';
 import CategoryItem from '@/components/Landing/CategoryItem/CategoryItem';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { GetStaticPropsContext } from 'next';
+
+export async function getStaticProps(context: GetStaticPropsContext) {
+  return {
+    props: {
+      ...(await serverSideTranslations(context.locale!, ['navbar', 'footer'])),
+    },
+  };
+}
 
 export default function Categories() {
   return (

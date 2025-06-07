@@ -8,6 +8,7 @@ import { parseRangeFromQuery } from '@/utils/serverParsers';
 import { useRouter } from 'next/router';
 import useUrl from '@/hooks/useUrl';
 import { parseUrlRange } from '@/utils/pagination';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 interface ProductsProps {
   products: ProductPaginatedResponse;
@@ -23,7 +24,13 @@ export const getServerSideProps: GetServerSideProps<ProductsProps> = async (
   const products = await api.products.findMany({
     range: [start, end],
   });
-  return { props: { products } };
+  return {
+    props: {
+      products,
+
+      ...(await serverSideTranslations(context.locale!, ['footer', 'navbar'])),
+    },
+  };
 };
 
 export default function ProductsPage({ products }: ProductsProps) {

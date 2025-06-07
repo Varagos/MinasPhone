@@ -55,7 +55,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       // pass the translation props to the page component
-      ...(await serverSideTranslations(locale)),
+      ...(await serverSideTranslations(context.locale!, [
+        'common',
+        'navbar',
+        'footer',
+      ])),
     },
   };
 };

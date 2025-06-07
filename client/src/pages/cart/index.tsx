@@ -12,10 +12,26 @@ import type { Cart } from '@/api/types/cart';
 import { formatPriceWithSymbol } from '@/utils/prices';
 import { useCart } from '@/hooks/useCart';
 import useTheme from '@mui/styles/useTheme';
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 type CartPageProps = {
   cart: Cart;
   handleEmptyCart: () => void;
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { locale } = context;
+  if (!locale) {
+    throw new Error('locale is undefined');
+  }
+
+  return {
+    props: {
+      // pass the translation props to the page component
+      ...(await serverSideTranslations(locale, ['common', 'footer', 'navbar'])),
+    },
+  };
 };
 
 const FilledCart = ({ cart, handleEmptyCart }: CartPageProps) => {

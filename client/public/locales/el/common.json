@@ -1,8 +1,5 @@
 {
   "HELLO_WORLD": "Hello, World!",
-  "NAVBAR": {
-    "SEARCH_PLACEHOLDER": "Αναζήτηση"
-  },
   "LANDING": {
     "CTA_TITLE1": "Αναβαθμίστε το",
     "CTA_TITLE2": "Κινητό σας",

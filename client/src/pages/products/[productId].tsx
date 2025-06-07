@@ -16,6 +16,7 @@ import { GetServerSideProps } from 'next';
 import { formatPriceWithSymbol } from '@/utils/prices';
 import Link from 'next/link';
 import Image from 'next/image';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 interface ProductsPageProps {
   product: Product | null;
@@ -26,7 +27,13 @@ export const getServerSideProps: GetServerSideProps<ProductsPageProps> = async (
 ) => {
   const productId = context.params?.productId as string;
   const product = await api.products.findOneById(productId);
-  return { props: { product } };
+  return {
+    props: {
+      product,
+
+      ...(await serverSideTranslations(context.locale!, ['footer', 'navbar'])),
+    },
+  };
 };
 
 export default function ProductPage({ product }: ProductsPageProps) {

@@ -45,7 +45,8 @@
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
     "typescript": "5.0.3",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "vanilla-cookieconsent": "^3.1.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.4",

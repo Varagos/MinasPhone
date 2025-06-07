@@ -49,7 +49,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const MobileSearch = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('navbar');
   return (
     <AppBar
       position="static"
@@ -60,7 +60,7 @@ const MobileSearch = () => {
         <SearchDiv>
           <SearchPromptIcon />
           <StyledInputBase
-            placeholder={t('NAVBAR.SEARCH_PLACEHOLDER')}
+            placeholder={t('SEARCH_PLACEHOLDER')}
             inputProps={{ 'aria-label': 'search' }}
             autoFocus
           />

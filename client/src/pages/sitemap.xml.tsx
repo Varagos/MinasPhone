@@ -9,6 +9,15 @@ const DOMAIN = 'https://minasphone.gr';
 function generateSiteMap(products: ProductSlug[], categories: Category[]) {
   const currentDate = new Date().toISOString();
 
+  /**
+   * 
+   * /pages/information/user-terms.js
+/pages/information/privacy-policy.js  
+/pages/information/cookie-policy.js
+
+
+   */
+
   // Helper function to generate URLs for both languages
   const generateBilingualUrls = (
     path: string,

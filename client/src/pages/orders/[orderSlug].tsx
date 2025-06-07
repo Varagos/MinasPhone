@@ -4,10 +4,11 @@ import Spinner from '@/components/Spinner/Spinner';
 import { ProductPaginatedResponse } from '@/api/types/products';
 import { api } from '@/api';
 import { GetServerSideProps } from 'next';
-import { Order } from '@/api/types/orders';
+import type { Order } from '@/api/types/orders';
 import LinkButton from '@/components/common/LinkButton';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 interface OrderProps {
   data: Order;
@@ -18,7 +19,13 @@ export const getServerSideProps: GetServerSideProps<OrderProps> = async (
 ) => {
   const orderSlug = context.params?.orderSlug as string;
   const order = await api.orders.findOrderBySlug(orderSlug);
-  return { props: { data: order } };
+  return {
+    props: {
+      data: order,
+
+      ...(await serverSideTranslations(context.locale!, ['footer', 'navbar'])),
+    },
+  };
 };
 
 const Order = ({ data }: OrderProps) => {

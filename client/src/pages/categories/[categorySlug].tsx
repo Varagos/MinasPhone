@@ -11,6 +11,7 @@ import {
 } from '@/utils/serverParsers';
 import useUrl from '@/hooks/useUrl';
 import { DEFAULT_ITEMS_PER_PAGE, parseUrlRange } from '@/utils/pagination';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 interface CategoryProps {
   products: ProductPaginatedResponse;
@@ -34,7 +35,12 @@ export const getServerSideProps: GetServerSideProps<CategoryProps> = async (
     },
     range: [start, end],
   });
-  return { props: { products } };
+  return {
+    props: {
+      products,
+      ...(await serverSideTranslations(context.locale!, ['navbar', 'footer'])),
+    },
+  };
 };
 
 const Category = ({ products }: CategoryProps) => {

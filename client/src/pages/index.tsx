@@ -12,11 +12,7 @@ import ProductCard from '@/components/Products/ProductCard/ProductCard';
 import { api } from '@/api/index';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import {
-  CategoryPaginatedResponse,
-  Product,
-  ProductPaginatedResponse,
-} from '@/api/types/types';
+import { Product, ProductPaginatedResponse } from '@/api/types/types';
 import Hero from '@/components/Landing/HeroSection';
 import StoreLocation from '@/components/Landing/StoreLocation';
 
@@ -36,14 +32,12 @@ const DynamicStoreLocation = dynamic(
 );
 
 interface LandingProps {
-  categories: CategoryPaginatedResponse;
   products: ProductPaginatedResponse;
 }
 
 export const getServerSideProps: GetServerSideProps<LandingProps> = async (
   context
 ) => {
-  const categories = await api.categories.findMany({ range: [0, 9] });
   // console.log({ categories });
   const products = await api.products.findMany({ range: [0, 9] });
 
@@ -54,15 +48,14 @@ export const getServerSideProps: GetServerSideProps<LandingProps> = async (
 
   return {
     props: {
-      categories,
       products,
       // pass the translation props to the page component
-      ...(await serverSideTranslations(locale)),
+      ...(await serverSideTranslations(locale, ['common', 'footer', 'navbar'])),
     },
   };
 };
 
-export default function Landing({ categories, products }: LandingProps) {
+export default function Landing({ products }: LandingProps) {
   // console.log('Landing categories:', categories, 'products:', products);
 
   const [shuffledProducts, setShuffledProducts] = useState<Product[]>([]);

@@ -32,26 +32,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     <CartProvider>
       <ThemeProvider theme={theme}>
         <MessageProvider>
-          <Head>
-            <title>MinasPhone - Buy Affordable Phones & Accessories</title>
-            <meta name="description" content="MinasPhone offers quality new & used phones, phone accessories, and reliable money transfer services (MoneyGram & Ria). Best deals in town!" />
-            <meta name="keywords" content="affordable phones, used phones, phone accessories, MoneyGram, Ria money transfer, smartphones, mobile phones, cheap phones, phone repairs, phone cases, screen protectors" />
-            <meta name="author" content="MinasPhone Team" />
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <link rel="icon" href="/favicon.ico" />
-            <meta property="og:type" content="website" />
-            <meta property="og:url" content="https://www.minasphone.gr" />
-            <meta property="og:title" content="MinasPhone - Quality Phones & Money Transfers" />
-            <meta property="og:description" content="Your one-stop shop for phones, accessories, and money transfer services" />
-            <meta property="og:site_name" content="MinasPhone" />
-            <meta property="og:image" content="https://www.minasphone.com/og-image.png" />
-            <meta property="og:image:width" content="1200" />
-            <meta property="og:image:height" content="630" />
-            <meta property="og:image:alt" content="MinasPhone Storefront" />
-            <link rel="canonical" href="https://www.minasphone.gr" />
-            <meta name="theme-color" content="#3F72AF" />
-            <meta name="robots" content="index, follow" />
-          </Head>
           <CssBaseline />
           <Navbar />
           <main style={{ minHeight: '80vh' }}>

@@ -11,7 +11,7 @@ import React, { useEffect } from 'react';
 import { MessageProvider } from '@/context/messages/Messages';
 import { GoogleAnalytics } from 'nextjs-google-analytics';
 import { useRouter } from 'next/router';
-import { Metadata } from 'next';
+import Head from 'next/head';
 
 function useDirection(language: string) {
   useEffect(() => {
@@ -22,74 +22,7 @@ function useDirection(language: string) {
   }, [language]);
 }
 
-export const metadata: Metadata = {
-  title: {
-    default: 'MinasPhone - Buy Affordable Phones & Accessories',
-    template: '%s | MinasPhone',
-  },
-  description:
-    'MinasPhone offers quality new & used phones, phone accessories, and reliable money transfer services (MoneyGram & Ria). Best deals in town!',
-  keywords: [
-    'affordable phones',
-    'used phones',
-    'phone accessories',
-    'MoneyGram',
-    'Ria money transfer',
-    'smartphones',
-    'mobile phones',
-    'cheap phones',
-    'phone repairs',
-    'phone cases',
-    'screen protectors',
-  ],
-  authors: [{ name: 'MinasPhone Team' }],
-  openGraph: {
-    type: 'website',
-    url: 'https://www.minasphone.gr', // replace with your actual domain
-    title: 'MinasPhone - Quality Phones & Money Transfers',
-    description:
-      'Your one-stop shop for phones, accessories, and money transfer services',
-    siteName: 'MinasPhone',
-    images: [
-      {
-        url: 'https://www.minasphone.com/og-image.png', // replace with your actual OG image
-        width: 1200,
-        height: 630,
-        alt: 'MinasPhone Storefront',
-      },
-    ],
-  },
-  // twitter: {
-  //   card: 'summary_large_image',
-  //   site: '@MinasPhone', // replace with your actual Twitter handle
-  //   creator: '@MinasPhone',
-  //   images: 'https://www.minasphone.com/twitter-card.jpg', // replace with your actual Twitter image
-  // },
-  alternates: {
-    canonical: 'https://www.minasphone.gr',
-  },
-  themeColor: '#3F72AF', // choose a color that matches your brand
-  category: 'ecommerce',
-  robots: {
-    index: true,
-    follow: true,
-    nocache: false,
-    googleBot: {
-      index: true,
-      follow: true,
-      noimageindex: false,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  icons: {
-    icon: '/favicon.ico',
-    // shortcut: '/favicon-16x16.png',
-    // apple: '/apple-touch-icon.png',
-  },
-  // manifest: '/site.webmanifest', // if you have one
-};
+// Default metadata for the site
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { locale } = useRouter();
@@ -99,6 +32,26 @@ function MyApp({ Component, pageProps }: AppProps) {
     <CartProvider>
       <ThemeProvider theme={theme}>
         <MessageProvider>
+          <Head>
+            <title>MinasPhone - Buy Affordable Phones & Accessories</title>
+            <meta name="description" content="MinasPhone offers quality new & used phones, phone accessories, and reliable money transfer services (MoneyGram & Ria). Best deals in town!" />
+            <meta name="keywords" content="affordable phones, used phones, phone accessories, MoneyGram, Ria money transfer, smartphones, mobile phones, cheap phones, phone repairs, phone cases, screen protectors" />
+            <meta name="author" content="MinasPhone Team" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link rel="icon" href="/favicon.ico" />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="https://www.minasphone.gr" />
+            <meta property="og:title" content="MinasPhone - Quality Phones & Money Transfers" />
+            <meta property="og:description" content="Your one-stop shop for phones, accessories, and money transfer services" />
+            <meta property="og:site_name" content="MinasPhone" />
+            <meta property="og:image" content="https://www.minasphone.com/og-image.png" />
+            <meta property="og:image:width" content="1200" />
+            <meta property="og:image:height" content="630" />
+            <meta property="og:image:alt" content="MinasPhone Storefront" />
+            <link rel="canonical" href="https://www.minasphone.gr" />
+            <meta name="theme-color" content="#3F72AF" />
+            <meta name="robots" content="index, follow" />
+          </Head>
           <CssBaseline />
           <Navbar />
           <main style={{ minHeight: '80vh' }}>

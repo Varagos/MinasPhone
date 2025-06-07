@@ -73,17 +73,7 @@ export default function Landing({ products }: LandingProps) {
       <Head>
         <title>Minas Phone</title>
         {/* This website is an electronics ecommerce website */}
-        <meta
-          name="description"
-          content="Minas Phone - Electronics Ecommerce"
-        />
-        <meta
-          name="keywords"
-          content="electronics, ecommerce, smartphones, tablets, smartwatches, accessories"
-        />
-        <meta name="author" content="Minas Phone" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <MainContainer>
         <Hero />

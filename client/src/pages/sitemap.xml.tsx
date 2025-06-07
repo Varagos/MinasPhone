@@ -46,6 +46,7 @@ function generateSiteMap(products: ProductSlug[], categories: Category[]) {
      <!-- Bilingual static pages -->
      ${generateBilingualUrls('/products', currentDate, '0.9')}
      ${generateBilingualUrls('/categories', currentDate, '0.8')}
+     ${generateBilingualUrls('/cart', currentDate, '0.5')}
      ${generateBilingualUrls('/information/user-terms', currentDate, '0.3')}
      
      <!-- Category pages - both languages -->

@@ -54,10 +54,12 @@ function MyApp({ Component, pageProps }: AppProps) {
           width: 180,
           height: 60,
         },
-        // sameAs: [
-        //   'https://www.facebook.com/minasphone',
-        //   'https://www.instagram.com/minasphone',
-        // ],
+        sameAs: [
+          'https://maps.app.goo.gl/QhHR3xDir67jEUmw5',
+          'https://www.vrisko.gr/details/172_1f0655_d4jb1_5ce6b4k_ga_6d_2',
+          // 'https://www.facebook.com/minasphone',
+          // 'https://www.instagram.com/minasphone',
+        ],
       },
       {
         '@type': 'LocalBusiness',

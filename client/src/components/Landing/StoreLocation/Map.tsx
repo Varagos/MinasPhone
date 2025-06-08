@@ -1,41 +1,22 @@
 import React from 'react';
-import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { LatLngExpression } from 'leaflet';
-import markerPng from '../../../../public/marker-icon-2x.png';
+import Box from '@mui/material/Box';
 
-import { icon } from 'leaflet';
-
-const ICON = icon({
-  iconUrl: markerPng.src,
-  iconSize: [32, 52],
-});
-
-const COORDS: LatLngExpression = [37.96332118797257, 23.722338003120228];
-
-const StoreMap = () => (
-  <MapContainer
-    center={COORDS}
-    zoom={15}
-    style={{ height: '400px', width: '100%' }}
-    scrollWheelZoom={false}
-  >
-    <TileLayer
-      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    />
-    <Marker
-      position={COORDS}
-      icon={ICON}
-      eventHandlers={{
-        click: (e) => {
-          window.open('https://maps.app.goo.gl/4K9Aw1NuNUcFtm8u9', '_blank');
-        },
-      }}
-    >
-      <Popup>Minas Phone</Popup>
-    </Marker>
-  </MapContainer>
-);
+const StoreMap: React.FC = () => {
+  return (
+    <Box sx={{ width: '100%', height: '400px', position: 'relative' }}>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3145.595389817462!2d23.7223541!3d37.963232399999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1bd3b88b7469f%3A0xd8587d83a0a65c0f!2sMINAS%20PHONE!5e0!3m2!1sel!2sgr!4v1749377870658!5m2!1sel!2sgr"
+        width="100%"
+        height="100%"
+        style={{ border: 0 }}
+        allowFullScreen
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        title="MinasPhone Store Location"
+        aria-label="MinasPhone Store Location Map"
+      />
+    </Box>
+  );
+};
 
 export default StoreMap;

@@ -76,7 +76,7 @@ function generateSiteMap(products: ProductSlug[], categories: Category[]) {
          // Use slug if available, otherwise fall back to id
          const urlSlug = product.id; //product.slug ||
          const lastmod = product.updatedAt;
-         return generateBilingualUrls(`/product/${urlSlug}`, lastmod, '0.9');
+         return generateBilingualUrls(`/products/${urlSlug}`, lastmod, '0.9');
        })
        .join('')}
    </urlset>

@@ -4,14 +4,26 @@ export const cookieConsentConfig: CookieConsentConfig = {
   // Specify the cookie domain
   cookie: {
     name: 'minas_phone_cookie_consent',
-    domain: process.env.NEXT_PUBLIC_DOMAIN || '',
+    domain: process.env.NEXT_PUBLIC_DOMAIN || 'minasphone.gr',
     expiresAfterDays: 365,
+    sameSite: 'Lax',
+    path: '/',
   },
 
+  /**
+   *     type ConsentModalLayout =
+        'box'
+        | 'box wide'
+        | 'box inline'
+        | 'cloud'
+        | 'cloud inline'
+        | 'bar'
+        | 'bar inline'
+   */
   // Specify the GUI options
   guiOptions: {
     consentModal: {
-      layout: 'box',
+      layout: 'box inline',
       position: 'bottom right',
       flipButtons: false,
       equalWeightButtons: true,
@@ -53,6 +65,7 @@ export const cookieConsentConfig: CookieConsentConfig = {
   // Language settings
   language: {
     default: 'el',
+    autoDetect: 'browser', // document will match our selected language, but needs re-render if lang changes
     translations: {
       en: {
         consentModal: {

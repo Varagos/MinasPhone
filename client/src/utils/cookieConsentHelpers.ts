@@ -11,11 +11,18 @@ import * as CookieConsent from 'vanilla-cookieconsent';
  */
 export const isCategoryAccepted = (category: string): boolean => {
   if (typeof window === 'undefined') {
+    console.log('Server-side check for cookie consent category:', category);
     return false; // Default to false on server-side
   }
 
   try {
-    return CookieConsent.acceptedCategory(category);
+    const isAccepted = CookieConsent.acceptedCategory(category);
+    console.log(
+      'Client-side check for cookie consent category:',
+      category,
+      isAccepted
+    );
+    return isAccepted;
   } catch (error) {
     // Fail silently in production
     if (process.env.NODE_ENV !== 'production') {

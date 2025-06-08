@@ -13,14 +13,8 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 
 // Dynamically import CookieConsent with SSR disabled
-const CookieConsent = dynamic(
+const CookieConsentComponent = dynamic(
   () => import('@/components/CookieConsent/CookieConsent'),
-  { ssr: false }
-);
-
-// Dynamically import ConsentAwareAnalytics with SSR disabled
-const ConsentAwareAnalytics = dynamic(
-  () => import('@/components/Analytics/ConsentAwareAnalytics'),
   { ssr: false }
 );
 
@@ -114,13 +108,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           <CssBaseline />
           <Navbar />
           <main style={{ minHeight: '80vh' }}>
-            {/* Use ConsentAwareAnalytics instead of directly using GoogleAnalytics */}
-            <ConsentAwareAnalytics trackPageViews />
             <Component {...pageProps} />
           </main>
           <Footer />
           {/* Cookie Consent Component */}
-          <CookieConsent />
+          <CookieConsentComponent />
         </MessageProvider>
       </ThemeProvider>
     </CartProvider>

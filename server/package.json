@@ -1,7 +1,7 @@
 {
   "name": "minasphone-backend",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "MinasPhone Backend",
   "license": "MIT",
   "scripts": {
@@ -12,7 +12,7 @@
     "start:prod": "NODE_ENV=production nest start --watch",
     "start:debug": "nest start --debug --watch",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
+    "test": "jest --runInBand --detectOpenHandles",
     "test:ci": "jest tests/e2e --runInBand --silent",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",

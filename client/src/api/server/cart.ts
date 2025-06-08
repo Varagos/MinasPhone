@@ -59,7 +59,9 @@ export class CartApi implements ICartApi {
       throw new Error('Failed to add line item');
     }
 
-    return this.retrieveCart();
+    const cart = await this.retrieveCart();
+    console.log('Retrieved cart', cart);
+    return cart;
   }
 
   async removeFromCart(lineItemId: string): Promise<Cart> {

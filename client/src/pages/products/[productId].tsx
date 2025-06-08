@@ -18,6 +18,7 @@ import { formatPriceWithSymbol } from '@/utils/prices';
 import Link from 'next/link';
 import Image from 'next/image';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useCart } from '@/hooks/useCart';
 
 interface ProductsPageProps {
   product: Product | null;
@@ -38,10 +39,12 @@ export const getServerSideProps: GetServerSideProps<ProductsPageProps> = async (
 };
 
 export default function ProductPage({ product }: ProductsPageProps) {
+  const { setCart } = useCart();
   // console.log(productId);
 
-  const handleAddToCart = (id: string) => {
-    return api.cart.addToCart(id, 1);
+  const handleAddToCart = async (id: string) => {
+    const cart = await api.cart.addToCart(id, 1);
+    setCart(cart);
   };
 
   {
@@ -86,28 +89,40 @@ export default function ProductPage({ product }: ProductsPageProps) {
     mpn: product.id,
     brand: {
       '@type': 'Brand',
-      name: 'MinasPhone'
+      name: 'MinasPhone',
     },
     offers: {
       '@type': 'Offer',
       url: `https://www.minasphone.gr/products/${product.id}`,
       priceCurrency: 'EUR',
       price: product.price,
-      priceValidUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
+      priceValidUntil: new Date(
+        new Date().setFullYear(new Date().getFullYear() + 1)
+      )
+        .toISOString()
+        .split('T')[0],
       itemCondition: 'https://schema.org/NewCondition',
-      availability: product.quantity > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      availability:
+        product.quantity > 0
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
       seller: {
         '@type': 'Organization',
-        name: 'MinasPhone'
-      }
-    }
+        name: 'MinasPhone',
+      },
+    },
   };
 
   return (
     <>
       <Head>
         <title>{product.name} | MinasPhone</title>
-        <meta name="description" content={product.description.replace(/<[^>]*>/g, '').substring(0, 160)} />
+        <meta
+          name="description"
+          content={product.description
+            .replace(/<[^>]*>/g, '')
+            .substring(0, 160)}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
@@ -115,102 +130,102 @@ export default function ProductPage({ product }: ProductsPageProps) {
       </Head>
       <Container maxWidth="lg" sx={{ pt: 10, pb: 20 }}>
         <Grid container spacing={2}>
-        <Grid
-          container
-          item
-          xs={12}
-          sm={6}
-          sx={{ pt: 13 }}
-          justifyContent="center"
-        >
-          {/* Medium: Product pages
+          <Grid
+            container
+            item
+            xs={12}
+            sm={6}
+            sx={{ pt: 13 }}
+            justifyContent="center"
+          >
+            {/* Medium: Product pages
 Every product needs good product page-quality images. These images (usually 640 x 640 or 800 x 800) */}
-          <Box
-            component="img"
-            sx={{
-              objectFit: 'cover',
-              width: '60%',
-              height: 'auto',
-              py: 5,
-              backgroundColor: 'white',
-              pointerEvents: 'none',
-              '&:hover': {
+            <Box
+              component="img"
+              sx={{
+                objectFit: 'cover',
+                width: '60%',
+                height: 'auto',
+                py: 5,
                 backgroundColor: 'white',
-              },
-              textTransform: 'none',
+                pointerEvents: 'none',
+                '&:hover': {
+                  backgroundColor: 'white',
+                },
+                textTransform: 'none',
 
-              // height: 233,
-              // width: 350,
-              // maxHeight: { xs: 233, md: 167 },
-              // maxWidth: { xs: 350, md: 250 },
-            }}
-            alt={product.name}
-            src={product.imageUrl}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Box mr={4}>
-              <Typography variant="h5" gutterBottom>
-                {product.name}
-              </Typography>
-            </Box>
-
-            <Box ml={4}>
-              <Typography
-                style={{ marginRight: 'auto', color: '#69b67c' }}
-                variant="h6"
-                noWrap
-              >
-                {formatPriceWithSymbol(product.price)}
-                {/* {product.price.formatted_with_symbol} */}
-              </Typography>
-            </Box>
-          </Box>
-
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              my: 8,
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <StoreMallDirectoryTwoToneIcon />
-              <Typography variant="caption">
-                Παραλαβή από το κατάστημα.
-              </Typography>
-            </Box>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              sx={{ py: 2, px: 10, textTransform: 'none' }}
-              onClick={() => handleAddToCart(product.id)}
-            >
-              Προσθήκη στο καλάθι
-            </Button>
-          </Box>
-
-          <Box sx={{ mt: 10 }}>
-            <Typography variant="h6">Περιγραφή</Typography>
-            <Typography
-              dangerouslySetInnerHTML={{ __html: product.description }}
-              variant="body2"
-              color="textSecondary"
+                // height: 233,
+                // width: 350,
+                // maxHeight: { xs: 233, md: 167 },
+                // maxWidth: { xs: 350, md: 250 },
+              }}
+              alt={product.name}
+              src={product.imageUrl}
             />
-          </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Box mr={4}>
+                <Typography variant="h5" gutterBottom>
+                  {product.name}
+                </Typography>
+              </Box>
+
+              <Box ml={4}>
+                <Typography
+                  style={{ marginRight: 'auto', color: '#69b67c' }}
+                  variant="h6"
+                  noWrap
+                >
+                  {formatPriceWithSymbol(product.price)}
+                  {/* {product.price.formatted_with_symbol} */}
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                my: 8,
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <StoreMallDirectoryTwoToneIcon />
+                <Typography variant="caption">
+                  Παραλαβή από το κατάστημα.
+                </Typography>
+              </Box>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                sx={{ py: 2, px: 10, textTransform: 'none' }}
+                onClick={() => handleAddToCart(product.id)}
+              >
+                Προσθήκη στο καλάθι
+              </Button>
+            </Box>
+
+            <Box sx={{ mt: 10 }}>
+              <Typography variant="h6">Περιγραφή</Typography>
+              <Typography
+                dangerouslySetInnerHTML={{ __html: product.description }}
+                variant="body2"
+                color="textSecondary"
+              />
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
     </>
   );
 }

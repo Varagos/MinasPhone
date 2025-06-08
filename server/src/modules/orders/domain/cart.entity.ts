@@ -62,6 +62,16 @@ export class CartEntity extends AggregateRoot<CartProps> {
         ),
       );
     }
+    // If line item exists, we should update it's quantity
+    const existingLineItem = this.props.lineItems.find(
+      (item) => item.productId === lineItem.productId,
+    );
+    if (existingLineItem) {
+      existingLineItem.updateQuantity(
+        existingLineItem.quantity + lineItem.quantity,
+      );
+      return Ok(undefined);
+    }
 
     this.props.lineItems.push(lineItem);
     return Ok(undefined);

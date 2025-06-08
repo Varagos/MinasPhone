@@ -12,6 +12,13 @@ import Schedule from '@mui/icons-material/Schedule';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import ContactRow from './ContactRow/ContactRow';
+import dynamic from 'next/dynamic';
+
+// Dynamically import CookieSettings with SSR disabled
+const CookieSettings = dynamic(
+  () => import('@/components/CookieConsent/CookieSettings'),
+  { ssr: false }
+);
 
 const Footer = () => {
   const { t } = useTranslation('footer');
@@ -83,6 +90,14 @@ const Footer = () => {
                 >
                   {t('MY_ACCOUNT')}
                 </Link>
+              </Box>
+              <Box sx={{ my: 2 }}>
+                <CookieSettings
+                  label={t('COOKIE_SETTINGS')}
+                  variant="text"
+                  color="inherit"
+                  sx={{ textDecoration: 'none', p: 0, minWidth: 'auto' }}
+                />
               </Box>
             </Grid>
 

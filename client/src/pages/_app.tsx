@@ -9,8 +9,20 @@ import { CartProvider } from '@/context/CartProvider';
 import '../styles/globals.css';
 import React, { useEffect } from 'react';
 import { MessageProvider } from '@/context/messages/Messages';
-import { GoogleAnalytics } from 'nextjs-google-analytics';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
+
+// Dynamically import CookieConsent with SSR disabled
+const CookieConsent = dynamic(
+  () => import('@/components/CookieConsent/CookieConsent'),
+  { ssr: false }
+);
+
+// Dynamically import ConsentAwareAnalytics with SSR disabled
+const ConsentAwareAnalytics = dynamic(
+  () => import('@/components/Analytics/ConsentAwareAnalytics'),
+  { ssr: false }
+);
 
 function useDirection(language: string) {
   useEffect(() => {
@@ -100,10 +112,13 @@ function MyApp({ Component, pageProps }: AppProps) {
           <CssBaseline />
           <Navbar />
           <main style={{ minHeight: '80vh' }}>
-            <GoogleAnalytics trackPageViews />
+            {/* Use ConsentAwareAnalytics instead of directly using GoogleAnalytics */}
+            <ConsentAwareAnalytics trackPageViews />
             <Component {...pageProps} />
           </main>
           <Footer />
+          {/* Cookie Consent Component */}
+          <CookieConsent />
         </MessageProvider>
       </ThemeProvider>
     </CartProvider>

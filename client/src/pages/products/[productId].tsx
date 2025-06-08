@@ -7,6 +7,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { notFound } from 'next/navigation';
 import EmptyLogo from '/public/undraw_empty_xct9.svg';
+import Head from 'next/head';
 
 import StoreMallDirectoryTwoToneIcon from '@mui/icons-material/StoreMallDirectoryTwoTone';
 import Spinner from '@/components/Spinner/Spinner';
@@ -74,9 +75,46 @@ export default function ProductPage({ product }: ProductsPageProps) {
     );
   }
 
+  // Create Product schema markup for this product
+  const productSchema = {
+    '@context': 'https://schema.org/',
+    '@type': 'Product',
+    name: product.name,
+    image: product.imageUrl,
+    description: product.description.replace(/<[^>]*>/g, ''), // Strip HTML tags from description
+    sku: product.id,
+    mpn: product.id,
+    brand: {
+      '@type': 'Brand',
+      name: 'MinasPhone'
+    },
+    offers: {
+      '@type': 'Offer',
+      url: `https://www.minasphone.gr/products/${product.id}`,
+      priceCurrency: 'EUR',
+      price: product.price,
+      priceValidUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
+      itemCondition: 'https://schema.org/NewCondition',
+      availability: product.quantity > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'MinasPhone'
+      }
+    }
+  };
+
   return (
-    <Container maxWidth="lg" sx={{ pt: 10, pb: 20 }}>
-      <Grid container spacing={2}>
+    <>
+      <Head>
+        <title>{product.name} | MinasPhone</title>
+        <meta name="description" content={product.description.replace(/<[^>]*>/g, '').substring(0, 160)} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+        />
+      </Head>
+      <Container maxWidth="lg" sx={{ pt: 10, pb: 20 }}>
+        <Grid container spacing={2}>
         <Grid
           container
           item
@@ -173,5 +211,6 @@ Every product needs good product page-quality images. These images (usually 640 
         </Grid>
       </Grid>
     </Container>
+    </>
   );
 }

@@ -68,10 +68,71 @@ export default function Landing({ products }: LandingProps) {
     setShuffledProducts(clonedProducts.sort(() => 0.5 - Math.random()));
   }, []);
 
+  // Schema.org structured data for WebPage and BreadcrumbList
+  const homePageSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': 'https://www.minasphone.gr/#webpage',
+        url: 'https://www.minasphone.gr/',
+        name: 'MinasPhone - Buy Affordable Phones & Accessories',
+        description:
+          'MinasPhone offers quality new & used phones, phone accessories, and reliable money transfer services (MoneyGram & Ria). Best deals in town!',
+        isPartOf: {
+          '@id': 'https://www.minasphone.gr/#website',
+        },
+        inLanguage: 'el-GR',
+        primaryImageOfPage: {
+          '@id': 'https://www.minasphone.gr/#primaryimage',
+        },
+        datePublished: '2022-01-01T08:00:00+00:00',
+        dateModified: new Date().toISOString(),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': 'https://www.minasphone.gr/#breadcrumb',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://www.minasphone.gr/',
+          },
+        ],
+      },
+      {
+        '@type': 'ImageObject',
+        '@id': 'https://www.minasphone.gr/#primaryimage',
+        inLanguage: 'el-GR',
+        url: 'https://www.minasphone.gr/og-image.png',
+        contentUrl: 'https://www.minasphone.gr/og-image.png',
+        width: 1200,
+        height: 630,
+        caption: 'MinasPhone Storefront',
+      },
+      {
+        '@type': 'WebSite',
+        '@id': 'https://www.minasphone.gr/#website',
+        url: 'https://www.minasphone.gr/',
+        name: 'MinasPhone',
+        description: 'Quality Phones & Money Transfers',
+        publisher: {
+          '@id': 'https://www.minasphone.gr/#organization',
+        },
+        inLanguage: 'el-GR',
+      },
+    ],
+  };
+
   return (
     <>
       <Head>
         {/* This website is an electronics ecommerce website */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
+        />
 
         <title>MinasPhone - Buy Affordable Phones & Accessories</title>
         <meta

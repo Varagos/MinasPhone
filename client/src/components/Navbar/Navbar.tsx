@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import svgLogo from '../../../public/free-logo.svg';
+import svgLogo from '../../../public/logo.svg';
 import AppDrawer from './AppDrawer/AppDrawer';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 import AppBar from '@mui/material/AppBar';

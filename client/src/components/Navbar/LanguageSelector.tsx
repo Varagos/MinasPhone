@@ -59,7 +59,7 @@ const LanguageSelector = () => {
             alt=""
             width={21}
             height={16}
-            style={{ marginRight: 5, width: 24 }}
+            style={{ marginRight: 5 }}
           />
           {label}
         </MenuItem>

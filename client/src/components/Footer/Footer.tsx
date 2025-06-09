@@ -94,7 +94,7 @@ const Footer = () => {
               <Box sx={{ my: 2 }}>
                 <CookieSettings
                   label={t('COOKIE_SETTINGS')}
-                  variant="text"
+                  // variant="text"
                   color="inherit"
                   sx={{ textDecoration: 'none', p: 0, minWidth: 'auto' }}
                 />

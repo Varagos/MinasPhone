@@ -27,10 +27,7 @@ import {
   ProductPaginatedResponseDto,
   ProductSlugsPaginatedResponseDto,
 } from '@modules/product-catalog/application/categories/dtos/product.paginated.response.dto';
-import {
-  FindProductsQueryDto,
-  FindProductsRequestDto,
-} from '@modules/product-catalog/application/products/queries/find-products/find-products.request.dto';
+import { FindProductsQueryDto } from '@modules/product-catalog/application/products/queries/find-products/find-products.request.dto';
 import { Body, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Result } from 'oxide.ts';
 import { PaginatedQueryRequestDto } from '@libs/api/paginated-query.request.dto';
@@ -226,7 +223,6 @@ export class ProductsHttpController {
   })
   @UsePipes(new ValidationPipe({ whitelist: true }))
   async findProducts(
-    @Body() request: FindProductsRequestDto,
     @Query() queryParams: FindProductsQueryDto, // PaginatedQueryRequestDto,
   ): Promise<ProductPaginatedResponseDto> {
     const { range, sort, filter } = queryParams;
@@ -244,7 +240,6 @@ export class ProductsHttpController {
       start !== undefined && limit !== undefined ? start / limit : undefined;
 
     const query = new FindProductsQuery({
-      ...request,
       ...filter,
       limit,
       page,

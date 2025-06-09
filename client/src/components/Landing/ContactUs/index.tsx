@@ -49,7 +49,7 @@ const ContactUsSection = () => {
   const { t } = useTranslation();
 
   return (
-    <section style={{ backgroundColor: '#f5f5f5' }}>
+    <section id="contact" style={{ backgroundColor: '#f5f5f5' }}>
       <ContactSection>
         <ContactGrid container spacing={2}>
           <ContactInfo item xs={12} md={5} paddingTop={8}>

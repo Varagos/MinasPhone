@@ -14,12 +14,15 @@ import { Product } from '@/api/types/products';
 import { formatPriceWithSymbol } from '@/utils/prices';
 import { api } from '@/api';
 import { useCart } from '@/hooks/useCart';
+import { BreadcrumbItem } from '@/components/common/BreadcrumbNav';
 
 type ProductProps = {
   product: Product;
+  // Whether the product is displayed from a category
+  fromCategory: string | null;
 };
 
-function ProductCard({ product }: ProductProps) {
+function ProductCard({ product, fromCategory }: ProductProps) {
   const classes = useStyles();
   const [raised, setRaised] = useState<boolean>(false);
 
@@ -42,7 +45,11 @@ function ProductCard({ product }: ProductProps) {
       }}
     >
       <Link
-        href={`/products/${product.id}`}
+        href={
+          fromCategory
+            ? `/products/${product.id}?from=${fromCategory}`
+            : `/products/${product.id}`
+        }
         style={{
           paddingTop: 2,
         }}

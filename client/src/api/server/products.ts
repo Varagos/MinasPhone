@@ -46,6 +46,7 @@ class ProductsApi implements IProductsApi {
 
     if (!res.ok) {
       console.error('Failed to find many products', res);
+      if (res.status === 404) return { data: [], count: 0, limit: 0, page: 0 };
       // This will activate the closest `error.js` Error Boundary
 
       throw new Error('Failed to find many products');

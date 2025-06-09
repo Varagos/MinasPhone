@@ -201,7 +201,7 @@ export default function Landing({ products }: LandingProps) {
             >
               {shuffledProducts.slice(0, 4).map((product) => (
                 <Grid item key={product.id} xs={8} sm={6} md={4} lg={3}>
-                  <ProductCard product={product} />
+                  <ProductCard product={product} fromCategory={null} />
                 </Grid>
               ))}
             </Grid>

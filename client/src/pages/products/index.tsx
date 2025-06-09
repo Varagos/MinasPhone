@@ -67,6 +67,7 @@ export default function ProductsPage({ products }: ProductsProps) {
         page={page}
         onPageChange={onPageChange}
         totalProducts={products.count}
+        breadcrumbItems={[{ label: 'Προϊόντα', href: '/products' }]}
       />
     </>
   );

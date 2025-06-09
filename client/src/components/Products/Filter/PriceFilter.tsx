@@ -92,7 +92,7 @@ export function PriceFilter({
     <div>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Typography variant="h6" gutterBottom color="black">
+          <Typography variant="h6" gutterBottom color="black" component="h3">
             <strong>Τιμή</strong>
           </Typography>
         </Grid>

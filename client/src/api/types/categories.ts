@@ -20,5 +20,7 @@ export type CategoryPaginatedResponse = PaginatedResponse<Category>;
 export interface ICategoriesApi {
   findMany(
     params: PaginatedRequest<FindCategoriesDto, FindCategoriesDto>
+    // Null if category slug is invalid
   ): Promise<CategoryPaginatedResponse>;
+  findCategoryBySlug(slug: string): Promise<Category | null>;
 }

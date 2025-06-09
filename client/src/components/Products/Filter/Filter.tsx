@@ -51,7 +51,7 @@ const Filter = () => {
   return (
     <div>
       <Box border={1} borderColor="grey.300" borderRadius="1%" p={4}>
-        <Typography variant="h5" gutterBottom color="black">
+        <Typography variant="h5" gutterBottom color="black" component="h3">
           <strong>Φίλτρα</strong>
         </Typography>
 

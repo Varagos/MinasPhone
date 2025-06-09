@@ -51,11 +51,9 @@ Note: Make sure to run the `git tag` command on the commit you want to mark as a
 npm version patch # or minor, major
 # Create a tag
 git tag nestjs-server-v1.2.3
-# Push the tag to the remote repository
-git push origin --tags
 # Push the changes to the main branch
 git push origin main
+# Push the tag to the remote repository
+git push origin --tags
 
-# or to push both changes and tags at once
-git push --follow-tags
 ```

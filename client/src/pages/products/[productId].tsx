@@ -19,6 +19,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useCart } from '@/hooks/useCart';
+import BreadcrumbNav, {
+  BreadcrumbItem,
+} from '@/components/common/BreadcrumbNav';
 
 interface ProductsPageProps {
   product: Product | null;
@@ -40,16 +43,14 @@ export const getServerSideProps: GetServerSideProps<ProductsPageProps> = async (
 
 export default function ProductPage({ product }: ProductsPageProps) {
   const { setCart } = useCart();
-  // console.log(productId);
+  const router = useRouter();
+  const { from } = router.query;
 
   const handleAddToCart = async (id: string) => {
     const cart = await api.cart.addToCart(id, 1);
     setCart(cart);
   };
 
-  {
-    /* Product not found */
-  }
   if (!product) {
     return (
       <div style={{ minHeight: '70vh' }}>
@@ -65,7 +66,6 @@ export default function ProductPage({ product }: ProductsPageProps) {
           />
           <Typography variant="body1" color="textSecondary">
             Δοκιμάστε να επιλέξετε κάποιο άλλο προϊόν.
-            {/* Link to homepage */}
             <Link
               href="/"
               style={{ color: '#1976d2', textDecoration: 'underline' }}
@@ -78,13 +78,12 @@ export default function ProductPage({ product }: ProductsPageProps) {
     );
   }
 
-  // Create Product schema markup for this product
   const productSchema = {
     '@context': 'https://schema.org/',
     '@type': 'Product',
     name: product.name,
     image: product.imageUrl,
-    description: product.description.replace(/<[^>]*>/g, ''), // Strip HTML tags from description
+    description: product.description.replace(/<[^>]*>/g, ''),
     sku: product.id,
     mpn: product.id,
     brand: {
@@ -113,6 +112,24 @@ export default function ProductPage({ product }: ProductsPageProps) {
     },
   };
 
+  const breadcrumbItems: BreadcrumbItem[] = [];
+
+  if (from && typeof from === 'string') {
+    const categoryName = from
+      .split('-')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+
+    breadcrumbItems.push(
+      { label: 'Κατηγορίες', href: '/categories' },
+      { label: categoryName, href: `/categories/${from}` }
+    );
+  } else {
+    breadcrumbItems.push({ label: 'Προϊόντα', href: '/products' });
+  }
+
+  breadcrumbItems.push({ label: product.name });
+
   return (
     <>
       <Head>
@@ -129,6 +146,10 @@ export default function ProductPage({ product }: ProductsPageProps) {
         />
       </Head>
       <Container maxWidth="lg" sx={{ pt: 10, pb: 20 }}>
+        <Box sx={{ mb: 4 }}>
+          <BreadcrumbNav items={breadcrumbItems} />
+        </Box>
+
         <Grid container spacing={2}>
           <Grid
             container
@@ -184,7 +205,6 @@ Every product needs good product page-quality images. These images (usually 640 
                   noWrap
                 >
                   {formatPriceWithSymbol(product.price)}
-                  {/* {product.price.formatted_with_symbol} */}
                 </Typography>
               </Box>
             </Box>

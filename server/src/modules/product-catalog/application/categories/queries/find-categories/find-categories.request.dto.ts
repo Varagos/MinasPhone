@@ -1,5 +1,20 @@
+import {
+  CustomFilterParam,
+  CustomRangeParam,
+  CustomSortParam,
+  TransformJSON,
+} from '@libs/api/query-params.request';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString, IsUUID } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  IsInt,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Max,
+  Min,
+  Validate,
+} from 'class-validator';
 
 export class FindCategoriesDto {
   @ApiProperty({
@@ -28,4 +43,35 @@ export class FindCategoriesDto {
   @IsOptional()
   @IsUUID()
   parentId?: string;
+}
+
+export class FindCategoriesQueryDto {
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(99999)
+  @Type(() => Number)
+  @ApiProperty({
+    example: 10,
+    description: 'Specifies a limit of returned records',
+    required: false,
+  })
+  readonly limit?: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(99999)
+  @Type(() => Number)
+  @ApiProperty({ example: 0, description: 'Page number', required: false })
+  readonly page?: number;
+
+  @ApiProperty({
+    description: 'Filter results',
+    example: '{"slug": "electronics"}',
+  })
+  @IsOptional()
+  @TransformJSON()
+  @Validate(CustomFilterParam, ['name', 'slug', 'parentId'])
+  filter?: Record<string, string | number>;
 }

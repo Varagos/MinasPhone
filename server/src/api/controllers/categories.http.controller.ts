@@ -32,7 +32,7 @@ import { UpdateCategoryRequestDto } from '@modules/product-catalog/application/c
 import { UpdateCategoryCommand } from '@modules/product-catalog/application/categories/commands/update-category/update-category.command';
 import { UpdateCategoryCommandResponse } from '@modules/product-catalog/application/categories/commands/update-category/update-category.handler';
 import { CategoryPaginatedResponseDto } from '@modules/product-catalog/application/categories/dtos/category.paginated.response.dto';
-import { FindCategoriesDto } from '@modules/product-catalog/application/categories/queries/find-categories/find-categories.request.dto';
+import { FindCategoriesQueryDto } from '@modules/product-catalog/application/categories/queries/find-categories/find-categories.request.dto';
 import { PaginatedQueryRequestDto } from '@libs/api/paginated-query.request.dto';
 import { FindCategoriesQuery } from '@modules/product-catalog/application/categories/queries/find-categories/find-categories.query';
 import { Paginated } from '@libs/ddd';
@@ -182,14 +182,14 @@ export class CategoriesHttpController {
   })
   @UsePipes(new ValidationPipe({ whitelist: true }))
   async findCategories(
-    @Body() request: FindCategoriesDto,
-    @Query() queryParams: PaginatedQueryRequestDto,
+    @Query() queryParams: FindCategoriesQueryDto,
   ): Promise<CategoryPaginatedResponseDto> {
+    const { limit, page, filter } = queryParams;
     // console.log({ request });
     const query = new FindCategoriesQuery({
-      ...request,
-      limit: queryParams?.limit,
-      page: queryParams?.page,
+      ...filter,
+      limit,
+      page,
     });
     const result: Result<
       Paginated<CategoryModel>,

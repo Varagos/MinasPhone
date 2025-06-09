@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
+import Link from '@mui/material/Link';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import ProductCard from './ProductCard/ProductCard';
 import { MainContainer, ToolBar } from './styles';
@@ -15,6 +17,8 @@ import { useRouter } from 'next/router';
 import FloatingActionButton from './Filter/mobile/FloatingActionButton';
 import { useState } from 'react';
 import FilterModal from './Filter/mobile/FilterModal';
+import { EmptyProducts } from './EmptyProducts';
+import BreadcrumbNav, { BreadcrumbItem } from '../common/BreadcrumbNav';
 
 type ProductsLayoutProps = {
   products: Product[];
@@ -22,28 +26,8 @@ type ProductsLayoutProps = {
   page: number;
   totalProducts: number;
   onPageChange: (page: number) => void;
+  breadcrumbItems: BreadcrumbItem[];
 };
-
-function EmptyProducts() {
-  return (
-    <main>
-      <Box ml={4} py={6}>
-        <Typography
-          variant="h5"
-          style={{ display: 'inline-block', verticalAlign: 'top' }}
-        >
-          Η κατηγορία είναι άδεια!
-        </Typography>
-        <Typography>Δοκιμάστε να επιλέξετε κάποια εναλλακτική.</Typography>
-      </Box>
-      <Image
-        src={EmptyLogo}
-        style={{ width: '50%', height: 'auto' }}
-        alt="Empty products"
-      />
-    </main>
-  );
-}
 
 export default function ProductsLayout({
   products,
@@ -51,11 +35,22 @@ export default function ProductsLayout({
   page,
   onPageChange,
   totalProducts,
+  breadcrumbItems = [{ label: 'Προϊόντα', href: '/products' }],
 }: ProductsLayoutProps) {
-  const { asPath } = useRouter();
+  const router = useRouter();
+  const { asPath } = router;
   const { filter } = useUrl(asPath);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const emptyFilters = !filter || Object.keys(filter).length === 0;
+
+  // Check if we're in a category page by examining the URL path and breadcrumb items
+  const categorySlug =
+    router.pathname === '/categories/[categorySlug]'
+      ? (router.query.categorySlug as string)
+      : null;
+
+  console.log('ProductsLayout fromCategory', categorySlug);
+
   if (!products.length && emptyFilters) {
     return <EmptyProducts />;
   }
@@ -68,17 +63,23 @@ export default function ProductsLayout({
     <MainContainer>
       <ToolBar />
       <Container sx={{ pb: 20 }}>
+        {/* Header Section with Title, Breadcrumbs, etc - Now full width above everything */}
+        <Box sx={{ mb: 4 }}>
+          {/* Breadcrumbs */}
+          <BreadcrumbNav items={breadcrumbItems} />
+
+          {/* Title */}
+          <Typography variant="h4" gutterBottom color="black">
+            <strong>Προϊόντα</strong>
+          </Typography>
+
+          {/* Total products */}
+          <Typography variant="body1" gutterBottom>
+            Βρέθηκαν {totalProducts} προϊόντα
+          </Typography>
+        </Box>
+
         <Grid container justifyContent="center" spacing={4}>
-          {/* Title etc */}
-          <Grid item xs={12}>
-            <Typography variant="h4" gutterBottom color="black">
-              <strong>Προϊόντα</strong>
-            </Typography>
-            {/* Total products */}
-            <Typography variant="body1" gutterBottom>
-              Βρέθηκαν {totalProducts} προϊόντα
-            </Typography>
-          </Grid>
           {/* <Hidden xsDown> */}
           <Grid
             item
@@ -110,7 +111,7 @@ export default function ProductsLayout({
                 lg={4}
                 // sx={{ borderColor: 'red', borderWidth: 1, borderStyle: 'solid' }}
               >
-                <ProductCard product={product} />
+                <ProductCard product={product} fromCategory={categorySlug} />
               </Grid>
             ))}
           </Grid>

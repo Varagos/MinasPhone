@@ -6,8 +6,13 @@ const routes = {
   v1: {
     baseUrl: API_BASE_URL,
     categories: {
-      findMany: (range: [number, number]) =>
-        `${API_BASE_URL}/api/v1/categories?range=[${range[0]}, ${range[1]}]`,
+      findMany: (range: [number, number], filter?: Record<string, string>) => {
+        let baseUrl = `${API_BASE_URL}/api/v1/categories?range=[${range[0]}, ${range[1]}]`;
+        if (filter) {
+          baseUrl += `&filter=${JSON.stringify(filter)}`;
+        }
+        return baseUrl;
+      },
       fineOne: (id: string) => `${API_BASE_URL}/api/v1/categories/${id}`,
     },
     products: {

@@ -21,3 +21,7 @@ feat: enhance cart functionality to update existing line item quantities
 ## 0.4.0
 
 feat: enhance cart API with detailed line item structure and error handling
+
+## 0.4.1
+
+improve category filtering

@@ -12,8 +12,10 @@ import {
 import useUrl from '@/hooks/useUrl';
 import { DEFAULT_ITEMS_PER_PAGE, parseUrlRange } from '@/utils/pagination';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { Category as CategoryDto } from '@/api/types/categories';
 
 interface CategoryProps {
+  category: CategoryDto;
   products: ProductPaginatedResponse;
 }
 
@@ -28,6 +30,16 @@ export const getServerSideProps: GetServerSideProps<CategoryProps> = async (
   console.log('filter:', filter);
 
   const categorySlug = context.params?.categorySlug as string;
+  console.log('categorySlug:', categorySlug);
+  const category = await api.categories.findCategoryBySlug(categorySlug);
+  console.log('Found category:', category);
+
+  if (!category) {
+    return {
+      notFound: true,
+    };
+  }
+
   const products = await api.products.findMany({
     filter: {
       categorySlug,
@@ -38,15 +50,16 @@ export const getServerSideProps: GetServerSideProps<CategoryProps> = async (
   return {
     props: {
       products,
+      category,
       ...(await serverSideTranslations(context.locale!, ['navbar', 'footer'])),
     },
   };
 };
 
-const Category = ({ products }: CategoryProps) => {
+const Category = ({ products, category }: CategoryProps) => {
   // console.log('Product params', params);
   const router = useRouter();
-  const { categorySlug } = router.query;
+  // const { categorySlug } = router.query;
 
   const url = router.asPath;
   const { setRange, range } = useUrl(url);
@@ -67,8 +80,13 @@ const Category = ({ products }: CategoryProps) => {
   };
 
   console.log({ products });
-  console.log({ categorySlug });
-  if (typeof categorySlug !== 'string') return <div>Category not found</div>;
+  // console.log({ categorySlug });
+  // If the category does not exist, redirect to the home page
+  // if (!category) {
+  //   router.push('/');
+  //   return null;
+  // }
+  // if (typeof categorySlug !== 'string') return <div>Category not found</div>;
 
   // return productsStatus === 'loading' ? (
   //   <Spinner />
@@ -80,6 +98,10 @@ const Category = ({ products }: CategoryProps) => {
       page={page}
       onPageChange={onPageChange}
       totalProducts={products.count}
+      breadcrumbItems={[
+        { label: 'Κατηγορίες', href: '/categories' },
+        { label: category.slug },
+      ]}
     />
   );
   // );

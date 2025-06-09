@@ -14,6 +14,10 @@ Revert nanoid to non-esm only version and fix broken 0.1.0 issue
 
 Add route for sitemap, fetching all product slugs
 
-## v0.3.0
+## 0.3.0
 
 feat: enhance cart functionality to update existing line item quantities
+
+## 0.4.0
+
+feat: enhance cart API with detailed line item structure and error handling

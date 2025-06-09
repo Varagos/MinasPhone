@@ -9,6 +9,7 @@ import { SupertokensExceptionFilter } from '@modules/user-management/infra/servi
 import { WinstonModule } from 'nest-winston';
 import { loggerInstance } from './logger/winston.logger';
 import helmet from 'helmet';
+import { writeFileSync } from 'fs';
 
 const setupSwagger = (app: INestApplication) => {
   const config = new DocumentBuilder()
@@ -23,6 +24,8 @@ const setupSwagger = (app: INestApplication) => {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+  // save swagger document to file
+  writeFileSync('swagger.json', JSON.stringify(document, null, 2));
 };
 
 async function bootstrap() {

@@ -19,7 +19,7 @@ export class CategoriesApi implements ICategoriesApi {
 
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch data');
+      throw new Error('Failed to find many categories');
     }
 
     return res.json();

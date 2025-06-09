@@ -28,6 +28,26 @@ const Filter = () => {
   const activatePriceFilter = () => {
     setActiveFilters({ ...activeFilters, price: true });
   };
+
+  /**
+   * TODO reset pagination when filters change/ are applied
+   * ~This is standard behavior, adopted by Amazon, eBay, etc.
+   * Since the page (e.g.3 ) might not exist after applying filters
+   * 
+   *  Best Practices:
+  - Scroll to Top – After resetting to page 1, auto-scroll the user to the top of the product list for a seamless experience.I
+  - Preserve Filters in URL – Update the URL (e.g., ?category=hats&page=1) so the state is shareable and bookmarkable.
+  - Loading State – Show a spinner/skeleton loader while the new results fetch.
+
+  Example
+  function handleFilterChange(newFilters) {
+  // Reset to page 1 when filters change
+  setFilters(newFilters);
+  setCurrentPage(1); 
+  fetchResults(newFilters, 1); // Reload data
+  window.scrollTo(0, 0); // Scroll to top
+}
+   */
   return (
     <div>
       <Box border={1} borderColor="grey.300" borderRadius="1%" p={4}>

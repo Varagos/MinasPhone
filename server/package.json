@@ -1,7 +1,7 @@
 {
   "name": "minasphone-backend",
   "private": true,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "MinasPhone Backend",
   "license": "MIT",
   "scripts": {
@@ -30,7 +30,7 @@
     "migration:pending": "ts-node database/migrate pending",
     "migration:pending:tests": "NODE_ENV=test ts-node database/migrate pending",
     "seed:up": "ts-node database/seed",
-    "open-api-types": "npx swagger-typescript-api generate --path ./swagger.json --output ../client/src/api/server --name api.ts --rewrite --useOptions --useUnionTypes --defaultResponseType never"
+    "open-api-types": "npx swagger-typescript-api generate --path ./swagger.json --output ../client/src/api/server --name api.ts --rewrite --useOptions --useUnionTypes --defaultResponseType never --disable-throw-on-error"
   },
   "dependencies": {
     "@google-cloud/storage": "^6.10.1",

@@ -18,7 +18,7 @@ class ProductsApi implements IProductsApi {
   private httpClient: Api<any>;
 
   constructor() {
-    console.log('baseUrl', routes.v1.baseUrl);
+    // console.log('baseUrl', routes.v1.baseUrl);
     this.httpClient = new Api({
       baseUrl: routes.v1.baseUrl,
     });
@@ -45,10 +45,10 @@ class ProductsApi implements IProductsApi {
     // You can return Date, Map, Set, etc.
 
     if (!res.ok) {
-      console.error('Failed to fetch data from', res);
+      console.error('Failed to find many products', res);
       // This will activate the closest `error.js` Error Boundary
 
-      throw new Error('Failed to fetch data');
+      throw new Error('Failed to find many products');
     }
 
     const json = await res.json();
@@ -65,8 +65,8 @@ class ProductsApi implements IProductsApi {
         return null; // Not found
       }
 
-      console.error('Failed to fetch data from', res);
-      throw new Error('Failed to fetch data');
+      console.error('Failed to find product by id', res);
+      throw new Error('Failed to find product by id');
     }
 
     return res.json();

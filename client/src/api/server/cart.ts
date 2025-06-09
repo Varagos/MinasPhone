@@ -1,21 +1,49 @@
 import { ICartApi, Cart } from '../types/types';
+import { Api } from './api';
 import { routes } from './config';
 
 export class CartApi implements ICartApi {
-  async retrieveCart(): Promise<Cart> {
-    const res = await fetch(routes.v1.cart.retrieve(), {
-      method: 'POST',
-      credentials: 'include',
+  private httpClient: Api<any>;
+
+  constructor() {
+    console.log('baseUrl', routes.v1.baseUrl);
+    this.httpClient = new Api({
+      baseUrl: routes.v1.baseUrl,
     });
-    // The return value is *not* serialized
-    // You can return Date, Map, Set, etc.
+  }
 
-    if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch data');
+  async retrieveCart(): Promise<Cart> {
+    const fetchWithClient =
+      await this.httpClient.api.cartHttpControllerFetchOrCreate({
+        credentials: 'include',
+      });
+    if (!fetchWithClient.ok) {
+      // If some product is not found, because it was deleted from db for example
+      if (fetchWithClient.status === 404) {
+        // clear cart
+        // THis can end up in infinite loop, if something goes wrong
+        return this.clearCart();
+      }
+      console.log(
+        'Failed to fetch cart with httpClient',
+        fetchWithClient.error
+      );
+      throw new Error('Failed to fetch cart with httpClient');
     }
+    console.log('Fetched cart with httpClient', fetchWithClient.data);
+    const cart = fetchWithClient.data;
+    return cart;
 
-    return res.json();
+    // const res = await fetch(routes.v1.cart.retrieve(), {
+    //   method: 'POST',
+    //   credentials: 'include',
+    // });
+
+    // if (!res.ok) {
+    //   throw new Error('Failed to fetch data');
+    // }
+
+    // return res.json();
   }
 
   async clearCart(): Promise<Cart> {

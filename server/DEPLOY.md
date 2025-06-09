@@ -55,4 +55,7 @@ git tag nestjs-server-v1.2.3
 git push origin --tags
 # Push the changes to the main branch
 git push origin main
+
+# or to push both changes and tags at once
+git push --follow-tags
 ```

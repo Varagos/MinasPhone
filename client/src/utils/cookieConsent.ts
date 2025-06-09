@@ -48,7 +48,7 @@ export const cookieConsentConfig: CookieConsentConfig = {
       autoClear: {
         cookies: [
           {
-            name: /^_ga/, // regex: all cookies that start with '_ga'
+            name: '^_ga', // regex: all cookies that start with '_ga'
           },
           {
             name: '_gid', // exact cookie name

@@ -392,6 +392,16 @@ export interface UpdateCartLineItemRequestDto {
   quantity: string;
 }
 
+export interface CartLineItemDto {
+  id: string;
+  productId: string;
+  quantity: number;
+  productName: string;
+  productSlug: string;
+  productPrice: number;
+  productImage: string;
+}
+
 export interface CartResponseDto {
   /** @example "2cdc8ab1-6d50-49cc-ba14-54e4ac7ec231" */
   id: string;
@@ -399,12 +409,11 @@ export interface CartResponseDto {
   createdAt: string;
   /** @example "2020-11-24T17:43:15.970Z" */
   updatedAt: string;
-  /** Cart line items */
-  lineItems: object;
   /** Cart total items */
-  totalItems: object;
+  totalItems: number;
   /** Cart subtotal */
-  subtotal: object;
+  subtotal: number;
+  lineItems: CartLineItemDto[];
 }
 
 export interface CheckoutOrderRequestDto {
@@ -443,7 +452,7 @@ export interface OrderResponseDto {
    * Order status
    * @example "pending"
    */
-  status: 'pending' | 'delivered' | 'cancelled';
+  status: "pending" | "delivered" | "cancelled";
   /** Order line items */
   lineItems: string[];
   /** Order contact info */
@@ -480,9 +489,9 @@ export interface UpdateOrderStatusRequestDto {
 }
 
 export type QueryParamsType = Record<string | number, any>;
-export type ResponseFormat = keyof Omit<Body, 'body' | 'bodyUsed'>;
+export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 
-export interface FullRequestParams extends Omit<RequestInit, 'body'> {
+export interface FullRequestParams extends Omit<RequestInit, "body"> {
   /** set parameter to `true` for call `securityWorker` for this request */
   secure?: boolean;
   /** request path */
@@ -503,14 +512,14 @@ export interface FullRequestParams extends Omit<RequestInit, 'body'> {
 
 export type RequestParams = Omit<
   FullRequestParams,
-  'body' | 'method' | 'query' | 'path'
+  "body" | "method" | "query" | "path"
 >;
 
 export interface ApiConfig<SecurityDataType = unknown> {
   baseUrl?: string;
-  baseApiParams?: Omit<RequestParams, 'baseUrl' | 'cancelToken' | 'signal'>;
+  baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
   securityWorker?: (
-    securityData: SecurityDataType | null
+    securityData: SecurityDataType | null,
   ) => Promise<RequestParams | void> | RequestParams | void;
   customFetch?: typeof fetch;
 }
@@ -524,30 +533,29 @@ export interface HttpResponse<D extends unknown, E extends unknown = unknown>
 type CancelToken = Symbol | string | number;
 
 export enum ContentType {
-  Json = 'application/json',
-  JsonApi = 'application/vnd.api+json',
-  FormData = 'multipart/form-data',
-  UrlEncoded = 'application/x-www-form-urlencoded',
-  Text = 'text/plain',
+  Json = "application/json",
+  JsonApi = "application/vnd.api+json",
+  FormData = "multipart/form-data",
+  UrlEncoded = "application/x-www-form-urlencoded",
+  Text = "text/plain",
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-  public baseUrl: string = '';
+  public baseUrl: string = "";
   private securityData: SecurityDataType | null = null;
-  private securityWorker?: ApiConfig<SecurityDataType>['securityWorker'];
+  private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
   private abortControllers = new Map<CancelToken, AbortController>();
   private customFetch = (...fetchParams: Parameters<typeof fetch>) =>
     fetch(...fetchParams);
 
   private baseApiParams: RequestParams = {
-    credentials: 'same-origin',
+    credentials: "same-origin",
     headers: {},
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
   };
 
   constructor(apiConfig: ApiConfig<SecurityDataType> = {}) {
-    // console.log('ApiConfig', apiConfig);
     Object.assign(this, apiConfig);
   }
 
@@ -557,9 +565,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected encodeQueryParam(key: string, value: any) {
     const encodedKey = encodeURIComponent(key);
-    return `${encodedKey}=${encodeURIComponent(
-      typeof value === 'number' ? value : `${value}`
-    )}`;
+    return `${encodedKey}=${encodeURIComponent(typeof value === "number" ? value : `${value}`)}`;
   }
 
   protected addQueryParam(query: QueryParamsType, key: string) {
@@ -568,39 +574,39 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected addArrayQueryParam(query: QueryParamsType, key: string) {
     const value = query[key];
-    return value.map((v: any) => this.encodeQueryParam(key, v)).join('&');
+    return value.map((v: any) => this.encodeQueryParam(key, v)).join("&");
   }
 
   protected toQueryString(rawQuery?: QueryParamsType): string {
     const query = rawQuery || {};
     const keys = Object.keys(query).filter(
-      (key) => 'undefined' !== typeof query[key]
+      (key) => "undefined" !== typeof query[key],
     );
     return keys
       .map((key) =>
         Array.isArray(query[key])
           ? this.addArrayQueryParam(query, key)
-          : this.addQueryParam(query, key)
+          : this.addQueryParam(query, key),
       )
-      .join('&');
+      .join("&");
   }
 
   protected addQueryParams(rawQuery?: QueryParamsType): string {
     const queryString = this.toQueryString(rawQuery);
-    return queryString ? `?${queryString}` : '';
+    return queryString ? `?${queryString}` : "";
   }
 
   private contentFormatters: Record<ContentType, (input: any) => any> = {
     [ContentType.Json]: (input: any) =>
-      input !== null && (typeof input === 'object' || typeof input === 'string')
+      input !== null && (typeof input === "object" || typeof input === "string")
         ? JSON.stringify(input)
         : input,
     [ContentType.JsonApi]: (input: any) =>
-      input !== null && (typeof input === 'object' || typeof input === 'string')
+      input !== null && (typeof input === "object" || typeof input === "string")
         ? JSON.stringify(input)
         : input,
     [ContentType.Text]: (input: any) =>
-      input !== null && typeof input !== 'string'
+      input !== null && typeof input !== "string"
         ? JSON.stringify(input)
         : input,
     [ContentType.FormData]: (input: any) =>
@@ -610,9 +616,9 @@ export class HttpClient<SecurityDataType = unknown> {
           key,
           property instanceof Blob
             ? property
-            : typeof property === 'object' && property !== null
-            ? JSON.stringify(property)
-            : `${property}`
+            : typeof property === "object" && property !== null
+              ? JSON.stringify(property)
+              : `${property}`,
         );
         return formData;
       }, new FormData()),
@@ -621,7 +627,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected mergeRequestParams(
     params1: RequestParams,
-    params2?: RequestParams
+    params2?: RequestParams,
   ): RequestParams {
     return {
       ...this.baseApiParams,
@@ -636,7 +642,7 @@ export class HttpClient<SecurityDataType = unknown> {
   }
 
   protected createAbortSignal = (
-    cancelToken: CancelToken
+    cancelToken: CancelToken,
   ): AbortSignal | undefined => {
     if (this.abortControllers.has(cancelToken)) {
       const abortController = this.abortControllers.get(cancelToken);
@@ -672,7 +678,7 @@ export class HttpClient<SecurityDataType = unknown> {
     ...params
   }: FullRequestParams): Promise<HttpResponse<T, E>> => {
     const secureParams =
-      ((typeof secure === 'boolean' ? secure : this.baseApiParams.secure) &&
+      ((typeof secure === "boolean" ? secure : this.baseApiParams.secure) &&
         this.securityWorker &&
         (await this.securityWorker(this.securityData))) ||
       {};
@@ -681,22 +687,14 @@ export class HttpClient<SecurityDataType = unknown> {
     const payloadFormatter = this.contentFormatters[type || ContentType.Json];
     const responseFormat = format || requestParams.format;
 
-    const url = `${baseUrl || this.baseUrl || ''}${path}${
-      queryString ? `?${queryString}` : ''
-    }`;
-    console.log('baseUrl', baseUrl);
-    console.log(`Request URL: ${url}`);
-
     return this.customFetch(
-      `${baseUrl || this.baseUrl || ''}${path}${
-        queryString ? `?${queryString}` : ''
-      }`,
+      `${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`,
       {
         ...requestParams,
         headers: {
           ...(requestParams.headers || {}),
           ...(type && type !== ContentType.FormData
-            ? { 'Content-Type': type }
+            ? { "Content-Type": type }
             : {}),
         },
         signal:
@@ -704,10 +702,10 @@ export class HttpClient<SecurityDataType = unknown> {
             ? this.createAbortSignal(cancelToken)
             : requestParams.signal) || null,
         body:
-          typeof body === 'undefined' || body === null
+          typeof body === "undefined" || body === null
             ? null
             : payloadFormatter(body),
-      }
+      },
     ).then(async (response) => {
       const r = response.clone() as HttpResponse<T, E>;
       r.data = null as unknown as T;
@@ -733,7 +731,6 @@ export class HttpClient<SecurityDataType = unknown> {
         this.abortControllers.delete(cancelToken);
       }
 
-      if (!response.ok) throw data;
       return data;
     });
   };
@@ -747,7 +744,7 @@ export class HttpClient<SecurityDataType = unknown> {
  * The minas phone API description
  */
 export class Api<
-  SecurityDataType extends unknown
+  SecurityDataType extends unknown,
 > extends HttpClient<SecurityDataType> {
   api = {
     /**
@@ -758,11 +755,11 @@ export class Api<
      */
     analyticsControllerCreate: (
       data: CreateAnalyticsDto,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<void, any>({
         path: `/api/analytics`,
-        method: 'POST',
+        method: "POST",
         body: data,
         type: ContentType.Json,
         ...params,
@@ -777,7 +774,7 @@ export class Api<
     analyticsControllerFindAll: (params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/analytics`,
-        method: 'GET',
+        method: "GET",
         ...params,
       }),
 
@@ -790,7 +787,7 @@ export class Api<
     analyticsControllerFindOne: (id: string, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/analytics/${id}`,
-        method: 'GET',
+        method: "GET",
         ...params,
       }),
 
@@ -803,11 +800,11 @@ export class Api<
     analyticsControllerUpdate: (
       id: string,
       data: UpdateAnalyticsDto,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<void, any>({
         path: `/api/analytics/${id}`,
-        method: 'PATCH',
+        method: "PATCH",
         body: data,
         type: ContentType.Json,
         ...params,
@@ -822,7 +819,7 @@ export class Api<
     analyticsControllerRemove: (id: string, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/analytics/${id}`,
-        method: 'DELETE',
+        method: "DELETE",
         ...params,
       }),
 
@@ -848,15 +845,15 @@ export class Api<
          */
         page?: number;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<UserPaginatedResponseDto, any>({
         path: `/api/v1/users`,
-        method: 'GET',
+        method: "GET",
         query: query,
         body: data,
         type: ContentType.Json,
-        format: 'json',
+        format: "json",
         ...params,
       }),
 
@@ -871,8 +868,8 @@ export class Api<
     usersControllerFindOne: (id: string, params: RequestParams = {}) =>
       this.request<UserResponseDto, ApiResponse>({
         path: `/api/v1/users/${id}`,
-        method: 'GET',
-        format: 'json',
+        method: "GET",
+        format: "json",
         ...params,
       }),
 
@@ -887,7 +884,7 @@ export class Api<
     usersControllerRemove: (id: string, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/v1/users/${id}`,
-        method: 'DELETE',
+        method: "DELETE",
         ...params,
       }),
 
@@ -901,14 +898,14 @@ export class Api<
      */
     categoriesHttpControllerCreate: (
       data: CreateCategoryRequestDto,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<IdResponse, ApiErrorResponse>({
         path: `/api/v1/categories`,
-        method: 'POST',
+        method: "POST",
         body: data,
         type: ContentType.Json,
-        format: 'json',
+        format: "json",
         ...params,
       }),
 
@@ -934,15 +931,15 @@ export class Api<
          */
         page?: number;
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<CategoryPaginatedResponseDto, any>({
         path: `/api/v1/categories`,
-        method: 'GET',
+        method: "GET",
         query: query,
         body: data,
         type: ContentType.Json,
-        format: 'json',
+        format: "json",
         ...params,
       }),
 
@@ -957,14 +954,14 @@ export class Api<
     categoriesHttpControllerUpdateOne: (
       id: string,
       data: UpdateCategoryRequestDto,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<IdResponse, ApiErrorResponse>({
         path: `/api/v1/categories/${id}`,
-        method: 'PUT',
+        method: "PUT",
         body: data,
         type: ContentType.Json,
-        format: 'json',
+        format: "json",
         ...params,
       }),
 
@@ -979,8 +976,8 @@ export class Api<
     categoriesHttpControllerDelete: (id: string, params: RequestParams = {}) =>
       this.request<IdResponse, ApiErrorResponse>({
         path: `/api/v1/categories/${id}`,
-        method: 'DELETE',
-        format: 'json',
+        method: "DELETE",
+        format: "json",
         ...params,
       }),
 
@@ -995,8 +992,8 @@ export class Api<
     categoriesHttpControllerFindOne: (id: string, params: RequestParams = {}) =>
       this.request<CategoryResponseDto, ApiResponse>({
         path: `/api/v1/categories/${id}`,
-        method: 'GET',
-        format: 'json',
+        method: "GET",
+        format: "json",
         ...params,
       }),
 
@@ -1010,14 +1007,14 @@ export class Api<
      */
     productsHttpControllerCreate: (
       data: CreateProductRequestDto,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<IdResponse, ApiErrorResponse>({
         path: `/api/v1/products`,
-        method: 'POST',
+        method: "POST",
         body: data,
         type: ContentType.Json,
-        format: 'json',
+        format: "json",
         ...params,
       }),
 
@@ -1037,15 +1034,15 @@ export class Api<
         range: string[];
       },
       data: FindProductsRequestDto,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<ProductPaginatedResponseDto, any>({
         path: `/api/v1/products`,
-        method: 'GET',
+        method: "GET",
         query: query,
         body: data,
         type: ContentType.Json,
-        format: 'json',
+        format: "json",
         ...params,
       }),
 
@@ -1060,8 +1057,8 @@ export class Api<
     productsHttpControllerDelete: (id: string, params: RequestParams = {}) =>
       this.request<IdResponse, ApiErrorResponse>({
         path: `/api/v1/products/${id}`,
-        method: 'DELETE',
-        format: 'json',
+        method: "DELETE",
+        format: "json",
         ...params,
       }),
 
@@ -1076,14 +1073,14 @@ export class Api<
     productsHttpControllerUpdateOne: (
       id: string,
       data: UpdateProductRequestDto,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<IdResponse, ApiErrorResponse>({
         path: `/api/v1/products/${id}`,
-        method: 'PUT',
+        method: "PUT",
         body: data,
         type: ContentType.Json,
-        format: 'json',
+        format: "json",
         ...params,
       }),
 
@@ -1098,8 +1095,8 @@ export class Api<
     productsHttpControllerFindOne: (id: string, params: RequestParams = {}) =>
       this.request<ProductResponseDto, ApiResponse>({
         path: `/api/v1/products/${id}`,
-        method: 'GET',
-        format: 'json',
+        method: "GET",
+        format: "json",
         ...params,
       }),
 
@@ -1114,8 +1111,8 @@ export class Api<
     productsHttpControllerFindAllProductSlugs: (params: RequestParams = {}) =>
       this.request<ProductSlugsPaginatedResponseDto, any>({
         path: `/api/v1/products/slugs`,
-        method: 'GET',
-        format: 'json',
+        method: "GET",
+        format: "json",
         ...params,
       }),
 
@@ -1129,14 +1126,14 @@ export class Api<
      */
     cartHttpControllerUpdateOne: (
       data: AddCartItemRequestDto,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<IdResponse, ApiErrorResponse>({
         path: `/api/v1/cart/line-item`,
-        method: 'POST',
+        method: "POST",
         body: data,
         type: ContentType.Json,
-        format: 'json',
+        format: "json",
         ...params,
       }),
 
@@ -1151,8 +1148,8 @@ export class Api<
     cartHttpControllerDelete: (id: string, params: RequestParams = {}) =>
       this.request<IdResponse, ApiErrorResponse>({
         path: `/api/v1/cart/line-item/${id}`,
-        method: 'DELETE',
-        format: 'json',
+        method: "DELETE",
+        format: "json",
         ...params,
       }),
 
@@ -1167,14 +1164,14 @@ export class Api<
     cartHttpControllerUpdateLineItem: (
       id: string,
       data: UpdateCartLineItemRequestDto,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<IdResponse, ApiErrorResponse>({
         path: `/api/v1/cart/line-item/${id}`,
-        method: 'PUT',
+        method: "PUT",
         body: data,
         type: ContentType.Json,
-        format: 'json',
+        format: "json",
         ...params,
       }),
 
@@ -1189,8 +1186,8 @@ export class Api<
     cartHttpControllerFetchOrCreate: (params: RequestParams = {}) =>
       this.request<CartResponseDto, ApiResponse>({
         path: `/api/v1/cart/fetch`,
-        method: 'POST',
-        format: 'json',
+        method: "POST",
+        format: "json",
         ...params,
       }),
 
@@ -1205,8 +1202,8 @@ export class Api<
     cartHttpControllerClearCart: (params: RequestParams = {}) =>
       this.request<IdResponse, any>({
         path: `/api/v1/cart/empty`,
-        method: 'DELETE',
-        format: 'json',
+        method: "DELETE",
+        format: "json",
         ...params,
       }),
 
@@ -1220,14 +1217,14 @@ export class Api<
      */
     ordersHttpControllerCreate: (
       data: CheckoutOrderRequestDto,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<IdResponse, ApiErrorResponse>({
         path: `/api/v1/orders/checkout`,
-        method: 'POST',
+        method: "POST",
         body: data,
         type: ContentType.Json,
-        format: 'json',
+        format: "json",
         ...params,
       }),
 
@@ -1242,8 +1239,8 @@ export class Api<
     ordersHttpControllerFindOne: (id: string, params: RequestParams = {}) =>
       this.request<OrderResponseDto, ApiResponse>({
         path: `/api/v1/orders/${id}`,
-        method: 'GET',
-        format: 'json',
+        method: "GET",
+        format: "json",
         ...params,
       }),
 
@@ -1258,14 +1255,14 @@ export class Api<
     ordersHttpControllerUpdateOne: (
       id: string,
       data: UpdateOrderStatusRequestDto,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<IdResponse, ApiErrorResponse>({
         path: `/api/v1/orders/${id}`,
-        method: 'PUT',
+        method: "PUT",
         body: data,
         type: ContentType.Json,
-        format: 'json',
+        format: "json",
         ...params,
       }),
 
@@ -1280,8 +1277,8 @@ export class Api<
     ordersHttpControllerDelete: (id: string, params: RequestParams = {}) =>
       this.request<IdResponse, ApiErrorResponse>({
         path: `/api/v1/orders/${id}`,
-        method: 'DELETE',
-        format: 'json',
+        method: "DELETE",
+        format: "json",
         ...params,
       }),
 
@@ -1295,12 +1292,12 @@ export class Api<
      */
     ordersHttpControllerFindOneBySlug: (
       slug: string,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<OrderResponseDto, ApiResponse>({
         path: `/api/v1/orders/slug/${slug}`,
-        method: 'GET',
-        format: 'json',
+        method: "GET",
+        format: "json",
         ...params,
       }),
 
@@ -1319,13 +1316,13 @@ export class Api<
         /** Range of results to return */
         range: string[];
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<OrderPaginatedResponseDto, any>({
         path: `/api/v1/orders`,
-        method: 'GET',
+        method: "GET",
         query: query,
-        format: 'json',
+        format: "json",
         ...params,
       }),
   };
@@ -1339,7 +1336,7 @@ export class Api<
     healthControllerGetHealth: (params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/health`,
-        method: 'GET',
+        method: "GET",
         ...params,
       }),
   };

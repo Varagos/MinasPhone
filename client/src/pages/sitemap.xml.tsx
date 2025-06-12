@@ -63,7 +63,7 @@ function generateSiteMap(products: ProductSlug[], categories: Category[]) {
        .map((category) => {
          const lastmod = category.updatedAt;
          return generateBilingualUrls(
-           `/category/${category.slug}`,
+           `/categories/${category.slug}`,
            lastmod,
            '0.8'
          );

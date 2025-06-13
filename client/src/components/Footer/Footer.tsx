@@ -129,10 +129,9 @@ const Footer = () => {
                         window.location.href =
                           'mailto:' + 'support' + '@' + 'minasphone.gr';
                       }}
-                      dangerouslySetInnerHTML={{
-                        __html: 'support&#64;minasphone.gr',
-                      }}
-                    />
+                    >
+                      {'support@minasphone.gr'}
+                    </Link>
                   </Typography>
                 }
               />

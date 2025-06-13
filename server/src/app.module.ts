@@ -6,6 +6,7 @@ import { ProductCatalogModule } from './modules/product-catalog/product-catalog.
 import { ShippingModule } from './modules/shipping/shipping.module';
 import { MarketingModule } from './modules/marketing/marketing.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { RequestContextModule } from 'nestjs-request-context';
 import { CqrsModule } from '@nestjs/cqrs';
@@ -42,6 +43,7 @@ const interceptors = [
     ShippingModule,
     MarketingModule,
     AnalyticsModule,
+    NotificationsModule,
     ApiModule,
   ],
   providers: [...interceptors],

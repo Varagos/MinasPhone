@@ -25,3 +25,7 @@ feat: enhance cart API with detailed line item structure and error handling
 ## 0.4.1
 
 improve category filtering
+
+## 0.5.0
+
+feat: implement email notifications system with SendGrid integration for order events

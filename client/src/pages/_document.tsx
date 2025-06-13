@@ -6,34 +6,24 @@ import Document, {
   NextScript,
   DocumentContext,
 } from 'next/document';
-import { ServerStyleSheets } from '@mui/styles';
+import {
+  DocumentHeadTags,
+  documentGetInitialProps,
+} from '@mui/material-nextjs/v15-pagesRouter';
+import type { DocumentHeadTagsProps } from '@mui/material-nextjs/v15-pagesRouter';
 import theme from '@/lib/theme';
 
-export default class MyDocument extends Document {
+export default class MyDocument extends Document<DocumentHeadTagsProps> {
   static async getInitialProps(ctx: DocumentContext) {
-    const sheets = new ServerStyleSheets();
-    const originalRenderPage = ctx.renderPage;
-
-    ctx.renderPage = () =>
-      originalRenderPage({
-        enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
-      });
-
-    const initialProps = await Document.getInitialProps(ctx);
-
-    return {
-      ...initialProps,
-      styles: [
-        ...React.Children.toArray(initialProps.styles),
-        sheets.getStyleElement(),
-      ],
-    };
+    const finalProps = await documentGetInitialProps(ctx);
+    return finalProps;
   }
 
   render() {
     return (
       <Html lang={this.props.__NEXT_DATA__.props.pageProps.initialLanguage}>
         <Head>
+          <DocumentHeadTags {...this.props} />
           {/* Not exactly required, but good for perf */}
           <meta name="theme-color" content={theme.palette.primary.main} />
           {/* Google Fonts - Noto Sans with Greek subset support */}

@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { AppCacheProvider } from '@mui/material-nextjs/v15-pagesRouter';
 import theme from '@/lib/theme';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
@@ -97,9 +98,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   return (
-    <CartProvider>
-      <ThemeProvider theme={theme}>
-        <MessageProvider>
+    <AppCacheProvider {...{ Component, pageProps }}>
+      <CartProvider>
+        <ThemeProvider theme={theme}>
+          <MessageProvider>
           {/* Add Schema.org JSON-LD structured data */}
           <script
             type="application/ld+json"
@@ -113,9 +115,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Footer />
           {/* Cookie Consent Component */}
           <CookieConsentComponent />
-        </MessageProvider>
-      </ThemeProvider>
-    </CartProvider>
+          </MessageProvider>
+        </ThemeProvider>
+      </CartProvider>
+    </AppCacheProvider>
   );
 }
 

@@ -2,7 +2,6 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { makeStyles } from '@mui/styles';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -21,14 +20,7 @@ import Drawer from '@mui/material/Drawer';
 import LinkListItem from '@/components/common/LinkListItem';
 import LanguageSelector from '../LanguageSelector';
 
-const useStyles = makeStyles({
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
-});
+import { Root, classes } from './styles';
 
 const drawerItems: [string, string, JSX.Element][] = [
   ['ΑΧΙΚΉ', '/', <Home />],
@@ -46,10 +38,8 @@ const drawerUtilities: [string, string, JSX.Element][] = [
 ];
 
 const AppDrawer = ({ anchor, toggleDrawer }: any) => {
-  const classes = useStyles();
-
   return (
-    <div>
+    <Root>
       <React.Fragment key={anchor}>
         <Drawer anchor="right" open={anchor} onClose={toggleDrawer(false)}>
           <div
@@ -83,7 +73,7 @@ const AppDrawer = ({ anchor, toggleDrawer }: any) => {
           </div>
         </Drawer>
       </React.Fragment>
-    </div>
+    </Root>
   );
 };
 

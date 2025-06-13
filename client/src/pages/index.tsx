@@ -171,8 +171,6 @@ export default function Landing({ products }: LandingProps) {
       <MainContainer>
         <Hero />
 
-        {/* <SimpleSlider /> */}
-
         <ServicesSection />
 
         <PopularCategories />

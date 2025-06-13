@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import useStyles from './styles';
+import { Root, classes } from './styles';
 
 import LinkButton from '@/components/common/LinkButton';
 
@@ -19,7 +19,6 @@ type ConfirmationProps = {
   orderResponse: CheckoutOrderResponse | null;
 };
 const Confirmation = ({ orderResponse }: ConfirmationProps) => {
-  const classes = useStyles();
   // const orderResponse: CheckoutCaptureResponse | null = {
   //   customer: {
   //     firstname: 'Γιάννης',
@@ -41,7 +40,7 @@ const Confirmation = ({ orderResponse }: ConfirmationProps) => {
   // }
 
   return orderResponse !== null ? (
-    <>
+    <Root>
       <div style={{ marginTop: 30 }}>
         <Typography variant="h5">
           Σας ευχαριστούμε για την παραγγελία,{' '}
@@ -61,11 +60,13 @@ const Confirmation = ({ orderResponse }: ConfirmationProps) => {
       <LinkButton href="/" variant="outlined" type="button">
         Πίσω στην αρχική
       </LinkButton>
-    </>
+    </Root>
   ) : (
-    <div className={classes.spinner}>
-      <CircularProgress />
-    </div>
+    <Root>
+      <div className={classes.spinner}>
+        <CircularProgress />
+      </div>
+    </Root>
   );
 };
 export default Confirmation;

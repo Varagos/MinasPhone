@@ -1,4 +1,3 @@
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
@@ -7,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
 import Image from 'next/image';
 
-import useStyles from './styles';
+import { StyledCard, classes } from './styles';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Product } from '@/api/types/products';
@@ -23,7 +22,6 @@ type ProductProps = {
 };
 
 function ProductCard({ product, fromCategory }: ProductProps) {
-  const classes = useStyles();
   const [raised, setRaised] = useState<boolean>(false);
 
   const { setCart } = useCart();
@@ -34,7 +32,7 @@ function ProductCard({ product, fromCategory }: ProductProps) {
   };
 
   return (
-    <Card
+    <StyledCard
       className={classes.root}
       raised={raised}
       onMouseOver={() => setRaised(true)}
@@ -137,7 +135,7 @@ function ProductCard({ product, fromCategory }: ProductProps) {
           </CardActions>
         </div>
       </CardContent>
-    </Card>
+    </StyledCard>
   );
 }
 

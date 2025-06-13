@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import useStyles from './styles';
+import { Root, classes } from './styles';
 import { CheckoutCapture } from '@/types/checkout-capture';
 import Account from '@/components/CheckoutForm/Account';
 import { CheckoutOrderInfo } from '@/pages/checkout';
@@ -29,13 +29,12 @@ export default function Form(props: FormProps): JSX.Element {
     checkoutOrderInfo,
     checkoutToken,
   } = props;
-  const classes = useStyles();
 
   if (checkoutToken === null) {
     return (
-      <div className={classes.spinner}>
+      <Root className={classes.spinner}>
         <CircularProgress />
-      </div>
+      </Root>
     );
   }
 

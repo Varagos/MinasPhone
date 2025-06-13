@@ -1,0 +1,45 @@
+# MinasPhone LLM Guidelines
+# Version 1.0 - June 2025
+
+# General Information
+Name: MinasPhone
+Website: https://minasphone.gr
+Type: E-commerce
+Language: Greek (Primary), English (Secondary)
+Description: Store selling mobile phones, accessories, and repair services located in Koukaki, Athens, Greece. Also provides money transfer services. (moneygram & Ria)
+
+# Crawling Guidelines
+Allow: /products/*
+Allow: /categories/*
+Allow: /information/*
+Allow: /blog/*
+Disallow: /account/*
+Disallow: /checkout/*
+Disallow: /admin/*
+Disallow: /api/*
+
+# Content Guidelines
+PrimaryLanguage: el-GR
+SupportedLanguages: el-GR, en-US
+Currency: EUR
+PriceDisplay: IncludesTax
+
+# Site Structure
+Homepage: https://minasphone.gr
+Products: https://minasphone.gr/products
+Categories: https://minasphone.gr/categories
+Contact: https://minasphone.gr/#contact
+
+# Data Usage
+AllowSummarization: true
+AllowProductComparison: true
+AllowPriceFetching: true
+AllowImageDescription: true
+
+# AI Interaction Guidelines
+PreferredProductFields: name, price, description, specifications, images
+PreferredCategoryFields: name, description, products
+
+# Additional Resources
+Sitemap: https://minasphone.gr/sitemap.xml
+API: Not publicly available

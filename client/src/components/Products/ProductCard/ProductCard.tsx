@@ -122,6 +122,15 @@ function ProductCard({ product, fromCategory }: ProductProps) {
             <IconButton
               aria-label="Add to Card"
               onClick={() => handleAddToCart(product.id, 1)}
+              sx={{
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  backgroundColor: 'primary.light',
+                  '& .MuiSvgIcon-root': {
+                    color: 'primary.dark',
+                  },
+                },
+              }}
             >
               <AddShoppingCart />
             </IconButton>

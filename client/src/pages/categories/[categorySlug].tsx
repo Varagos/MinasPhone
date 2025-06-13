@@ -93,6 +93,7 @@ const Category = ({ products, category }: CategoryProps) => {
   // ) : (
   return (
     <ProductsLayout
+      title={category.name}
       products={products.data}
       totalPages={totalPages}
       page={page}

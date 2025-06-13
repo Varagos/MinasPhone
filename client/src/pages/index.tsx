@@ -199,11 +199,12 @@ export default function Landing({ products }: LandingProps) {
               spacing={2}
               alignItems="stretch"
             >
-              {shuffledProducts.slice(0, 4).map((product) => (
-                <Grid item key={product.id} xs={8} sm={6} md={4} lg={3}>
-                  <ProductCard product={product} fromCategory={null} />
-                </Grid>
-              ))}
+              {shuffledProducts.length > 3 &&
+                shuffledProducts.slice(0, 4).map((product) => (
+                  <Grid item key={product.id} xs={8} sm={6} md={4} lg={3}>
+                    <ProductCard product={product} fromCategory={null} />
+                  </Grid>
+                ))}
             </Grid>
           </Container>
         </section>

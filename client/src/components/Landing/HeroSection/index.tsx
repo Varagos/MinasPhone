@@ -138,7 +138,9 @@ export default function Hero() {
         <HeroSubText variant="subtitle1">
           {t('LANDING.CTA_DESCRIPTION')}
         </HeroSubText>
-        <HeroButton variant="contained">{t('LANDING.CTA_BUTTON')}</HeroButton>
+        <HeroButton variant="contained" href="/products">
+          {t('LANDING.CTA_BUTTON')}
+        </HeroButton>
       </HeroContent>
       <ShapeDividerBottom />
     </HeroSection>

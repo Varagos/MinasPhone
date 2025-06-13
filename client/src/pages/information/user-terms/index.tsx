@@ -359,7 +359,19 @@ export default function TermsAndConditions() {
       </Paragraph>
       <StyledList>
         <StyledListItem>
-          <Paragraph variant="body1">By email: support@minasphone.gr</Paragraph>
+          <Paragraph variant="body1">
+            By email:{' '}
+            <span
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.location.href =
+                    'mailto:' + 'support' + '@' + 'minasphone.gr';
+                }
+              }}
+              style={{ cursor: 'pointer', textDecoration: 'underline' }}
+              dangerouslySetInnerHTML={{ __html: 'support&#64;minasphone.gr' }}
+            />
+          </Paragraph>
         </StyledListItem>
         <StyledListItem>
           <Paragraph variant="body1">By phone number: 2109224764</Paragraph>

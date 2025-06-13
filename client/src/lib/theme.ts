@@ -44,7 +44,8 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
+    // Use Noto Sans for all text
+    fontFamily: `"Noto Sans", "Roboto", "Helvetica", "Arial", sans-serif`,
     fontSize: 14,
     fontWeightLight: 300,
     fontWeightRegular: 400,

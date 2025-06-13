@@ -42,14 +42,19 @@ const Confirmation = ({ orderResponse }: ConfirmationProps) => {
 
   return orderResponse !== null ? (
     <>
-      <div>
+      <div style={{ marginTop: 30 }}>
         <Typography variant="h5">
           Σας ευχαριστούμε για την παραγγελία,{' '}
           {orderResponse.customer.firstName} {orderResponse.customer.lastName}
         </Typography>
         <Divider className={classes.divider} />
         <Typography variant="subtitle2">
-          Κωδικός παραγγελίας: {orderResponse.orderReference}
+          Κωδικός παραγγελίας: <strong>{orderResponse.orderReference}</strong>
+        </Typography>
+        <Typography variant="body2" style={{ marginTop: '16px' }}>
+          Έχουμε στείλει ένα email επιβεβαίωσης με τις λεπτομέρειες της
+          παραγγελίας σας. Παρακαλώ ελέγξτε το email σας (και τον φάκελο
+          ανεπιθύμητης αλληλογραφίας).
         </Typography>
       </div>
       <br />

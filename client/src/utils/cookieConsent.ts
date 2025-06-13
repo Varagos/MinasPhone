@@ -110,7 +110,7 @@ export const cookieConsentConfig: CookieConsentConfig = {
             {
               title: 'More information',
               description:
-                'For any queries in relation to our policy on cookies and your choices, please <a href="/contact">contact us</a>.',
+                'For any queries in relation to our policy on cookies and your choices, please <a href="/#contact">contact us</a>.',
             },
           ],
         },
@@ -153,7 +153,7 @@ export const cookieConsentConfig: CookieConsentConfig = {
             {
               title: 'Περισσότερες πληροφορίες',
               description:
-                'Για οποιαδήποτε απορία σχετικά με την πολιτική μας για τα cookies και τις επιλογές σας, παρακαλούμε <a href="/contact">επικοινωνήστε μαζί μας</a>.',
+                'Για οποιαδήποτε απορία σχετικά με την πολιτική μας για τα cookies και τις επιλογές σας, παρακαλούμε <a href="/#contact">επικοινωνήστε μαζί μας</a>.',
             },
           ],
         },

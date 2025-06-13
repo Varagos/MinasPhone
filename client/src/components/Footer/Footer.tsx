@@ -121,9 +121,18 @@ const Footer = () => {
                 header="Email :"
                 details={
                   <Typography variant="body2">
-                    <Link color="inherit" href="mailto: support@minasphone.com">
-                      support@minasphone.com
-                    </Link>
+                    <Link
+                      color="inherit"
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href =
+                          'mailto:' + 'support' + '@' + 'minasphone.gr';
+                      }}
+                      dangerouslySetInnerHTML={{
+                        __html: 'support&#64;minasphone.gr',
+                      }}
+                    />
                   </Typography>
                 }
               />

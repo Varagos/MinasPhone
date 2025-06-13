@@ -9,8 +9,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 
-// import { CardElement } from '@stripe/react-stripe-js';
-// import { loadStripe } from '@stripe/stripe-js';
 import PaymentsSharpIcon from '@mui/icons-material/PaymentsSharp';
 import CreditCardSharpIcon from '@mui/icons-material/CreditCardSharp';
 
@@ -224,17 +222,7 @@ const PaymentForm = ({
             </CardActions>
           </Card>
         </TabPanel>
-        <TabPanel value={value} index={2}>
-          {/* <CardPayment
-            checkoutToken={checkoutToken}
-            onCaptureCheckout={onCaptureCheckout}
-            shippingData={shippingData}
-            nextStep={nextStep}
-          /> */}
-        </TabPanel>
-        {/* <TabPanel value={value} index={3}>
-          Item Four
-        </TabPanel> */}
+        <TabPanel value={value} index={2}></TabPanel>
       </Box>
     </>
   );

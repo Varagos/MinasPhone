@@ -22,6 +22,7 @@ import BreadcrumbNav, { BreadcrumbItem } from '../common/BreadcrumbNav';
 
 type ProductsLayoutProps = {
   products: Product[];
+  title: string;
   totalPages: number;
   page: number;
   totalProducts: number;
@@ -31,6 +32,7 @@ type ProductsLayoutProps = {
 
 export default function ProductsLayout({
   products,
+  title,
   totalPages,
   page,
   onPageChange,
@@ -69,8 +71,8 @@ export default function ProductsLayout({
           <BreadcrumbNav items={breadcrumbItems} />
 
           {/* Title */}
-          <Typography variant="h4" gutterBottom color="black">
-            <strong>Προϊόντα</strong>
+          <Typography variant="h4" gutterBottom color="black" component="h1">
+            <strong>{title}</strong>
           </Typography>
 
           {/* Total products */}

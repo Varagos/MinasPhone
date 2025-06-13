@@ -1,38 +1,3 @@
-// import DocumentHead from '@/components/DocumentHead';
-// import Document, {
-//   DocumentContext,
-//   Html,
-//   Head,
-//   Main,
-//   NextScript,
-// } from 'next/document';
-
-// const MyDocument = () => {
-//   return (
-//     <Html lang="en">
-//       <Head>
-//         {/* add any custom meta tags, stylesheets, or scripts here */}
-//         <DocumentHead />
-//       </Head>
-//       <body>
-//         <Main />
-//         <NextScript />
-//       </body>
-//     </Html>
-//   );
-// };
-
-// /**
-//  * since We are using Material-UI (MUI) and we might be concerned about server-side rendering (SSR) and ensuring that styles are correctly hydrated,
-//  *  it's a good idea to implement server-side style handling for MUI.
-//  */
-// MyDocument.getInitialProps = async (ctx: DocumentContext) => {
-//   const initialProps = await Document.getInitialProps(ctx);
-//   return { ...initialProps };
-// };
-
-// export default MyDocument;
-
 import * as React from 'react';
 import Document, {
   Html,
@@ -71,6 +36,11 @@ export default class MyDocument extends Document {
         <Head>
           {/* Not exactly required, but good for perf */}
           <meta name="theme-color" content={theme.palette.primary.main} />
+          {/* Google Fonts - Noto Sans with Greek subset support */}
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap&subset=greek"
+          />
         </Head>
         <body>
           <Main />

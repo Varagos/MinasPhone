@@ -91,12 +91,12 @@ export function PriceFilter({
   return (
     <div>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12, sm: 12 }}>
           <Typography variant="h6" gutterBottom color="black" component="h3">
             <strong>Τιμή</strong>
           </Typography>
         </Grid>
-        <Grid item xs={6}>
+        <Grid size={{ xs: 6, sm: 6 }}>
           <PriceInputField
             label="Min"
             variant="outlined"
@@ -105,7 +105,7 @@ export function PriceFilter({
             onChange={handleMinPriceChange}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid size={{ xs: 6, sm: 6 }}>
           <PriceInputField
             label="Max"
             variant="outlined"

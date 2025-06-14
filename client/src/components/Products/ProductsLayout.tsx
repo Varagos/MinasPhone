@@ -84,9 +84,10 @@ export default function ProductsLayout({
         <Grid container justifyContent="center" spacing={4}>
           {/* <Hidden xsDown> */}
           <Grid
-            item
-            xs={0}
-            sm={3}
+            size={{
+              xs: 0,
+              sm: 3,
+            }}
             sx={(theme) => ({
               [theme.breakpoints.down('md')]: {
                 display: 'none',
@@ -103,14 +104,16 @@ export default function ProductsLayout({
           />
           {/* Mobile Filter - END */}
 
-          <Grid item container xs={12} sm={9} spacing={4}>
+          <Grid container size={{ xs: 12, sm: 9 }} spacing={4}>
             {products.map((product) => (
               <Grid
-                item
+                size={{
+                  xs: 12,
+                  sm: 6,
+                  md: 6,
+                  lg: 4,
+                }}
                 key={product.id}
-                xs={12}
-                md={6}
-                lg={4}
                 // sx={{ borderColor: 'red', borderWidth: 1, borderStyle: 'solid' }}
               >
                 <ProductCard product={product} fromCategory={categorySlug} />

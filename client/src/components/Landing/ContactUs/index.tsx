@@ -52,13 +52,13 @@ const ContactUsSection = () => {
     <section id="contact" style={{ backgroundColor: '#f5f5f5' }}>
       <ContactSection>
         <ContactGrid container spacing={2}>
-          <ContactInfo item xs={12} md={5} paddingTop={8}>
+          <ContactInfo size={{ xs: 12, sm: 5 }} paddingTop={8}>
             <Typography variant="h4" gutterBottom align="left">
               {t('CONTACT_US.TITLE')}
             </Typography>
             <Typography align="left">{t('CONTACT_US.DESCRIPTION')}</Typography>
           </ContactInfo>
-          <Grid item xs={12} md={7}>
+          <Grid size={{ xs: 12, sm: 7 }}>
             <ContactForm>
               <Box
                 sx={{

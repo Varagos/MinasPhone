@@ -2,7 +2,10 @@ import type { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { AppCacheProvider } from '@mui/material-nextjs/v15-pagesRouter';
+import {
+  AppCacheProvider,
+  createEmotionCache,
+} from '@mui/material-nextjs/v14-pagesRouter';
 import theme from '@/lib/theme';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
@@ -12,6 +15,7 @@ import React, { useEffect } from 'react';
 import { MessageProvider } from '@/context/messages/Messages';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import { EmotionCache } from '@emotion/cache';
 
 // Dynamically import CookieConsent with SSR disabled
 const CookieConsentComponent = dynamic(
@@ -30,7 +34,13 @@ function useDirection(language: string) {
 
 // Default metadata for the site
 
-function MyApp({ Component, pageProps }: AppProps) {
+const clientCache = createEmotionCache({ enableCssLayer: true, key: 'css' });
+
+function MyApp({
+  Component,
+  pageProps,
+  emotionCache = clientCache,
+}: AppProps & { emotionCache: EmotionCache }) {
   const { locale } = useRouter();
   useDirection(locale || 'en');
 
@@ -98,23 +108,23 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   return (
-    <AppCacheProvider {...{ Component, pageProps }}>
+    <AppCacheProvider {...{ Component, pageProps }} emotionCache={emotionCache}>
       <CartProvider>
         <ThemeProvider theme={theme}>
           <MessageProvider>
-          {/* Add Schema.org JSON-LD structured data */}
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-          />
-          <CssBaseline />
-          <Navbar />
-          <main style={{ minHeight: '80vh' }}>
-            <Component {...pageProps} />
-          </main>
-          <Footer />
-          {/* Cookie Consent Component */}
-          <CookieConsentComponent />
+            {/* Add Schema.org JSON-LD structured data */}
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+            />
+            <CssBaseline />
+            <Navbar />
+            <main style={{ minHeight: '80vh' }}>
+              <Component {...pageProps} />
+            </main>
+            <Footer />
+            {/* Cookie Consent Component */}
+            <CookieConsentComponent />
           </MessageProvider>
         </ThemeProvider>
       </CartProvider>

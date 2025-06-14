@@ -75,7 +75,7 @@ const MobileCartItem = ({
   return (
     <Card sx={{ margin: 'auto' }}>
       <Grid container>
-        <Grid item xs={4}>
+        <Grid size={4}>
           <CardMedia
             component="img"
             image={item.productImage}
@@ -83,7 +83,7 @@ const MobileCartItem = ({
             sx={{ width: '100%', height: 'auto', p: 2 }}
           />
         </Grid>
-        <Grid item xs={8}>
+        <Grid size={8}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {item.productName}
@@ -96,17 +96,14 @@ const MobileCartItem = ({
           </CardContent>
         </Grid>
       </Grid>
-
       <Grid container>
         <Grid
-          item
-          xs={6}
           sx={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}
-        >
+          size={6}>
           <IconButton
             onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}
           >
@@ -119,7 +116,7 @@ const MobileCartItem = ({
             <AddIcon />
           </IconButton>
         </Grid>
-        <Grid item xs={6} sx={{ textAlign: 'center' }}>
+        <Grid sx={{ textAlign: 'center' }} size={6}>
           <Typography variant="h6">
             {formatPriceWithSymbol(item.quantity * item.productPrice)}
           </Typography>

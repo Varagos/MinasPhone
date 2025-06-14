@@ -35,7 +35,12 @@ const Footer = () => {
         <Container maxWidth="lg">
           <Grid container spacing={5}>
             {/* on mobile screen, each col -> full screen */}
-            <Grid item xs={12} sm={4}>
+            <Grid
+              size={{
+                xs: 12,
+                sm: 4,
+              }}
+            >
               <Box borderBottom={1}>{t('USEFUL_LINKS')}</Box>
               <Box sx={{ my: 2 }}>
                 <Link
@@ -101,7 +106,12 @@ const Footer = () => {
               </Box>
             </Grid>
 
-            <Grid item xs={12} sm={4}>
+            <Grid
+              size={{
+                xs: 12,
+                sm: 4,
+              }}
+            >
               {/* <address> */}
               <Box borderBottom={1} mb={4}>
                 {t('CONTACT.TITLE')}
@@ -170,10 +180,11 @@ const Footer = () => {
             </Grid>
 
             <Grid
-              item
+              size={{
+                xs: 12,
+                sm: 4,
+              }}
               container
-              xs={12}
-              sm={4}
               alignContent="center"
               justifyContent="center"
             >

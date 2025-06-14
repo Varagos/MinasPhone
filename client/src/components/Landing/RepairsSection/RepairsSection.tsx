@@ -26,10 +26,7 @@ const RepairsSection = () => {
           </Typography>
           <Grid container justifyContent="center" spacing={3} mt={2}>
             <Grid
-              container
-              item
-              xs={12}
-              md={6}
+              size={{ xs: 12, md: 6 }}
               alignContent="center"
               justifyContent="center"
             >
@@ -41,10 +38,7 @@ const RepairsSection = () => {
               />
             </Grid>
             <Grid
-              container
-              item
-              xs={12}
-              md={6}
+              size={{ xs: 12, md: 6 }}
               alignContent="center"
               justifyContent="center"
             >

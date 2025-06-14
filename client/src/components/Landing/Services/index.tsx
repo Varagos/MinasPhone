@@ -30,7 +30,7 @@ const ServicesSection = () => {
         })}
       >
         <Grid container spacing={4} sx={{ paddingBottom: 20 }}>
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12, sm: 12 }}>
             <Typography
               variant="h2"
               // on mobile make this smaller

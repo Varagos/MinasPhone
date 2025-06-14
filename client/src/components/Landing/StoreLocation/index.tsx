@@ -21,7 +21,7 @@ const StoreLocation = () => {
     <section style={{ padding: '50px 0' }}>
       <Container maxWidth="lg">
         <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <Box
               sx={{
                 width: '100%',
@@ -37,7 +37,7 @@ const StoreLocation = () => {
               <Typography>{t('LOCATION.CONTENT')}</Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <StoreMap />
           </Grid>
         </Grid>

@@ -53,7 +53,7 @@ const CardTextContainer = styled('div')({
 
 const CategoryItem = ({ src, heading, dest, alt }: CategoryItemProps) => {
   return (
-    <Card item xs={8} md={3} alignContent="center" justifyContent="center">
+    <Card size={{ xs: 8, md: 3 }} alignContent="center" justifyContent="center">
       <Link href={dest} style={{ height: '100%', textDecoration: 'none' }}>
         <CardContent>
           {/* TODO make sure this doesn't cause layout shifting (Image optimization) */}

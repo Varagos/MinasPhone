@@ -41,7 +41,7 @@ const FilledCart = ({ cart, handleEmptyCart }: CartPageProps) => {
     <Container sx={{ mb: 6 }}>
       <Grid container spacing={3} gap={3}>
         {cart.lineItems.map((item) => (
-          <Grid item xs={12} key={item.id}>
+          <Grid key={item.id} size={12}>
             <CartItem item={item} />
           </Grid>
         ))}
@@ -53,16 +53,22 @@ const FilledCart = ({ cart, handleEmptyCart }: CartPageProps) => {
         justifyContent="space-between"
         sx={{ marginTop: '10%' }}
       >
-        <Grid item xs={12} sm={6}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+          }}
+        >
           <Typography variant="h4" align={isMobile ? 'center' : 'left'}>
             Σύνολο: {formatPriceWithSymbol(cart.subtotal)}
           </Typography>
         </Grid>
         <Grid
-          item
-          xs={12}
-          sm={6}
           sx={{ textAlign: isMobile ? 'center' : 'right' }}
+          size={{
+            xs: 12,
+            sm: 6,
+          }}
         >
           <Button
             size="large"

@@ -40,7 +40,13 @@ const ImageContainer = styled(Box)(({ theme }) => ({
 const ServiceCard = (props: ServiceCardProps) => {
   const { imageUrl, title, icon, description, backgroundColor } = props;
   return (
-    <Grid item xs={12} sm={6} md={4}>
+    <Grid
+      size={{
+        xs: 12,
+        sm: 6,
+        md: 4,
+      }}
+    >
       <ServiceItem>
         <ImageContainer
           style={{

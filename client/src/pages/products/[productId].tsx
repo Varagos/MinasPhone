@@ -152,10 +152,7 @@ export default function ProductPage({ product }: ProductsPageProps) {
 
         <Grid container spacing={2}>
           <Grid
-            container
-            item
-            xs={12}
-            sm={6}
+            size={{ xs: 12, sm: 6 }}
             sx={{ pt: 13 }}
             justifyContent="center"
           >
@@ -184,7 +181,12 @@ Every product needs good product page-quality images. These images (usually 640 
               src={product.imageUrl}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid
+            size={{
+              xs: 12,
+              sm: 6,
+            }}
+          >
             <Box
               sx={{
                 display: 'flex',

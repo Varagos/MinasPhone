@@ -8,7 +8,12 @@ const FormInput = ({ name, label, required, rules }: any) => {
   // const isError = false;
 
   return (
-    <Grid item xs={12} sm={6}>
+    <Grid
+      size={{
+        xs: 12,
+        sm: 6,
+      }}
+    >
       <Controller
         name={name}
         control={control}

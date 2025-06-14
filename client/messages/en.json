@@ -1,0 +1,29 @@
+{
+  "HomePage": {
+    "title": "Hello world!"
+  },
+  "footer": {
+    "USEFUL_LINKS": "USEFUL LINKS",
+    "TERMS_AND_CONDITIONS": "Terms and Conditions",
+    "PRIVACY_POLICY": "Privacy Policy",
+    "COOKIE_POLICY": "Cookie Policy",
+    "COOKIE_SETTINGS": "Cookie Settings",
+    "DELIVERY_AND_COSTS": "Delivery and Costs",
+    "PAYMENT_METHODS": "Payment Methods",
+    "MY_ACCOUNT": "My Account",
+    "CONTACT": {
+      "TITLE": "CONTACT US TODAY",
+      "ADDRESS": {
+        "TITLE": "Address :",
+        "VALUE": "Dimitrakopoulou 87, Athens - Koukaki",
+        "POSTAL": "11741, Attika"
+      },
+      "PHONE": "Phone :",
+      "HOURS": {
+        "TITLE": "Operating Hours :",
+        "FIRST_ROW": "Monday-Friday",
+        "SECOND_ROW": "Saturday"
+      }
+    }
+  }
+}

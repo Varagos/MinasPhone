@@ -2,11 +2,15 @@
 /** @type {import('next').NextConfig} */
 
 const { i18n } = require('./next-i18next.config')
+const createNextIntlPlugin = require('next-intl/plugin');
+
+const withNextIntl = createNextIntlPlugin();
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   i18n,
@@ -44,6 +48,5 @@ See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host
     ],
   },
 };
-require('dotenv').config();
 
-module.exports = withBundleAnalyzer(nextConfig)
+module.exports = withBundleAnalyzer(withNextIntl(nextConfig))

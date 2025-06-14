@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
@@ -7,10 +8,10 @@ import Container from '@mui/material/Container';
 
 import { ThickBottomBorder } from '@/components/Landing/styles';
 import PhoneFix from '../../../../public/undraw_phone_fix.svg';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 const RepairsSection = () => {
-  const { t } = useTranslation();
+  const t = useTranslations('landing');
   return (
     <section>
       <Container>

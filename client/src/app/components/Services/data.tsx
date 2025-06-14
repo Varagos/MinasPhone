@@ -14,6 +14,7 @@ import ScreenReplacementIcon from '@mui/icons-material/ScreenRotation';
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 import HeadsetIcon from '@mui/icons-material/Headset';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import { useTranslations } from 'next-intl';
 
 /**
  * Currently the images have different aspect rations, so in order to have consistency, objecfit contain is used. but
@@ -27,7 +28,7 @@ import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
  */
 
 export const useServicesSection = () => {
-  const { t } = useTranslation();
+  const t = useTranslations('landing');
 
   const services = [
     {

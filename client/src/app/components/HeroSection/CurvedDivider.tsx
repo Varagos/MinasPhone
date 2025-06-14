@@ -1,30 +1,32 @@
 import { styled } from '@mui/material/styles';
 import type { Theme } from '@mui/material/styles';
 
-const CustomShapeDividerBottom = styled('div')(({ theme }: { theme: Theme }) => ({
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  width: '100%',
-  overflow: 'hidden',
-  lineHeight: 0,
-  zIndex: 3,
+const CustomShapeDividerBottom = styled('div')(
+  ({ theme }: { theme: Theme }) => ({
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    width: '100%',
+    overflow: 'hidden',
+    lineHeight: 0,
+    zIndex: 3,
 
-  '& svg': {
-    position: 'relative',
-    display: 'block',
-    width: 'calc(114% + 1.3px)',
-    height: '91px',
-  },
+    '& svg': {
+      position: 'relative',
+      display: 'block',
+      width: 'calc(114% + 1.3px)',
+      height: '91px',
+    },
 
-  '& .shape-fill': {
-    fill: '#f5f5f5',
-    // fill: '#FFFFFF',
-  },
-  [theme.breakpoints.down('sm')]: {
-    display: 'none',
-  },
-}));
+    '& .shape-fill': {
+      fill: '#f5f5f5',
+      // fill: '#FFFFFF',
+    },
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  })
+);
 
 export default function ShapeDividerBottom() {
   return (

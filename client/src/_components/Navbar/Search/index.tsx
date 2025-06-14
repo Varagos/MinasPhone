@@ -6,6 +6,7 @@ import InputBase from '@mui/material/InputBase';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 type SearchPromptIconProps = {
   handleSearchToggle: () => void;
@@ -53,7 +54,7 @@ const SearchDiv = styled('div')(({ theme }) => ({
 }));
 
 const SearchInputField = () => {
-  const { t } = useTranslation('navbar');
+  const t = useTranslations('navbar');
   return (
     <SearchDiv>
       <InputBase

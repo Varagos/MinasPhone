@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 
 import Box from '@mui/material/Box';
@@ -5,8 +6,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 
-import { ThickBottomBorder } from '@/components/Landing/styles';
-import CategoryItem from '@/components/Landing/CategoryItem/CategoryItem';
+import CategoryItem from '@/app/components/CategoryItem/CategoryItem';
 import { useTranslation } from 'next-i18next';
 
 import { StaticImageData } from 'next/image';
@@ -15,6 +15,9 @@ import TabletCategory from '/public/categories_tablet.webp';
 import SmartWatchCategory from '/public/categories_smartwatch.webp';
 import PhonesCategory from '/public/categories_smartphones.webp';
 import AccessoriesCategory from '/public/categories_accessories.webp';
+import { useTranslations } from 'next-intl';
+import { styled } from '@mui/material/styles';
+import { ThickBottomBorder } from '../styles';
 
 const LandingPageCategories: Array<{
   src: StaticImageData;
@@ -49,7 +52,7 @@ const LandingPageCategories: Array<{
 ];
 
 const PopularCategories = () => {
-  const { t } = useTranslation();
+  const t = useTranslations('landing');
   return (
     <section style={{ paddingBottom: 20 }}>
       <Container maxWidth={'lg'}>

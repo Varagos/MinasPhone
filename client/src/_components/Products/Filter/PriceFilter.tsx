@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import { PriceInputField } from './styles';
 import useUrl from '@/hooks/useUrl';
 import { PriceFiltersFilterKeys, PriceOption } from './definitions';
+import { usePathname } from 'next/navigation';
 
 type PriceFilterProps = {
   priceFilters: PriceOption[];
@@ -22,8 +23,9 @@ export function PriceFilter({
   minMaxPrice,
 }: PriceFilterProps) {
   const [sliderMinPrice, sliderMaxPrice] = minMaxPrice;
-  const { asPath } = useRouter();
-  const { filter, addFilter, removeFilter } = useUrl(asPath);
+
+  const pathName = usePathname();
+  const { filter, addFilter, removeFilter } = useUrl(pathName);
   console.log('Price filter from URL:', filter);
 
   // Extract price range from URL filters

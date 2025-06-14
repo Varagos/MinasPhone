@@ -1,4 +1,5 @@
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
+import { api } from '@/api/index';
 
 export default async function HomePage() {
   const t = await getTranslations('landing');
@@ -7,35 +8,32 @@ export default async function HomePage() {
   const shuffledProducts = products.data.sort(() => 0.5 - Math.random());
 
   return (
-    <MainContainer>
-      <h1>{t('title')}</h1>
-    </MainContainer>
+    <main className="bg-white">
+      <Hero />
+      <ServicesSection />
+      <PopularCategories />
+      <SuggestedProducts shuffledProducts={shuffledProducts} />
+      <RepairsSection />
+      <DynamicStoreLocation />
+      <ContactUsSection />
+    </main>
   );
 }
 
-import Head from 'next/head';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
+import Hero from '@/app/components/HeroSection';
 
-import { MainContainer, ThickBottomBorder } from '@/_components/Landing/styles';
-import ProductCard from '@/_components/Products/ProductCard/ProductCard';
-import { api } from '@/api/index';
-
-import Hero from '@/_components/Landing/HeroSection';
-
-import ServicesSection from '@/_components/Landing/Services';
-import ContactUsSection from '@/_components/Landing/ContactUs';
+import ServicesSection from '@/app/components/Services';
+import ContactUsSection from '@/app/components/ContactUs';
 
 import dynamic from 'next/dynamic';
-import RepairsSection from '@/_components/Landing/RepairsSection/RepairsSection';
-import PopularCategories from '@/_components/Landing/PopularCategories';
+import RepairsSection from '@/app/components/RepairsSection/RepairsSection';
+import PopularCategories from '@/app/components/PopularCategories';
 import { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import SuggestedProducts from './components/SuggestedProducts';
+// import { getTranslations } from 'next-intl/server';
 
 const DynamicStoreLocation = dynamic(
-  () => import('@/_components/Landing/StoreLocation'),
+  () => import('@/app/components/StoreLocation'),
   {
     loading: () => <p>Loading...</p>,
   }

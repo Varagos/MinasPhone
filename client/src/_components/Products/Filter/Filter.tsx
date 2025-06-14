@@ -6,10 +6,11 @@ import Button from '@mui/material/Button';
 import PriceFilter from './PriceFilter';
 import useUrl from '@/hooks/useUrl';
 import { priceFilters } from './contants';
+import { usePathname } from 'next/navigation';
 
 const Filter = () => {
-  const { asPath } = useRouter();
-  const { clearFilters, filter } = useUrl(asPath);
+  const pathName = usePathname();
+  const { clearFilters, filter } = useUrl(pathName);
   const [activeFilters, setActiveFilters] = useState<{
     price?: boolean;
   }>({});

@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -7,6 +8,7 @@ import bg from '../../../../public/hero-section-apple-standing.webp';
 import { useTranslation } from 'next-i18next';
 import ShapeDividerBottom from './CurvedDivider';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 const HeroSection = styled('section')(({ theme }) => ({
   width: '100%',
@@ -111,7 +113,8 @@ const DesktopLineBreak = styled('br')(({ theme }) => ({
 }));
 
 export default function Hero() {
-  const { t } = useTranslation();
+  const t = useTranslations('landing');
+
   return (
     <HeroSection>
       <HeroOverlay />

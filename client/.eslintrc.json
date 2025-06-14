@@ -4,7 +4,8 @@
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
     "eslint-config-prettier",
-    "prettier"
+    "prettier",
+    "plugin:tailwindcss/recommended"
   ],
   "root": true,
   "parser": "@typescript-eslint/parser",

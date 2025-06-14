@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { styled } from '@mui/system';
 import Grid from '@mui/material/Grid';
@@ -6,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 // Styled Components
 const ContactSection = styled(Container)(({ theme }) => ({
@@ -46,7 +47,7 @@ const ContactInfo = styled(Grid)(({ theme }) => ({
 
 // Component
 const ContactUsSection = () => {
-  const { t } = useTranslation();
+  const t = useTranslations('landing');
 
   return (
     <section id="contact" style={{ backgroundColor: '#f5f5f5' }}>

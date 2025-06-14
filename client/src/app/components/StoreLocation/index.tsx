@@ -1,3 +1,4 @@
+'use client';
 // pages/your-page.jsx
 
 import React from 'react';
@@ -6,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 // Import the MapComponent with no SSR
 const StoreMap = dynamic(
@@ -15,7 +16,7 @@ const StoreMap = dynamic(
 );
 
 const StoreLocation = () => {
-  const { t } = useTranslation();
+  const t = useTranslations('landing');
 
   return (
     <section style={{ padding: '50px 0' }}>

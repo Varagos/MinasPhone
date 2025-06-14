@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -6,9 +7,10 @@ import { useTranslation } from 'next-i18next';
 import { useServicesSection } from './data';
 import ServiceCard from './ServiceCard';
 import ShapeDivider from './BottomShapeDivider';
+import { useTranslations } from 'next-intl';
 
 const ServicesSection = () => {
-  const { t } = useTranslation();
+  const t = useTranslations('landing');
 
   const { services } = useServicesSection();
 

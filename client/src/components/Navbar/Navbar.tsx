@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 
 import svgLogo from '../../../public/logo.svg';
 import AppDrawer from './AppDrawer/AppDrawer';
-import ClickAwayListener from '@mui/base/ClickAwayListener';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+
 import AppBar from '@mui/material/AppBar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
@@ -27,6 +28,7 @@ import AppTheme from '@/lib/theme';
 import theme from '@/lib/theme';
 import LanguageSelector from './LanguageSelector';
 import MobileSearch from './Search/MobileSearch';
+import { Theme } from '@mui/material';
 
 const FEATURED_CATEGORIES = [
   {
@@ -224,7 +226,7 @@ const NewNavbar = () => {
                   <Badge
                     badgeContent={cart?.totalItems}
                     color="secondary"
-                    sx={(theme) => ({
+                    sx={(theme: Theme) => ({
                       '& .MuiBadge-badge': {
                         backgroundColor: theme.palette.primary.dark, // SpaceCadetNavy
                         color: theme.palette.primary.contrastText, // Assuming CulturedWhite

@@ -21,9 +21,9 @@
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.10.6",
     "@fontsource/roboto": "^4.5.8",
-    "@mui/icons-material": "^5.11.11",
-    "@mui/material": "^5.11.15",
-    "@mui/material-nextjs": "^7.1.1",
+    "@mui/icons-material": "^6",
+    "@mui/material": "^6",
+    "@mui/material-nextjs": "^6",
     "i18next": "^23.7.2",
     "jsurl": "^0.1.5",
     "next": "^14.2.30",
@@ -35,9 +35,13 @@
     "react-dom": "18",
     "react-hook-form": "^7",
     "react-i18next": "^13.4.0",
+    "react-is": "18",
     "sharp": "^0.34.2",
     "uuid": "^9.0.0",
     "vanilla-cookieconsent": "^3.1.0"
+  },
+  "resolutions": {
+    "react-is": "18"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^15.3.3",

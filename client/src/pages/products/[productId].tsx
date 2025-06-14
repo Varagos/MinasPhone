@@ -109,6 +109,33 @@ export default function ProductPage({ product }: ProductsPageProps) {
         '@type': 'Organization',
         name: 'MinasPhone',
       },
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'GR',
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 0,
+            maxValue: 0,
+            unitCode: 'HUR',
+          },
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 0,
+            maxValue: 0,
+            unitCode: 'HUR',
+          },
+        },
+        hasShippingService: {
+          '@type': 'ShippingService',
+          name: 'Store Pickup',
+          description: 'Παραλαβή από το κατάστημα',
+        },
+      },
     },
   };
 

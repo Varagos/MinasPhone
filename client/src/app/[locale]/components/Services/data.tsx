@@ -1,11 +1,9 @@
-import repairs from '../../../../public/services-repair.webp';
-import upgrades from '../../../../public/services-upgrade.webp';
-import screen from '../../../../public/services-screen.webp';
-import battery from '../../../../public/services-battery.webp';
-import accessories from '../../../../public/services-accessories.webp';
-import tradeins from '../../../../public/services-trade.webp';
-import moneygram from '../../../../public/services-moneygram.webp';
-import ria from '../../../../public/services-ria.webp';
+import repairs from '/public/services-repair.webp';
+import upgrades from '/public/services-upgrade.webp';
+import screen from '/public/services-screen.webp';
+import accessories from '/public/services-accessories.webp';
+import moneygram from '/public/services-moneygram.webp';
+import ria from '/public/services-ria.webp';
 
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import UpgradeIcon from '@mui/icons-material/SystemUpdateAlt';

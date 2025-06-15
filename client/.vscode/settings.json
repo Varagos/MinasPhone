@@ -7,5 +7,11 @@
   },
   "editor.quickSuggestions": {
     "strings": true
-  }
+  },
+  "i18n-ally.localesPaths": [
+    "messages",
+    "public/locales",
+    "src/i18n",
+    "src/context/messages"
+  ]
 }

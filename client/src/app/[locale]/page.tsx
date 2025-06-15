@@ -1,18 +1,18 @@
-import Hero from '@/app/components/HeroSection';
+import Hero from '@/app/[locale]/components/HeroSection';
 
-import ServicesSection from '@/app/components/Services';
-import ContactUsSection from '@/app/components/ContactUs';
+import ServicesSection from '@/app/[locale]/components/Services';
+import ContactUsSection from '@/app/[locale]/components/ContactUs';
 
 import dynamic from 'next/dynamic';
-import RepairsSection from '@/app/components/RepairsSection/RepairsSection';
-import PopularCategories from '@/app/components/PopularCategories';
+import RepairsSection from '@/app/[locale]/components/RepairsSection/RepairsSection';
+import PopularCategories from '@/app/[locale]/components/PopularCategories';
 import { Metadata } from 'next';
 import SuggestedProducts from './components/SuggestedProducts';
 import { getTranslations } from 'next-intl/server';
 import { api } from '@/api/index';
 
 const DynamicStoreLocation = dynamic(
-  () => import('@/app/components/StoreLocation'),
+  () => import('@/app/[locale]/components/StoreLocation'),
   {
     loading: () => <p>Loading...</p>,
   }

@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
+import { Link as NavigationLink } from '@/i18n/navigation';
 
 export type BreadcrumbItem = {
   label: string;

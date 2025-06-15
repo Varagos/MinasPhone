@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 
-import CategoryItem from '@/app/components/CategoryItem/CategoryItem';
+import CategoryItem from '@/app/[locale]/components/CategoryItem/CategoryItem';
 
 import { StaticImageData } from 'next/image';
 

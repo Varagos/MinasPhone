@@ -1,4 +1,4 @@
-import { NextIntlClientProvider } from 'next-intl';
+import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { Roboto } from 'next/font/google';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { getLocale } from 'next-intl/server';
@@ -9,6 +9,8 @@ import Footer from '@/components/Footer/Footer';
 import theme from '@/_theme';
 import { Metadata } from 'next';
 import { CartProvider } from '@/context/CartProvider';
+import { notFound } from 'next/navigation';
+import { routing } from '@/i18n/routing';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -63,10 +65,16 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }) {
-  const locale = await getLocale();
+  // Ensure that the incoming `locale` is valid
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
 
   return (
     <html lang={locale} className={roboto.variable}>

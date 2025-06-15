@@ -8,6 +8,7 @@ import Navbar from '@/_components/Navbar/Navbar';
 import Footer from '@/_components/Footer/Footer';
 import theme from '@/_theme';
 import { Metadata } from 'next';
+import { CartProvider } from '@/context/CartProvider';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -70,13 +71,15 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={roboto.variable}>
       <body>
-        <AppRouterCacheProvider>
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
             <NextIntlClientProvider>
-              <CssBaseline />
-              <Navbar />
-              <main style={{ minHeight: '80vh' }}>{children}</main>
-              <Footer />
+              <CartProvider>
+                <CssBaseline />
+                <Navbar />
+                <main style={{ minHeight: '80vh' }}>{children}</main>
+                <Footer />
+              </CartProvider>
             </NextIntlClientProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>

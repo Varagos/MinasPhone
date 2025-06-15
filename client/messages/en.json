@@ -1,11 +1,7 @@
 {
-  "HomePage": {
-    "title": "Hello world!"
-  },
   "navbar": {
     "SEARCH_PLACEHOLDER": "Search for products..."
   },
-
   "landing": {
     "HELLO_WORLD": "Hello, World!",
     "LANDING": {

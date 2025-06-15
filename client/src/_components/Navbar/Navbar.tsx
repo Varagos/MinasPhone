@@ -30,6 +30,7 @@ import theme from '@/lib/theme';
 import MobileSearch from './Search/MobileSearch';
 import { Theme } from '@mui/material';
 import { usePathname } from 'next/navigation';
+import { useCart } from '@/hooks/useCart';
 
 const FEATURED_CATEGORIES = [
   {
@@ -70,7 +71,7 @@ const NewNavbar = () => {
   };
 
   // TODO fix
-  // const { cart } = useCart();
+  const { cart } = useCart();
 
   const toggleDrawer = (open: any) => (event: any) => {
     if (
@@ -228,8 +229,8 @@ const NewNavbar = () => {
                 <IconLinkButton href="/cart" aria-label="Show cart items">
                   <Badge
                     // TODO fix
-                    // badgeContent={cart?.totalItems}
-                    badgeContent={10000}
+                    badgeContent={cart?.totalItems}
+                    // badgeContent={10000}
                     color="secondary"
                     sx={(theme: Theme) => ({
                       '& .MuiBadge-badge': {

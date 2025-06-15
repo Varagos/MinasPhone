@@ -93,14 +93,14 @@ const FilledCart = ({ cart, handleEmptyCart }: CartPageProps) => {
 
 export default async function CartPage() {
   // Fix
-  // const { cart, setCart } = useCart();
+  const { cart, setCart } = useCart();
 
-  const cart = await api.cart.retrieveCart();
+  // const cart = await api.cart.retrieveCart();
 
   const handleEmptyCart = async () => {
     const cart = await api.cart.clearCart();
     // TODO fix how we update navbar cart quantity
-    // setCart(cart);
+    setCart(cart);
   };
 
   if (cart === null) return <Spinner />;

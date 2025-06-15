@@ -15,6 +15,7 @@ import Image from 'next/image';
 import BreadcrumbNav, {
   BreadcrumbItem,
 } from '@/_components/common/BreadcrumbNav';
+import AddToCartButton from '@/_components/common/AddToCartButton';
 
 export default async function ProductPage({
   params,
@@ -239,16 +240,10 @@ Every product needs good product page-quality images. These images (usually 640 
                   Παραλαβή από το κατάστημα.
                 </Typography>
               </Box>
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                sx={{ py: 2, px: 10, textTransform: 'none' }}
-                // TODO Fix
-                // onClick={() => handleAddToCart(product.id)}
-              >
-                Προσθήκη στο καλάθι
-              </Button>
+              <AddToCartButton
+                productId={product.id}
+                content="Προσθήκη στο καλάθι"
+              />
             </Box>
 
             <Box sx={{ mt: 10 }}>

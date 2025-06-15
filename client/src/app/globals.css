@@ -1,29 +1,30 @@
-@import "tailwindcss";
+@layer theme, base, mui, components, utilities;
+@import 'tailwindcss';
 
 :root {
   /* Winter color palette from Color Hunt */
-  --cultured-white: #F9F7F7;
-  --azureish-white: #DBE2EF;
-  --steel-blue: #3F72AF;
-  --space-cadet-navy: #112D4E;
-  
+  --cultured-white: #f9f7f7;
+  --azureish-white: #dbe2ef;
+  --steel-blue: #3f72af;
+  --space-cadet-navy: #112d4e;
+
   /* Tailwind v4 theme customization */
   --color-primary: var(--steel-blue);
   --color-primary-light: var(--azureish-white);
   --color-primary-dark: var(--space-cadet-navy);
   --color-primary-contrast: var(--cultured-white);
-  
+
   --color-secondary: var(--cultured-white);
-  --color-secondary-light: #FFFFFF;
+  --color-secondary-light: #ffffff;
   --color-secondary-dark: var(--azureish-white);
   --color-secondary-contrast: var(--space-cadet-navy);
-  
-  --color-error: #D32F2F;
-  --color-warning: #FFA000;
-  --color-info: #1976D2;
-  --color-success: #388E3C;
+
+  --color-error: #d32f2f;
+  --color-warning: #ffa000;
+  --color-info: #1976d2;
+  --color-success: #388e3c;
   --color-divider: var(--azureish-white);
-  
+
   /* Typography */
   --font-sans: var(--font-roboto), ui-sans-serif, system-ui, sans-serif;
   --font-size-base: 14px;
@@ -39,12 +40,28 @@ html {
 }
 
 /* Custom utility classes */
-.bg-primary { background-color: var(--color-primary); }
-.bg-primary-light { background-color: var(--color-primary-light); }
-.bg-primary-dark { background-color: var(--color-primary-dark); }
-.text-primary-contrast { color: var(--color-primary-contrast); }
+.bg-primary {
+  background-color: var(--color-primary);
+}
+.bg-primary-light {
+  background-color: var(--color-primary-light);
+}
+.bg-primary-dark {
+  background-color: var(--color-primary-dark);
+}
+.text-primary-contrast {
+  color: var(--color-primary-contrast);
+}
 
-.bg-secondary { background-color: var(--color-secondary); }
-.bg-secondary-light { background-color: var(--color-secondary-light); }
-.bg-secondary-dark { background-color: var(--color-secondary-dark); }
-.text-secondary-contrast { color: var(--color-secondary-contrast); }
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+.bg-secondary-light {
+  background-color: var(--color-secondary-light);
+}
+.bg-secondary-dark {
+  background-color: var(--color-secondary-dark);
+}
+.text-secondary-contrast {
+  color: var(--color-secondary-contrast);
+}

@@ -9,7 +9,7 @@ import Radio from '@mui/material/Radio';
 
 import Review from './Review';
 import { Controller, useForm } from 'react-hook-form';
-import { CheckoutToken } from '../../types/checkout-token';
+import { CheckoutToken } from '@/types/checkout-token';
 
 type AddressProps = {
   checkoutToken: CheckoutToken;

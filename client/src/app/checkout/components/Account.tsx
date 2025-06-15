@@ -5,8 +5,8 @@ import Typography from '@mui/material/Typography';
 import { useForm, FormProvider } from 'react-hook-form';
 
 import FormInput from './FormInput';
-import LinkButton from '../common/LinkButton';
-import { useTranslation } from 'next-i18next';
+import LinkButton from '@/_components/common/LinkButton';
+import { useTranslations } from 'next-intl';
 
 type AccountProps = {
   next: (data: AccountFormData) => void;
@@ -21,7 +21,7 @@ export type AccountFormData = {
 
 const Account = ({ next }: AccountProps) => {
   const methods = useForm();
-  const { t } = useTranslation();
+  const t = useTranslations('landing');
 
   const { errors } = methods.formState;
   // useEffect(() => {

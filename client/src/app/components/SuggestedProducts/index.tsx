@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import ProductCard from '@/_components/Products/ProductCard/ProductCard';
+import ProductCard from '@/components/Products/ProductCard/ProductCard';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';

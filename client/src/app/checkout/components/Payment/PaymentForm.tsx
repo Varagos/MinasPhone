@@ -14,9 +14,9 @@ import CreditCardSharpIcon from '@mui/icons-material/CreditCardSharp';
 
 import Review from '../Review';
 // import CardPayment from './CardPayment';
-import { CheckoutToken } from '../../../types/checkout-token';
-import { CheckoutCapture } from '../../../types/checkout-capture';
-import { CheckoutOrderInfo } from '@/_pages/checkout';
+import { CheckoutToken } from '@/types/checkout-token';
+import { CheckoutCapture } from '@/types/checkout-capture';
+import { CheckoutOrderInfo } from '../../page';
 
 interface TabPanelProps {
   children?: React.ReactNode;

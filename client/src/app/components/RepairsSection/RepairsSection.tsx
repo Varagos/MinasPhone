@@ -6,9 +6,9 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 
-import { ThickBottomBorder } from '@/components/Landing/styles';
 import PhoneFix from '../../../../public/undraw_phone_fix.svg';
 import { useTranslations } from 'next-intl';
+import { ThickBottomBorder } from '../styles';
 
 const RepairsSection = () => {
   const t = useTranslations('landing');

@@ -7,7 +7,6 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 
 import CategoryItem from '@/app/components/CategoryItem/CategoryItem';
-import { useTranslation } from 'next-i18next';
 
 import { StaticImageData } from 'next/image';
 

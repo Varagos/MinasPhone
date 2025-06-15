@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { Root, classes } from './styles';
 
-import LinkButton from '@/_components/common/LinkButton';
+import LinkButton from '@/components/common/LinkButton';
 
 export type CheckoutOrderResponse = {
   customer: {

@@ -1,3 +1,4 @@
+'use client';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Image from 'next/image';
@@ -19,6 +20,7 @@ import { useState } from 'react';
 import FilterModal from './Filter/mobile/FilterModal';
 import { EmptyProducts } from './EmptyProducts';
 import BreadcrumbNav, { BreadcrumbItem } from '../common/BreadcrumbNav';
+import { usePathname } from 'next/navigation';
 
 type ProductsLayoutProps = {
   products: Product[];
@@ -39,16 +41,15 @@ export default function ProductsLayout({
   totalProducts,
   breadcrumbItems = [{ label: 'Προϊόντα', href: '/products' }],
 }: ProductsLayoutProps) {
-  const router = useRouter();
-  const { asPath } = router;
-  const { filter } = useUrl(asPath);
+  const pathname = usePathname();
+  const { filter } = useUrl(pathname);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const emptyFilters = !filter || Object.keys(filter).length === 0;
 
   // Check if we're in a category page by examining the URL path and breadcrumb items
   const categorySlug =
-    router.pathname === '/categories/[categorySlug]'
-      ? (router.query.categorySlug as string)
+    pathname === '/categories/[categorySlug]'
+      ? (pathname.split('/').pop() as string)
       : null;
 
   console.log('ProductsLayout fromCategory', categorySlug);

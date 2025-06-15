@@ -6,7 +6,6 @@ import accessories from '../../../../public/services-accessories.webp';
 import tradeins from '../../../../public/services-trade.webp';
 import moneygram from '../../../../public/services-moneygram.webp';
 import ria from '../../../../public/services-ria.webp';
-import { useTranslation } from 'next-i18next';
 
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import UpgradeIcon from '@mui/icons-material/SystemUpdateAlt';

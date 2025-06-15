@@ -23,8 +23,6 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Head from 'next/head';
-import { GetStaticPropsContext } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),

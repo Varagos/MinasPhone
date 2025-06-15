@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 // import { Link, useLocation } from 'react-router-dom';
 import Link from 'next/link';
@@ -21,14 +22,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Image from 'next/image';
 import IconLinkButton from '../common/IconLinkButton';
 import LinkButton from '../common/LinkButton';
-import { useCart } from '@/hooks/useCart';
 import SimpleMenu from './SimpleMenu/SimpleMenu';
 import { SearchInputField, SearchPromptIcon } from './Search';
 import AppTheme from '@/lib/theme';
 import theme from '@/lib/theme';
-import LanguageSelector from './LanguageSelector';
+// import LanguageSelector from './LanguageSelector';
 import MobileSearch from './Search/MobileSearch';
 import { Theme } from '@mui/material';
+import { usePathname } from 'next/navigation';
+import { useCart } from '@/hooks/useCart';
 
 const FEATURED_CATEGORIES = [
   {
@@ -54,8 +56,8 @@ const FEATURED_CATEGORIES = [
 ] as const;
 
 const NewNavbar = () => {
-  const router = useRouter();
-  const currentPath = router.asPath;
+  const currentPath = usePathname();
+
   const [anchor, setAnchor] = useState(false);
 
   const [searchActive, setSearchActive] = useState(false);
@@ -68,6 +70,7 @@ const NewNavbar = () => {
     setSearchActive(false);
   };
 
+  // TODO fix
   const { cart } = useCart();
 
   const toggleDrawer = (open: any) => (event: any) => {
@@ -144,7 +147,8 @@ const NewNavbar = () => {
               </Typography>
             </Box>
           </Box>
-          <LanguageSelector />
+          {/* TODO fix */}
+          {/* <LanguageSelector /> */}
         </Toolbar>
       </AppBar>
       <MobileSearch />
@@ -224,7 +228,9 @@ const NewNavbar = () => {
               <div>
                 <IconLinkButton href="/cart" aria-label="Show cart items">
                   <Badge
+                    // TODO fix
                     badgeContent={cart?.totalItems}
+                    // badgeContent={10000}
                     color="secondary"
                     sx={(theme: Theme) => ({
                       '& .MuiBadge-badge': {

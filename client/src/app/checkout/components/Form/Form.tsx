@@ -5,10 +5,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Root, classes } from './styles';
 import { CheckoutCapture } from '@/types/checkout-capture';
 import Account from '../Account';
-import { CheckoutOrderInfo } from '@/_pages/checkout';
 import PaymentForm from '../Payment/PaymentForm';
 import Address from '../Address';
 import { CheckoutToken } from '@/types/checkout-token';
+import { CheckoutOrderInfo } from '../../page';
 
 export interface FormProps {
   activeStep: number;

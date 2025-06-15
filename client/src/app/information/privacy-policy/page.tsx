@@ -1,8 +1,5 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
 import { Container } from '@mui/material';
-import { GetStaticPropsContext } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const PrivacyPolicy = () => {
   return (

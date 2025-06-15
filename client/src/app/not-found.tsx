@@ -9,7 +9,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import EmptyLogo from '../../public/undraw_empty_xct9.svg';
-import { MainContainer } from '@/components/Landing/styles';
 
 export default function Custom404() {
   const router = useRouter();
@@ -40,7 +39,7 @@ export default function Custom404() {
           content="Η σελίδα που αναζητάτε δεν βρέθηκε."
         />
       </Head>
-      <MainContainer>
+      <Container sx={{ py: 4 }}>
         <Container maxWidth="md">
           <Box
             sx={{
@@ -162,7 +161,7 @@ export default function Custom404() {
             </Box>
           </Box>
         </Container>
-      </MainContainer>
+      </Container>
     </>
   );
 }

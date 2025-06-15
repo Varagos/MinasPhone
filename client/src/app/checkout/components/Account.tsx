@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { useForm, FormProvider } from 'react-hook-form';
 
 import FormInput from './FormInput';
-import LinkButton from '@/_components/common/LinkButton';
+import LinkButton from '@/components/common/LinkButton';
 import { useTranslations } from 'next-intl';
 
 type AccountProps = {

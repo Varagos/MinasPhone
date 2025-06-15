@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { ProductPaginatedResponse } from '@/api/types/products';
-import ProductsLayout from '@/_components/Products/ProductsLayout';
+import ProductsLayout from '@/components/Products/ProductsLayout';
 import useUrl from '@/hooks/useUrl';
 import { parseUrlRange } from '@/utils/pagination';
 import { usePathname } from 'next/navigation';

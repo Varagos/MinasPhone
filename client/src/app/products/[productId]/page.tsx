@@ -14,8 +14,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import BreadcrumbNav, {
   BreadcrumbItem,
-} from '@/_components/common/BreadcrumbNav';
-import AddToCartButton from '@/_components/common/AddToCartButton';
+} from '@/components/common/BreadcrumbNav';
+import AddToCartButton from '@/components/common/AddToCartButton';
 
 export default async function ProductPage({
   params,

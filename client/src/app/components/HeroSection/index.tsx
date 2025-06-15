@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import bg from '../../../../public/hero-section-apple-standing.webp';
-import { useTranslation } from 'next-i18next';
 import ShapeDividerBottom from './CurvedDivider';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';

@@ -10,7 +10,7 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 
 import { CheckoutCapture } from '@/types/checkout-capture';
-import LinkButton from '@/_components/common/LinkButton';
+import LinkButton from '@/components/common/LinkButton';
 import Confirmation, {
   CheckoutOrderResponse,
 } from './components/Confirmation/Confirmation';
@@ -19,14 +19,7 @@ import { useCart } from '@/hooks/useCart';
 import { api } from '@/api';
 import { CheckoutToken } from '@/types/checkout-token';
 import { Cart } from '@/api/types/types';
-import { Price } from '@/types/price';
-
-export const priceNumberToFormattedPrice = (price: number): Price => ({
-  raw: price,
-  formatted: `$${price}`,
-  formatted_with_symbol: `$${price}`,
-  formatted_with_code: `$${price}`,
-});
+import { priceNumberToFormattedPrice } from '@/utils/prices';
 
 const steps = ['Λογαριασμός', 'Διέυθυνση', 'Πληρωμή'];
 

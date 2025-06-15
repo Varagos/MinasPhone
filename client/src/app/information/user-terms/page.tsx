@@ -1,4 +1,3 @@
-// import { useTranslation } from 'next-i18next';
 import React from 'react';
 import {
   Typography,
@@ -8,9 +7,6 @@ import {
   List,
   ListItem,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { GetStaticPropsContext } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Paragraph = ({
   children,

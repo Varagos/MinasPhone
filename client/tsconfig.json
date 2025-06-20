@@ -16,13 +16,20 @@
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "allowArbitraryExtensions": true
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "__mocks__/next/router.js"
+    "__mocks__/next/router.js",
+    ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

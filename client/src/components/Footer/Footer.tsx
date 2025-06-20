@@ -1,4 +1,5 @@
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
+
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -21,7 +22,8 @@ const CookieSettings = dynamic(
 );
 
 const Footer = () => {
-  const { t } = useTranslation('footer');
+  const t = useTranslations('footer');
+
   return (
     <footer
     // style={{ position: 'absolute', bottom: 0 }}
@@ -131,15 +133,7 @@ const Footer = () => {
                 header="Email :"
                 details={
                   <Typography variant="body2">
-                    <Link
-                      color="inherit"
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        window.location.href =
-                          'mailto:' + 'support' + '@' + 'minasphone.gr';
-                      }}
-                    >
+                    <Link color="inherit" href="mailto:support@minasphone.gr">
                       {'support@minasphone.gr'}
                     </Link>
                   </Typography>

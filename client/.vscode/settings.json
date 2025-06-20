@@ -1,3 +1,18 @@
 {
-  "cSpell.words": ["Minas"]
+  "cSpell.words": ["Minas"],
+  "tailwindCSS.includeLanguages": {
+    "html": "html",
+    "javascript": "javascript",
+    "css": "css"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "i18n-ally.localesPaths": [
+    "messages",
+    "public/locales",
+    "src/i18n",
+    "src/context/messages"
+  ],
+  "i18n-ally.keystyle": "nested"
 }

@@ -1,3 +1,4 @@
+'use client';
 /* eslint-disable react/jsx-key */
 import React from 'react';
 import clsx from 'clsx';

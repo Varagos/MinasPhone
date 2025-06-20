@@ -1,9 +1,11 @@
+'use client';
+
 // components/SimpleMenu.tsx
 import { useState } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import PersonOutline from '@mui/icons-material/PersonOutline';
 import LocalShipping from '@mui/icons-material/LocalShipping';
 import Person from '@mui/icons-material/Person';

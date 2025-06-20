@@ -1,35 +1,47 @@
-import React from 'react';
+'use client';
+import React, { useTransition } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import Image from 'next/image';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter } from '@/i18n/navigation';
+
+// Regular components
+import { useLocale, Locale } from 'next-intl';
+import { useParams } from 'next/navigation';
 
 const languages: Record<string, { label: string; flag: string }> = {
-  el: { label: 'el', flag: '/flags/gr.webp' },
-  en: { label: 'en', flag: '/flags/us.webp' },
+  el: { label: 'Greek', flag: '/flags/gr.webp' },
+  en: { label: 'English', flag: '/flags/us.webp' },
   // ar: { label: 'ar', flag: '/flags/eg.webp' },
   // Add other languages here
 };
 
 const LanguageSelector = () => {
-  const { i18n } = useTranslation();
   const router = useRouter();
+
+  const [isPending, startTransition] = useTransition();
+
+  const pathname = usePathname();
+  const params = useParams();
+
+  const locale = useLocale();
 
   const handleChange = (event: SelectChangeEvent<string>) => {
     const newLocale = event.target.value;
-    i18n.changeLanguage(newLocale);
 
-    const { pathname, asPath, query } = router;
-    router.push({ pathname, query }, router.asPath, { locale: newLocale });
+    startTransition(() => {
+      router.replace(
+        // @ts-expect-error -- TypeScript will validate that only known `params`
+        // are used in combination with a given `pathname`. Since the two will
+        // always match for the current route, we can skip runtime checks.
+        { pathname, params },
+        { locale: newLocale }
+      );
+    });
   };
-  // Use router.locale as primary source of truth, fallback to 'el' if both are undefined
-  const currentLanguage = i18n.language || router.locale || 'el';
 
   // Make sure the language is one of our supported languages
-  const safeLanguage = Object.keys(languages).includes(currentLanguage)
-    ? currentLanguage
-    : 'el';
+  const safeLanguage = Object.keys(languages).includes(locale) ? locale : 'el';
 
   return (
     <Select

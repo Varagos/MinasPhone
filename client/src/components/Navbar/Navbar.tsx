@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 // import { Link, useLocation } from 'react-router-dom';
 import Link from 'next/link';
@@ -21,7 +22,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Image from 'next/image';
 import IconLinkButton from '../common/IconLinkButton';
 import LinkButton from '../common/LinkButton';
-import { useCart } from '@/hooks/useCart';
 import SimpleMenu from './SimpleMenu/SimpleMenu';
 import { SearchInputField, SearchPromptIcon } from './Search';
 import AppTheme from '@/lib/theme';
@@ -29,6 +29,9 @@ import theme from '@/lib/theme';
 import LanguageSelector from './LanguageSelector';
 import MobileSearch from './Search/MobileSearch';
 import { Theme } from '@mui/material';
+import { usePathname } from '@/i18n/navigation';
+import { useCart } from '@/hooks/useCart';
+import { useLocale, useTranslations } from 'next-intl';
 
 const FEATURED_CATEGORIES = [
   {
@@ -54,11 +57,14 @@ const FEATURED_CATEGORIES = [
 ] as const;
 
 const NewNavbar = () => {
-  const router = useRouter();
-  const currentPath = router.asPath;
+  const currentPath = usePathname();
+  const locale = useLocale();
+
   const [anchor, setAnchor] = useState(false);
 
   const [searchActive, setSearchActive] = useState(false);
+
+  const t = useTranslations('common');
 
   const handleSearchToggle = () => {
     setSearchActive((prev) => !prev);
@@ -68,6 +74,7 @@ const NewNavbar = () => {
     setSearchActive(false);
   };
 
+  // TODO fix
   const { cart } = useCart();
 
   const toggleDrawer = (open: any) => (event: any) => {
@@ -85,8 +92,10 @@ const NewNavbar = () => {
     path: string,
     theme: typeof AppTheme
   ): Record<string, any> {
+    // Add locale
     const basePathWithOutQuery = currentPath.split('?')[0];
     const isActive = basePathWithOutQuery === path;
+    console.log(path, basePathWithOutQuery, isActive);
 
     return {
       textDecoration: 'none',
@@ -140,7 +149,7 @@ const NewNavbar = () => {
                   color: theme.palette.secondary.contrastText,
                 })}
               >
-                210 9224 764
+                {t('PHONE_NUMBER')}
               </Typography>
             </Box>
           </Box>
@@ -192,7 +201,7 @@ const NewNavbar = () => {
                   })}
                 >
                   <LinkButton href="/" sx={(theme) => activeClass('/', theme)}>
-                    ΑΡΧΙΚΗ
+                    {t('HOME')}
                   </LinkButton>
                   {FEATURED_CATEGORIES.map((category) => (
                     <LinkButton
@@ -208,7 +217,7 @@ const NewNavbar = () => {
                     href="/products"
                     sx={(theme) => activeClass('/products', theme)}
                   >
-                    ΟΛΑ ΤΑ ΠΡΟΪΟΝΤΑ
+                    {t('ALL_PRODUCTS')}
                   </LinkButton>
                 </Box>
               </>
@@ -224,7 +233,9 @@ const NewNavbar = () => {
               <div>
                 <IconLinkButton href="/cart" aria-label="Show cart items">
                   <Badge
+                    // TODO fix
                     badgeContent={cart?.totalItems}
+                    // badgeContent={10000}
                     color="secondary"
                     sx={(theme: Theme) => ({
                       '& .MuiBadge-badge': {

@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import { PriceInputField } from './styles';
 import useUrl from '@/hooks/useUrl';
 import { PriceFiltersFilterKeys, PriceOption } from './definitions';
+import { usePathname } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 type PriceFilterProps = {
   priceFilters: PriceOption[];
@@ -22,8 +24,10 @@ export function PriceFilter({
   minMaxPrice,
 }: PriceFilterProps) {
   const [sliderMinPrice, sliderMaxPrice] = minMaxPrice;
-  const { asPath } = useRouter();
-  const { filter, addFilter, removeFilter } = useUrl(asPath);
+  const t = useTranslations('common');
+
+  const pathName = usePathname();
+  const { filter, addFilter, removeFilter } = useUrl(pathName);
   console.log('Price filter from URL:', filter);
 
   // Extract price range from URL filters
@@ -91,12 +95,12 @@ export function PriceFilter({
   return (
     <div>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12, sm: 12 }}>
           <Typography variant="h6" gutterBottom color="black" component="h3">
-            <strong>Τιμή</strong>
+            <strong>{t('PRICE')}</strong>
           </Typography>
         </Grid>
-        <Grid item xs={6}>
+        <Grid size={{ xs: 6, sm: 6 }}>
           <PriceInputField
             label="Min"
             variant="outlined"
@@ -105,7 +109,7 @@ export function PriceFilter({
             onChange={handleMinPriceChange}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid size={{ xs: 6, sm: 6 }}>
           <PriceInputField
             label="Max"
             variant="outlined"

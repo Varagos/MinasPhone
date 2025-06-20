@@ -1,4 +1,5 @@
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
+
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -21,7 +22,8 @@ const CookieSettings = dynamic(
 );
 
 const Footer = () => {
-  const { t } = useTranslation('footer');
+  const t = useTranslations('footer');
+
   return (
     <footer
     // style={{ position: 'absolute', bottom: 0 }}
@@ -35,7 +37,12 @@ const Footer = () => {
         <Container maxWidth="lg">
           <Grid container spacing={5}>
             {/* on mobile screen, each col -> full screen */}
-            <Grid item xs={12} sm={4}>
+            <Grid
+              size={{
+                xs: 12,
+                sm: 4,
+              }}
+            >
               <Box borderBottom={1}>{t('USEFUL_LINKS')}</Box>
               <Box sx={{ my: 2 }}>
                 <Link
@@ -101,7 +108,12 @@ const Footer = () => {
               </Box>
             </Grid>
 
-            <Grid item xs={12} sm={4}>
+            <Grid
+              size={{
+                xs: 12,
+                sm: 4,
+              }}
+            >
               {/* <address> */}
               <Box borderBottom={1} mb={4}>
                 {t('CONTACT.TITLE')}
@@ -121,15 +133,7 @@ const Footer = () => {
                 header="Email :"
                 details={
                   <Typography variant="body2">
-                    <Link
-                      color="inherit"
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        window.location.href =
-                          'mailto:' + 'support' + '@' + 'minasphone.gr';
-                      }}
-                    >
+                    <Link color="inherit" href="mailto:support@minasphone.gr">
                       {'support@minasphone.gr'}
                     </Link>
                   </Typography>
@@ -170,10 +174,11 @@ const Footer = () => {
             </Grid>
 
             <Grid
-              item
+              size={{
+                xs: 12,
+                sm: 4,
+              }}
               container
-              xs={12}
-              sm={4}
               alignContent="center"
               justifyContent="center"
             >

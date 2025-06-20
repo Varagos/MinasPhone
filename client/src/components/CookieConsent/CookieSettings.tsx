@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Button, ButtonProps } from '@mui/material';
 import { showPreferencesModal } from '@/utils/cookieConsentHelpers';

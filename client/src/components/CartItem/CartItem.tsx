@@ -18,6 +18,7 @@ import { CartLineItem } from '@/api/types/cart';
 import { formatPriceWithSymbol } from '@/utils/prices';
 import { useCart } from '@/hooks/useCart';
 import { useTheme } from '@mui/material/styles';
+import { useTranslations } from 'next-intl';
 
 type CartItemWrapperProps = {
   item: CartLineItem;
@@ -72,10 +73,11 @@ const MobileCartItem = ({
   handleRemoveFromCart,
   onUpdateCartQty,
 }: CartItemProps) => {
+  const t = useTranslations('common');
   return (
     <Card sx={{ margin: 'auto' }}>
       <Grid container>
-        <Grid item xs={4}>
+        <Grid size={4}>
           <CardMedia
             component="img"
             image={item.productImage}
@@ -83,29 +85,27 @@ const MobileCartItem = ({
             sx={{ width: '100%', height: 'auto', p: 2 }}
           />
         </Grid>
-        <Grid item xs={8}>
+        <Grid size={8}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {item.productName}
             </Typography>
             <Link href={`/products/${item.productId}`} passHref>
               <Typography variant="body2" color="text.secondary">
-                Λεπτομέρειες
+                {t('DETAILS')}
               </Typography>
             </Link>
           </CardContent>
         </Grid>
       </Grid>
-
       <Grid container>
         <Grid
-          item
-          xs={6}
           sx={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}
+          size={6}
         >
           <IconButton
             onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}
@@ -119,7 +119,7 @@ const MobileCartItem = ({
             <AddIcon />
           </IconButton>
         </Grid>
-        <Grid item xs={6} sx={{ textAlign: 'center' }}>
+        <Grid sx={{ textAlign: 'center' }} size={6}>
           <Typography variant="h6">
             {formatPriceWithSymbol(item.quantity * item.productPrice)}
           </Typography>
@@ -141,6 +141,7 @@ const DesktopCartItem = ({
   handleRemoveFromCart,
   onUpdateCartQty,
 }: CartItemProps) => {
+  const t = useTranslations('common');
   return (
     <Card sx={{ display: 'flex' }}>
       <CardMedia
@@ -160,7 +161,7 @@ const DesktopCartItem = ({
             passHref
           >
             <Typography variant="subtitle1" color="text.secondary">
-              Λεπτομέρειες
+              {t('DETAILS')}
             </Typography>
           </Link>
         </CardContent>

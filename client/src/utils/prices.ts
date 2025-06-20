@@ -1,3 +1,5 @@
+import { Price } from '@/types/price';
+
 const formatPriceWithSymbol = (price: number) => {
   const formattedPrice = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -9,3 +11,10 @@ const formatPriceWithSymbol = (price: number) => {
   return formattedPrice;
 };
 export { formatPriceWithSymbol };
+
+export const priceNumberToFormattedPrice = (price: number): Price => ({
+  raw: price,
+  formatted: `$${price}`,
+  formatted_with_symbol: `$${price}`,
+  formatted_with_code: `$${price}`,
+});

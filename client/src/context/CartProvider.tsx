@@ -1,3 +1,4 @@
+'use client';
 import { api } from '@/api';
 import { Cart } from '@/api/types/cart';
 import React, { createContext, useContext, useEffect, useState } from 'react';

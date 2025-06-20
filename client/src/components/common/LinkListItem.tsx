@@ -1,7 +1,8 @@
 import React from 'react';
 import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from '@/i18n/navigation';
 
 interface LinkListItemProps {
   href: string;
@@ -19,11 +20,17 @@ const LinkListItem: React.FC<LinkListItemProps> = ({ href, children }) => {
   };
 
   return (
-    <NextLink href={href} passHref>
-      <ListItem button component="a" onClick={handleClick}>
-        {children}
-      </ListItem>
-    </NextLink>
+    <ListItem disablePadding>
+      <NextLink
+        href={href}
+        passHref
+        style={{ width: '100%', textDecoration: 'none', color: 'inherit' }}
+      >
+        <ListItemButton component="a" onClick={handleClick}>
+          {children}
+        </ListItemButton>
+      </NextLink>
+    </ListItem>
   );
 };
 

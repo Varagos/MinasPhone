@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
+import { Link as NavigationLink } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 export type BreadcrumbItem = {
   label: string;
@@ -17,6 +19,7 @@ type BreadcrumbNavProps = {
 };
 
 const BreadcrumbNav: React.FC<BreadcrumbNavProps> = ({ items, sx }) => {
+  const t = useTranslations('common');
   return (
     <Breadcrumbs
       separator={<NavigateNextIcon fontSize="small" />}
@@ -25,7 +28,7 @@ const BreadcrumbNav: React.FC<BreadcrumbNavProps> = ({ items, sx }) => {
     >
       <NextLink href="/" passHref legacyBehavior>
         <Link underline="hover" color="inherit">
-          Αρχική
+          {t('HOME')}
         </Link>
       </NextLink>
 

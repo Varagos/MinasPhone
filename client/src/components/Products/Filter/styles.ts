@@ -1,16 +1,16 @@
 import TextField from '@mui/material/TextField';
-import { styled } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 
-export const PriceInputField = styled(TextField)({
+export const PriceInputField = styled(TextField)(({ theme }) => ({
   '& input[type=number]::-webkit-inner-spin-button': {
-    '-webkit-appearance': 'none',
+    WebkitAppearance: 'none',
     margin: 0,
   },
   '& input[type=number]::-webkit-outer-spin-button': {
-    '-webkit-appearance': 'none',
+    WebkitAppearance: 'none',
     margin: 0,
   },
   '& input[type=number]': {
-    '-moz-appearance': 'textfield',
+    MozAppearance: 'textfield',
   },
-});
+}));

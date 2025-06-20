@@ -21,9 +21,11 @@
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.14.0",
     "@fontsource/roboto": "^4.5.8",
+    "@hookform/resolvers": "^5.1.1",
     "@mui/icons-material": "^7",
     "@mui/material": "^7",
     "@mui/material-nextjs": "^7",
+    "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@tailwindcss/postcss": "^4.1.10",
@@ -40,13 +42,14 @@
     "query-string": "^8.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-hook-form": "^7",
+    "react-hook-form": "^7.58.1",
     "react-is": "19.1.0",
     "sharp": "^0.34.2",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.10",
     "uuid": "^9.0.0",
-    "vanilla-cookieconsent": "^3.1.0"
+    "vanilla-cookieconsent": "^3.1.0",
+    "zod": "^3.25.67"
   },
   "resolutions": {
     "react-is": "19.1.0",

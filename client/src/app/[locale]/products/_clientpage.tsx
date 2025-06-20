@@ -4,7 +4,7 @@ import { ProductPaginatedResponse } from '@/api/types/products';
 import ProductsLayout from '@/components/Products/ProductsLayout';
 import useUrl from '@/hooks/useUrl';
 import { parseUrlRange } from '@/utils/pagination';
-import { usePathname } from 'next/navigation';
+import { usePathname } from '@/i18n/navigation';
 
 interface ProductsProps {
   products: ProductPaginatedResponse;

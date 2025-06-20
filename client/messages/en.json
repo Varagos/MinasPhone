@@ -1,4 +1,22 @@
 {
+  "common": {
+    "HOME": "Home",
+    "BACK_TO_HOME": "Back to Home",
+    "DETAILS": "Details",
+    "TRY_ANOTHER_PRODUCT": "Try to search another product",
+    "PRODUCT_NOT_FOUND": "Product not found",
+    "STORE_PICKUP": "Pickup at store",
+    "ADD_TO_CART": "Add to Cart",
+    "DESCRIPTION": "Description",
+    "TOTAL_PRODUCTS": "{count, number} products found",
+    "ALL_PRODUCTS": "ALL PRODUCTS",
+    "PHONE_NUMBER": "210 9224 764",
+    "FILTERS": "Filters",
+    "PRICE": "Price",
+    "CLEAR_FILTERS": "Clear Filters",
+    "CATEGORY_IS_EMPTY": "Category is empty!",
+    "NOT_FOUND_TITLE": "404 - Page Not Found | MinasPhone"
+  },
   "navbar": {
     "SEARCH_PLACEHOLDER": "Search for products..."
   },
@@ -95,5 +113,15 @@
         "SECOND_ROW": "Saturday"
       }
     }
+  },
+  "orders": {
+    "ORDER_NOT_FOUND": "Order not found",
+    "TOTAL": "Total",
+    "EMPTY_CART": "Empty the cart",
+    "CHECKOUT": "Checkout",
+    "NO_PRODUCTS_IN_CART": "There's nothing in your cart",
+    "NO_PRODUCTS_IN_CART_SUBTITLE": "Someone has to buy this great products!",
+    "DISCOVER": "Discover them!",
+    "CART_TITLE": "Shopping Cart"
   }
 }

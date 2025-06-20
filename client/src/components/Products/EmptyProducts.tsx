@@ -3,8 +3,10 @@ import Image from 'next/image';
 import Typography from '@mui/material/Typography';
 
 import EmptyLogo from '../../../public/undraw_empty_xct9.svg';
+import { useTranslations } from 'next-intl';
 
 export function EmptyProducts() {
+  const t = useTranslations('common');
   return (
     <main>
       <Box ml={4} py={6}>
@@ -12,9 +14,9 @@ export function EmptyProducts() {
           variant="h5"
           style={{ display: 'inline-block', verticalAlign: 'top' }}
         >
-          Η κατηγορία είναι άδεια!
+          {t('CATEGORY_IS_EMPTY')}
         </Typography>
-        <Typography>Δοκιμάστε να επιλέξετε κάποια εναλλακτική.</Typography>
+        <Typography>{t('TRY_ANOTHER_PRODUCT')}</Typography>
       </Box>
       <Image
         src={EmptyLogo}

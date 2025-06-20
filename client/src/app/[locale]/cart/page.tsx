@@ -13,6 +13,7 @@ import type { Cart } from '@/api/types/cart';
 import { formatPriceWithSymbol } from '@/utils/prices';
 import { useCart } from '@/hooks/useCart';
 import { useTheme } from '@mui/material/styles';
+import { useTranslations } from 'use-intl';
 
 type CartPageProps = {
   cart: Cart;
@@ -21,6 +22,7 @@ type CartPageProps = {
 
 const FilledCart = ({ cart, handleEmptyCart }: CartPageProps) => {
   const theme = useTheme<any>();
+  const t = useTranslations('orders');
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Container sx={{ mb: 6 }}>
@@ -45,7 +47,7 @@ const FilledCart = ({ cart, handleEmptyCart }: CartPageProps) => {
           }}
         >
           <Typography variant="h4" align={isMobile ? 'center' : 'left'}>
-            Σύνολο: {formatPriceWithSymbol(cart.subtotal)}
+            {t('TOTAL')}: {formatPriceWithSymbol(cart.subtotal)}
           </Typography>
         </Grid>
         <Grid
@@ -67,7 +69,7 @@ const FilledCart = ({ cart, handleEmptyCart }: CartPageProps) => {
               my: isMobile ? 1 : 0,
             }}
           >
-            Άδειασε το καλάθι
+            {t('EMPTY_CART')}
           </Button>
           <LinkButton
             href="/checkout"
@@ -83,7 +85,7 @@ const FilledCart = ({ cart, handleEmptyCart }: CartPageProps) => {
               ml: isMobile ? 0 : 5,
             }}
           >
-            Ολοκλήρωση παραγγελίας
+            {t('CHECKOUT')}
           </LinkButton>
         </Grid>
       </Grid>
@@ -91,9 +93,10 @@ const FilledCart = ({ cart, handleEmptyCart }: CartPageProps) => {
   );
 };
 
-export default async function CartPage() {
+export default function CartPage() {
   // Fix
   const { cart, setCart } = useCart();
+  const t = useTranslations('orders');
 
   // const cart = await api.cart.retrieveCart();
 
@@ -107,9 +110,9 @@ export default async function CartPage() {
 
   const EmptyCart = () => (
     <div style={{ minHeight: '60vh' }}>
-      <Typography variant="h6">Δεν υπάρχει τίποτα στο καλάθι σου.</Typography>
+      <Typography variant="h6">{t('NO_PRODUCTS_IN_CART')}</Typography>
       <Typography variant="subtitle1">
-        Κάποιος πρέπει να ψωνίσει αυτά τα υπέροχα προϊόντα!
+        {t('NO_PRODUCTS_IN_CART_SUBTITLE')}
         <br />
         <Link
           href="/"
@@ -118,7 +121,7 @@ export default async function CartPage() {
           }}
         >
           {' '}
-          Ανακάλυψε τα!
+          {t('DISCOVER')}
         </Link>
       </Typography>
     </div>
@@ -133,7 +136,7 @@ export default async function CartPage() {
           marginTop: '5%',
         }}
       >
-        Καλάθι Αγορών
+        {t('CART_TITLE')}
       </Typography>
       {!cart.lineItems.length ? (
         <EmptyCart />

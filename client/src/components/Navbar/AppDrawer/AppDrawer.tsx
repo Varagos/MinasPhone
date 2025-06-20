@@ -19,7 +19,7 @@ import Lock from '@mui/icons-material/Lock';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Drawer from '@mui/material/Drawer';
 import LinkListItem from '@/components/common/LinkListItem';
-// import LanguageSelector from '../LanguageSelector';
+import LanguageSelector from '../LanguageSelector';
 
 import { Root, classes } from './styles';
 
@@ -68,8 +68,7 @@ const AppDrawer = ({ anchor, toggleDrawer }: any) => {
                 </LinkListItem>
               ))}
               <div style={{ marginLeft: 14, marginTop: 30 }}>
-                {/* TODO Fix */}
-                {/* <LanguageSelector /> */}
+                <LanguageSelector />
               </div>
             </List>
           </div>

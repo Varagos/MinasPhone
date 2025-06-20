@@ -18,6 +18,7 @@ import { CartLineItem } from '@/api/types/cart';
 import { formatPriceWithSymbol } from '@/utils/prices';
 import { useCart } from '@/hooks/useCart';
 import { useTheme } from '@mui/material/styles';
+import { useTranslations } from 'next-intl';
 
 type CartItemWrapperProps = {
   item: CartLineItem;
@@ -72,6 +73,7 @@ const MobileCartItem = ({
   handleRemoveFromCart,
   onUpdateCartQty,
 }: CartItemProps) => {
+  const t = useTranslations('common');
   return (
     <Card sx={{ margin: 'auto' }}>
       <Grid container>
@@ -90,7 +92,7 @@ const MobileCartItem = ({
             </Typography>
             <Link href={`/products/${item.productId}`} passHref>
               <Typography variant="body2" color="text.secondary">
-                Λεπτομέρειες
+                {t('DETAILS')}
               </Typography>
             </Link>
           </CardContent>
@@ -103,7 +105,8 @@ const MobileCartItem = ({
             alignItems: 'center',
             justifyContent: 'center',
           }}
-          size={6}>
+          size={6}
+        >
           <IconButton
             onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}
           >
@@ -138,6 +141,7 @@ const DesktopCartItem = ({
   handleRemoveFromCart,
   onUpdateCartQty,
 }: CartItemProps) => {
+  const t = useTranslations('common');
   return (
     <Card sx={{ display: 'flex' }}>
       <CardMedia
@@ -157,7 +161,7 @@ const DesktopCartItem = ({
             passHref
           >
             <Typography variant="subtitle1" color="text.secondary">
-              Λεπτομέρειες
+              {t('DETAILS')}
             </Typography>
           </Link>
         </CardContent>

@@ -4,12 +4,15 @@ import type { Order } from '@/api/types/orders';
 import LinkButton from '@/components/common/LinkButton';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
 export default async function Order({
   params,
 }: {
   params: Promise<{ orderSlug: string }>;
 }) {
+  const t = await getTranslations('orders');
   // console.log('Product params', params);
   const orderSlug = (await params).orderSlug;
 
@@ -17,7 +20,7 @@ export default async function Order({
   console.log('Order data', data);
 
   console.log({ orderSlug });
-  if (typeof orderSlug !== 'string') return <div>Order not found</div>;
+  if (typeof orderSlug !== 'string') return <div>{t('ORDER_NOT_FOUND')}</div>;
 
   return (
     <main>

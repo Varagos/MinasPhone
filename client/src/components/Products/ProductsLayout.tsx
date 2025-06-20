@@ -20,7 +20,9 @@ import { useState } from 'react';
 import FilterModal from './Filter/mobile/FilterModal';
 import { EmptyProducts } from './EmptyProducts';
 import BreadcrumbNav, { BreadcrumbItem } from '../common/BreadcrumbNav';
-import { usePathname } from 'next/navigation';
+import { usePathname } from '@/i18n/navigation';
+import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 type ProductsLayoutProps = {
   products: Product[];
@@ -41,18 +43,16 @@ export default function ProductsLayout({
   totalProducts,
   breadcrumbItems = [{ label: 'Προϊόντα', href: '/products' }],
 }: ProductsLayoutProps) {
+  const t = useTranslations('common');
   const pathname = usePathname();
   const { filter } = useUrl(pathname);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const emptyFilters = !filter || Object.keys(filter).length === 0;
 
-  // Check if we're in a category page by examining the URL path and breadcrumb items
-  const categorySlug =
-    pathname === '/categories/[categorySlug]'
-      ? (pathname.split('/').pop() as string)
-      : null;
+  const params = useParams<{ categorySlug?: string }>();
 
-  console.log('ProductsLayout fromCategory', categorySlug);
+  // Check if we're in a category page by examining the URL path and breadcrumb items
+  const categorySlug = params.categorySlug ?? null;
 
   if (!products.length && emptyFilters) {
     return <EmptyProducts />;
@@ -78,7 +78,7 @@ export default function ProductsLayout({
 
           {/* Total products */}
           <Typography variant="body1" gutterBottom>
-            Βρέθηκαν {totalProducts} προϊόντα
+            {t('TOTAL_PRODUCTS', { count: totalProducts })}
           </Typography>
         </Box>
 

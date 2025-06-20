@@ -6,10 +6,12 @@ import Button from '@mui/material/Button';
 import PriceFilter from './PriceFilter';
 import useUrl from '@/hooks/useUrl';
 import { priceFilters } from './contants';
-import { usePathname } from 'next/navigation';
+import { usePathname } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 const Filter = () => {
   const pathName = usePathname();
+  const t = useTranslations('common');
   const { clearFilters, filter } = useUrl(pathName);
   const [activeFilters, setActiveFilters] = useState<{
     price?: boolean;
@@ -53,7 +55,7 @@ const Filter = () => {
     <div>
       <Box border={1} borderColor="grey.300" borderRadius="1%" p={4}>
         <Typography variant="h5" gutterBottom color="black" component="h3">
-          <strong>Φίλτρα</strong>
+          <strong>{t('FILTERS')}</strong>
         </Typography>
 
         {activeFilters?.price && (
@@ -78,7 +80,7 @@ const Filter = () => {
             color="primary"
             onClick={handleClear}
           >
-            Απαλοιφή φίλτρων
+            {t('CLEAR_FILTERS')}
           </Button>
         )}
         <hr />

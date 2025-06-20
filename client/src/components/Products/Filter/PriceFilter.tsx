@@ -9,7 +9,8 @@ import Typography from '@mui/material/Typography';
 import { PriceInputField } from './styles';
 import useUrl from '@/hooks/useUrl';
 import { PriceFiltersFilterKeys, PriceOption } from './definitions';
-import { usePathname } from 'next/navigation';
+import { usePathname } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 type PriceFilterProps = {
   priceFilters: PriceOption[];
@@ -23,6 +24,7 @@ export function PriceFilter({
   minMaxPrice,
 }: PriceFilterProps) {
   const [sliderMinPrice, sliderMaxPrice] = minMaxPrice;
+  const t = useTranslations('common');
 
   const pathName = usePathname();
   const { filter, addFilter, removeFilter } = useUrl(pathName);
@@ -95,7 +97,7 @@ export function PriceFilter({
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, sm: 12 }}>
           <Typography variant="h6" gutterBottom color="black" component="h3">
-            <strong>Τιμή</strong>
+            <strong>{t('PRICE')}</strong>
           </Typography>
         </Grid>
         <Grid size={{ xs: 6, sm: 6 }}>

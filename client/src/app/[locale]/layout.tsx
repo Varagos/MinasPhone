@@ -7,7 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import theme from '@/_theme';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import { CartProvider } from '@/context/CartProvider';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
@@ -18,6 +18,10 @@ const roboto = Roboto({
   display: 'swap',
   variable: '--font-roboto',
 });
+
+export const viewport: Viewport = {
+  themeColor: '#3F72AF',
+};
 
 export const metadata: Metadata = {
   title: 'MinasPhone - Buy Affordable Phones & Accessories',
@@ -36,9 +40,7 @@ export const metadata: Metadata = {
     'phone cases',
     'screen protectors',
   ],
-  themeColor: '#3F72AF',
   robots: 'index, follow',
-  viewport: 'width=device-width, initial-scale=1',
   openGraph: {
     title: 'MinasPhone - Buy Affordable Phones & Accessories',
     description:

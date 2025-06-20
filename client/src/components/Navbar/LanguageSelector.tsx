@@ -3,14 +3,15 @@ import React, { useTransition } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import Image from 'next/image';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n/navigation';
 
 // Regular components
 import { useLocale, Locale } from 'next-intl';
+import { useParams } from 'next/navigation';
 
 const languages: Record<string, { label: string; flag: string }> = {
-  el: { label: 'el', flag: '/flags/gr.webp' },
-  en: { label: 'en', flag: '/flags/us.webp' },
+  el: { label: 'Greek', flag: '/flags/gr.webp' },
+  en: { label: 'English', flag: '/flags/us.webp' },
   // ar: { label: 'ar', flag: '/flags/eg.webp' },
   // Add other languages here
 };

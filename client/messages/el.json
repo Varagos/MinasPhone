@@ -1,5 +1,25 @@
 {
-  "navbar": { "SEARCH_PLACEHOLDER": "Αναζήτηση" },
+  "common": {
+    "HOME": "Αρχική",
+    "BACK_TO_HOME": "Επιστροφή στην Αρχική",
+    "DETAILS": "Λεπτομέρειες",
+    "TRY_ANOTHER_PRODUCT": "Δοκιμάστε να ψάξετε κάποιο άλλο προϊόν",
+    "PRODUCT_NOT_FOUND": "Το προϊόν δεν βρέθηκε",
+    "STORE_PICKUP": "Παραλαβή από το κατάστημα.",
+    "ADD_TO_CART": "Προσθήκη στο καλάθι",
+    "DESCRIPTION": "Περιγραφή",
+    "TOTAL_PRODUCTS": "Βρέθηκαν {count, number} προϊόντα",
+    "ALL_PRODUCTS": "ΟΛΑ ΤΑ ΠΡΟΪΟΝΤΑ",
+    "PHONE_NUMBER": "210 9224 764",
+    "FILTERS": "Φίλτρα",
+    "PRICE": "Τιμή",
+    "CLEAR_FILTERS": "Απαλοιφή φίλτρων",
+    "CATEGORY_IS_EMPTY": "Η κατηγορία είναι άδεια!",
+    "NOT_FOUND_TITLE": "404 - Σελίδα δεν βρέθηκε | MinasPhone"
+  },
+  "navbar": {
+    "SEARCH_PLACEHOLDER": "Αναζήτηση"
+  },
   "landing": {
     "HELLO_WORLD": "Hello, World!",
     "LANDING": {
@@ -93,5 +113,15 @@
         "SECOND_ROW": "Σάββατο"
       }
     }
+  },
+  "orders": {
+    "ORDER_NOT_FOUND": "Η παραγγελία δε βρέθηκε",
+    "TOTAL": "Σύνολο",
+    "EMPTY_CART": "Άδειασε το καλάθι",
+    "CHECKOUT": "Ολοκλήρωση παραγγελίας",
+    "NO_PRODUCTS_IN_CART": "Δεν υπάρχει τίποτα στο καλάθι σου.",
+    "NO_PRODUCTS_IN_CART_SUBTITLE": "Κάποιος πρέπει να ψωνίσει αυτά τα υπέροχα προϊόντα!",
+    "DISCOVER": "Ανακάλυψε τα!",
+    "CART_TITLE": "Καλάθι Αγορών"
   }
 }

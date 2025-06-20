@@ -26,11 +26,12 @@ import SimpleMenu from './SimpleMenu/SimpleMenu';
 import { SearchInputField, SearchPromptIcon } from './Search';
 import AppTheme from '@/lib/theme';
 import theme from '@/lib/theme';
-// import LanguageSelector from './LanguageSelector';
+import LanguageSelector from './LanguageSelector';
 import MobileSearch from './Search/MobileSearch';
 import { Theme } from '@mui/material';
-import { usePathname } from 'next/navigation';
+import { usePathname } from '@/i18n/navigation';
 import { useCart } from '@/hooks/useCart';
+import { useLocale, useTranslations } from 'next-intl';
 
 const FEATURED_CATEGORIES = [
   {
@@ -57,10 +58,13 @@ const FEATURED_CATEGORIES = [
 
 const NewNavbar = () => {
   const currentPath = usePathname();
+  const locale = useLocale();
 
   const [anchor, setAnchor] = useState(false);
 
   const [searchActive, setSearchActive] = useState(false);
+
+  const t = useTranslations('common');
 
   const handleSearchToggle = () => {
     setSearchActive((prev) => !prev);
@@ -88,8 +92,10 @@ const NewNavbar = () => {
     path: string,
     theme: typeof AppTheme
   ): Record<string, any> {
+    // Add locale
     const basePathWithOutQuery = currentPath.split('?')[0];
     const isActive = basePathWithOutQuery === path;
+    console.log(path, basePathWithOutQuery, isActive);
 
     return {
       textDecoration: 'none',
@@ -143,12 +149,11 @@ const NewNavbar = () => {
                   color: theme.palette.secondary.contrastText,
                 })}
               >
-                210 9224 764
+                {t('PHONE_NUMBER')}
               </Typography>
             </Box>
           </Box>
-          {/* TODO fix */}
-          {/* <LanguageSelector /> */}
+          <LanguageSelector />
         </Toolbar>
       </AppBar>
       <MobileSearch />
@@ -196,7 +201,7 @@ const NewNavbar = () => {
                   })}
                 >
                   <LinkButton href="/" sx={(theme) => activeClass('/', theme)}>
-                    ΑΡΧΙΚΗ
+                    {t('HOME')}
                   </LinkButton>
                   {FEATURED_CATEGORIES.map((category) => (
                     <LinkButton
@@ -212,7 +217,7 @@ const NewNavbar = () => {
                     href="/products"
                     sx={(theme) => activeClass('/products', theme)}
                   >
-                    ΟΛΑ ΤΑ ΠΡΟΪΟΝΤΑ
+                    {t('ALL_PRODUCTS')}
                   </LinkButton>
                 </Box>
               </>

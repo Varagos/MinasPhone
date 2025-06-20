@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -16,34 +17,57 @@ import BreadcrumbNav, {
   BreadcrumbItem,
 } from '@/components/common/BreadcrumbNav';
 import AddToCartButton from '@/components/common/AddToCartButton';
+import { Metadata, ResolvingMetadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
-export default async function ProductPage({
-  params,
-  searchParams,
-}: {
+type Props = {
   params: Promise<{ productId: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
+};
+
+// Memoize API call
+const getProduct = cache(async (productId: string) => {
+  const product = await api.products.findOneById(productId);
+  return product;
+});
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
   const productId = (await params).productId;
 
-  const product = await api.products.findOneById(productId);
+  // fetch post information
+  const product = await getProduct(productId);
+  if (!product) {
+    return {
+      title: 'Product not found',
+      description: 'Product not found',
+    };
+  }
+
+  return {
+    title: product.name,
+    description: product.description,
+  };
+}
+
+export default async function ProductPage({ params, searchParams }: Props) {
+  const productId = (await params).productId;
+  const t = await getTranslations('common');
+
+  const product = await getProduct(productId);
   // TODO fix
   // const { setCart } = useCart();
   // const { from } = router.query;
   const from = (await searchParams).from;
-
-  const handleAddToCart = async (id: string) => {
-    const cart = await api.cart.addToCart(id, 1);
-    // TODO fix
-    // setCart(cart);
-  };
 
   if (!product) {
     return (
       <div style={{ minHeight: '70vh' }}>
         <Box sx={{ textAlign: 'center', mt: 10 }}>
           <Typography variant="h5" gutterBottom>
-            Το προϊόν δεν βρέθηκε
+            {t('PRODUCT_NOT_FOUND')}
           </Typography>
           <Image
             src={EmptyLogo.src}
@@ -52,12 +76,12 @@ export default async function ProductPage({
             height={300}
           />
           <Typography variant="body1" color="textSecondary">
-            Δοκιμάστε να επιλέξετε κάποιο άλλο προϊόν.
+            {t('TRY_ANOTHER_PRODUCT')}
             <Link
               href="/"
               style={{ color: '#1976d2', textDecoration: 'underline' }}
             >
-              Επιστροφή στην αρχική σελίδα
+              {t('BACK_TO_HOME')}
             </Link>
           </Typography>
         </Box>
@@ -147,13 +171,6 @@ export default async function ProductPage({
   return (
     <>
       <Head>
-        <title>{product.name} | MinasPhone</title>
-        <meta
-          name="description"
-          content={product.description
-            .replace(/<[^>]*>/g, '')
-            .substring(0, 160)}
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
@@ -236,18 +253,16 @@ Every product needs good product page-quality images. These images (usually 640 
             >
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <StoreMallDirectoryTwoToneIcon />
-                <Typography variant="caption">
-                  Παραλαβή από το κατάστημα.
-                </Typography>
+                <Typography variant="caption">{t('STORE_PICKUP')}</Typography>
               </Box>
               <AddToCartButton
                 productId={product.id}
-                content="Προσθήκη στο καλάθι"
+                content={t('ADD_TO_CART')}
               />
             </Box>
 
             <Box sx={{ mt: 10 }}>
-              <Typography variant="h6">Περιγραφή</Typography>
+              <Typography variant="h6">{t('DESCRIPTION')}</Typography>
               <Typography
                 dangerouslySetInnerHTML={{ __html: product.description }}
                 variant="body2"

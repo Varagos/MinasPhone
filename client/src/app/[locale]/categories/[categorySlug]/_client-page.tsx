@@ -5,7 +5,7 @@ import { ProductPaginatedResponse } from '@/api/types/products';
 import useUrl from '@/hooks/useUrl';
 import { parseUrlRange } from '@/utils/pagination';
 import { Category as CategoryDto } from '@/api/types/categories';
-import { usePathname } from 'next/navigation';
+import { usePathname } from '@/i18n/navigation';
 
 interface CategoryProps {
   category: CategoryDto;

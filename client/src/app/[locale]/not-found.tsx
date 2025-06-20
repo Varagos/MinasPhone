@@ -9,10 +9,12 @@ import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import EmptyLogo from '/public/undraw_empty_xct9.svg';
+import { useTranslations } from 'next-intl';
 
 export default function Custom404() {
   const router = useRouter();
   const [countdown, setCountdown] = useState(10);
+  const t = useTranslations('common');
 
   // Auto-redirect after 10 seconds
   useEffect(() => {
@@ -33,7 +35,7 @@ export default function Custom404() {
   return (
     <>
       <Head>
-        <title>404 - Σελίδα δεν βρέθηκε | MinasPhone</title>
+        <title>{t('NOT_FOUND_TITLE')}</title>
         <meta
           name="description"
           content="Η σελίδα που αναζητάτε δεν βρέθηκε."

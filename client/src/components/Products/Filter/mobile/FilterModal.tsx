@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import PriceFilter from '../PriceFilter';
 import { priceFilters } from '../contants';
 import Filter from '../Filter';
+import { useTranslations } from 'next-intl';
 // import other necessary components
 
 type FilterModalProps = {
@@ -19,6 +20,7 @@ type FilterModalProps = {
 
 const FilterModal: React.FC<FilterModalProps> = ({ open, onClose }) => {
   // Re-use the same logic and components as your desktop filter here
+  const t = useTranslations('common');
 
   return (
     <Dialog
@@ -38,7 +40,7 @@ const FilterModal: React.FC<FilterModalProps> = ({ open, onClose }) => {
             <CloseIcon />
           </IconButton>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-            Φίλτρα
+            {t('FILTERS')}
           </Typography>
           {/* <Button autoFocus color="inherit" onClick={onClose}>
             Apply

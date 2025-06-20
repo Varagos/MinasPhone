@@ -1,20 +1,14 @@
 'use client';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Image from 'next/image';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Pagination from '@mui/material/Pagination';
-import Link from '@mui/material/Link';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import ProductCard from './ProductCard/ProductCard';
 import { MainContainer, ToolBar } from './styles';
-import EmptyLogo from '../../../public/undraw_empty_xct9.svg';
 import Filter from './Filter/Filter';
 import { Product } from '@/api/types/types';
 import useUrl from '@/hooks/useUrl';
-import { useRouter } from 'next/router';
 import FloatingActionButton from './Filter/mobile/FloatingActionButton';
 import { useState } from 'react';
 import FilterModal from './Filter/mobile/FilterModal';
@@ -23,6 +17,7 @@ import BreadcrumbNav, { BreadcrumbItem } from '../common/BreadcrumbNav';
 import { usePathname } from '@/i18n/navigation';
 import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import ProductsPagination from './Pagination/Pagination';
 
 type ProductsLayoutProps = {
   products: Product[];
@@ -123,14 +118,12 @@ export default function ProductsLayout({
           </Grid>
         </Grid>
         {/* Pagination */}
-        <Grid container justifyContent="flex-end">
-          <Pagination
-            count={totalPages}
-            page={page}
-            onChange={(event, newPage) => onPageChange(newPage)}
-            sx={{ pt: 2 }} // Add some padding-top for spacing
-          />
-        </Grid>
+
+        <ProductsPagination
+          page={page}
+          onPageChange={onPageChange}
+          totalPages={totalPages}
+        />
       </Container>
     </MainContainer>
   );

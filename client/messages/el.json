@@ -15,7 +15,9 @@
     "PRICE": "Τιμή",
     "CLEAR_FILTERS": "Απαλοιφή φίλτρων",
     "CATEGORY_IS_EMPTY": "Η κατηγορία είναι άδεια!",
-    "NOT_FOUND_TITLE": "404 - Σελίδα δεν βρέθηκε | MinasPhone"
+    "NOT_FOUND_TITLE": "404 - Σελίδα δεν βρέθηκε | MinasPhone",
+    "NEXT": "Επόμενο",
+    "PREVIOUS": "Προηγούμενο"
   },
   "navbar": {
     "SEARCH_PLACEHOLDER": "Αναζήτηση"

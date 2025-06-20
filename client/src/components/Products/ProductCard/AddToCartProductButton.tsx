@@ -34,7 +34,7 @@ const AddToCartProductButton = ({ productId }: Props) => {
           <Button
             variant="ghost"
             size="icon"
-            className="rounded-full bg-primary/20 hover:bg-primary/30"
+            className="rounded-full bg-primary/20 hover:bg-primary/30 cursor-pointer"
             onClick={handleAddToCart}
             aria-label="Add to Cart"
           >

@@ -15,7 +15,9 @@
     "PRICE": "Price",
     "CLEAR_FILTERS": "Clear Filters",
     "CATEGORY_IS_EMPTY": "Category is empty!",
-    "NOT_FOUND_TITLE": "404 - Page Not Found | MinasPhone"
+    "NOT_FOUND_TITLE": "404 - Page Not Found | MinasPhone",
+    "NEXT": "Next",
+    "PREVIOUS": "Previous"
   },
   "navbar": {
     "SEARCH_PLACEHOLDER": "Search for products..."

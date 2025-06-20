@@ -162,20 +162,10 @@ export function Stepper({
 }
 
 export interface StepProps {
-  label: string
-  optional?: boolean
-  completed?: boolean
-  error?: boolean
-  icon?: React.ReactNode
   children?: React.ReactNode
 }
 
 export function Step({
-  label,
-  optional,
-  completed,
-  error,
-  icon,
   children,
 }: StepProps) {
   return (
@@ -188,28 +178,18 @@ export function Step({
 export interface StepLabelProps {
   children: React.ReactNode
   optional?: React.ReactNode
-  error?: boolean
-  completed?: boolean
   icon?: React.ReactNode
 }
 
 export function StepLabel({
   children,
   optional,
-  error,
-  completed,
   icon,
 }: StepLabelProps) {
   return (
     <div className="step-label">
       {icon || (
-        <div
-          className={cn(
-            "step-icon",
-            error && "step-icon-error",
-            completed && "step-icon-completed"
-          )}
-        />
+        <div className="step-icon" />
       )}
       <div className="step-label-container">
         <span className="step-label-text">{children}</span>
@@ -222,14 +202,12 @@ export function StepLabel({
 export interface StepContentProps {
   children: React.ReactNode
   active?: boolean
-  transition?: boolean
   className?: string
 }
 
 export function StepContent({
   children,
   active,
-  transition = true,
   className,
 }: StepContentProps) {
   return (
@@ -237,7 +215,6 @@ export function StepContent({
       className={cn(
         "step-content",
         !active && "step-content-hidden",
-        transition && "step-content-transition",
         className
       )}
     >

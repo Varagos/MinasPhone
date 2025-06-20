@@ -1,16 +1,13 @@
 'use client';
 import React, { useState } from 'react';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-// import Stepper from '@mui/material/Stepper';
 
 import { CheckoutCapture } from '@/types/checkout-capture';
-import LinkButton from '@/components/common/LinkButton';
+import { Button } from '@/components/ui/button';
+import { Link as NavigationLink } from '@/i18n/navigation';
 import Confirmation, {
   CheckoutOrderResponse,
 } from './components/Confirmation/Confirmation';
-import Form from './components/Form/Form';
+import CheckoutController from './components/CheckoutController/CheckoutController';
 import { useCart } from '@/hooks/useCart';
 import { api } from '@/api';
 import { CheckoutToken } from '@/types/checkout-token';
@@ -95,13 +92,17 @@ export default function Checkout() {
   };
 
   if (error) {
-    <>
-      <Typography variant="h5">Error: {error}</Typography>
-      <br />
-      <LinkButton href="/" variant="outlined" type="button">
-        {t('BACK_TO_HOME')}
-      </LinkButton>
-    </>;
+    return (
+      <div className="flex flex-col items-center justify-center p-6">
+        <h2 className="text-xl font-semibold text-red-600 mb-4">
+          {'Error: '}
+          {error}
+        </h2>
+        <Button asChild variant="outline" className="mt-4">
+          <NavigationLink href="/">{t('BACK_TO_HOME')}</NavigationLink>
+        </Button>
+      </div>
+    );
   }
 
   const createCheckoutInfoFromCart = (
@@ -136,26 +137,15 @@ export default function Checkout() {
   };
 
   return (
-    <main>
-      <Toolbar />
-      <main style={{ marginTop: '5%', width: 'auto' }}>
-        <Paper
-          sx={(theme) => ({
-            marginX: 20,
-            marginTop: '5%',
-            marginBottom: '5%',
-            padding: '10%',
-            [theme.breakpoints.down('sm')]: {
-              marginX: 2,
-              // marginTop: '10%',
-              // marginBottom: '10%',
-              padding: 2,
-            },
-          })}
-        >
-          <Typography variant="h4" align="center">
-            Ολοκλήρωση Παραγγελίας
-          </Typography>
+    <div className="flex flex-col min-h-screen">
+      {/* Top spacer (replacing Toolbar) */}
+      <div className="h-16 md:h-20" />
+
+      <main className="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 mt-8">
+        <div className="bg-white rounded-lg shadow-md mx-auto my-8 p-4 md:p-8 lg:p-12 max-w-4xl">
+          <h1 className="text-2xl md:text-3xl font-bold text-center mb-6">
+            {'Ολοκλήρωση Παραγγελίας'}
+          </h1>
 
           <Stepper
             steps={steps}
@@ -166,7 +156,7 @@ export default function Checkout() {
           {activeStep === steps.length ? (
             <Confirmation orderResponse={orderResponse} />
           ) : (
-            <Form
+            <CheckoutController
               activeStep={activeStep}
               next={next}
               nextStep={nextStep}
@@ -176,8 +166,8 @@ export default function Checkout() {
               checkoutToken={createCheckoutInfoFromCart(cart)}
             />
           )}
-        </Paper>
+        </div>
       </main>
-    </main>
+    </div>
   );
 }

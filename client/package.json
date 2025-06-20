@@ -24,6 +24,8 @@
     "@mui/icons-material": "^7",
     "@mui/material": "^7",
     "@mui/material-nextjs": "^7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-tooltip": "^1.2.7",
     "@tailwindcss/postcss": "^4.1.10",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",

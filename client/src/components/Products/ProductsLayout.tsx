@@ -1,8 +1,5 @@
 'use client';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+// MUI components replaced with Tailwind CSS
 
 import ProductCard from './ProductCard/ProductCard';
 import { MainContainer, ToolBar } from './styles';
@@ -60,38 +57,26 @@ export default function ProductsLayout({
   return (
     <MainContainer>
       <ToolBar />
-      <Container sx={{ pb: 20 }}>
+      <div className="container mx-auto px-4 pb-20">
         {/* Header Section with Title, Breadcrumbs, etc - Now full width above everything */}
-        <Box sx={{ mb: 4 }}>
+        <div className="mb-16">
           {/* Breadcrumbs */}
           <BreadcrumbNav items={breadcrumbItems} />
 
           {/* Title */}
-          <Typography variant="h4" gutterBottom color="black" component="h1">
-            <strong>{title}</strong>
-          </Typography>
+          <h1 className="text-2xl font-bold text-black mb-2">{title}</h1>
 
           {/* Total products */}
-          <Typography variant="body1" gutterBottom>
+          <p className="text-base mb-4">
             {t('TOTAL_PRODUCTS', { count: totalProducts })}
-          </Typography>
-        </Box>
+          </p>
+        </div>
 
-        <Grid container justifyContent="center" spacing={4}>
+        <div className="flex flex-wrap justify-center -mx-4">
           {/* <Hidden xsDown> */}
-          <Grid
-            size={{
-              xs: 0,
-              sm: 3,
-            }}
-            sx={(theme) => ({
-              [theme.breakpoints.down('md')]: {
-                display: 'none',
-              },
-            })}
-          >
+          <div className="hidden md:block w-full md:w-1/4 px-4">
             <Filter />
-          </Grid>
+          </div>
           {/* Mobile Filter - START */}
           <FloatingActionButton handleOpenFilters={handleOpenFilters} />
           <FilterModal
@@ -100,23 +85,21 @@ export default function ProductsLayout({
           />
           {/* Mobile Filter - END */}
 
-          <Grid container size={{ xs: 12, sm: 9 }} spacing={4}>
-            {products.map((product) => (
-              <Grid
-                size={{
-                  xs: 12,
-                  sm: 6,
-                  md: 6,
-                  lg: 4,
-                }}
-                key={product.id}
-                // sx={{ borderColor: 'red', borderWidth: 1, borderStyle: 'solid' }}
-              >
-                <ProductCard product={product} fromCategory={categorySlug} />
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
+          <div className="w-full md:w-3/4 px-4">
+            <div className="flex flex-wrap -mx-4">
+              {products.map((product) => (
+                <div 
+                  className="w-full sm:w-1/2 lg:w-1/3 p-4" 
+                  key={product.id}
+                >
+                  <div className="h-full">
+                    <ProductCard product={product} fromCategory={categorySlug} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
         {/* Pagination */}
 
         <ProductsPagination
@@ -124,7 +107,7 @@ export default function ProductsLayout({
           onPageChange={onPageChange}
           totalPages={totalPages}
         />
-      </Container>
+      </div>
     </MainContainer>
   );
 }

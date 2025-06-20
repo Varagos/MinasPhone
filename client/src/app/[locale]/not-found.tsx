@@ -1,17 +1,15 @@
 'use client';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
+
 import Image from 'next/image';
-import Link from 'next/link';
-import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import EmptyLogo from '@/../public/undraw_empty_xct9.svg';
 import { useTranslations } from 'next-intl';
+import { Link as NavigationLink } from '@/i18n/navigation';
+import { Button } from '@/components/ui/button';
 
-export default function Custom404() {
+// Custom 404 Page as a catch-all route inside locale context
+export default function CatchAllNotFound() {
   const router = useRouter();
   const [countdown, setCountdown] = useState(10);
   const t = useTranslations('common');
@@ -33,137 +31,69 @@ export default function Custom404() {
   }, [router]);
 
   return (
-    <>
-      <Head>
-        <title>{t('NOT_FOUND_TITLE')}</title>
-        <meta
-          name="description"
-          content="Η σελίδα που αναζητάτε δεν βρέθηκε."
-        />
-      </Head>
-      <Container sx={{ py: 4 }}>
-        <Container maxWidth="md">
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              minHeight: '70vh',
-              py: 8,
-              textAlign: 'center',
-            }}
-          >
-            <Typography
-              variant="h2"
-              component="h1"
-              gutterBottom
-              sx={{
-                fontWeight: 700,
-                color: 'primary.main',
-                mb: 2,
-              }}
+    <div className="py-16">
+      <div className="container mx-auto max-w-3xl">
+        <div className="flex flex-col items-center justify-center min-h-[70vh] py-8 text-center">
+          <h1 className="text-4xl font-bold text-primary mb-8">{'404'}</h1>
+
+          <h2 className="text-2xl font-semibold mb-4">
+            {'Ωχ! Χάσατε το δρόμο σας;'}
+          </h2>
+
+          <p className="mb-16 max-w-[600px] text-muted-foreground">
+            {'Φαίνεται ότι ψάχνετε για ένα προϊόν που εξαφανίστηκε σαν τα' +
+              ' ακουστικά που πάντα χάνονται στις τσέπες μας. Η σελίδα που' +
+              ' αναζητάτε δεν υπάρχει ή μετακινήθηκε.'}
+          </p>
+
+          <div className="w-[280px] h-[280px] relative mb-16">
+            <Image
+              src={EmptyLogo}
+              alt="Page not found"
+              style={{ width: '100%', height: 'auto' }}
+              priority
+            />
+          </div>
+
+          <div className="flex flex-col items-center gap-4">
+            <Button
+              variant="default"
+              size="lg"
+              className="px-8 py-6 rounded-md font-semibold text-lg"
+              asChild
             >
-              404
-            </Typography>
+              <NavigationLink href="/">{t('BACK_TO_HOME')}</NavigationLink>
+            </Button>
 
-            <Typography variant="h4" component="h2" gutterBottom sx={{ mb: 1 }}>
-              Ωχ! Χάσατε το δρόμο σας;
-            </Typography>
+            <p className="text-sm text-muted-foreground">
+              {'Αυτόματη ανακατεύθυνση σε'} {countdown} {'δευτερόλεπτα...'}
+            </p>
+          </div>
 
-            <Typography variant="body1" sx={{ mb: 4, maxWidth: '600px' }}>
-              Φαίνεται ότι ψάχνετε για ένα προϊόν που εξαφανίστηκε σαν τα
-              ακουστικά που πάντα χάνονται στις τσέπες μας. Η σελίδα που
-              αναζητάτε δεν υπάρχει ή μετακινήθηκε.
-            </Typography>
-
-            <Box
-              sx={{
-                width: '280px',
-                height: '280px',
-                position: 'relative',
-                mb: 4,
-              }}
-            >
-              <Image
-                src={EmptyLogo}
-                alt="Page not found"
-                style={{ width: '100%', height: 'auto' }}
-                priority
-              />
-            </Box>
-
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 2,
-              }}
-            >
-              <Button
-                variant="contained"
-                color="primary"
-                component={Link}
-                href="/"
-                size="large"
-                sx={{
-                  px: 4,
-                  py: 1,
-                  borderRadius: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Επιστροφή στην Αρχική
+          <div className="mt-12">
+            <p className="text-sm text-muted-foreground mb-4">
+              {'Μήπως ψάχνετε για:'}
+            </p>
+            <div className="flex justify-center flex-wrap gap-4">
+              <Button variant="outline" size="sm" asChild>
+                <NavigationLink href="/products">
+                  {t('ALL_PRODUCTS')}
+                </NavigationLink>
               </Button>
-
-              <Typography variant="body2" color="text.secondary">
-                Αυτόματη ανακατεύθυνση σε {countdown} δευτερόλεπτα...
-              </Typography>
-            </Box>
-
-            <Box sx={{ mt: 6 }}>
-              <Typography variant="body2" color="text.secondary">
-                Μήπως ψάχνετε για:
-              </Typography>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexWrap: 'wrap',
-                  gap: 2,
-                  mt: 2,
-                }}
-              >
-                <Button
-                  variant="outlined"
-                  size="small"
-                  component={Link}
-                  href="/products"
-                >
-                  Όλα τα Προϊόντα
-                </Button>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  component={Link}
-                  href="/categories"
-                >
-                  Κατηγορίες
-                </Button>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  component={Link}
-                  href="/#contact"
-                >
-                  Επικοινωνία
-                </Button>
-              </Box>
-            </Box>
-          </Box>
-        </Container>
-      </Container>
-    </>
+              <Button variant="outline" size="sm" asChild>
+                <NavigationLink href="/categories">
+                  {'Κατηγορίες'}
+                </NavigationLink>
+              </Button>
+              <Button variant="outline" size="sm" asChild>
+                <NavigationLink href="/#contact">
+                  {'Επικοινωνία'}
+                </NavigationLink>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

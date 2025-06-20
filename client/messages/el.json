@@ -17,7 +17,9 @@
     "CATEGORY_IS_EMPTY": "Η κατηγορία είναι άδεια!",
     "NOT_FOUND_TITLE": "404 - Σελίδα δεν βρέθηκε | MinasPhone",
     "NEXT": "Επόμενο",
-    "PREVIOUS": "Προηγούμενο"
+    "PREVIOUS": "Προηγούμενο",
+    "ADD_TO_CART_SUCCESS": "Το προϊόν προστέθηκε στο καλάθι",
+    "ADD_TO_CART_ERROR": "Σφάλμα κατά την προσθήκη στο καλάθι"
   },
   "navbar": {
     "SEARCH_PLACEHOLDER": "Αναζήτηση"

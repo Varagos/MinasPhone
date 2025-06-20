@@ -14,6 +14,7 @@ import { CartProvider } from '@/context/CartProvider';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import dynamic from 'next/dynamic';
+import { ToastProvider } from '@/context/ToastProvider';
 
 // Dynamically import CookieConsent with SSR disabled
 const CookieConsentComponent = dynamic(
@@ -93,13 +94,15 @@ export default async function RootLayout({
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <NextIntlClientProvider>
-              <CartProvider>
-                <CssBaseline />
-                <Navbar />
-                <main style={{ minHeight: '80vh' }}>{children}</main>
-                <Footer />
-                <CookieConsentComponent />
-              </CartProvider>
+              <ToastProvider>
+                <CartProvider>
+                  <CssBaseline />
+                  <Navbar />
+                  <main style={{ minHeight: '80vh' }}>{children}</main>
+                  <Footer />
+                  <CookieConsentComponent />
+                </CartProvider>
+              </ToastProvider>
             </NextIntlClientProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>

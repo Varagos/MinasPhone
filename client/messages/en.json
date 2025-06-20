@@ -17,7 +17,9 @@
     "CATEGORY_IS_EMPTY": "Category is empty!",
     "NOT_FOUND_TITLE": "404 - Page Not Found | MinasPhone",
     "NEXT": "Next",
-    "PREVIOUS": "Previous"
+    "PREVIOUS": "Previous",
+    "ADD_TO_CART_SUCCESS": "Product added to Cart",
+    "ADD_TO_CART_ERROR": "Error while adding product to Cart"
   },
   "navbar": {
     "SEARCH_PLACEHOLDER": "Search for products..."

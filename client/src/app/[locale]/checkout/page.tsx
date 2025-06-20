@@ -1,13 +1,9 @@
 'use client';
 import React, { useState } from 'react';
-import Head from 'next/head';
-import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
+// import Stepper from '@mui/material/Stepper';
 
 import { CheckoutCapture } from '@/types/checkout-capture';
 import LinkButton from '@/components/common/LinkButton';
@@ -20,8 +16,8 @@ import { api } from '@/api';
 import { CheckoutToken } from '@/types/checkout-token';
 import { Cart } from '@/api/types/types';
 import { priceNumberToFormattedPrice } from '@/utils/prices';
-import { Viewport } from 'next';
 import { useTranslations } from 'next-intl';
+import { Stepper } from '@/components/ui/stepper';
 
 const steps = ['Λογαριασμός', 'Διέυθυνση', 'Πληρωμή'];
 
@@ -160,13 +156,13 @@ export default function Checkout() {
           <Typography variant="h4" align="center">
             Ολοκλήρωση Παραγγελίας
           </Typography>
-          <Stepper activeStep={activeStep} sx={{ padding: '0 10%' }}>
-            {steps.map((step) => (
-              <Step key={step}>
-                <StepLabel>{step}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
+
+          <Stepper
+            steps={steps}
+            activeStep={activeStep}
+            className="mb-8"
+            alternativeLabel
+          />
           {activeStep === steps.length ? (
             <Confirmation orderResponse={orderResponse} />
           ) : (

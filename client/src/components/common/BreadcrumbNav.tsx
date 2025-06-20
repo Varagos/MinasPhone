@@ -3,9 +3,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { useRouter } from 'next/router';
 import NextLink from 'next/link';
-import { Link as NavigationLink } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 
 export type BreadcrumbItem = {
@@ -26,11 +24,9 @@ const BreadcrumbNav: React.FC<BreadcrumbNavProps> = ({ items, sx }) => {
       aria-label="breadcrumb"
       sx={{ mb: 2, ...sx }}
     >
-      <NextLink href="/" passHref legacyBehavior>
-        <Link underline="hover" color="inherit">
-          {t('HOME')}
-        </Link>
-      </NextLink>
+      <Link underline="hover" color="inherit" href="/" component={NextLink}>
+        {t('HOME')}
+      </Link>
 
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
@@ -40,16 +36,15 @@ const BreadcrumbNav: React.FC<BreadcrumbNavProps> = ({ items, sx }) => {
             {item.label}
           </Typography>
         ) : (
-          <NextLink
-            key={item.label}
+          <Link
+            underline="hover"
+            color="inherit"
+            component={NextLink}
             href={item.href || '#'}
-            passHref
-            legacyBehavior
+            key={item.label}
           >
-            <Link underline="hover" color="inherit">
-              {item.label}
-            </Link>
-          </NextLink>
+            {item.label}
+          </Link>
         );
       })}
     </Breadcrumbs>

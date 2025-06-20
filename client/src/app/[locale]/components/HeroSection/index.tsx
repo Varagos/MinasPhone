@@ -1,13 +1,14 @@
 'use client';
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
+// import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import bg from '/public/hero-section-apple-standing.webp';
+import bg from '@/../public/hero-section-apple-standing.webp';
 import ShapeDividerBottom from './CurvedDivider';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { styled } from '@mui/material';
 
 const HeroSection = styled('section')(({ theme }) => ({
   width: '100%',

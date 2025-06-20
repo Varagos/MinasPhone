@@ -10,10 +10,10 @@ import CategoryItem from '@/app/[locale]/components/CategoryItem/CategoryItem';
 
 import { StaticImageData } from 'next/image';
 
-import TabletCategory from '/public/categories_tablet.webp';
-import SmartWatchCategory from '/public/categories_smartwatch.webp';
-import PhonesCategory from '/public/categories_smartphones.webp';
-import AccessoriesCategory from '/public/categories_accessories.webp';
+import TabletCategory from '@/../public/categories_tablet.webp';
+import SmartWatchCategory from '@/../public/categories_smartwatch.webp';
+import PhonesCategory from '@/../public/categories_smartphones.webp';
+import AccessoriesCategory from '@/../public/categories_accessories.webp';
 import { useTranslations } from 'next-intl';
 import { styled } from '@mui/material/styles';
 import { ThickBottomBorder } from '../styles';

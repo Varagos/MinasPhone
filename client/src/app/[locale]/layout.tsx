@@ -11,6 +11,13 @@ import { Metadata, Viewport } from 'next';
 import { CartProvider } from '@/context/CartProvider';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import dynamic from 'next/dynamic';
+
+// Dynamically import CookieConsent with SSR disabled
+const CookieConsentComponent = dynamic(
+  () => import('@/components/CookieConsent/CookieConsent'),
+  { ssr: !!false }
+);
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -89,6 +96,7 @@ export default async function RootLayout({
                 <Navbar />
                 <main style={{ minHeight: '80vh' }}>{children}</main>
                 <Footer />
+                <CookieConsentComponent />
               </CartProvider>
             </NextIntlClientProvider>
           </ThemeProvider>

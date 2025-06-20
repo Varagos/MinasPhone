@@ -8,7 +8,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import EmptyLogo from '/public/undraw_empty_xct9.svg';
+import EmptyLogo from '@/../public/undraw_empty_xct9.svg';
 import { useTranslations } from 'next-intl';
 
 export default function Custom404() {

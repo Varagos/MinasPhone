@@ -19,7 +19,7 @@ export interface FormProps {
   backStep: () => void;
   handleCaptureCheckout: (newOrder: CheckoutCapture) => Promise<void>;
 }
-export default function Form(props: FormProps): JSX.Element {
+export default function Form(props: FormProps): React.JSX.Element {
   const {
     activeStep,
     next,

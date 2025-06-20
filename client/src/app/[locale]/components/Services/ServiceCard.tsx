@@ -18,7 +18,7 @@ const ServiceItem = styled(Grid)(({ theme }) => ({
 type ServiceCardProps = {
   title: string;
   imageUrl: StaticImageData;
-  icon: JSX.Element;
+  icon: React.JSX.Element;
   description: string;
   backgroundColor: string;
 };

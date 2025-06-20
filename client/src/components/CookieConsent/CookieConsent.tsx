@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useState } from 'react';
 import * as CookieConsent from 'vanilla-cookieconsent';
 import { cookieConsentConfig } from '@/utils/cookieConsent';
@@ -12,7 +13,7 @@ interface CookieConsentComponentProps {
 
 const CookieConsentComponent = ({
   trackPageViews = true,
-}: CookieConsentComponentProps): JSX.Element => {
+}: CookieConsentComponentProps): React.JSX.Element => {
   const [hasAnalyticsConsent, setHasAnalyticsConsent] = useState(false);
 
   useEffect(() => {

@@ -18,7 +18,7 @@ import dynamic from 'next/dynamic';
 // Dynamically import CookieSettings with SSR disabled
 const CookieSettings = dynamic(
   () => import('@/components/CookieConsent/CookieSettings'),
-  { ssr: false }
+  { ssr: !!false }
 );
 
 const Footer = () => {

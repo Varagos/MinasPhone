@@ -5,7 +5,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import EmptyLogo from '/public/undraw_empty_xct9.svg';
+import EmptyLogo from '@/../public/undraw_empty_xct9.svg';
 import Head from 'next/head';
 
 import StoreMallDirectoryTwoToneIcon from '@mui/icons-material/StoreMallDirectoryTwoTone';

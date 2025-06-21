@@ -1,11 +1,12 @@
 'use client';
 
 import React from 'react';
-// Keep MUI Tabs for now
-import { Box, Divider, Tab, Tabs } from '@mui/material';
+// Using Shadcn Tabs
+import { Divider } from '@mui/material';
 // Import shadcn components
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 // MUI icons for now
 import PaymentsSharpIcon from '@mui/icons-material/PaymentsSharp';
@@ -18,46 +19,7 @@ import { CheckoutCapture } from '@/types/checkout-capture';
 import { CheckoutOrderInfo } from '../../page';
 import { useTranslations } from 'use-intl';
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      style={{ width: '100%' }}
-      {...other}
-    >
-      {value === index && (
-        <Box
-          sx={{ p: 3 }}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          minHeight="20vh"
-          minWidth="70%"
-        >
-          {children}
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
+// Removed TabPanel and a11yProps functions as they're no longer needed with Shadcn Tabs
 
 // const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY!);
 type PaymentFormProps = {
@@ -77,9 +39,7 @@ const PaymentForm = ({
   const [value, setValue] = React.useState(0);
   const t = useTranslations('orders');
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+  // handleChange is no longer needed as we're using onValueChange with the Shadcn Tabs
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -130,74 +90,72 @@ const PaymentForm = ({
 
       <div className="flex flex-grow bg-background min-h-[224px]">
         <Tabs
+          defaultValue="0"
           orientation="vertical"
-          // variant="scrollable"
-          variant="standard"
-          value={value}
-          onChange={handleChange}
-          aria-label="Payment method"
-          sx={{ borderRight: 1, borderColor: 'divider' }}
+          value={String(value)}
+          onValueChange={(val) => setValue(parseInt(val))}
+          className="flex space-x-4"
         >
-          <Tab
-            icon={<PaymentsSharpIcon />}
-            iconPosition="end"
-            label={t('STORE_CASH')}
-            sx={{ textTransform: 'none', justifyContent: 'start' }}
-            {...a11yProps(0)}
-          />
-          <Tab
-            icon={<CreditCardSharpIcon />}
-            iconPosition="end"
-            label={t('STORE_CARD')}
-            // disabled
-            sx={{ textTransform: 'none', justifyContent: 'start' }}
-            {...a11yProps(1)}
-          />
-          <Tab
-            icon={<PaymentsSharpIcon />}
-            iconPosition="end"
-            label={t('CARD_PAYMENT')}
-            disabled
-            sx={{ textTransform: 'none', justifyContent: 'start' }}
-            {...a11yProps(2)}
-          />
-          {/* <Tab
-            icon={<AccountBalanceSharpIcon />}
-            iconPosition="end"
-            label="Τραπεζική Κατάθεση"
-            sx={{ textTransform: 'none', justifyContent: 'start' }}
-            {...a11yProps(3)}
-          /> */}
+          <TabsList className="border-r border-border space-y-2 py-2">
+            <TabsTrigger
+              value="0"
+              className="flex justify-between gap-2 text-base font-medium py-3"
+            >
+              {t('STORE_CASH')}
+              <PaymentsSharpIcon fontSize="medium" />
+            </TabsTrigger>
+            <TabsTrigger
+              value="1"
+              className="flex justify-between gap-2 text-base font-medium py-3"
+            >
+              {t('STORE_CARD')}
+              <CreditCardSharpIcon fontSize="medium" />
+            </TabsTrigger>
+            <TabsTrigger
+              value="2"
+              className="flex justify-between gap-2 text-base font-medium py-3"
+              disabled
+            >
+              {t('CARD_PAYMENT')}
+              <PaymentsSharpIcon fontSize="medium" />
+            </TabsTrigger>
+            {/* Removed the commented out tab */}
+          </TabsList>
+
+          <TabsContent value="0" className="flex-1">
+            <Card className="w-full min-w-[275px] mt-4">
+              <CardContent className="pt-6">
+                <p className="text-sm text-muted-foreground">
+                  {t('STORE_CASH_DESC')}
+                </p>
+              </CardContent>
+              <CardFooter className="flex justify-center">
+                <Button variant="default" size="lg" onClick={handleSubmit}>
+                  {t('CONFIRM')}
+                </Button>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="1" className="flex-1">
+            <Card className="w-full min-w-[275px] mt-4">
+              <CardContent className="pt-6">
+                <p className="text-sm text-muted-foreground">
+                  {t('STORE_CARD_DESC')}
+                </p>
+              </CardContent>
+              <CardFooter className="flex justify-center">
+                <Button variant="default" size="lg" onClick={handleSubmit}>
+                  {t('CONFIRM')}
+                </Button>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="2" className="flex-1">
+            {/* Empty content for disabled tab */}
+          </TabsContent>
         </Tabs>
-        <TabPanel value={value} index={0}>
-          <Card className="w-full min-w-[275px]">
-            <CardContent className="pt-6">
-              <p className="text-sm text-muted-foreground">
-                {t('STORE_CASH_DESC')}
-              </p>
-            </CardContent>
-            <CardFooter className="flex justify-center">
-              <Button variant="default" size="lg" onClick={handleSubmit}>
-                {t('CONFIRM')}
-              </Button>
-            </CardFooter>
-          </Card>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Card className="w-full min-w-[275px]">
-            <CardContent className="pt-6">
-              <p className="text-sm text-muted-foreground">
-                {t('STORE_CARD_DESC')}
-              </p>
-            </CardContent>
-            <CardFooter className="flex justify-center">
-              <Button variant="default" size="lg" onClick={handleSubmit}>
-                {t('CONFIRM')}
-              </Button>
-            </CardFooter>
-          </Card>
-        </TabPanel>
-        <TabPanel value={value} index={2}></TabPanel>
       </div>
       <div className="flex justify-between mt-6">
         <Button

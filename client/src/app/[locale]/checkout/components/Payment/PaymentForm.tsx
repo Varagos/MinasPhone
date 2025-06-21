@@ -89,31 +89,31 @@ const PaymentForm = ({
       <Divider />
 
       <div className="flex flex-grow bg-background min-h-[224px]">
-        <Tabs
-          defaultValue="0"
-          orientation="vertical"
-          value={String(value)}
-          onValueChange={(val) => setValue(parseInt(val))}
-          className="flex space-x-4"
+        <Tabs 
+          defaultValue="0" 
+          orientation="vertical" 
+          value={String(value)} 
+          onValueChange={(val) => setValue(parseInt(val))} 
+          className="flex flex-col md:flex-row w-full md:space-x-4"
         >
-          <TabsList className="border-r border-border space-y-2 py-2">
+          <TabsList className="w-full md:w-auto border-b md:border-b-0 md:border-r border-border md:space-y-2 py-2 flex md:flex-col overflow-x-auto">
             <TabsTrigger
               value="0"
-              className="flex justify-between gap-2 text-base font-medium py-3"
+              className="flex flex-1 md:flex-none justify-between gap-2 text-base font-medium py-3"
             >
               {t('STORE_CASH')}
               <PaymentsSharpIcon fontSize="medium" />
             </TabsTrigger>
             <TabsTrigger
               value="1"
-              className="flex justify-between gap-2 text-base font-medium py-3"
+              className="flex flex-1 md:flex-none justify-between gap-2 text-base font-medium py-3"
             >
               {t('STORE_CARD')}
               <CreditCardSharpIcon fontSize="medium" />
             </TabsTrigger>
             <TabsTrigger
               value="2"
-              className="flex justify-between gap-2 text-base font-medium py-3"
+              className="flex flex-1 md:flex-none justify-between gap-2 text-base font-medium py-3"
               disabled
             >
               {t('CARD_PAYMENT')}

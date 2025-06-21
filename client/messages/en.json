@@ -126,6 +126,14 @@
     "NO_PRODUCTS_IN_CART": "There's nothing in your cart",
     "NO_PRODUCTS_IN_CART_SUBTITLE": "Someone has to buy this great products!",
     "DISCOVER": "Discover them!",
-    "CART_TITLE": "Shopping Cart"
+    "CART_TITLE": "Shopping Cart",
+    "PAYMENT_METHODS": "Payment Methods",
+    "STORE_CASH": "Cash at the store",
+    "STORE_CASH_DESC": "The order will be paid at the store with cash.",
+    "STORE_CARD": "Card at the store",
+    "STORE_CARD_DESC": "The order will be paid at the store with a credit or debit card.",
+    "CARD_PAYMENT": "Card payment",
+    "CONFIRM": "Confirm order",
+    "BACK": "Back"
   }
 }

@@ -1,14 +1,13 @@
-import React from 'react';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
+'use client';
 
+import React from 'react';
+// Keep MUI Tabs for now
+import { Box, Divider, Tab, Tabs } from '@mui/material';
+// Import shadcn components
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+
+// MUI icons for now
 import PaymentsSharpIcon from '@mui/icons-material/PaymentsSharp';
 import CreditCardSharpIcon from '@mui/icons-material/CreditCardSharp';
 
@@ -17,6 +16,7 @@ import Review from '../Review';
 import { CheckoutToken } from '@/types/checkout-token';
 import { CheckoutCapture } from '@/types/checkout-capture';
 import { CheckoutOrderInfo } from '../../page';
+import { useTranslations } from 'use-intl';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -75,6 +75,7 @@ const PaymentForm = ({
   nextStep,
 }: PaymentFormProps) => {
   const [value, setValue] = React.useState(0);
+  const t = useTranslations('orders');
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -122,19 +123,12 @@ const PaymentForm = ({
   return (
     <>
       <Review checkoutToken={checkoutToken} />
+      <div className="flex justify-between items-center mt-6 mb-2">
+        <h3 className="text-xl font-medium">{t('PAYMENT_METHODS')}</h3>
+      </div>
       <Divider />
-      <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>
-        Τρόποι Πληρωμής
-      </Typography>
 
-      <Box
-        sx={{
-          flexGrow: 1,
-          bgcolor: 'background.paper',
-          display: 'flex',
-          minHeight: 224,
-        }}
-      >
+      <div className="flex flex-grow bg-background min-h-[224px]">
         <Tabs
           orientation="vertical"
           // variant="scrollable"
@@ -147,14 +141,14 @@ const PaymentForm = ({
           <Tab
             icon={<PaymentsSharpIcon />}
             iconPosition="end"
-            label="Μετρητά στο κατάστημα"
+            label={t('STORE_CASH')}
             sx={{ textTransform: 'none', justifyContent: 'start' }}
             {...a11yProps(0)}
           />
           <Tab
             icon={<CreditCardSharpIcon />}
             iconPosition="end"
-            label="Κάρτα στο κατάστημα"
+            label={t('STORE_CARD')}
             // disabled
             sx={{ textTransform: 'none', justifyContent: 'start' }}
             {...a11yProps(1)}
@@ -162,7 +156,7 @@ const PaymentForm = ({
           <Tab
             icon={<PaymentsSharpIcon />}
             iconPosition="end"
-            label="Πληρωμή με κάρτα"
+            label={t('CARD_PAYMENT')}
             disabled
             sx={{ textTransform: 'none', justifyContent: 'start' }}
             {...a11yProps(2)}
@@ -176,54 +170,45 @@ const PaymentForm = ({
           /> */}
         </Tabs>
         <TabPanel value={value} index={0}>
-          <Card sx={{ minWidth: 275 }}>
-            <CardContent>
-              <Typography
-                sx={{ fontSize: 14 }}
-                color="text.secondary"
-                gutterBottom
-              >
-                Η παραγγελία σας θα πληρωθεί στο κατάστημα μας με μετρητά.
-              </Typography>
+          <Card className="w-full min-w-[275px]">
+            <CardContent className="pt-6">
+              <p className="text-sm text-muted-foreground">
+                {t('STORE_CASH_DESC')}
+              </p>
             </CardContent>
-            <CardActions sx={{ justifyContent: 'center' }}>
-              <Button
-                variant="contained"
-                size="large"
-                color="primary"
-                onClick={handleSubmit}
-              >
-                Επιβεβαίωση παραγγελίας
+            <CardFooter className="flex justify-center">
+              <Button variant="default" size="lg" onClick={handleSubmit}>
+                {t('CONFIRM')}
               </Button>
-            </CardActions>
+            </CardFooter>
           </Card>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Card sx={{ minWidth: 275 }}>
-            <CardContent>
-              <Typography
-                sx={{ fontSize: 14 }}
-                color="text.secondary"
-                gutterBottom
-              >
-                Η παραγγελία σας θα πληρωθεί στο κατάστημα μας με χρήση
-                πιστωτικής ή χρεωστικής κάρτας.
-              </Typography>
+          <Card className="w-full min-w-[275px]">
+            <CardContent className="pt-6">
+              <p className="text-sm text-muted-foreground">
+                {t('STORE_CARD_DESC')}
+              </p>
             </CardContent>
-            <CardActions sx={{ justifyContent: 'center' }}>
-              <Button
-                variant="contained"
-                size="large"
-                color="primary"
-                onClick={handleSubmit}
-              >
-                Επιβεβαίωση παραγγελίας
+            <CardFooter className="flex justify-center">
+              <Button variant="default" size="lg" onClick={handleSubmit}>
+                {t('CONFIRM')}
               </Button>
-            </CardActions>
+            </CardFooter>
           </Card>
         </TabPanel>
         <TabPanel value={value} index={2}></TabPanel>
-      </Box>
+      </div>
+      <div className="flex justify-between mt-6">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={backStep}
+          className="cursor-pointer"
+        >
+          {t('BACK')}
+        </Button>
+      </div>
     </>
   );
 };

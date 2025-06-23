@@ -1,22 +1,12 @@
-'use client';
 import React from 'react';
-
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-
 import CategoryItem from '@/app/[locale]/components/CategoryItem/CategoryItem';
-
 import { StaticImageData } from 'next/image';
 
-import TabletCategory from '/public/categories_tablet.webp';
-import SmartWatchCategory from '/public/categories_smartwatch.webp';
-import PhonesCategory from '/public/categories_smartphones.webp';
-import AccessoriesCategory from '/public/categories_accessories.webp';
+import TabletCategory from '@/../public/categories_tablet.webp';
+import SmartWatchCategory from '@/../public/categories_smartwatch.webp';
+import PhonesCategory from '@/../public/categories_smartphones.webp';
+import AccessoriesCategory from '@/../public/categories_accessories.webp';
 import { useTranslations } from 'next-intl';
-import { styled } from '@mui/material/styles';
-import { ThickBottomBorder } from '../styles';
 
 const LandingPageCategories: Array<{
   src: StaticImageData;
@@ -53,22 +43,14 @@ const LandingPageCategories: Array<{
 const PopularCategories = () => {
   const t = useTranslations('landing');
   return (
-    <section style={{ paddingBottom: 20 }}>
-      <Container maxWidth={'lg'}>
-        <Box my={8}>
-          <Typography
-            component="h3" // Semantic HTML
-            variant="h4" // Visual style
-            align="center"
-            gutterBottom
-            fontWeight={900}
-          >
-            <ThickBottomBorder>
-              {t('POPULAR_CATEGORIES.TITLE')}
-            </ThickBottomBorder>
-          </Typography>
-        </Box>
-        <Grid container justifyContent="center" spacing={3}>
+    <section className="pb-5">
+      <div className="container mx-auto max-w-7xl px-4">
+        <div className="flex justify-center my-16">
+          <h3 className="text-center text-3xl font-black mb-6 pb-2 border-b-4 border-primary">
+            {t('POPULAR_CATEGORIES.TITLE')}
+          </h3>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
           {LandingPageCategories.map((category) => (
             <CategoryItem
               key={category.heading}
@@ -78,8 +60,8 @@ const PopularCategories = () => {
               alt={category.alt}
             />
           ))}
-        </Grid>
-      </Container>
+        </div>
+      </div>
     </section>
   );
 };

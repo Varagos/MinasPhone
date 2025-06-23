@@ -1,5 +1,6 @@
-import { styled } from '@mui/material/styles';
-import type { Theme } from '@mui/material/styles';
+'use client';
+import { type Theme } from '@mui/material/styles';
+import { styled } from '@mui/material';
 
 const CustomShapeDividerBottom = styled('div')(
   ({ theme }: { theme: Theme }) => ({

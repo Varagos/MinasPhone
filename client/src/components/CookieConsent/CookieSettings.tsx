@@ -1,27 +1,31 @@
 'use client';
 import React from 'react';
-import { Button, ButtonProps } from '@mui/material';
 import { showPreferencesModal } from '@/utils/cookieConsentHelpers';
 
-interface CookieSettingsProps extends Omit<ButtonProps, 'onClick'> {
+interface CookieSettingsProps {
   label?: string;
+  className?: string;
 }
 
 /**
- * A button component that opens the cookie preferences modal when clicked
+ * A component that opens the cookie preferences modal when clicked
+ * Styled to match NavigationLink in the footer
  */
 const CookieSettings: React.FC<CookieSettingsProps> = ({
   label = 'Cookie Settings',
-  ...buttonProps
+  className = ''
 }) => {
   const handleClick = () => {
     showPreferencesModal();
   };
 
   return (
-    <Button onClick={handleClick} {...buttonProps}>
+    <span 
+      onClick={handleClick}
+      className={`${className} inline-block cursor-pointer`}
+    >
       {label}
-    </Button>
+    </span>
   );
 };
 

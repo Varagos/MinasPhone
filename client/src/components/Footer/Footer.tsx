@@ -1,205 +1,179 @@
-import { useTranslations } from 'next-intl';
+'use client';
 
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
-import Home from '@mui/icons-material/Home';
-import Email from '@mui/icons-material/Email';
-import Phone from '@mui/icons-material/Phone';
-import Schedule from '@mui/icons-material/Schedule';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { useTranslations } from 'next-intl';
+import { Link as NavigationLink } from '@/i18n/navigation';
+import { Home, Mail, Phone, Clock, Facebook, Linkedin } from 'lucide-react';
 import ContactRow from './ContactRow/ContactRow';
 import dynamic from 'next/dynamic';
 
 // Dynamically import CookieSettings with SSR disabled
 const CookieSettings = dynamic(
   () => import('@/components/CookieConsent/CookieSettings'),
-  { ssr: false }
+  { ssr: !!false }
 );
 
 const Footer = () => {
   const t = useTranslations('footer');
 
   return (
-    <footer
-    // style={{ position: 'absolute', bottom: 0 }}
-    >
-      <Box
-        px={{ xs: 3, sm: 10 }}
-        py={{ xs: 5, sm: 10 }}
-        bgcolor="text.primary"
-        color="white"
-      >
-        <Container maxWidth="lg">
-          <Grid container spacing={5}>
-            {/* on mobile screen, each col -> full screen */}
-            <Grid
-              size={{
-                xs: 12,
-                sm: 4,
-              }}
-            >
-              <Box borderBottom={1}>{t('USEFUL_LINKS')}</Box>
-              <Box sx={{ my: 2 }}>
-                <Link
+    <footer className="bg-gray-900 text-white">
+      <div className="px-4 sm:px-10 py-8 sm:py-12">
+        <div className="container mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {/* Links column */}
+            <div>
+              <h3 className="border-b border-white pb-2 mb-4">
+                {t('USEFUL_LINKS')}
+              </h3>
+
+              <div className="my-4">
+                <NavigationLink
                   href="/information/user-terms"
-                  color="inherit"
-                  sx={{ textDecoration: 'none' }}
+                  className="text-white hover:text-gray-300 no-underline"
                 >
                   {t('TERMS_AND_CONDITIONS')}
-                </Link>
-              </Box>
-              <Box sx={{ my: 2 }}>
-                <Link
+                </NavigationLink>
+              </div>
+
+              <div className="my-4">
+                <NavigationLink
                   href="/information/privacy-policy"
-                  color="inherit"
-                  sx={{ textDecoration: 'none' }}
+                  className="text-white hover:text-gray-300 no-underline"
                 >
                   {t('PRIVACY_POLICY')}
-                </Link>
-              </Box>
-              <Box sx={{ my: 2 }}>
-                <Link
+                </NavigationLink>
+              </div>
+
+              <div className="my-4">
+                <NavigationLink
                   href="/information/cookie-policy"
-                  color="inherit"
-                  sx={{ textDecoration: 'none' }}
+                  className="text-white hover:text-gray-300 no-underline"
                 >
                   {t('COOKIE_POLICY')}
-                </Link>
-              </Box>
-              <Box sx={{ my: 2 }}>
-                <Link
+                </NavigationLink>
+              </div>
+
+              <div className="my-4">
+                <NavigationLink
                   href="/information/delivery-and-costs"
-                  color="inherit"
-                  sx={{ textDecoration: 'none' }}
+                  className="text-white hover:text-gray-300 no-underline"
                 >
                   {t('DELIVERY_AND_COSTS')}
-                </Link>
-              </Box>
-              <Box sx={{ my: 2 }}>
-                <Link
+                </NavigationLink>
+              </div>
+
+              <div className="my-4">
+                <NavigationLink
                   href="/information/payment-methods"
-                  color="inherit"
-                  sx={{ textDecoration: 'none' }}
+                  className="text-white hover:text-gray-300 no-underline"
                 >
                   {t('PAYMENT_METHODS')}
-                </Link>
-              </Box>
-              <Box sx={{ my: 2 }}>
-                <Link
+                </NavigationLink>
+              </div>
+
+              <div className="my-4">
+                <NavigationLink
                   href="/account"
-                  color="inherit"
-                  sx={{ textDecoration: 'none' }}
+                  className="text-white hover:text-gray-300 no-underline"
                 >
                   {t('MY_ACCOUNT')}
-                </Link>
-              </Box>
-              <Box sx={{ my: 2 }}>
+                </NavigationLink>
+              </div>
+
+              <div className="my-4">
                 <CookieSettings
                   label={t('COOKIE_SETTINGS')}
-                  // variant="text"
-                  color="inherit"
-                  sx={{ textDecoration: 'none', p: 0, minWidth: 'auto' }}
+                  className="text-white hover:text-gray-300 no-underline"
                 />
-              </Box>
-            </Grid>
+              </div>
+            </div>
 
-            <Grid
-              size={{
-                xs: 12,
-                sm: 4,
-              }}
-            >
-              {/* <address> */}
-              <Box borderBottom={1} mb={4}>
+            {/* Contact column */}
+            <div>
+              <h3 className="border-b border-white pb-2 mb-6">
                 {t('CONTACT.TITLE')}
-              </Box>
+              </h3>
+
               <ContactRow
-                icon={<Home fontSize="inherit" />}
+                icon={<Home className="h-5 w-5" />}
                 header={t('CONTACT.ADDRESS.TITLE')}
                 details={
-                  <Typography variant="body2">
+                  <p className="text-sm">
                     {t('CONTACT.ADDRESS.VALUE')}
                     <br /> {t('CONTACT.ADDRESS.POSTAL')}
-                  </Typography>
+                  </p>
                 }
               />
+
               <ContactRow
-                icon={<Email fontSize="inherit" />}
+                icon={<Mail className="h-5 w-5" />}
                 header="Email :"
                 details={
-                  <Typography variant="body2">
-                    <Link color="inherit" href="mailto:support@minasphone.gr">
+                  <p className="text-sm">
+                    <a
+                      className="text-white hover:text-gray-300"
+                      href="mailto:support@minasphone.gr"
+                    >
                       {'support@minasphone.gr'}
-                    </Link>
-                  </Typography>
+                    </a>
+                  </p>
                 }
               />
+
               <ContactRow
-                icon={<Phone fontSize="inherit" />}
+                icon={<Phone className="h-5 w-5" />}
                 header="Τηλέφωνο :"
                 details={
-                  <Typography variant="body2">
-                    <Link color="inherit" href="tel:+302109224764">
-                      2109224764
-                    </Link>
-                  </Typography>
+                  <p className="text-sm">
+                    <a
+                      className="text-white hover:text-gray-300"
+                      href="tel:+302109224764"
+                    >
+                      {'2109224764'}
+                    </a>
+                  </p>
                 }
               />
+
               <ContactRow
-                icon={<Schedule fontSize="inherit" />}
+                icon={<Clock className="h-5 w-5" />}
                 header={t('CONTACT.HOURS.TITLE')}
                 details={
-                  <table>
+                  <table className="text-sm">
                     <tbody>
                       <tr>
-                        <td>{t('CONTACT.HOURS.FIRST_ROW')}</td>
+                        <td className="pr-4">{t('CONTACT.HOURS.FIRST_ROW')}</td>
                         <td>
-                          10:00 - 15:30 ,<br /> 18:00 - 21:00
+                          {'10:00 - 15:30,'}
+                          <br /> {'18:00 - 21:00'}
                         </td>
                       </tr>
                       <tr>
-                        <td>{t('CONTACT.HOURS.SECOND_ROW')}</td>
-                        <td>10:00 - 15: 30</td>
+                        <td className="pr-4">
+                          {t('CONTACT.HOURS.SECOND_ROW')}
+                        </td>
+                        <td>{'10:00 - 15:30'}</td>
                       </tr>
                     </tbody>
                   </table>
                 }
               />
-              {/* </address> */}
-            </Grid>
+            </div>
 
-            <Grid
-              size={{
-                xs: 12,
-                sm: 4,
-              }}
-              container
-              alignContent="center"
-              justifyContent="center"
-            >
-              <FacebookIcon fontSize="large" sx={{ mr: 2 }} />
-              <LinkedInIcon fontSize="large" sx={{ mr: 2 }} />
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
+            {/* Social icons column */}
+            <div className="flex items-center justify-center">
+              <Facebook className="h-8 w-8 mr-4 cursor-pointer hover:text-gray-300" />
+              <Linkedin className="h-8 w-8 cursor-pointer hover:text-gray-300" />
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <Divider light={true} />
+      <hr className="border-gray-700" />
 
-      <Box
-        textAlign="center"
-        bgcolor="text.primary"
-        color="white"
-        pt={{ xs: 5, sm: 5 }}
-        pb={{ xs: 5, sm: 5 }}
-      >
+      <div className="text-center bg-gray-900 text-white py-8">
         <strong>MINAS PHONE</strong> &reg; {new Date().getFullYear()}
-      </Box>
+      </div>
     </footer>
   );
 };

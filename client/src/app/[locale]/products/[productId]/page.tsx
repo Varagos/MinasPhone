@@ -1,14 +1,8 @@
 import { cache } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import React from 'react';
-import EmptyLogo from '/public/undraw_empty_xct9.svg';
+import EmptyLogo from '@/../public/undraw_empty_xct9.svg';
 import Head from 'next/head';
 
-import StoreMallDirectoryTwoToneIcon from '@mui/icons-material/StoreMallDirectoryTwoTone';
 import { api } from '@/api';
 import { formatPriceWithSymbol } from '@/utils/prices';
 import Link from 'next/link';
@@ -19,6 +13,7 @@ import BreadcrumbNav, {
 import AddToCartButton from '@/components/common/AddToCartButton';
 import { Metadata, ResolvingMetadata } from 'next';
 import { getTranslations } from 'next-intl/server';
+import { Store } from 'lucide-react'; // Store icon replacement for StoreMallDirectoryTwoToneIcon
 
 type Props = {
   params: Promise<{ productId: string }>;
@@ -64,27 +59,27 @@ export default async function ProductPage({ params, searchParams }: Props) {
 
   if (!product) {
     return (
-      <div style={{ minHeight: '70vh' }}>
-        <Box sx={{ textAlign: 'center', mt: 10 }}>
-          <Typography variant="h5" gutterBottom>
+      <div className="min-h-[70vh]">
+        <div className="text-center mt-10">
+          <h2 className="text-xl font-semibold mb-2">
             {t('PRODUCT_NOT_FOUND')}
-          </Typography>
+          </h2>
           <Image
             src={EmptyLogo.src}
             alt="Product not found"
             width={300}
             height={300}
           />
-          <Typography variant="body1" color="textSecondary">
-            {t('TRY_ANOTHER_PRODUCT')}
+          <p className="text-muted-foreground">
+            {t('TRY_ANOTHER_PRODUCT')}{' '}
             <Link
               href="/"
-              style={{ color: '#1976d2', textDecoration: 'underline' }}
+              className="text-blue-600 underline"
             >
               {t('BACK_TO_HOME')}
             </Link>
-          </Typography>
-        </Box>
+          </p>
+        </div>
       </div>
     );
   }
@@ -176,102 +171,57 @@ export default async function ProductPage({ params, searchParams }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
         />
       </Head>
-      <Container maxWidth="lg" sx={{ pt: 10, pb: 20 }}>
-        <Box sx={{ mb: 4 }}>
+      <div className="container mx-auto pt-10 pb-20 px-4">
+        <div className="mb-4">
           <BreadcrumbNav items={breadcrumbItems} />
-        </Box>
+        </div>
 
-        <Grid container spacing={2}>
-          <Grid
-            size={{ xs: 12, sm: 6 }}
-            sx={{ pt: 13 }}
-            justifyContent="center"
-          >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="pt-13 flex justify-center">
             {/* Medium: Product pages
 Every product needs good product page-quality images. These images (usually 640 x 640 or 800 x 800) */}
-            <Box
-              component="img"
-              sx={{
-                objectFit: 'cover',
-                width: '60%',
-                height: 'auto',
-                py: 5,
-                backgroundColor: 'white',
-                pointerEvents: 'none',
-                '&:hover': {
-                  backgroundColor: 'white',
-                },
-                textTransform: 'none',
-
-                // height: 233,
-                // width: 350,
-                // maxHeight: { xs: 233, md: 167 },
-                // maxWidth: { xs: 350, md: 250 },
-              }}
+            <img
+              className="object-cover w-[60%] h-auto py-5 bg-white pointer-events-none select-none"
               alt={product.name}
               src={product.imageUrl}
             />
-          </Grid>
-          <Grid
-            size={{
-              xs: 12,
-              sm: 6,
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <Box mr={4}>
-                <Typography variant="h5" gutterBottom>
+          </div>
+          <div className="">
+            <div className="flex flex-row justify-between">
+              <div className="mr-4">
+                <h2 className="text-xl font-semibold mb-2">
                   {product.name}
-                </Typography>
-              </Box>
+                </h2>
+              </div>
 
-              <Box ml={4}>
-                <Typography
-                  style={{ marginRight: 'auto', color: '#69b67c' }}
-                  variant="h6"
-                  noWrap
-                >
+              <div className="ml-4">
+                <h3 className="text-lg font-medium mr-auto text-[#69b67c] truncate">
                   {formatPriceWithSymbol(product.price)}
-                </Typography>
-              </Box>
-            </Box>
+                </h3>
+              </div>
+            </div>
 
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                my: 8,
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <StoreMallDirectoryTwoToneIcon />
-                <Typography variant="caption">{t('STORE_PICKUP')}</Typography>
-              </Box>
+            <div className="flex flex-row justify-between items-center my-8">
+              <div className="flex items-center">
+                <Store className="h-5 w-5 mr-1" />
+                <span className="text-sm text-muted-foreground">{t('STORE_PICKUP')}</span>
+              </div>
               <AddToCartButton
                 productId={product.id}
                 content={t('ADD_TO_CART')}
               />
-            </Box>
+            </div>
 
-            <Box sx={{ mt: 10 }}>
-              <Typography variant="h6">{t('DESCRIPTION')}</Typography>
-              <Typography
+            <div className="mt-10">
+              <h3 className="text-lg font-medium mb-2">{t('DESCRIPTION')}</h3>
+              <p 
                 dangerouslySetInnerHTML={{ __html: product.description }}
-                variant="body2"
-                color="textSecondary"
+                className="text-sm text-muted-foreground"
               />
-            </Box>
-          </Grid>
-        </Grid>
-      </Container>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

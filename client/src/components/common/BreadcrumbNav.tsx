@@ -1,12 +1,17 @@
+'use client';
+
 import React from 'react';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
-import Typography from '@mui/material/Typography';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { useRouter } from 'next/router';
-import NextLink from 'next/link';
-import { Link as NavigationLink } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
+import { Link as NavigationLink } from '@/i18n/navigation';
+import { ChevronRight } from 'lucide-react';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 
 export type BreadcrumbItem = {
   label: string;
@@ -15,44 +20,61 @@ export type BreadcrumbItem = {
 
 type BreadcrumbNavProps = {
   items: BreadcrumbItem[];
-  sx?: any;
 };
 
-const BreadcrumbNav: React.FC<BreadcrumbNavProps> = ({ items, sx }) => {
+const BreadcrumbNav: React.FC<BreadcrumbNavProps> = ({ items }) => {
   const t = useTranslations('common');
+
   return (
-    <Breadcrumbs
-      separator={<NavigateNextIcon fontSize="small" />}
-      aria-label="breadcrumb"
-      sx={{ mb: 2, ...sx }}
-    >
-      <NextLink href="/" passHref legacyBehavior>
-        <Link underline="hover" color="inherit">
-          {t('HOME')}
-        </Link>
-      </NextLink>
+    <Breadcrumb>
+      <BreadcrumbList className="mb-2">
+        {/* Home Link */}
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild>
+            <NavigationLink
+              href="/"
+              className="text-muted-foreground hover:text-foreground"
+            >
+              {t('HOME')}
+            </NavigationLink>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
 
-      {items.map((item, index) => {
-        const isLast = index === items.length - 1;
+        <BreadcrumbSeparator>
+          <ChevronRight className="h-4 w-4" />
+        </BreadcrumbSeparator>
 
-        return isLast ? (
-          <Typography key={item.label} color="text.primary">
-            {item.label}
-          </Typography>
-        ) : (
-          <NextLink
-            key={item.label}
-            href={item.href || '#'}
-            passHref
-            legacyBehavior
-          >
-            <Link underline="hover" color="inherit">
-              {item.label}
-            </Link>
-          </NextLink>
-        );
-      })}
-    </Breadcrumbs>
+        {/* Dynamic Items */}
+        {items.map((item, index) => {
+          const isLast = index === items.length - 1;
+
+          return (
+            <React.Fragment key={item.label}>
+              <BreadcrumbItem>
+                {isLast ? (
+                  <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                ) : (
+                  <BreadcrumbLink asChild>
+                    <NavigationLink
+                      href={item.href || '#'}
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      {item.label}
+                    </NavigationLink>
+                  </BreadcrumbLink>
+                )}
+              </BreadcrumbItem>
+
+              {!isLast && (
+                <BreadcrumbSeparator>
+                  <ChevronRight className="h-4 w-4" />
+                </BreadcrumbSeparator>
+              )}
+            </React.Fragment>
+          );
+        })}
+      </BreadcrumbList>
+    </Breadcrumb>
   );
 };
 

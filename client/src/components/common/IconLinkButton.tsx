@@ -24,7 +24,7 @@ const IconLinkButton: React.FC<CustomIconButtonProps> = ({
         {React.Children.map(children, (child) => {
           if (React.isValidElement(child)) {
             return React.cloneElement(child, {
-              style: { ...child.props.style, ...childrenStyle },
+              style: { ...(child.props as any).style, ...childrenStyle },
             } as any);
           }
           return child;

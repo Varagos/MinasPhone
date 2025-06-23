@@ -1,40 +1,44 @@
+'use client';
+
 import React from 'react';
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import { CheckoutToken } from '@/types/checkout-token';
+import { Separator } from '@/components/ui/separator';
+// Import useTranslations for i18n support
+import { useTranslations } from 'use-intl';
 
 type ReviewProps = {
   checkoutToken: CheckoutToken;
 };
 
 const Review = ({ checkoutToken }: ReviewProps) => {
+  const t = useTranslations('orders');
+  
   return (
-    <>
-      <Typography variant="h6" gutterBottom>
+    <div className="space-y-4">
+      <h2 className="text-xl font-semibold">
         Ανακεφαλαίωση παραγγελίας
-      </Typography>
-      <List disablePadding>
+      </h2>
+      <ul className="space-y-2">
         {checkoutToken.line_items.map((product) => (
-          <ListItem style={{ padding: '10px 0' }} key={product.name}>
-            <ListItemText
-              primary={product.name}
-              secondary={`Ποσότητα: ${product.quantity}`}
-            />
-            <Typography variant="body2">
+          <li key={product.name} className="flex justify-between items-center py-2">
+            <div className="space-y-1">
+              <p className="font-medium">{product.name}</p>
+              <p className="text-sm text-muted-foreground">{`Ποσότητα: ${product.quantity}`}</p>
+            </div>
+            <p className="text-sm">
               {product.subtotal.formatted_with_symbol}
-            </Typography>
-          </ListItem>
+            </p>
+          </li>
         ))}
-        <ListItem sx={{ py: 4, px: 0 }}>
-          <ListItemText primary="Σύνολο" />
-          <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
+        <Separator className="my-4" />
+        <li className="flex justify-between items-center py-4">
+          <p className="font-medium">{t('TOTAL')}</p>
+          <p className="font-bold">
             {checkoutToken.live.subtotal.formatted_with_symbol}
-          </Typography>
-        </ListItem>
-      </List>
-    </>
+          </p>
+        </li>
+      </ul>
+    </div>
   );
 };
 

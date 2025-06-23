@@ -23,7 +23,7 @@ import LanguageSelector from '../LanguageSelector';
 
 import { Root, classes } from './styles';
 
-const drawerItems: [string, string, JSX.Element][] = [
+const drawerItems: [string, string, React.JSX.Element][] = [
   ['ΑΧΙΚΉ', '/', <Home />],
   ['ΚΙΝΗΤΑ', '/categories/smartphones', <Smartphone />],
   ['ACCESSORIES', '/categories/accessories', <Headset />],
@@ -31,7 +31,7 @@ const drawerItems: [string, string, JSX.Element][] = [
   ['ALL PRODUCTS', '/products', <Storefront />],
 ];
 
-const drawerUtilities: [string, string, JSX.Element][] = [
+const drawerUtilities: [string, string, React.JSX.Element][] = [
   ['ΑΝΑΖΗΤΗΣΗ', '/search', <SearchIcon />],
   ['ORDER TRACKING', '/order-tracking', <LocalShipping />],
   ['ΣΥΝΔΕΣΗ', '/login', <Lock />],

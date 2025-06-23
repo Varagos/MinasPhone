@@ -1,24 +1,15 @@
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import Grid from '@mui/material/Grid';
+'use client';
 
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-
-import Link from 'next/link';
+import Image from 'next/image';
+import { MinusIcon, PlusIcon, TrashIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 import { api } from '@/api';
 import { CartLineItem } from '@/api/types/cart';
 import { formatPriceWithSymbol } from '@/utils/prices';
 import { useCart } from '@/hooks/useCart';
-import { useTheme } from '@mui/material/styles';
-import { useTranslations } from 'next-intl';
+import { Link as NavigationLink } from '@/i18n/navigation';
+import { Button } from '@/components/ui/button';
 
 type CartItemWrapperProps = {
   item: CartLineItem;
@@ -31,10 +22,20 @@ type CartItemProps = {
 };
 
 const CartItem = ({ item }: CartItemWrapperProps) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
+  const [isMobile, setIsMobile] = useState(false);
   const { setCart } = useCart();
+
+  // Handle responsive detection with useEffect instead of MUI's useMediaQuery
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // 768px is standard md breakpoint
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleRemoveFromCart = async (lineItemId: string) => {
     const cart = await api.cart.removeFromCart(lineItemId);
@@ -75,64 +76,70 @@ const MobileCartItem = ({
 }: CartItemProps) => {
   const t = useTranslations('common');
   return (
-    <Card sx={{ margin: 'auto' }}>
-      <Grid container>
-        <Grid size={4}>
-          <CardMedia
-            component="img"
-            image={item.productImage}
-            alt={item.productName}
-            sx={{ width: '100%', height: 'auto', p: 2 }}
-          />
-        </Grid>
-        <Grid size={8}>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {item.productName}
-            </Typography>
-            <Link href={`/products/${item.productId}`} passHref>
-              <Typography variant="body2" color="text.secondary">
-                {t('DETAILS')}
-              </Typography>
-            </Link>
-          </CardContent>
-        </Grid>
-      </Grid>
-      <Grid container>
-        <Grid
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          size={6}
-        >
-          <IconButton
+    <div className="w-full bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+      <div className="grid grid-cols-12 gap-2">
+        <div className="col-span-4 p-2">
+          <div className="relative w-full aspect-square">
+            <Image
+              src={item.productImage}
+              alt={item.productName}
+              className="object-contain"
+              fill
+            />
+          </div>
+        </div>
+        <div className="col-span-8 p-4">
+          <h3 className="text-lg font-medium mb-1">{item.productName}</h3>
+          <Button
+            variant="link"
+            className="p-0 h-auto text-muted-foreground"
+            asChild
+          >
+            <NavigationLink href={`/products/${item.productId}`}>
+              {t('DETAILS')}
+            </NavigationLink>
+          </Button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 border-t">
+        <div className="flex items-center justify-center p-3 gap-3 px-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 mx-2 cursor-pointer"
             onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}
           >
-            <RemoveIcon />
-          </IconButton>
-          <Typography sx={{ marginX: 2 }}>{item.quantity}</Typography>
-          <IconButton
+            <MinusIcon className="h-4 w-4" />
+          </Button>
+
+          <span className="mx-2 text-base">{item.quantity}</span>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 mx-2 cursor-pointer"
             onClick={() => onUpdateCartQty(item.id, item.quantity + 1)}
           >
-            <AddIcon />
-          </IconButton>
-        </Grid>
-        <Grid sx={{ textAlign: 'center' }} size={6}>
-          <Typography variant="h6">
+            <PlusIcon className="h-4 w-4" />
+          </Button>
+        </div>
+
+        <div className="flex flex-col items-center justify-center p-3">
+          <p className="font-semibold mb-1">
             {formatPriceWithSymbol(item.quantity * item.productPrice)}
-          </Typography>
-          <IconButton
-            aria-label="remove item"
-            sx={{ color: 'error.main' }}
+          </p>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 text-red-500 hover:text-red-600 hover:bg-red-50 cursor-pointer"
             onClick={() => handleRemoveFromCart(item.id)}
           >
-            <DeleteIcon />
-          </IconButton>
-        </Grid>
-      </Grid>
-    </Card>
+            <TrashIcon className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -143,78 +150,68 @@ const DesktopCartItem = ({
 }: CartItemProps) => {
   const t = useTranslations('common');
   return (
-    <Card sx={{ display: 'flex' }}>
-      <CardMedia
-        component="img"
-        sx={{ width: 151, padding: 3 }}
-        image={item.productImage}
-        alt="Live from space album cover"
-      />
-      <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-        <CardContent sx={{ flex: '1 0 auto' }}>
-          <Typography component="div" variant="h5">
-            {item.productName}
-          </Typography>
-          <Link
-            href={`/products/${item.productId}`}
-            style={{ textDecoration: 'none' }}
-            passHref
-          >
-            <Typography variant="subtitle1" color="text.secondary">
-              {t('DETAILS')}
-            </Typography>
-          </Link>
-        </CardContent>
-      </Box>
+    <div className="flex w-full bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+      <div className="relative w-[151px] h-[151px] p-3">
+        <Image
+          src={item.productImage}
+          alt={item.productName}
+          className="object-contain"
+          fill
+        />
+      </div>
 
-      <CardActions
-        sx={{
-          flex: 2,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <IconButton
-            aria-label="remove item"
+      <div className="flex flex-col flex-1 p-4">
+        <h3 className="text-xl font-medium">{item.productName}</h3>
+        <Button
+          variant="link"
+          className="p-0 h-auto justify-start text-muted-foreground cursor-pointer"
+          asChild
+        >
+          <NavigationLink href={`/products/${item.productId}`}>
+            {t('DETAILS')}
+          </NavigationLink>
+        </Button>
+      </div>
+
+      <div className="flex-[2] flex items-center justify-center">
+        <div className="flex items-center space-x-3">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-9 w-9 cursor-pointer"
             onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}
           >
-            <RemoveIcon />
-          </IconButton>
-          <Typography sx={{ mg: 2, px: 2 }}>{item.quantity}</Typography>
+            <MinusIcon className="h-5 w-5" />
+          </Button>
 
-          <IconButton
-            aria-label="remove item"
+          <span className="text-lg px-4">{item.quantity}</span>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-9 w-9 cursor-pointer"
             onClick={() => onUpdateCartQty(item.id, item.quantity + 1)}
           >
-            <AddIcon />
-          </IconButton>
+            <PlusIcon className="h-5 w-5" />
+          </Button>
         </div>
-      </CardActions>
-      <Box
-        sx={{
-          flex: '1',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
-          // border: 'solid 1px',
-        }}
-      >
-        <Typography variant="h5" align="center">
-          {formatPriceWithSymbol(item.quantity * item.productPrice)}
-        </Typography>
+      </div>
 
-        <IconButton
-          size="medium"
-          aria-label="remove item"
-          sx={(theme) => ({ color: theme.palette.error.main })}
+      <div className="flex-1 flex flex-col items-center justify-evenly p-4">
+        <p className="text-xl font-semibold text-center">
+          {formatPriceWithSymbol(item.quantity * item.productPrice)}
+        </p>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-10 w-10 text-red-500 hover:text-red-600 hover:bg-red-50 cursor-pointer"
           onClick={() => handleRemoveFromCart(item.id)}
         >
-          <DeleteIcon />
-        </IconButton>
-      </Box>
-    </Card>
+          <TrashIcon className="h-5 w-5" />
+        </Button>
+      </div>
+    </div>
   );
 };
 

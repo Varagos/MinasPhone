@@ -1,19 +1,13 @@
 'use client';
-import Link from 'next/link';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import LinkButton from '@/components/common/LinkButton';
 import Spinner from '@/components/Spinner/Spinner';
 import CartItem from '@/components/CartItem/CartItem';
 import { api } from '@/api';
 import type { Cart } from '@/api/types/cart';
 import { formatPriceWithSymbol } from '@/utils/prices';
 import { useCart } from '@/hooks/useCart';
-import { useTheme } from '@mui/material/styles';
 import { useTranslations } from 'use-intl';
+import { Button } from '@/components/ui/button';
+import { Link as NavigationLink } from '@/i18n/navigation';
 
 type CartPageProps = {
   cart: Cart;
@@ -21,75 +15,47 @@ type CartPageProps = {
 };
 
 const FilledCart = ({ cart, handleEmptyCart }: CartPageProps) => {
-  const theme = useTheme<any>();
   const t = useTranslations('orders');
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
-    <Container sx={{ mb: 6 }}>
-      <Grid container spacing={3} gap={3}>
+    <div className="container mx-auto mb-24">
+      <div className="grid grid-cols-1 gap-6">
         {cart.lineItems.map((item) => (
-          <Grid key={item.id} size={12}>
+          <div key={item.id} className="w-full">
             <CartItem item={item} />
-          </Grid>
+          </div>
         ))}
-      </Grid>
-      <Grid
-        container
-        spacing={isMobile ? 2 : 0}
-        alignItems="center"
-        justifyContent="space-between"
-        sx={{ marginTop: '10%' }}
-      >
-        <Grid
-          size={{
-            xs: 12,
-            sm: 6,
-          }}
-        >
-          <Typography variant="h4" align={isMobile ? 'center' : 'left'}>
+      </div>
+
+      <div className="flex flex-col md:flex-row items-center justify-between mt-[10%] gap-4">
+        <div className="w-full md:w-1/2">
+          <h2 className="text-2xl font-semibold text-center md:text-left">
             {t('TOTAL')}: {formatPriceWithSymbol(cart.subtotal)}
-          </Typography>
-        </Grid>
-        <Grid
-          sx={{ textAlign: isMobile ? 'center' : 'right' }}
-          size={{
-            xs: 12,
-            sm: 6,
-          }}
-        >
+          </h2>
+        </div>
+
+        <div className="w-full md:w-1/2 flex flex-col md:flex-row md:justify-end gap-4 px-4 md:px-0">
           <Button
-            size="large"
-            type="button"
-            variant="outlined"
-            color="primary"
+            variant="outline"
+            size="lg"
             onClick={handleEmptyCart}
-            sx={{
-              textTransform: 'none',
-              minWidth: isMobile ? '100%' : '150px', // full width on mobile
-              my: isMobile ? 1 : 0,
-            }}
+            className="w-full md:w-auto md:min-w-[150px] normal-case mx-2 md:mx-0 cursor-pointer"
           >
             {t('EMPTY_CART')}
           </Button>
-          <LinkButton
-            href="/checkout"
-            size="large"
-            type="button"
-            variant="contained"
-            color="primary"
+
+          <Button
+            variant="default"
+            size="lg"
             disabled={cart === null || cart.lineItems.length === 0}
-            sx={{
-              textTransform: 'none',
-              minWidth: isMobile ? '100%' : '150px', // full width on mobile
-              mt: isMobile ? 2 : 0,
-              ml: isMobile ? 0 : 5,
-            }}
+            className="w-full md:w-auto md:min-w-[150px] normal-case mx-2 md:mx-0"
+            asChild
           >
-            {t('CHECKOUT')}
-          </LinkButton>
-        </Grid>
-      </Grid>
-    </Container>
+            <NavigationLink href="/checkout">{t('CHECKOUT')}</NavigationLink>
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -109,40 +75,26 @@ export default function CartPage() {
   if (cart === null) return <Spinner />;
 
   const EmptyCart = () => (
-    <div style={{ minHeight: '60vh' }}>
-      <Typography variant="h6">{t('NO_PRODUCTS_IN_CART')}</Typography>
-      <Typography variant="subtitle1">
+    <div className="min-h-[60vh] flex flex-col items-center justify-center">
+      <h2 className="text-xl font-medium mb-2">{t('NO_PRODUCTS_IN_CART')}</h2>
+      <p className="text-base text-muted-foreground mb-4">
         {t('NO_PRODUCTS_IN_CART_SUBTITLE')}
-        <br />
-        <Link
-          href="/"
-          style={{
-            textDecoration: 'none',
-          }}
-        >
-          {' '}
-          {t('DISCOVER')}
-        </Link>
-      </Typography>
+      </p>
+      <Button variant="link" asChild className="p-0">
+        <NavigationLink href="/">{t('DISCOVER')}</NavigationLink>
+      </Button>
     </div>
   );
 
   return (
-    <Container sx={{ pt: 2, pb: 20 }}>
-      <Typography
-        variant="h3"
-        gutterBottom
-        sx={{
-          marginTop: '5%',
-        }}
-      >
-        {t('CART_TITLE')}
-      </Typography>
+    <div className="container mx-auto pt-8 pb-24">
+      <h1 className="text-3xl font-bold mt-[5%] mb-8">{t('CART_TITLE')}</h1>
+
       {!cart.lineItems.length ? (
         <EmptyCart />
       ) : (
         <FilledCart cart={cart} handleEmptyCart={handleEmptyCart} />
       )}
-    </Container>
+    </div>
   );
 }

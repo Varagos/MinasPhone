@@ -1,20 +1,11 @@
 'use client';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Image from 'next/image';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Pagination from '@mui/material/Pagination';
-import Link from '@mui/material/Link';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+// MUI components replaced with Tailwind CSS
 
 import ProductCard from './ProductCard/ProductCard';
 import { MainContainer, ToolBar } from './styles';
-import EmptyLogo from '../../../public/undraw_empty_xct9.svg';
 import Filter from './Filter/Filter';
 import { Product } from '@/api/types/types';
 import useUrl from '@/hooks/useUrl';
-import { useRouter } from 'next/router';
 import FloatingActionButton from './Filter/mobile/FloatingActionButton';
 import { useState } from 'react';
 import FilterModal from './Filter/mobile/FilterModal';
@@ -23,6 +14,7 @@ import BreadcrumbNav, { BreadcrumbItem } from '../common/BreadcrumbNav';
 import { usePathname } from '@/i18n/navigation';
 import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import ProductsPagination from './Pagination/Pagination';
 
 type ProductsLayoutProps = {
   products: Product[];
@@ -65,38 +57,26 @@ export default function ProductsLayout({
   return (
     <MainContainer>
       <ToolBar />
-      <Container sx={{ pb: 20 }}>
+      <div className="container mx-auto px-4 pb-20">
         {/* Header Section with Title, Breadcrumbs, etc - Now full width above everything */}
-        <Box sx={{ mb: 4 }}>
+        <div className="mb-16">
           {/* Breadcrumbs */}
           <BreadcrumbNav items={breadcrumbItems} />
 
           {/* Title */}
-          <Typography variant="h4" gutterBottom color="black" component="h1">
-            <strong>{title}</strong>
-          </Typography>
+          <h1 className="text-2xl font-bold text-black mb-2">{title}</h1>
 
           {/* Total products */}
-          <Typography variant="body1" gutterBottom>
+          <p className="text-base mb-4">
             {t('TOTAL_PRODUCTS', { count: totalProducts })}
-          </Typography>
-        </Box>
+          </p>
+        </div>
 
-        <Grid container justifyContent="center" spacing={4}>
+        <div className="flex flex-wrap justify-center -mx-4">
           {/* <Hidden xsDown> */}
-          <Grid
-            size={{
-              xs: 0,
-              sm: 3,
-            }}
-            sx={(theme) => ({
-              [theme.breakpoints.down('md')]: {
-                display: 'none',
-              },
-            })}
-          >
+          <div className="hidden md:block w-full md:w-1/4 px-4">
             <Filter />
-          </Grid>
+          </div>
           {/* Mobile Filter - START */}
           <FloatingActionButton handleOpenFilters={handleOpenFilters} />
           <FilterModal
@@ -105,33 +85,29 @@ export default function ProductsLayout({
           />
           {/* Mobile Filter - END */}
 
-          <Grid container size={{ xs: 12, sm: 9 }} spacing={4}>
-            {products.map((product) => (
-              <Grid
-                size={{
-                  xs: 12,
-                  sm: 6,
-                  md: 6,
-                  lg: 4,
-                }}
-                key={product.id}
-                // sx={{ borderColor: 'red', borderWidth: 1, borderStyle: 'solid' }}
-              >
-                <ProductCard product={product} fromCategory={categorySlug} />
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
+          <div className="w-full md:w-3/4 px-4">
+            <div className="flex flex-wrap -mx-4">
+              {products.map((product) => (
+                <div 
+                  className="w-full sm:w-1/2 lg:w-1/3 p-4" 
+                  key={product.id}
+                >
+                  <div className="h-full">
+                    <ProductCard product={product} fromCategory={categorySlug} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
         {/* Pagination */}
-        <Grid container justifyContent="flex-end">
-          <Pagination
-            count={totalPages}
-            page={page}
-            onChange={(event, newPage) => onPageChange(newPage)}
-            sx={{ pt: 2 }} // Add some padding-top for spacing
-          />
-        </Grid>
-      </Container>
+
+        <ProductsPagination
+          page={page}
+          onPageChange={onPageChange}
+          totalPages={totalPages}
+        />
+      </div>
     </MainContainer>
   );
 }

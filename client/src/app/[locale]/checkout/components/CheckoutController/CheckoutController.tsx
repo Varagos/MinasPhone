@@ -1,12 +1,10 @@
-import React from 'react';
-import Typography from '@mui/material/Typography';
-import CircularProgress from '@mui/material/CircularProgress';
+'use client';
 
-import { Root, classes } from './styles';
+import React from 'react';
 import { CheckoutCapture } from '@/types/checkout-capture';
 import Account from '../Account';
 import PaymentForm from '../Payment/PaymentForm';
-import Address from '../Address';
+import Shipping from '../Shipping';
 import { CheckoutToken } from '@/types/checkout-token';
 import { CheckoutOrderInfo } from '../../page';
 
@@ -19,7 +17,9 @@ export interface FormProps {
   backStep: () => void;
   handleCaptureCheckout: (newOrder: CheckoutCapture) => Promise<void>;
 }
-export default function Form(props: FormProps): JSX.Element {
+export default function CheckoutController(
+  props: FormProps
+): React.JSX.Element {
   const {
     activeStep,
     next,
@@ -32,9 +32,9 @@ export default function Form(props: FormProps): JSX.Element {
 
   if (checkoutToken === null) {
     return (
-      <Root className={classes.spinner}>
-        <CircularProgress />
-      </Root>
+      <div className="flex justify-center items-center p-8">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
     );
   }
 
@@ -43,7 +43,7 @@ export default function Form(props: FormProps): JSX.Element {
       return <Account next={next} />;
     case 1:
       return (
-        <Address
+        <Shipping
           shippingData={checkoutOrderInfo}
           checkoutToken={checkoutToken}
           next={next}
@@ -61,6 +61,6 @@ export default function Form(props: FormProps): JSX.Element {
         />
       );
     default:
-      return <Typography>Unknown checkout step</Typography>;
+      return <p className="text-lg text-red-600 text-center p-4">{"Unknown checkout step"}</p>;
   }
 }

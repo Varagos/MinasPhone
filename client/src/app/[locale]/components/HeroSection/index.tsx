@@ -1,6 +1,5 @@
 'use client';
 import * as React from 'react';
-import Typography from '@mui/material/Typography';
 import { Button } from '@/components/ui/button';
 import bg from '@/../public/hero-section-apple-standing.webp';
 import ShapeDividerBottom from './CurvedDivider';
@@ -44,49 +43,24 @@ export default function Hero() {
           max-md:w-full max-md:p-4
           max-sm:p-2"
       >
-        <Typography
-          variant="h1"
-          sx={(theme) => ({
-            color: '#000',
-            marginBottom: '20px',
-            fontWeight: 800,
-            fontSize: '3.5rem',
-            [theme.breakpoints.down('md')]: {
-              width: '100%', // Full width on medium devices and down
-              fontSize: '2rem', // Smaller font size on medium devices
-            },
-            [theme.breakpoints.down('sm')]: {
-              fontSize: '1.5rem', // Even smaller font size on small devices
-            },
-            [theme.breakpoints.down('xs')]: {
-              fontSize: '1rem', // Smallest font size on extra small devices
-            },
-          })}
+        <h1
+          className="text-black mb-5 font-extrabold text-5xl leading-tight
+          max-md:w-full max-md:text-4xl
+          max-sm:text-2xl
+          max-xs:text-base"
         >
-          {t('LANDING.CTA_TITLE1')} <DesktopLineBreak />{' '}
+          {t('LANDING.CTA_TITLE1')} <DesktopLineBreak />
           {t('LANDING.CTA_TITLE2')}
-        </Typography>
+        </h1>
 
-        <Typography
-          variant="subtitle1"
-          sx={(theme) => ({
-            color: '#000',
-            marginBottom: '40px', // Adjust as needed
-            fontWeight: 300,
-            fontSize: '2rem', // Adjust the font size as needed
-            [theme.breakpoints.down('md')]: {
-              fontSize: '1.75rem',
-            },
-            [theme.breakpoints.down('sm')]: {
-              fontSize: '1.0rem',
-            },
-            [theme.breakpoints.down('xs')]: {
-              fontSize: '0.75rem',
-            },
-          })}
+        <p
+          className="text-black mb-10 font-light text-4xl leading-snug
+          max-md:text-3xl
+          max-sm:text-base
+          max-xs:text-sm"
         >
           {t('LANDING.CTA_DESCRIPTION')}
-        </Typography>
+        </p>
         <Button
           asChild
           className="w-full max-w-xs h-12 bg-gray-800 hover:bg-black text-white text-base font-bold rounded-md px-6 py-2.5

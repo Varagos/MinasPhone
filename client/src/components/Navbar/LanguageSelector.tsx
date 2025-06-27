@@ -1,16 +1,19 @@
 'use client';
 import React, { useTransition } from 'react';
-import MenuItem from '@mui/material/MenuItem';
 import Image from 'next/image';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { usePathname, useRouter } from '@/i18n/navigation';
-
-// Regular components
-import { useLocale, Locale } from 'next-intl';
+import { useLocale } from 'next-intl';
 import { useParams } from 'next/navigation';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const languages: Record<string, { label: string; flag: string }> = {
-  el: { label: 'Greek', flag: '/flags/gr.webp' },
+  el: { label: 'Ελληνικά', flag: '/flags/gr.webp' },
   en: { label: 'English', flag: '/flags/us.webp' },
   // ar: { label: 'ar', flag: '/flags/eg.webp' },
   // Add other languages here
@@ -26,9 +29,7 @@ const LanguageSelector = () => {
 
   const locale = useLocale();
 
-  const handleChange = (event: SelectChangeEvent<string>) => {
-    const newLocale = event.target.value;
-
+  const handleChange = (newLocale: string) => {
     startTransition(() => {
       router.replace(
         // @ts-expect-error -- TypeScript will validate that only known `params`
@@ -44,38 +45,35 @@ const LanguageSelector = () => {
   const safeLanguage = Object.keys(languages).includes(locale) ? locale : 'el';
 
   return (
-    <Select
-      value={safeLanguage}
-      onChange={handleChange}
-      renderValue={(value) => {
-        // Ensure we have a valid language key
-        const lang = Object.keys(languages).includes(value) ? value : 'el';
-        return (
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Image
-              src={languages[lang].flag}
-              alt=""
-              width={21}
-              height={16}
-              style={{ marginRight: 5, width: 24 }}
-            />
-            {languages[lang].label}
-          </div>
-        );
-      }}
-    >
-      {Object.entries(languages).map(([lang, { label, flag }]) => (
-        <MenuItem key={lang} value={lang}>
+    <Select value={safeLanguage} onValueChange={handleChange}>
+      <SelectTrigger className="w-auto border-0 shadow-none pr-2">
+        <div className="flex items-center">
           <Image
-            src={flag}
+            src={languages[safeLanguage].flag}
             alt=""
             width={21}
             height={16}
-            style={{ marginRight: 5 }}
+            className="mr-2 h-4 w-6 object-cover"
           />
-          {label}
-        </MenuItem>
-      ))}
+          <SelectValue>{languages[safeLanguage].label}</SelectValue>
+        </div>
+      </SelectTrigger>
+      <SelectContent>
+        {Object.entries(languages).map(([lang, { label, flag }]) => (
+          <SelectItem key={lang} value={lang}>
+            <div className="flex items-center">
+              <Image
+                src={flag}
+                alt=""
+                width={21}
+                height={16}
+                className="mr-2 h-4 w-5 object-cover"
+              />
+              {label}
+            </div>
+          </SelectItem>
+        ))}
+      </SelectContent>
     </Select>
   );
 };

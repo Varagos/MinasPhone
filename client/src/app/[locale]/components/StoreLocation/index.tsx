@@ -1,48 +1,33 @@
 'use client';
-// pages/your-page.jsx
 
 import React from 'react';
 import dynamic from 'next/dynamic';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import { useTranslations } from 'next-intl';
 
 // Import the MapComponent with no SSR
 const StoreMap = dynamic(
-  () => import('./Map'), // replace with your actual path to the MapComponent
-  { ssr: false } // This line is important. It's what prevents server-side rendering
+  () => import('./Map'),
+  { ssr: false } // Prevents server-side rendering
 );
 
 const StoreLocation = () => {
   const t = useTranslations('landing');
 
   return (
-    <section style={{ padding: '50px 0' }}>
-      <Container maxWidth="lg">
-        <Grid container spacing={2}>
-          <Grid size={{ xs: 12, sm: 6 }}>
-            <Box
-              sx={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-              }}
-            >
-              <Typography variant="h3" gutterBottom sx={{ fontWeight: 700 }}>
-                {t('LOCATION.TITLE')}
-              </Typography>
-              <Typography>{t('LOCATION.CONTENT')}</Typography>
-            </Box>
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6 }}>
+    <section className="py-12">
+      <div className="container mx-auto px-4 max-w-7xl">
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="w-full md:w-1/2 flex flex-col justify-center">
+            <h2 className="text-3xl font-bold mb-4">
+              {t('LOCATION.TITLE')}
+            </h2>
+            <p className="text-gray-700">{t('LOCATION.CONTENT')}</p>
+          </div>
+          <div className="w-full md:w-1/2">
             <StoreMap />
-          </Grid>
-        </Grid>
-      </Container>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

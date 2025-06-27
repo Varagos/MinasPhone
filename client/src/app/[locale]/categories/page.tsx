@@ -1,33 +1,23 @@
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-
 import TabletCategory from '@/../public/categories_tablet.webp';
 import PhonesCategory from '@/../public/categories_smartphones.webp';
 import AccessoriesCategory from '@/../public/categories_accessories.webp';
 import SmartWatchCategory from '@/../public/categories_smartwatch.webp';
 import CategoryItem from '../components/CategoryItem/CategoryItem';
+import { useTranslations } from 'next-intl';
 
 export default function Categories() {
+  const t = useTranslations('common');
   return (
-    <div>
-      <Container>
-        <Box my={8}>
-          <Typography variant="h4" align="center" gutterBottom>
-            <span
-              style={{
-                fontWeight: '900',
-                borderBottom: 'thick solid #6A2C70',
-                paddingBottom: '3px',
-                marginBottom: '40px',
-              }}
-            >
-              ΚΑΤΗΓΟΡΙΕΣ
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-16">
+        <div className="text-center mb-16">
+          <h1 className="text-3xl md:text-4xl font-black text-foreground mb-4">
+            <span className="border-b-4 border-primary pb-1">
+              {t('CATEGORIES')}
             </span>
-          </Typography>
-        </Box>
-        <Grid container justifyContent="center" spacing={3}>
+          </h1>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           <CategoryItem
             src={PhonesCategory}
             heading="ΚΙΝΗΤΑ ΤΗΛΕΦΩΝΑ"
@@ -52,8 +42,8 @@ export default function Categories() {
             dest="/categories/smartwatches"
             alt="smartwatches"
           />
-        </Grid>
-      </Container>
+        </div>
+      </div>
     </div>
   );
 }

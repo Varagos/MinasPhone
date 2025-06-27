@@ -1,12 +1,10 @@
+'use client';
+
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Radio from '@mui/material/Radio';
-import Grid from '@mui/material/Grid';
-import Slider from '@mui/material/Slider';
-import Typography from '@mui/material/Typography';
-import { PriceInputField } from './styles';
+import { Slider } from '@/components/ui/slider';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Input } from '@/components/ui/input';
 import useUrl from '@/hooks/useUrl';
 import { PriceFiltersFilterKeys, PriceOption } from './definitions';
 import { usePathname } from '@/i18n/navigation';
@@ -93,47 +91,60 @@ export function PriceFilter({
   };
 
   return (
-    <div>
-      <Grid container spacing={3}>
-        <Grid size={{ xs: 12, sm: 12 }}>
-          <Typography variant="h6" gutterBottom color="black" component="h3">
-            <strong>{t('PRICE')}</strong>
-          </Typography>
-        </Grid>
-        <Grid size={{ xs: 6, sm: 6 }}>
-          <PriceInputField
-            label="Min"
-            variant="outlined"
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <h3 className="text-lg font-semibold text-black">{t('PRICE')}</h3>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="min-price">Min</Label>
+          <Input
+            id="min-price"
             type="number"
             value={minPrice || ''}
             onChange={handleMinPriceChange}
+            className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
-        </Grid>
-        <Grid size={{ xs: 6, sm: 6 }}>
-          <PriceInputField
-            label="Max"
-            variant="outlined"
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="max-price">Max</Label>
+          <Input
+            id="max-price"
             type="number"
             value={maxPrice || ''}
             onChange={handleMaxPriceChange}
+            className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
-        </Grid>
-      </Grid>
-      <Slider
-        value={[minPrice || sliderMinPrice, maxPrice || sliderMaxPrice]}
-        onChange={handleSliderChange}
-        valueLabelDisplay="auto"
-        min={sliderMinPrice}
-        max={sliderMaxPrice}
-      />
-      <RadioGroup value={selectedOption || ''} onChange={handleRadioChange} row>
+        </div>
+      </div>
+
+      <div className="py-4">
+        <Slider
+          value={[minPrice || sliderMinPrice, maxPrice || sliderMaxPrice]}
+          onValueChange={(value) =>
+            handleSliderChange({} as Event, value as any)
+          }
+          min={sliderMinPrice}
+          max={sliderMaxPrice}
+          step={1}
+        />
+      </div>
+
+      <RadioGroup
+        value={selectedOption || ''}
+        onValueChange={(value) =>
+          handleRadioChange({ target: { value } } as any)
+        }
+        className="space-y-2"
+      >
         {priceFilters.map((priceFilter) => (
-          <FormControlLabel
-            key={priceFilter.value}
-            value={priceFilter.value}
-            control={<Radio />}
-            label={priceFilter.label}
-          />
+          <div key={priceFilter.value} className="flex items-center space-x-2">
+            <RadioGroupItem value={priceFilter.value} id={priceFilter.value} />
+            <Label htmlFor={priceFilter.value} className="cursor-pointer">
+              {priceFilter.label}
+            </Label>
+          </div>
         ))}
       </RadioGroup>
     </div>

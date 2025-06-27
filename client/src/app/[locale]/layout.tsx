@@ -1,14 +1,9 @@
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { Roboto } from 'next/font/google';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import './globals.css';
 
-import { getLocale } from 'next-intl/server';
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
-import theme from '@/theme';
 import { Metadata, Viewport } from 'next';
 import { CartProvider } from '@/context/CartProvider';
 import { notFound } from 'next/navigation';
@@ -91,21 +86,16 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={roboto.variable}>
       <body>
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
-            <NextIntlClientProvider>
-              <ToastProvider>
-                <CartProvider>
-                  <CssBaseline />
-                  <Navbar />
-                  <main style={{ minHeight: '80vh' }}>{children}</main>
-                  <Footer />
-                  <CookieConsentComponent />
-                </CartProvider>
-              </ToastProvider>
-            </NextIntlClientProvider>
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+        <NextIntlClientProvider>
+          <ToastProvider>
+            <CartProvider>
+              <Navbar />
+              <main style={{ minHeight: '80vh' }}>{children}</main>
+              <Footer />
+              <CookieConsentComponent />
+            </CartProvider>
+          </ToastProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

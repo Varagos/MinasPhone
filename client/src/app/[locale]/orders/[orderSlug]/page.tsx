@@ -1,7 +1,6 @@
 import React from 'react';
 import { api } from '@/api';
 import type { Order } from '@/api/types/orders';
-import LinkButton from '@/components/common/LinkButton';
 import { getTranslations } from 'next-intl/server';
 import { Button } from '@/components/ui/button';
 

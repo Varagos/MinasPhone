@@ -1,6 +1,5 @@
 import React from 'react';
 
-import LinkButton from '@/components/common/LinkButton';
 import { Loader2 } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 

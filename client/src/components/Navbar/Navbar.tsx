@@ -4,11 +4,12 @@ import Link from 'next/link';
 
 import svgLogo from '../../../public/logo.svg';
 import AppDrawer from './AppDrawer/AppDrawer';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
+
 import { Phone, ShoppingCart, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import IconLinkButton from '../common/IconLinkButton';
+import { IconLinkButton } from '../common/IconLinkButton';
+import { ClickAwayListener } from '../common/ClickAwayListener';
 import SimpleMenu from './SimpleMenu/SimpleMenu';
 import { SearchInputField, SearchPromptIcon } from './Search';
 import LanguageSelector from './LanguageSelector';

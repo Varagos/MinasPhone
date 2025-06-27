@@ -1,37 +1,65 @@
 import React from 'react';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import NextLink from 'next/link';
+import { Link } from '@/i18n/navigation';
+import { Button } from '@/components/ui/button';
+import type { ButtonHTMLAttributes } from 'react';
+import { cn } from '@/lib/utils';
 
-type CustomIconButtonProps = {
+type IconLinkButtonProps = {
   href: string;
-  underline?: string;
-  childrenStyle?: React.CSSProperties;
-} & IconButtonProps;
+  underline?: 'none' | 'underline' | 'hover:underline';
+  childrenStyle?: React.CSSProperties & { className?: string };
+  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+  size?: 'default' | 'sm' | 'lg' | 'icon';
+} & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'asChild'>;
 
-const IconLinkButton: React.FC<CustomIconButtonProps> = ({
-  href,
-  children,
-  underline = 'none',
-  childrenStyle,
-  ...props
-}) => {
-  const linkStyle = { textDecoration: underline, color: 'inherit' };
+const IconLinkButton = React.forwardRef<HTMLButtonElement, IconLinkButtonProps>(
+  ({
+    href,
+    children,
+    className,
+    underline = 'none',
+    childrenStyle,
+    variant = 'ghost',
+    size = 'icon',
+    ...props
+  }, ref) => {
+    return (
+      <Button
+        asChild
+        variant={variant}
+        size={size}
+        className={cn(
+          'text-inherit hover:bg-transparent hover:text-inherit',
+          {
+            'underline': underline === 'underline',
+            'hover:underline': underline === 'hover:underline',
+          },
+          className
+        )}
+        ref={ref}
+        {...props}
+      >
+        <Link href={href}>
+          {React.Children.map(children, (child) => {
+            if (React.isValidElement(child)) {
+              return React.cloneElement(child, {
+                className: cn(
+                  (child.props as any).className,
+                  'h-4 w-4', // Default icon size, can be overridden by className on the icon
+                  childrenStyle?.className
+                ),
+                style: { ...(child.props as any).style, ...childrenStyle },
+              } as any);
+            }
+            return child;
+          })}
+        </Link>
+      </Button>
+    );
+  }
+);
 
-  return (
-    <NextLink href={href} passHref>
-      <IconButton style={linkStyle} {...props}>
-        {/* {children} */}
-        {React.Children.map(children, (child) => {
-          if (React.isValidElement(child)) {
-            return React.cloneElement(child, {
-              style: { ...(child.props as any).style, ...childrenStyle },
-            } as any);
-          }
-          return child;
-        })}
-      </IconButton>
-    </NextLink>
-  );
-};
+IconLinkButton.displayName = 'IconLinkButton';
 
-export default IconLinkButton;
+export { IconLinkButton };
+export type { IconLinkButtonProps };

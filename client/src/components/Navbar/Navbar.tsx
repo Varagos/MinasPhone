@@ -1,36 +1,28 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-// import { Link, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import svgLogo from '../../../public/logo.svg';
 import AppDrawer from './AppDrawer/AppDrawer';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-
-import AppBar from '@mui/material/AppBar';
-import Badge from '@mui/material/Badge';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-
-import Toolbar from '@mui/material/Toolbar';
-
-import Phone from '@mui/icons-material/Phone';
-import ShoppingCart from '@mui/icons-material/ShoppingCart';
-import MenuIcon from '@mui/icons-material/Menu';
+import { Phone, ShoppingCart, Menu } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import IconLinkButton from '../common/IconLinkButton';
-import LinkButton from '../common/LinkButton';
 import SimpleMenu from './SimpleMenu/SimpleMenu';
 import { SearchInputField, SearchPromptIcon } from './Search';
-import AppTheme from '@/theme';
 import LanguageSelector from './LanguageSelector';
 import MobileSearch from './Search/MobileSearch';
-import { Theme } from '@mui/material';
 import { usePathname } from '@/i18n/navigation';
 import { useCart } from '@/hooks/useCart';
 import { useLocale, useTranslations } from 'next-intl';
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from '@/components/ui/navigation-menu';
+import { cn } from '@/lib/utils';
 
 const FEATURED_CATEGORIES = [
   {
@@ -45,21 +37,13 @@ const FEATURED_CATEGORIES = [
     href: '/categories/used-smartphones',
     title: 'ΜΕΤΑΧΕΙΡΙΣΜΕΝΑ',
   },
-  // {
-  //   href: '/categories/tablets',
-  //   title: 'TABLET',
-  // },
-  // {
-  //   href: '/categories/smartwatches',
-  //   title: 'SMARTWATCH',
-  // },
 ] as const;
 
 const NewNavbar = () => {
   const currentPath = usePathname();
   const locale = useLocale();
 
-  const [anchor, setAnchor] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const [searchActive, setSearchActive] = useState(false);
 
@@ -76,198 +60,159 @@ const NewNavbar = () => {
   // TODO fix
   const { cart } = useCart();
 
-  const toggleDrawer = (open: any) => (event: any) => {
-    if (
-      event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-    setAnchor(open);
-  };
-
-  function activeClass(
-    path: string,
-    theme: typeof AppTheme
-  ): Record<string, any> {
-    // Add locale
-    const basePathWithOutQuery = currentPath.split('?')[0];
-    const isActive = basePathWithOutQuery === path;
-    console.log(path, basePathWithOutQuery, isActive);
-
-    return {
-      textDecoration: 'none',
-      color: isActive
-        ? theme.palette.primary.dark
-        : theme.palette.primary.contrastText,
-      borderBottom: isActive
-        ? `4.5px solid ${theme.palette.primary.contrastText}`
-        : 'none', // Highlight the active item with an underline
-      paddingBottom: '0.5rem',
-      transition: 'all .7s ease-in-out',
-      fontWeight: isActive ? 'bold' : 'normal',
-      '&:hover': {
-        color: isActive
-          ? theme.palette.primary.dark
-          : theme.palette.primary.dark,
-        backgroundColor: isActive
-          ? 'transparent'
-          : theme.palette.secondary.main,
-      },
+  const toggleDrawer =
+    (open: boolean) => (event?: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event &&
+        'key' in event &&
+        (event.key === 'Tab' || event.key === 'Shift')
+      ) {
+        return;
+      }
+      setIsDrawerOpen(open);
     };
+
+  function isActive(path: string): boolean {
+    const basePathWithOutQuery = currentPath.split('?')[0];
+    return basePathWithOutQuery === path;
   }
 
   return (
-    <nav>
-      <AppBar
-        position={currentPath === '/' ? 'sticky' : 'static'}
-        color="secondary" // This will use the styleOverrides for colorSecondary
-        sx={(theme) => ({
-          display: 'block',
-          [theme.breakpoints.down('sm')]: {
-            display: 'none',
-          },
-          // display: { xs: 'none', md: 'block' },
-          px: 2,
-          minHeight: '48px',
-        })}
-      >
-        <Toolbar
-          variant="dense"
-          sx={{
-            justifyContent: 'space-between',
-          }}
-        >
-          <Box>
-            <Phone fontSize="inherit" color="primary" sx={{ color: 'black' }} />
-            <Box pl={2} style={{ display: 'inline-block' }}>
-              <Typography
-                variant="h6"
-                sx={(theme) => ({
-                  color: theme.palette.secondary.contrastText,
-                })}
-              >
-                {t('PHONE_NUMBER')}
-              </Typography>
-            </Box>
-          </Box>
-          <LanguageSelector />
-        </Toolbar>
-      </AppBar>
-      <MobileSearch />
-      <ClickAwayListener onClickAway={handleCloseSearch}>
-        <AppBar
-          position="static"
-          color="inherit" // This will use the styleOverrides for colorInherit
-          sx={(theme) => ({
-            boxShadow: 'none',
-            borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-            [theme.breakpoints.up('sm')]: {
-              width: `calc(100% - ${0}px)`, // 0 = drawerWidth
-              marginLeft: 0,
-            },
-          })}
-        >
-          <Toolbar>
-            <Box
-              color="inherit"
-              sx={{ flexGrow: 1, display: 'flex', alignItems: 'flex-end' }}
-            >
-              <Link href="/">
+    <nav className="bg-white">
+      {/* Top Bar */}
+      <div className="border-b border-gray-200 bg-secondary px-12 mx-auto w-full flex h-12 items-center justify-between">
+        <div className="flex items-center">
+          <Phone className="h-5 w-5 " />
+          <div className="ml-2">
+            <span className="text-lg font-bold">{t('PHONE_NUMBER')}</span>
+          </div>
+        </div>
+        <LanguageSelector />
+      </div>
+
+      {/* Main Navbar */}
+      <div className="border-b border-gray-200 bg-primary px-9">
+        <div className="mx-auto w-full">
+          <div className="flex h-16 items-center justify-between">
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <Link href="/" className="block">
                 <Image
                   src={svgLogo}
-                  // src={newLogo}
                   alt="MinasPhone"
-                  style={{ marginRight: '10px', display: 'block' }}
+                  className="h-14 w-auto"
+                  priority
                 />
               </Link>
-            </Box>
+            </div>
+            
+            <div className="flex flex-1 items-center justify-end">
+              {/* Navigation Menu */}
+              {!searchActive && (
+                <div className="hidden md:block">
+                  <NavigationMenu>
+                    <NavigationMenuList className="gap-1">
+                      <NavigationMenuItem>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href="/"
+                            className={cn(
+                              'inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors',
+                              isActive('/')
+                                ? 'border-b-2 border-primary font-bold text-primary hover:bg-transparent'
+                                : 'hover:bg-secondary/50 hover:text-foreground text-white'
+                            )}
+                          >
+                            {t('HOME').toUpperCase()}
+                          </Link>
+                        </NavigationMenuLink>
+                      </NavigationMenuItem>
 
-            {!searchActive && (
-              <>
-                <div
-                  style={{
-                    flexGrow: 1,
-                  }}
-                />
-                <Box
-                  mr={12}
-                  sx={(theme) => ({
-                    [theme.breakpoints.down('md')]: {
-                      display: 'none',
-                    },
-                  })}
-                >
-                  <LinkButton href="/" sx={(theme) => activeClass('/', theme)}>
-                    {t('HOME')}
-                  </LinkButton>
-                  {FEATURED_CATEGORIES.map((category) => (
-                    <LinkButton
-                      key={category.title}
-                      href={category.href}
-                      sx={(theme) => activeClass(category.href, theme)}
+                      {FEATURED_CATEGORIES.map((category) => (
+                        <NavigationMenuItem key={category.title}>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              href={category.href}
+                              className={cn(
+                                'inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors',
+                                isActive(category.href)
+                                  ? 'border-b-2 border-primary font-bold text-primary hover:bg-transparent'
+                                  : 'hover:bg-secondary/50 hover:text-foreground text-white'
+                              )}
+                            >
+                              {category.title}
+                            </Link>
+                          </NavigationMenuLink>
+                        </NavigationMenuItem>
+                      ))}
+
+                      <NavigationMenuItem>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href="/products"
+                            className={cn(
+                              'inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors',
+                              isActive('/products')
+                                ? 'border-b-2 border-primary font-bold text-primary hover:bg-transparent'
+                                : 'hover:bg-secondary/50 hover:text-foreground text-white'
+                            )}
+                          >
+                            {t('ALL_PRODUCTS')}
+                          </Link>
+                        </NavigationMenuLink>
+                      </NavigationMenuItem>
+                    </NavigationMenuList>
+                  </NavigationMenu>
+                </div>
+              )}
+              
+              {/* Search and Cart */}
+              <div className="ml-4 flex items-center space-x-2">
+                {searchActive ? (
+                  <ClickAwayListener onClickAway={handleCloseSearch}>
+                    <div className="w-64">
+                      <SearchInputField />
+                    </div>
+                  </ClickAwayListener>
+                ) : (
+                  <SearchPromptIcon handleSearchToggle={handleSearchToggle} />
+                )}
+
+                <SimpleMenu />
+
+                {currentPath !== '/cart' && (
+                  <div className="relative">
+                    <IconLinkButton
+                      href="/cart"
+                      aria-label="Show cart items"
+                      className="relative"
                     >
-                      {category.title}
-                    </LinkButton>
-                  ))}
+                      {cart?.totalItems ? (
+                        <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-white text-xs font-bold text-black">
+                          {cart.totalItems}
+                        </span>
+                      ) : null}
+                      <ShoppingCart className="h-6 w-6 text-white" />
+                    </IconLinkButton>
+                  </div>
+                )}
 
-                  <LinkButton
-                    href="/products"
-                    sx={(theme) => activeClass('/products', theme)}
-                  >
-                    {t('ALL_PRODUCTS')}
-                  </LinkButton>
-                </Box>
-              </>
-            )}
-            {searchActive ? (
-              <SearchInputField />
-            ) : (
-              <SearchPromptIcon handleSearchToggle={handleSearchToggle} />
-            )}
-
-            <SimpleMenu />
-            {currentPath !== '/cart' && (
-              <div>
-                <IconLinkButton href="/cart" aria-label="Show cart items">
-                  <Badge
-                    // TODO fix
-                    badgeContent={cart?.totalItems}
-                    // badgeContent={10000}
-                    color="secondary"
-                    sx={(theme: Theme) => ({
-                      '& .MuiBadge-badge': {
-                        backgroundColor: theme.palette.primary.dark, // SpaceCadetNavy
-                        color: theme.palette.primary.contrastText, // Assuming CulturedWhite
-                        // Additional styling to adjust the position or size of the badge
-                      },
-                    })}
-                  >
-                    <ShoppingCart color="secondary" />
-                  </Badge>
-                </IconLinkButton>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="md:hidden"
+                  onClick={toggleDrawer(true)}
+                >
+                  <Menu className="h-6 w-6 text-white" />
+                  <span className="sr-only">Open menu</span>
+                </Button>
               </div>
-            )}
-            <IconButton
-              color="inherit"
-              aria-label="menu"
-              onClick={toggleDrawer(true)}
-              sx={(theme) => ({
-                display: { xs: 'block', md: 'none' },
-                [theme.breakpoints.up('md')]: {
-                  display: 'none',
-                },
-              })}
-            >
-              <Badge>
-                <MenuIcon fontSize="large" />
-              </Badge>
-            </IconButton>
-            <AppDrawer anchor={anchor} toggleDrawer={toggleDrawer} />
-          </Toolbar>
-        </AppBar>
-      </ClickAwayListener>
+            </div>
+          </div>
+        </div>
+      </div>
+      <AppDrawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} />
+      <MobileSearch />
     </nav>
   );
 };

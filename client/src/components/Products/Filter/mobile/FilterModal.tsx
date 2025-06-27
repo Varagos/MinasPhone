@@ -1,17 +1,7 @@
 import React from 'react';
-import Dialog from '@mui/material/Dialog';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import CloseIcon from '@mui/icons-material/Close';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import PriceFilter from '../PriceFilter';
-import { priceFilters } from '../contants';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Filter from '../Filter';
 import { useTranslations } from 'next-intl';
-// import other necessary components
 
 type FilterModalProps = {
   open: boolean;
@@ -23,47 +13,25 @@ const FilterModal: React.FC<FilterModalProps> = ({ open, onClose }) => {
   const t = useTranslations('common');
 
   return (
-    <Dialog
-      fullScreen
-      open={open}
-      onClose={onClose}
-      aria-labelledby="mobile-filter-dialog"
-    >
-      <AppBar sx={{ position: 'relative' }}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            onClick={onClose}
-            aria-label="close"
-          >
-            <CloseIcon />
-          </IconButton>
-          <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="h-full w-full max-w-none sm:max-w-none md:max-w-none lg:max-w-none flex flex-col p-0">
+        <DialogHeader className="border-b p-4">
+          <DialogTitle className="text-lg font-semibold">
             {t('FILTERS')}
-          </Typography>
-          {/* <Button autoFocus color="inherit" onClick={onClose}>
-            Apply
-          </Button> */}
-        </Toolbar>
-      </AppBar>
+          </DialogTitle>
+        </DialogHeader>
 
-      <Box
-        sx={{
-          p: 3,
-          // Additional styling if needed
-        }}
-      >
-        {/* Here you can add your filter components */}
-        {/* Example: <PriceFilter ... /> */}
-        <Filter />
+        <div className="flex-1 overflow-y-auto p-4">
+          <Filter />
+        </div>
 
-        {/* <PriceFilter
-          priceFilters={priceFilters.options}
-          activate={() => {}}
-          minMaxPrice={priceFilters.minMax}
-        /> */}
-      </Box>
+        {/* Uncomment and update if you want to add an apply button */}
+        {/* <div className="border-t p-4">
+          <Button className="w-full" onClick={onClose}>
+            {t('APPLY_FILTERS')}
+          </Button>
+        </div> */}
+      </DialogContent>
     </Dialog>
   );
 };

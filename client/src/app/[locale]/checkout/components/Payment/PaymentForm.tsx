@@ -1,16 +1,14 @@
 'use client';
 
 import React from 'react';
-// Using Shadcn Tabs
-import { Divider } from '@mui/material';
-// Import shadcn components
+// Shadcn components
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Separator } from '@/components/ui/separator';
 
-// MUI icons for now
-import PaymentsSharpIcon from '@mui/icons-material/PaymentsSharp';
-import CreditCardSharpIcon from '@mui/icons-material/CreditCardSharp';
+// Lucide icons (commonly used with Shadcn)
+import { Wallet, CreditCard } from 'lucide-react';
 
 import Review from '../Review';
 // import CardPayment from './CardPayment';
@@ -86,7 +84,7 @@ const PaymentForm = ({
       <div className="flex justify-between items-center mt-6 mb-2">
         <h3 className="text-xl font-medium">{t('PAYMENT_METHODS')}</h3>
       </div>
-      <Divider />
+      <Separator className="my-4" />
 
       <div className="flex flex-grow bg-background min-h-[224px]">
         <Tabs 
@@ -102,14 +100,14 @@ const PaymentForm = ({
               className="flex flex-1 md:flex-none justify-between gap-2 text-base font-medium py-3"
             >
               {t('STORE_CASH')}
-              <PaymentsSharpIcon fontSize="medium" />
+              <Wallet className="h-5 w-5" />
             </TabsTrigger>
             <TabsTrigger
               value="1"
               className="flex flex-1 md:flex-none justify-between gap-2 text-base font-medium py-3"
             >
               {t('STORE_CARD')}
-              <CreditCardSharpIcon fontSize="medium" />
+              <CreditCard className="h-5 w-5" />
             </TabsTrigger>
             <TabsTrigger
               value="2"
@@ -117,7 +115,7 @@ const PaymentForm = ({
               disabled
             >
               {t('CARD_PAYMENT')}
-              <PaymentsSharpIcon fontSize="medium" />
+              <Wallet className="h-5 w-5" />
             </TabsTrigger>
             {/* Removed the commented out tab */}
           </TabsList>

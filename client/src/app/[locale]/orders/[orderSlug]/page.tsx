@@ -1,11 +1,8 @@
 import React from 'react';
 import { api } from '@/api';
 import type { Order } from '@/api/types/orders';
-import LinkButton from '@/components/common/LinkButton';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
+import { Button } from '@/components/ui/button';
 
 export default async function Order({
   params,
@@ -23,21 +20,20 @@ export default async function Order({
   if (typeof orderSlug !== 'string') return <div>{t('ORDER_NOT_FOUND')}</div>;
 
   return (
-    <main>
-      <div>
-        <Typography variant="h5">
+    <main className="container mx-auto px-4 py-8">
+      <div className="mb-6">
+        <h1 className="text-2xl font-semibold mb-4">
           Σας ευχαριστούμε για την παραγγελία, {data.contactInfo?.firstName}{' '}
           {data.contactInfo?.lastName}
-        </Typography>
-        <Divider sx={{ margin: '20px 0' }} />
-        <Typography variant="subtitle2">
-          Κωδικός παραγγελίας: {data.slug}
-        </Typography>
+        </h1>
+        <div className="h-px bg-gray-200 my-5"></div>
+        <p className="text-sm text-gray-600">
+          Κωδικός παραγγελίας: <span className="font-medium">{data.slug}</span>
+        </p>
       </div>
-      <br />
-      <LinkButton href="/" variant="outlined" type="button">
-        Πίσω στην αρχική
-      </LinkButton>
+      <Button className="inline-block px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+        <a>Πίσω στην αρχική</a>
+      </Button>
     </main>
   );
 }

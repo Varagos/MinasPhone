@@ -1,85 +1,47 @@
 'use client';
 
-// components/SimpleMenu.tsx
-import { useState } from 'react';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
 import { useRouter } from 'next/navigation';
-import PersonOutline from '@mui/icons-material/PersonOutline';
-import LocalShipping from '@mui/icons-material/LocalShipping';
-import Person from '@mui/icons-material/Person';
-import Settings from '@mui/icons-material/Settings';
-import ListItemIcon from '@mui/material/ListItemIcon';
+import { User, Truck, Settings, LogIn } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
 
-const SimpleMenu: React.FC = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+const SimpleMenu = () => {
   const router = useRouter();
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   const handleNavigate = (route: string) => {
     router.push(route);
-    handleClose();
   };
 
   // {authStatus === 'signedIn' && <LogoutButton />}
 
   return (
-    <div>
-      <IconButton
-        aria-label="more"
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <PersonOutline
-          fontSize="medium"
-          style={{
-            verticalAlign: 'bottom',
-            paddingBottom: 1,
-          }}
-          color="secondary"
-        />
-      </IconButton>
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            padding: '10px',
-          },
-        }}
-      >
-        <MenuItem onClick={() => handleNavigate('/order-tracking')}>
-          <ListItemIcon>
-            <LocalShipping fontSize="small" />
-          </ListItemIcon>
-          Order Tracking
-        </MenuItem>
-        <MenuItem onClick={() => handleNavigate('/auth')}>
-          <ListItemIcon>
-            <Person fontSize="small" />
-          </ListItemIcon>
-          Login/Register
-        </MenuItem>
-        <MenuItem onClick={() => handleNavigate('/another-route')}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Another Option
-        </MenuItem>
-      </Menu>
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className="h-9 w-9">
+          <User className="h-5 w-5 text-white" />
+          <span className="sr-only">User menu</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuItem onClick={() => handleNavigate('/order-tracking')}>
+          <Truck className="mr-2 h-4 w-4" />
+          <span>Order Tracking</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => handleNavigate('/auth')}>
+          <LogIn className="mr-2 h-4 w-4" />
+          <span>Login/Register</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => handleNavigate('/another-route')}>
+          <Settings className="mr-2 h-4 w-4" />
+          <span>Another Option</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

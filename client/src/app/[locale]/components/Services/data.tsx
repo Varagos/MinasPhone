@@ -5,12 +5,7 @@ import accessories from '@/../public/services-accessories.webp';
 import moneygram from '@/../public/services-moneygram.webp';
 import ria from '@/../public/services-ria.webp';
 
-import SmartphoneIcon from '@mui/icons-material/Smartphone';
-import UpgradeIcon from '@mui/icons-material/SystemUpdateAlt';
-import ScreenReplacementIcon from '@mui/icons-material/ScreenRotation';
-import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
-import HeadsetIcon from '@mui/icons-material/Headset';
-import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import { Smartphone, RefreshCw, SmartphoneCharging, Headphones, RefreshCcw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 /**
@@ -31,48 +26,48 @@ export const useServicesSection = () => {
     {
       title: t('SERVICES.SMARTPHONE_REPAIRS.TITLE'),
       imageUrl: repairs,
-      icon: <SmartphoneIcon />,
+      icon: <Smartphone className="w-6 h-6" />,
       description: t('SERVICES.SMARTPHONE_REPAIRS.DESCRIPTION'),
       backgroundColor: 'rgba(218,219,210,255)',
     },
     {
       title: t('SERVICES.MONEYGRAM_SERVICES.TITLE'),
       imageUrl: moneygram,
-      icon: <SwapHorizIcon />,
+      icon: <RefreshCw className="w-6 h-6" />,
       description: t('SERVICES.MONEYGRAM_SERVICES.DESCRIPTION'),
       backgroundColor: 'rgba(255,255,255,255)',
     },
     {
       title: t('SERVICES.RIA_MONEY_TRANSFER.TITLE'),
       imageUrl: ria,
-      icon: <SwapHorizIcon />,
+      icon: <RefreshCw className="w-6 h-6" />,
       description: t('SERVICES.RIA_MONEY_TRANSFER.DESCRIPTION'),
       backgroundColor: 'rgba(255,255,255,255)',
     },
     {
       title: t('SERVICES.DEVICE_UPGRADES.TITLE'),
       imageUrl: upgrades,
-      icon: <UpgradeIcon />,
+      icon: <RefreshCw className="w-6 h-6" />,
       description: t('SERVICES.DEVICE_UPGRADES.DESCRIPTION'),
       backgroundColor: 'rgba(15,31,48,255)',
     },
     {
       title: t('SERVICES.SCREEN_REPLACEMENTS.TITLE'),
       imageUrl: screen,
-      icon: <ScreenReplacementIcon />,
+      icon: <SmartphoneCharging className="w-6 h-6" />,
       description: t('SERVICES.SCREEN_REPLACEMENTS.DESCRIPTION'),
       backgroundColor: 'rgba(239,239,239,255)',
     },
     // {
     //   title: t('SERVICES.BATTERY_REPLACEMENTS.TITLE'),
     //   imageUrl: battery.src,
-    //   icon: <BatteryChargingFullIcon />,
+    //   icon: <BatteryCharging className="w-6 h-6" />,
     //   description: t('SERVICES.BATTERY_REPLACEMENTS.DESCRIPTION'),
     // },
     {
       title: t('SERVICES.ACCESSORIES.TITLE'),
       imageUrl: accessories,
-      icon: <HeadsetIcon />,
+      icon: <Headphones className="w-6 h-6" />,
       description: t('SERVICES.ACCESSORIES.DESCRIPTION'),
       backgroundColor: 'rgba(112,178,206,255)',
     },

@@ -1,13 +1,13 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import PriceFilter from './PriceFilter';
 import useUrl from '@/hooks/useUrl';
 import { priceFilters } from './contants';
 import { usePathname } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
+import { Button } from '@/components/ui/button';
 
 const Filter = () => {
   const pathName = usePathname();
@@ -52,71 +52,47 @@ const Filter = () => {
 }
    */
   return (
-    <div>
-      <Box border={1} borderColor="grey.300" borderRadius="1%" p={4}>
-        <Typography variant="h5" gutterBottom color="black" component="h3">
-          <strong>{t('FILTERS')}</strong>
-        </Typography>
+    <div className="border border-border rounded-md p-6 my-4">
+      <h3 className="text-xl font-bold text-foreground mb-4">{t('FILTERS')}</h3>
 
-        {activeFilters?.price && (
-          <Button
-            variant="outlined"
-            size="small"
-            fullWidth
-            sx={{
-              textTransform: 'none',
-              whiteSpace: 'nowrap',
-              textAlign: 'center',
-              my: 2,
-              px: 1,
-              color: 'white',
-              backgroundColor: 'black',
-              borderColor: 'black',
-              '&:hover': {
-                borderColor: 'black',
-                backgroundColor: '#3A3845',
-              },
-            }}
-            color="primary"
-            onClick={handleClear}
-          >
-            {t('CLEAR_FILTERS')}
-          </Button>
-        )}
-        <hr />
-        <PriceFilter
-          priceFilters={priceFilters.options}
-          activate={activatePriceFilter}
-          minMaxPrice={priceFilters.minMax}
-        />
-        {/* {}
-        <Typography variant="h6" gutterBottom>
-          <strong>Κατασκευαστής</strong>
-        </Typography>
-        <Divider />
-        <List>
-          <ListItem button selected={selectedIndex === 0} onClick={(event) => handleListItemClick(event, 0)}>
-            <ListItemText primary="Inbox" />
-          </ListItem>
-          <ListItem button selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1)}>
-            <ListItemText primary="Drafts" />
-          </ListItem>
-        </List>
-        <Divider />
-        <List component="nav" aria-label="secondary mailbox folder">
-          <ListItem button selected={selectedIndex === 2} onClick={(event) => handleListItemClick(event, 2)}>
-            <ListItemText primary="Trash" />
-          </ListItem>
-          <ListItem button selected={selectedIndex === 3} onClick={(event) => handleListItemClick(event, 3)}>
-            <ListItemText primary="Spam" />
-          </ListItem>
-        </List>
+      {activeFilters?.price && (
+        <Button
+          variant="default"
+          size="sm"
+          className="w-full mb-6 bg-foreground text-background hover:bg-foreground/90"
+          onClick={handleClear}
+        >
+          {t('CLEAR_FILTERS')}
+        </Button>
+      )}
 
-       
-        {/* <Typography variant="body2" onClick={handleClear} component={Link}>
-          <HighlightOff fontSize="inherit" /> Clear all
-        </Typography> */}
-      </Box>
+      <div className="border-t border-border my-4"></div>
+
+      <PriceFilter
+        priceFilters={priceFilters.options}
+        activate={activatePriceFilter}
+        minMaxPrice={priceFilters.minMax}
+      />
+
+      {/* Example of additional filter section - commented out for now */}
+      {false && (
+        <>
+          <h4 className="text-lg font-semibold mt-6 mb-3">Κατασκευαστής</h4>
+          <div className="border-t border-border mb-4"></div>
+          <div className="space-y-2">
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="manufacturer1"
+                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+              />
+              <label htmlFor="manufacturer1" className="text-sm font-medium">
+                Inbox
+              </label>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

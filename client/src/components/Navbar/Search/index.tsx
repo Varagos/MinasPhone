@@ -1,67 +1,51 @@
 'use client';
 import React from 'react';
-import { alpha } from '@mui/system';
-import IconButton from '@mui/material/IconButton';
-import InputBase from '@mui/material/InputBase';
-import { styled } from '@mui/material/styles';
-import SearchIcon from '@mui/icons-material/Search';
 import { useTranslations } from 'next-intl';
+import { Search as SearchIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 type SearchPromptIconProps = {
   handleSearchToggle: () => void;
 };
 
-const SearchPromptIcon = (props: SearchPromptIconProps) => {
-  const { handleSearchToggle } = props;
+const SearchPromptIcon = ({ handleSearchToggle }: SearchPromptIconProps) => {
   return (
-    <IconButton
-      color="inherit"
-      aria-label="open search"
+    <Button
+      variant="ghost"
+      size="icon"
       onClick={handleSearchToggle}
-      sx={(theme) => ({
-        [theme.breakpoints.down('sm')]: {
-          display: 'none', // Hide on small screens
-        },
-      })}
+      className="hidden md:flex"
+      aria-label="Open search"
     >
-      <SearchIcon />
-    </IconButton>
+      <SearchIcon className="h-5 w-5 text-white" />
+    </Button>
   );
 };
 
-const SearchDiv = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: 20,
-  backgroundColor: theme.palette.secondary.main,
-  //   alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  padding: '10px 30px',
-  [theme.breakpoints.up('sm')]: {
-    width: 'auto',
-  },
-  display: 'none', // Hide by default
-  justifyContent: 'center',
-  // Flex self align to the left
-  [theme.breakpoints.up('md')]: {
-    display: 'flex', // Show only on md screens and up when active
-  },
-}));
+type SearchInputFieldProps = {
+  className?: string;
+};
 
-const SearchInputField = () => {
+const SearchInputField = ({ className = '' }: SearchInputFieldProps) => {
   const t = useTranslations('navbar');
+
   return (
-    <SearchDiv>
-      <InputBase
-        placeholder={t('SEARCH_PLACEHOLDER')}
-        inputProps={{ 'aria-label': 'search' }}
+    <div className={`relative flex items-center ${className}`}>
+      <input
+        type="text"
+        placeholder={t('SEARCH_PLACEHOLDER') || 'Search...'}
+        className="h-10 w-full rounded-full bg-secondary/10 pl-4 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+        aria-label="Search"
         autoFocus
       />
-    </SearchDiv>
+      <button
+        type="button"
+        className="absolute right-2 rounded-full p-1.5 text-muted-foreground hover:bg-secondary/20"
+        aria-label="Search"
+      >
+        <SearchIcon className="h-4 w-4" />
+      </button>
+    </div>
   );
 };
 

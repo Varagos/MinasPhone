@@ -1,8 +1,6 @@
 'use client';
-// MUI components replaced with Tailwind CSS
-
 import ProductCard from './ProductCard/ProductCard';
-import { MainContainer, ToolBar } from './styles';
+
 import Filter from './Filter/Filter';
 import { Product } from '@/api/types/types';
 import useUrl from '@/hooks/useUrl';
@@ -55,18 +53,14 @@ export default function ProductsLayout({
   };
 
   return (
-    <MainContainer>
-      <ToolBar />
+    <main className="flex-grow bg-background p-6">
+      <div className="min-h-[64px]" />
       <div className="container mx-auto px-4 pb-20">
-        {/* Header Section with Title, Breadcrumbs, etc - Now full width above everything */}
         <div className="mb-16">
-          {/* Breadcrumbs */}
           <BreadcrumbNav items={breadcrumbItems} />
 
-          {/* Title */}
           <h1 className="text-2xl font-bold text-black mb-2">{title}</h1>
 
-          {/* Total products */}
           <p className="text-base mb-4">
             {t('TOTAL_PRODUCTS', { count: totalProducts })}
           </p>
@@ -88,12 +82,12 @@ export default function ProductsLayout({
           <div className="w-full md:w-3/4 px-4">
             <div className="flex flex-wrap -mx-4">
               {products.map((product) => (
-                <div 
-                  className="w-full sm:w-1/2 lg:w-1/3 p-4" 
-                  key={product.id}
-                >
+                <div className="w-full sm:w-1/2 lg:w-1/3 p-4" key={product.id}>
                   <div className="h-full">
-                    <ProductCard product={product} fromCategory={categorySlug} />
+                    <ProductCard
+                      product={product}
+                      fromCategory={categorySlug}
+                    />
                   </div>
                 </div>
               ))}
@@ -108,6 +102,6 @@ export default function ProductsLayout({
           totalPages={totalPages}
         />
       </div>
-    </MainContainer>
+    </main>
   );
 }

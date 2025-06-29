@@ -25,7 +25,6 @@ const ServicesSection = () => {
           </div>
         </div>
       </div>
-      {/* <ShapeDivider /> */}
     </section>
   );
 };

@@ -1,36 +1,56 @@
 import React from 'react';
-import { Container } from '@mui/material';
 
 const PrivacyPolicy = () => {
   return (
-    <Container maxWidth="lg" sx={{ padding: 4, marginTop: 2, marginBottom: 4 }}>
-      <h1>Privacy Policy</h1>
-      <p>Last updated: June 07, 2025</p>
-      <p>
-        This Privacy Policy describes Our policies and procedures on the
-        collection, use and disclosure of Your information when You use the
-        Service and tells You about Your privacy rights and how the law protects
-        You.
-      </p>
-      <p>
-        We use Your Personal data to provide and improve the Service. By using
-        the Service, You agree to the collection and use of information in
-        accordance with this Privacy Policy.
-      </p>
-      <h2>Interpretation and Definitions</h2>
-      <h3>Interpretation</h3>
-      <p>
-        The words of which the initial letter is capitalized have meanings
-        defined under the following conditions. The following definitions shall
-        have the same meaning regardless of whether they appear in singular or
-        in plural.
-      </p>
-      <h3>Definitions</h3>
-      <p>For the purposes of this Privacy Policy:</p>
-      <ul>
-        <li>
-          <p>
-            <strong>Account</strong> means a unique account created for You to
+    <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-lg sm:prose-xl prose-headings:font-semibold prose-headings:mt-8 prose-headings:mb-4 prose-p:my-4 prose-ul:my-4 prose-li:my-2">
+      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Privacy Policy</h1>
+      <p className="text-gray-600 text-sm mb-8">Last updated: June 07, 2025</p>
+      
+      <div className="space-y-6">
+        <p className="text-gray-700 leading-relaxed">
+          This Privacy Policy describes Our policies and procedures on the
+          collection, use and disclosure of Your information when You use the
+          Service and tells You about Your privacy rights and how the law protects
+          You.
+        </p>
+        <p className="text-gray-700 leading-relaxed">
+          We use Your Personal data to provide and improve the Service. By using
+          the Service, You agree to the collection and use of information in
+          accordance with this Privacy Policy.
+        </p>
+      </div>
+      
+      <div className="border-t border-gray-200 my-8"></div>
+      <section className="mb-12">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+          Interpretation and Definitions
+        </h2>
+        
+        <div className="space-y-6">
+          <div>
+            <h3 className="text-xl font-medium text-gray-800 mb-3">
+              Interpretation
+            </h3>
+            <p className="text-gray-700 leading-relaxed">
+              The words of which the initial letter is capitalized have meanings
+              defined under the following conditions. The following definitions shall
+              have the same meaning regardless of whether they appear in singular or
+              in plural.
+            </p>
+          </div>
+          
+          <div>
+            <h3 className="text-xl font-medium text-gray-800 mb-3">
+              Definitions
+            </h3>
+            <p className="text-gray-700 mb-4">For the purposes of this Privacy Policy:</p>
+          </div>
+        </div>
+      </section>
+      <ul className="space-y-4 mb-8">
+        <li className="pl-4 border-l-2 border-blue-200">
+          <p className="text-gray-700">
+            <strong className="text-gray-800">Account</strong> means a unique account created for You to
             access our Service or parts of our Service.
           </p>
         </li>
@@ -38,8 +58,8 @@ const PrivacyPolicy = () => {
           <p>
             <strong>Affiliate</strong> means an entity that controls, is
             controlled by or is under common control with a party, where
-            &quot;control&quot; means ownership of 50% or more of the shares,
-            equity interest or other securities entitled to vote for election of
+            &quot;control&quot; means ownership of 50% or more of the shares, equity
+            interest or other securities entitled to vote for election of
             directors or other managing authority.
           </p>
         </li>
@@ -118,9 +138,15 @@ const PrivacyPolicy = () => {
           </p>
         </li>
       </ul>
-      <h2>Collecting and Using Your Personal Data</h2>
-      <h3>Types of Data Collected</h3>
-      <h4>Personal Data</h4>
+      <h2 className="text-2xl font-semibold text-gray-900 mt-12 mb-6">
+        Collecting and Using Your Personal Data
+      </h2>
+      <h3 className="text-xl font-medium text-gray-800 mt-8 mb-4">
+        Types of Data Collected
+      </h3>
+      <h4 className="text-lg font-medium text-gray-800 mt-6 mb-3">
+        Personal Data
+      </h4>
       <p>
         While using Our Service, We may ask You to provide Us with certain
         personally identifiable information that can be used to contact or
@@ -189,25 +215,28 @@ const PrivacyPolicy = () => {
           system and server integrity).
         </li>
       </ul>
-      <p>
-        Cookies can be &quot;Persistent&quot; or &quot;Session&quot; Cookies.
-        Persistent Cookies remain on Your personal computer or mobile device
-        when You go offline, while Session Cookies are deleted as soon as You
-        close Your web browser.
+      <div className="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500 my-6">
+        <p className="text-blue-800">
+          Cookies can be &quot;Persistent&quot; or &quot;Session&quot; Cookies.
+          Persistent Cookies remain on Your personal computer or mobile device
+          when You go offline, while Session Cookies are deleted as soon as You
+          close Your web browser.
+        </p>
+      </div>
+      
+      <p className="text-lg font-medium text-gray-800 mb-6">
+        We use both Session and Persistent Cookies for the purposes set out below:
       </p>
-      <p>
-        We use both Session and Persistent Cookies for the purposes set out
-        below:
-      </p>
-      <ul>
-        <li>
-          <p>
-            <strong>Necessary / Essential Cookies</strong>
-          </p>
-          <p>Type: Session Cookies</p>
-          <p>Administered by: Us</p>
-          <p>
-            Purpose: These Cookies are essential to provide You with services
+      
+      <ul className="space-y-6">
+        <li className="bg-white p-5 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+          <h5 className="text-lg font-semibold text-gray-900 mb-3">Necessary / Essential Cookies</h5>
+          <div className="space-y-2 text-sm text-gray-700">
+            <p><span className="font-medium">Type:</span> Session Cookies</p>
+            <p><span className="font-medium">Administered by:</span> Us</p>
+          </div>
+          <p className="mt-3 text-gray-700">
+            <span className="font-medium">Purpose:</span> These Cookies are essential to provide You with services
             available through the Website and to enable You to use some of its
             features. They help to authenticate users and prevent fraudulent use
             of user accounts. Without these Cookies, the services that You have
@@ -215,25 +244,27 @@ const PrivacyPolicy = () => {
             provide You with those services.
           </p>
         </li>
-        <li>
-          <p>
-            <strong>Cookies Policy / Notice Acceptance Cookies</strong>
-          </p>
-          <p>Type: Persistent Cookies</p>
-          <p>Administered by: Us</p>
-          <p>
-            Purpose: These Cookies identify if users have accepted the use of
+        
+        <li className="bg-white p-5 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+          <h5 className="text-lg font-semibold text-gray-900 mb-3">Cookies Policy / Notice Acceptance Cookies</h5>
+          <div className="space-y-2 text-sm text-gray-700">
+            <p><span className="font-medium">Type:</span> Persistent Cookies</p>
+            <p><span className="font-medium">Administered by:</span> Us</p>
+          </div>
+          <p className="mt-3 text-gray-700">
+            <span className="font-medium">Purpose:</span> These Cookies identify if users have accepted the use of
             cookies on the Website.
           </p>
         </li>
-        <li>
-          <p>
-            <strong>Functionality Cookies</strong>
-          </p>
-          <p>Type: Persistent Cookies</p>
-          <p>Administered by: Us</p>
-          <p>
-            Purpose: These Cookies allow us to remember choices You make when
+        
+        <li className="bg-white p-5 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+          <h5 className="text-lg font-semibold text-gray-900 mb-3">Functionality Cookies</h5>
+          <div className="space-y-2 text-sm text-gray-700">
+            <p><span className="font-medium">Type:</span> Persistent Cookies</p>
+            <p><span className="font-medium">Administered by:</span> Us</p>
+          </div>
+          <p className="mt-3 text-gray-700">
+            <span className="font-medium">Purpose:</span> These Cookies allow us to remember choices You make when
             You use the Website, such as remembering your login details or
             language preference. The purpose of these Cookies is to provide You
             with a more personal experience and to avoid You having to re-enter
@@ -499,7 +530,7 @@ const PrivacyPolicy = () => {
       <ul>
         <li>By phone number: 2109224764</li>
       </ul>
-    </Container>
+    </div>
   );
 };
 

@@ -1,32 +1,31 @@
-import Fab from '@mui/material/Fab';
-import FilterListIcon from '@mui/icons-material/FilterList';
-
-// Inside your ProductsLayout component
-{
-  /* Other components */
-}
+import { Button } from '@/components/ui/button';
+import { Filter } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import React from 'react';
+
 type FloatingActionButtonProps = {
   handleOpenFilters: () => void;
+  className?: string;
 };
 
 const FloatingActionButton = ({
   handleOpenFilters,
+  className,
 }: FloatingActionButtonProps) => {
   return (
-    <Fab
-      color="primary"
-      aria-label="filter"
-      sx={{
-        position: 'fixed',
-        bottom: (theme) => theme.spacing(2),
-        right: (theme) => theme.spacing(2),
-        display: { xs: 'flex', sm: 'none' }, // Show only on xs screens
-      }}
+    <Button
+      variant="default"
+      size="icon"
+      aria-label="Filter products"
+      className={cn(
+        'fixed bottom-4 right-4 md:hidden rounded-full w-14 h-14',
+        'shadow-lg hover:shadow-xl transition-shadow',
+        className
+      )}
       onClick={handleOpenFilters}
     >
-      <FilterListIcon />
-    </Fab>
+      <Filter className="h-6 w-6" />
+    </Button>
   );
 };
 

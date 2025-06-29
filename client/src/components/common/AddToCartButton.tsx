@@ -2,7 +2,7 @@
 
 import { api } from '@/api';
 import { useCart } from '@/hooks/useCart';
-import Button from '@mui/material/Button';
+import { Button } from '@/components/ui/button';
 import React from 'react';
 
 const AddToCartButton = ({
@@ -21,10 +21,9 @@ const AddToCartButton = ({
 
   return (
     <Button
-      variant="contained"
-      color="primary"
-      size="large"
-      sx={{ py: 2, px: 10, textTransform: 'none' }}
+      variant="default"
+      size="lg"
+      className="py-6 px-10 text-base font-normal"
       onClick={() => handleAddToCart(productId)}
     >
       {content}

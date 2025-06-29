@@ -1,72 +1,27 @@
-import Toolbar from '@mui/material/Toolbar';
+'use client';
+
 import React from 'react';
-import { alpha } from '@mui/system';
-import IconButton from '@mui/material/IconButton';
-import InputBase from '@mui/material/InputBase';
-import { styled } from '@mui/material/styles';
-import SearchIcon from '@mui/icons-material/Search';
-import AppBar from '@mui/material/AppBar';
 import { useTranslations } from 'next-intl';
-
-const SearchPromptIcon = () => {
-  return (
-    <IconButton color="inherit" aria-label="search">
-      <SearchIcon />
-    </IconButton>
-  );
-};
-
-const SearchDiv = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
-  },
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
-  },
-}));
+import { Search as SearchIcon } from 'lucide-react';
 
 const MobileSearch = () => {
   const t = useTranslations('navbar');
+
   return (
-    <AppBar
-      position="static"
-      color="secondary"
-      sx={{ display: { xs: 'flex', sm: 'none' } }}
-    >
-      <Toolbar>
-        <SearchDiv>
-          <SearchPromptIcon />
-          <StyledInputBase
+    <div className="md:hidden w-full bg-secondary">
+      <div className="container mx-auto px-4 py-2">
+        <div className="relative flex w-full items-center">
+          <SearchIcon className="absolute left-3 h-5 w-5 text-black" />
+          <input
+            type="text"
             placeholder={t('SEARCH_PLACEHOLDER')}
-            inputProps={{ 'aria-label': 'search' }}
+            className="h-10 w-full rounded-full bg-white/15 pl-10 pr-4 text-sm text-black placeholder-black/70 focus:outline-none focus:ring-2 focus:ring-white/50"
+            aria-label="Search"
             autoFocus
           />
-        </SearchDiv>
-      </Toolbar>
-    </AppBar>
+        </div>
+      </div>
+    </div>
   );
 };
 

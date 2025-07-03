@@ -1,7 +1,7 @@
 {
   "name": "minasphone-backend",
   "private": true,
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "MinasPhone Backend",
   "license": "MIT",
   "scripts": {

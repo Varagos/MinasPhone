@@ -25,6 +25,7 @@ export class UpdateCategoryCommandHandler {
   async execute(
     command: UpdateCategoryCommand,
   ): Promise<UpdateCategoryCommandResponse> {
+    // TODO return error if parentId is same as the current category id
     const found = await this.categoryRepo.findOneById(command.id);
 
     if (found.isNone()) {

@@ -29,10 +29,20 @@ export class FindCategoriesQueryHandler implements IQueryHandler {
      * Constructing a query with Slonik.
      * More info: https://contra.com/p/AqZWWoUB-writing-composable-sql-using-java-script
      */
+    const { id } = query;
+
+    // Every one could be an array
+    const idArray = id ? (Array.isArray(id) ? id : [id]) : [];
+
     const statement = sql.type(categorySchema)`
          SELECT *
          FROM categories
          WHERE
+           ${
+             idArray.length > 0
+               ? sql`id = ANY(${sql.array(idArray, 'uuid')})`
+               : true
+           } AND
            ${query.slug ? sql`slug = ${query.slug}` : true} AND
            ${query.name ? sql`name = ${query.name}` : true} AND
            ${query.parentId ? sql`parent_id = ${query.parentId}` : true}

@@ -23,8 +23,8 @@ const postgresConnectionUri = databaseConfig.connectionUri
   : !databaseConfig.endpointId
   ? `postgres://${username}:${password}@${host}/${database}`
   : `postgres://${username}:${password}@${host}/${database}?options=project%3D${endpointId}&sslmode=require`;
-console.log({ databaseConfig });
+// console.log({ databaseConfig });
 
-console.log({ postgresConnectionUri });
+// console.log({ postgresConnectionUri });
 
 export { postgresConnectionUri };

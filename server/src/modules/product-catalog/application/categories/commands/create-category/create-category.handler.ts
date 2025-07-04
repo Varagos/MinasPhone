@@ -26,6 +26,8 @@ export class CreateCategoryCommandHandler implements ICommandHandler {
   ): Promise<Result<AggregateID, CategoryAlreadyExistsError>> {
     const category = CategoryEntity.create(command);
 
+    // TODO return error if parentId is same as the current category id
+
     try {
       /* Wrapping operation in a transaction to make sure
          that all domain events are processed atomically */

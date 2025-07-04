@@ -9,6 +9,7 @@ export const storageConfig = {
   gcp_project_id: get('GCP_PROJECT_ID').required().asString(),
   gcp_service_account: get('GCP_CREDENTIALS_SERVICE_ACCOUNT')
     .required()
+    .convertFromBase64()
     .asJsonObject(),
 };
 

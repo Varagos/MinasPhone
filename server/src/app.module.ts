@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { SentryGlobalFilter, SentryModule } from '@sentry/nestjs/setup';
 
 import { OrdersModule } from './modules/orders/orders.module';
 import { UserManagementModule } from './modules/user-management/user-management.module';
@@ -11,13 +12,17 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { RequestContextModule } from 'nestjs-request-context';
 import { CqrsModule } from '@nestjs/cqrs';
 import { SlonikModule } from 'nestjs-slonik';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { ContextInterceptor } from '@libs/application/context/ContextInterceptor';
 import { ExceptionInterceptor } from '@libs/application/interceptors/exception.interceptor';
 import { postgresConnectionUri } from '@config/database.config';
 import { ApiModule } from '@api/api.module';
-import { SuperTokensAuthModule } from '@modules/user-management/infra/services/super-tokens/super-tokens.module';
+
 const interceptors = [
+  {
+    provide: APP_FILTER,
+    useClass: SentryGlobalFilter,
+  },
   {
     provide: APP_INTERCEPTOR,
     useClass: ContextInterceptor,
@@ -29,6 +34,7 @@ const interceptors = [
 ];
 @Module({
   imports: [
+    SentryModule.forRoot(),
     EventEmitterModule.forRoot(),
     RequestContextModule,
     CqrsModule,

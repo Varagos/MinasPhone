@@ -405,3 +405,5 @@ dist
 /credentials/*
 /NOTES.md
 swagger.json
+# Sentry Config File
+.sentryclirc

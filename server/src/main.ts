@@ -1,3 +1,4 @@
+import './instrument';
 import { NestFactory } from '@nestjs/core';
 import supertokens from 'supertokens-node';
 import * as cookieParser from 'cookie-parser';

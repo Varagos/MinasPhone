@@ -6,4 +6,9 @@ export class HealthController {
   getHealth(): string {
     return 'OK';
   }
+
+  @Get('/debug-sentry')
+  getError() {
+    throw new Error('My first Sentry error!');
+  }
 }

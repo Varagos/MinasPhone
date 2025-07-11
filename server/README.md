@@ -2,6 +2,15 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Environment
+```bash
+touch .env.development
+touch .env.prod
+touch ./docker/dev/.env
+touch ./docker/prod/.env
+```
+
+
 ## Installation
 
 ```bash

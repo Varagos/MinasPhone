@@ -7,13 +7,13 @@ import NbItemsField from './NbItemsField';
 import { OrderResponseDto } from '../../dto/order';
 
 export const OrderList = () => (
-  <List filterDefaultValues={{ status: 'pending' }}>
+  <List filterDefaultValues={{ status: 'confirmed' }}>
     <TabbedDataGrid />
   </List>
 );
 
-const tabs: Array<{ id: string; name: 'Pending' | 'Delivered' | 'Cancelled' }> = [
-  { id: 'pending', name: 'Pending' },
+const tabs: Array<{ id: string; name: 'Confirmed' | 'Delivered' | 'Cancelled' }> = [
+  { id: 'confirmed', name: 'Confirmed' },
   { id: 'delivered', name: 'Delivered' },
   { id: 'cancelled', name: 'Cancelled' },
 ];
@@ -29,7 +29,7 @@ const useGetTotals = (
   const { data: pendingOrders } = useGetList('orders', {
     pagination: { perPage: 1, page: 1 },
     sort: { field: 'id', order: 'ASC' },
-    filter: { ...filterValues, status: 'pending' },
+    filter: { ...filterValues, status: 'confirmed' },
   });
   const { data: deliveredOrders } = useGetList('orders', {
     pagination: { perPage: 1, page: 1 },
@@ -98,7 +98,7 @@ const TabbedDataGrid = () => {
         //     <MobileGrid />
         //   ) :
         <>
-          {filterValues.status === 'pending' && (
+          {filterValues.status === 'confirmed' && (
             <Datagrid rowClick="edit">
               <DateField source="createdAt" showTime label={translate('resources.orders.fields.created_at')} />
               <TextField source="slug" label="Code" />

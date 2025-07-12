@@ -4,8 +4,11 @@ import { ContactInfo } from './value-objects/contact-info.value-object';
 import { customAlphabet } from 'nanoid';
 import { OrderLineItemEntity } from './order-line-item.entity';
 import Decimal from 'decimal.js';
-import { OrderCreatedDomainEvent } from './events/order-created.domain-event';
 import { OrderCancelledDomainEvent } from './events/order-cancelled.domain-event';
+import { InvalidOrderStatusError } from './order.errors';
+import { Err, Ok, Result } from 'oxide.ts';
+import { OrderConfirmedDomainEvent } from './events/order-confirmed.domain-event';
+import { OrderCreationStartedDomainEvent } from './events/order-creation-started.domain-event';
 
 export enum OrderStatus {
   Pending = 'pending',
@@ -13,6 +16,8 @@ export enum OrderStatus {
   // Shipped = 'shipped',
   Delivered = 'delivered',
   Cancelled = 'cancelled',
+  Confirmed = 'confirmed',
+  // Failed = 'failed',
 }
 
 interface OrderProps {
@@ -72,7 +77,7 @@ export class OrderEntity extends AggregateRoot<OrderProps> {
     const order = new OrderEntity({ props: defaultProps, id });
 
     order.addEvent(
-      new OrderCreatedDomainEvent({
+      new OrderCreationStartedDomainEvent({
         aggregateId: id,
         lineItems: props.lineItems.map((item) => ({
           productId: item.productId,
@@ -84,11 +89,39 @@ export class OrderEntity extends AggregateRoot<OrderProps> {
     return order;
   }
 
-  public updateStatus(status: OrderStatus): void {
+  public updateStatus(status: string): Result<void, InvalidOrderStatusError> {
+    if (!this.isOrderStatus(status)) {
+      return Err(new InvalidOrderStatusError(status));
+    }
+
     if (status === OrderStatus.Cancelled) {
       this.cancel();
+    } else if (status === OrderStatus.Confirmed) {
+      this.confirm();
     }
     this.props.status = status;
+    return Ok(undefined);
+  }
+
+  public confirm(): void {
+    this.props.status = OrderStatus.Confirmed;
+    this.addEvent(
+      new OrderConfirmedDomainEvent({
+        aggregateId: this.id,
+        lineItems: this.lineItems.map((item) => ({
+          productId: item.productId,
+          quantity: item.quantity,
+          itemPrice: item.itemPrice,
+          totalPrice: item.totalPrice,
+          productImage: item.productImage,
+          productName: item.productName,
+        })),
+      }),
+    );
+  }
+
+  private isOrderStatus(value: string): value is OrderStatus {
+    return Object.values(OrderStatus).includes(value as OrderStatus);
   }
 
   public updateSlug(): void {

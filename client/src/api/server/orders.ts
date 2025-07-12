@@ -1,7 +1,16 @@
 import { routes } from './config';
 import { IOrdersApi, Order } from '../types/types';
+import { Api, OrderCreatedResponseDto, OrderResponseDto } from './api';
 
 export class OrdersApi implements IOrdersApi {
+  private httpClient: Api<any>;
+
+  constructor() {
+    this.httpClient = new Api({
+      baseUrl: routes.v1.baseUrl,
+    });
+  }
+
   async checkoutOrder(params: {
     contactInfo: {
       firstName: string;
@@ -40,22 +49,77 @@ export class OrdersApi implements IOrdersApi {
       throw new Error('Failed to checkout order');
     }
 
-    const data = await res.json();
-    const { id: orderId } = data;
+    const data = (await res.json()) as OrderCreatedResponseDto;
+    const { id: orderId, slug } = data;
 
     console.log({ data });
-    return { orderId };
+    // Start polling for order status
+    console.log(`Polling for order status for orderId: ${orderId}`);
+    await this.pollOrderStatus(orderId);
+
+    return { orderId: slug };
+  }
+
+  private async pollOrderStatus(
+    orderId: string,
+    maxAttempts: number = 30,
+    intervalMs: number = 1000
+  ): Promise<void> {
+    let attempts = 0;
+
+    while (attempts < maxAttempts) {
+      try {
+        console.log(
+          `Polling order status for orderId: ${orderId}, attempt: ${
+            attempts + 1
+          }`
+        );
+        const order = await this.findOrderById(orderId);
+
+        // Check if order is in a final state
+        if (order.status === 'confirmed') {
+          console.log(`Order ${orderId} is ${order.status}`);
+          return;
+        }
+
+        if (order.status === 'cancelled') {
+          throw new Error(`Order ${orderId} ${order.status}`);
+        }
+
+        // Wait before next poll
+        await new Promise((resolve) => setTimeout(resolve, intervalMs));
+        attempts++;
+      } catch (error) {
+        console.error('Error polling order status:', error);
+        throw error;
+      }
+    }
+
+    throw new Error(
+      `Order ${orderId} status polling timed out after ${maxAttempts} attempts`
+    );
   }
 
   async findOrderById(orderId: string): Promise<Order> {
-    const res = await fetch(routes.v1.orders.findOne(orderId));
-    const data = await res.json();
-    return data;
+    const response = await this.httpClient.api.ordersHttpControllerFindOne(
+      orderId
+    );
+
+    if (!response.ok) {
+      console.error('Failed to fetch product slugs', response);
+      throw new Error('Failed to fetch product slugs');
+    }
+    return response.data;
   }
 
-  async findOrderBySlug(slug: string): Promise<any> {
-    const res = await fetch(routes.v1.orders.findOneBySlug(slug));
-    const data = await res.json();
-    return data;
+  async findOrderBySlug(slug: string): Promise<OrderResponseDto> {
+    const response =
+      await this.httpClient.api.ordersHttpControllerFindOneBySlug(slug);
+
+    if (!response.ok) {
+      console.error('Failed to fetch product slugs', response);
+      throw new Error('Failed to fetch product slugs');
+    }
+    return response.data;
   }
 }

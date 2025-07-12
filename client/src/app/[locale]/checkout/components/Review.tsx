@@ -1,40 +1,41 @@
 'use client';
 
 import React from 'react';
-import { CheckoutToken } from '@/types/checkout-token';
+import { CheckoutInfo } from '@/types/checkout-token';
 import { Separator } from '@/components/ui/separator';
 // Import useTranslations for i18n support
 import { useTranslations } from 'use-intl';
 
 type ReviewProps = {
-  checkoutToken: CheckoutToken;
+  checkoutInfo: CheckoutInfo;
 };
 
-const Review = ({ checkoutToken }: ReviewProps) => {
+const Review = ({ checkoutInfo: checkoutToken }: ReviewProps) => {
   const t = useTranslations('orders');
-  
+
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold">
-        Ανακεφαλαίωση παραγγελίας
-      </h2>
+      <h2 className="text-xl font-semibold">{t('ORDER_SUMMARY')}</h2>
       <ul className="space-y-2">
         {checkoutToken.line_items.map((product) => (
-          <li key={product.name} className="flex justify-between items-center py-2">
+          <li
+            key={product.name}
+            className="flex justify-between items-center py-2"
+          >
             <div className="space-y-1">
               <p className="font-medium">{product.name}</p>
-              <p className="text-sm text-muted-foreground">{`Ποσότητα: ${product.quantity}`}</p>
+              <p className="text-sm text-muted-foreground">
+                {t('QUANTITY', { count: product.quantity })}
+              </p>
             </div>
-            <p className="text-sm">
-              {product.subtotal.formatted_with_symbol}
-            </p>
+            <p className="text-sm">{product.subtotal.formatted_with_symbol}</p>
           </li>
         ))}
         <Separator className="my-4" />
         <li className="flex justify-between items-center py-4">
           <p className="font-medium">{t('TOTAL')}</p>
           <p className="font-bold">
-            {checkoutToken.live.subtotal.formatted_with_symbol}
+            {checkoutToken.total.formatted_with_symbol}
           </p>
         </li>
       </ul>

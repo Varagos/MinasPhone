@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
@@ -12,10 +12,17 @@ type FormInputProps = {
   name: string;
   label: string;
   required?: boolean;
+  autoComplete?: string;
   rules?: RegisterOptions;
 };
 
-const FormInput = ({ name, label, required, rules }: FormInputProps) => {
+const FormInput = ({
+  name,
+  label,
+  required,
+  rules,
+  autoComplete,
+}: FormInputProps) => {
   const { control } = useFormContext();
 
   return (
@@ -34,16 +41,21 @@ const FormInput = ({ name, label, required, rules }: FormInputProps) => {
                 <Input
                   id={name}
                   placeholder=" "
-                  className={`h-12 pt-4 border-2 ${error ? "border-red-500" : "border-gray-300"}`}
+                  className={`h-12 pt-4 border-2 ${
+                    error ? 'border-red-500' : 'border-gray-300'
+                  }`}
                   onBlur={onBlur}
                   onChange={onChange}
                   ref={ref}
-                  value={value || ""}
+                  autoComplete={autoComplete || 'off'}
+                  value={value || ''}
                 />
-                <Label 
-                  htmlFor={name} 
-                  className="absolute left-3 top-1 text-xs text-muted-foreground pointer-events-none">
-                  {label}{required && <span className="text-red-500 ml-1">{"*"}</span>}
+                <Label
+                  htmlFor={name}
+                  className="absolute left-3 top-1 text-xs text-muted-foreground pointer-events-none"
+                >
+                  {label}
+                  {required && <span className="text-red-500 ml-1">{'*'}</span>}
                 </Label>
               </div>
             </FormControl>

@@ -1,4 +1,6 @@
-type CheckoutOrderParams = {
+import { OrderResponseDto } from '../server/api';
+
+export type CheckoutOrderParams = {
   contactInfo: {
     firstName: string;
     lastName: string;
@@ -7,28 +9,7 @@ type CheckoutOrderParams = {
   };
 };
 
-export interface Order {
-  contactInfo: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-  };
-  id: string;
-  created_at: Date;
-  status: string;
-  updated_at: Date;
-  lineItems: {
-    id: string;
-    productId: string;
-    quantity: number;
-    itemPrice: number;
-    totalPrice: number;
-    productImage: string;
-    productName: string;
-  }[];
-  slug: string;
-}
+export type Order = OrderResponseDto;
 
 export interface IOrdersApi {
   checkoutOrder(params: CheckoutOrderParams): Promise<{ orderId: string }>;

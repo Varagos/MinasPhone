@@ -13,8 +13,12 @@ import { FindProductsByIdsQuery } from '@modules/product-catalog/application/pro
 import { FindProductsByIdsQueryResponse } from '@modules/product-catalog/application/products/queries/find-products-by-ids/find-products-by-ids.handler';
 import { ProductModel } from '@modules/product-catalog/infra/database/product.repository';
 import { RequestContextService } from '@libs/application/context/AppRequestContext';
+import { OrderCreatedResponseDto } from '../../dtos/order-created.response.dto';
 
-export type CheckoutOrderCommandResponse = Result<AggregateID, never>;
+export type CheckoutOrderCommandResponse = Result<
+  OrderCreatedResponseDto,
+  never
+>;
 
 @CommandHandler(CheckoutOrderCommand)
 export class CheckoutOrderCommandHandler implements ICommandHandler {
@@ -28,7 +32,7 @@ export class CheckoutOrderCommandHandler implements ICommandHandler {
 
   async execute(
     command: CheckoutOrderCommand,
-  ): Promise<Result<AggregateID, never>> {
+  ): Promise<CheckoutOrderCommandResponse> {
     this.logger.log(
       'Start executing CheckoutOrderCommand...' + JSON.stringify(command),
     );
@@ -81,7 +85,10 @@ export class CheckoutOrderCommandHandler implements ICommandHandler {
           order.slug
         }] has been created, ${RequestContextService.getRequestId()}`,
       );
-      return Ok(order.slug);
+      return Ok({
+        id: order.id,
+        slug: order.slug,
+      });
     } catch (error: any) {
       throw error;
     }

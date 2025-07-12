@@ -254,6 +254,8 @@ export class OrderRepository
       `);
       }
     });
+
+    order.publishEvents(this.logger, this.eventEmitter);
   }
 }
 

@@ -1,19 +1,9 @@
 import { ExceptionBase } from '@libs/exceptions';
 
-export class ProductAlreadyExistsError extends ExceptionBase {
-  static readonly message = 'Product already exists';
-
-  public readonly code = 'PRODUCT.ALREADY_EXISTS';
-
-  constructor(cause?: Error, metadata?: unknown) {
-    super(ProductAlreadyExistsError.message, cause, metadata);
-  }
-}
-
 export class InsufficientStockError extends ExceptionBase {
   static readonly message = 'Insufficient stock available';
 
-  public readonly code = 'PRODUCT.INSUFFICIENT_STOCK';
+  public readonly code = 'ORDER.INSUFFICIENT_STOCK';
 
   constructor(
     productId: string,
@@ -28,5 +18,15 @@ export class InsufficientStockError extends ExceptionBase {
       cause,
       metadata,
     );
+  }
+}
+
+export class InvalidOrderStatusError extends ExceptionBase {
+  static readonly message = 'Invalid order status';
+
+  public readonly code = 'ORDER.INVALID_STATUS';
+
+  constructor(status: string, cause?: Error, metadata?: unknown) {
+    super(`${InvalidOrderStatusError.message}: ${status}`, cause, metadata);
   }
 }

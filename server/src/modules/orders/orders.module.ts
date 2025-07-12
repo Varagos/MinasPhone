@@ -14,6 +14,10 @@ import { FindOrderBySlugQueryHandler } from './application/orders/queries/find-o
 import { FindOrdersQueryHandler } from './application/orders/queries/find-orders/find-orders.handler';
 import { UpdateOrderStatusCommandHandler } from './application/orders/commands/update-order-status/update-order-status.handler';
 import { DeleteOrderCommandHandler } from './application/orders/commands/delete-order/delete-order.handler';
+import { OrderProcessingSaga } from './application/orders/sagas/checkout-order/order-processing.saga';
+import { ConfirmOrderCommandHandler } from './application/orders/commands/confirm-order/confirm-order.handler';
+
+const sagas: Provider[] = [OrderProcessingSaga];
 
 const commandHandlers: Provider[] = [
   // Cart
@@ -24,6 +28,7 @@ const commandHandlers: Provider[] = [
   // Order
   CheckoutOrderCommandHandler,
   UpdateOrderStatusCommandHandler,
+  ConfirmOrderCommandHandler,
   DeleteOrderCommandHandler,
 ];
 
@@ -50,6 +55,7 @@ const services: Provider[] = [];
   providers: [
     Logger,
     ...repositories,
+    ...sagas,
     ...commandHandlers,
     ...queryHandlers,
     ...eventHandlers,

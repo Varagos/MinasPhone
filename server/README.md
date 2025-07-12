@@ -3,13 +3,13 @@
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Environment
+
 ```bash
 touch .env.development
 touch .env.prod
 touch ./docker/dev/.env
 touch ./docker/prod/.env
 ```
-
 
 ## Installation
 
@@ -80,6 +80,10 @@ Before running the app for the first time, you need to:
    ```bash
    NODE_ENV=development yarn seed:up
    ```
+
+4. Create User admin dashboard
+   - Visit `http://localhost:8080/auth/dashboard` and create an admin dashboard user.
+   - Sign up user route at `http://localhost:8080/auth/signup` to create a new user.
 
 ### Notes
 

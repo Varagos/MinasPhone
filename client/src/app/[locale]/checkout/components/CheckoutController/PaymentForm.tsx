@@ -10,25 +10,26 @@ import { Separator } from '@/components/ui/separator';
 // Lucide icons (commonly used with Shadcn)
 import { Wallet, CreditCard } from 'lucide-react';
 
-import Review from '../Review';
 // import CardPayment from './CardPayment';
-import { CheckoutToken } from '@/types/checkout-token';
-import { CheckoutCapture } from '@/types/checkout-capture';
-import { CheckoutOrderInfo } from '../../page';
+import { CheckoutInfo } from '@/types/checkout-token';
+
 import { useTranslations } from 'use-intl';
+import Review from '../Review';
+import { CheckoutOrderInfo } from '../../page';
+import { CheckoutOrderParams } from '@/api/types/orders';
 
 // Removed TabPanel and a11yProps functions as they're no longer needed with Shadcn Tabs
 
 // const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY!);
 type PaymentFormProps = {
-  checkoutToken: CheckoutToken;
+  checkoutInfo: CheckoutInfo;
   shippingData: CheckoutOrderInfo;
-  backStep: any;
-  nextStep: any;
-  onCaptureCheckout: (newOrder: CheckoutCapture) => Promise<void>;
+  backStep: () => void;
+  nextStep: () => void;
+  onCaptureCheckout: (newOrder: CheckoutOrderParams) => Promise<void>;
 };
 const PaymentForm = ({
-  checkoutToken,
+  checkoutInfo,
   shippingData,
   backStep,
   onCaptureCheckout,
@@ -42,33 +43,40 @@ const PaymentForm = ({
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    const orderData: CheckoutCapture = {
-      line_items: checkoutToken.line_items,
-      customer: {
-        first_name: shippingData.firstName,
-        last_name: shippingData.lastName,
+    const orderData: CheckoutOrderParams = {
+      contactInfo: {
+        firstName: shippingData.firstName,
+        lastName: shippingData.lastName,
         email: shippingData.email,
-        phoneNumber: shippingData.phoneNumber,
+        phone: shippingData.phoneNumber,
       },
-      shipping: {
-        name: 'Primary',
-        street: shippingData.street ?? 'Glyfada',
-        town_city: shippingData.town_city ?? 'athens',
-        county_state: shippingData.shippingSubdivision,
-        postal_zip_code: shippingData.postal_zip_code ?? '19152',
-        country: shippingData.shippingCountry,
-      },
-      fulfillment: { shipping_method: shippingData.shippingOption },
-      payment: {
-        gateway: 'test_gateway',
-        card: {
-          number: '4242424242424242',
-          expiry_month: '02',
-          expiry_year: '24',
-          cvc: '123',
-          postal_zip_code: '94107',
-        },
-      },
+
+      // line_items: checkoutToken.line_items,
+      // customer: {
+      //   first_name: shippingData.firstName,
+      //   last_name: shippingData.lastName,
+      //   email: shippingData.email,
+      //   phoneNumber: shippingData.phoneNumber,
+      // },
+      // shipping: {
+      //   name: 'Primary',
+      //   street: shippingData.street ?? 'Glyfada',
+      //   town_city: shippingData.town_city ?? 'athens',
+      //   county_state: shippingData.shippingSubdivision,
+      //   postal_zip_code: shippingData.postal_zip_code ?? '19152',
+      //   country: shippingData.shippingCountry,
+      // },
+      // fulfillment: { shipping_method: shippingData.shippingOption },
+      // payment: {
+      //   gateway: 'test_gateway',
+      //   card: {
+      //     number: '4242424242424242',
+      //     expiry_month: '02',
+      //     expiry_year: '24',
+      //     cvc: '123',
+      //     postal_zip_code: '94107',
+      //   },
+      // },
     };
     // console.log(orderData);
 
@@ -80,18 +88,18 @@ const PaymentForm = ({
   // console.log('FINAL SHIPPING DATA--', shippingData);
   return (
     <>
-      <Review checkoutToken={checkoutToken} />
+      <Review checkoutInfo={checkoutInfo} />
       <div className="flex justify-between items-center mt-6 mb-2">
         <h3 className="text-xl font-medium">{t('PAYMENT_METHODS')}</h3>
       </div>
       <Separator className="my-4" />
 
       <div className="flex flex-grow bg-background min-h-[224px]">
-        <Tabs 
-          defaultValue="0" 
-          orientation="vertical" 
-          value={String(value)} 
-          onValueChange={(val) => setValue(parseInt(val))} 
+        <Tabs
+          defaultValue="0"
+          orientation="vertical"
+          value={String(value)}
+          onValueChange={(val) => setValue(parseInt(val))}
           className="flex flex-col md:flex-row w-full md:space-x-4"
         >
           <TabsList className="w-full md:w-auto border-b md:border-b-0 md:border-r border-border md:space-y-2 py-2 flex md:flex-col overflow-x-auto">

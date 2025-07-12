@@ -13,7 +13,7 @@ This project demonstrates a microservices-based e-commerce platform with clear s
 - **Saga Choreography** for distributed transaction management
 
 <!-- ![Event Storming](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png 'Logo Title Text 1') -->
-<img width="2011" height="1988" alt="Image" src="https://github.com/user-attachments/assets/abcfdc05-1b96-4809-be7f-94d8d4f5a57b" />
+<img width="1025" height="957" alt="Image" src="https://github.com/user-attachments/assets/74488434-5a7d-4137-88e1-cd745d950b9e" />
 
 ## 📦 Current Modules
 

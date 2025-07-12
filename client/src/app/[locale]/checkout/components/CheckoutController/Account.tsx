@@ -30,9 +30,7 @@ const Account = ({ next }: AccountProps) => {
 
   return (
     <>
-      <h2 className="text-xl font-semibold mb-4">
-        {"Προσωπικά στοιχεία"}
-      </h2>
+      <h2 className="text-xl font-semibold mb-4">{'Προσωπικά στοιχεία'}</h2>
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit((data) => {
@@ -47,6 +45,7 @@ const Account = ({ next }: AccountProps) => {
               name="firstName"
               label="'Ονομα"
               required
+              autoComplete="given-name"
               rules={{
                 required: 'Υποχρεωτικό πεδίο',
               }}
@@ -54,6 +53,7 @@ const Account = ({ next }: AccountProps) => {
             <FormInput
               name="lastName"
               label="Επώνυμο"
+              autoComplete="family-name"
               required
               rules={{
                 required: 'Υποχρεωτικό πεδίο',
@@ -63,6 +63,7 @@ const Account = ({ next }: AccountProps) => {
               name="email"
               label="Email"
               required
+              autoComplete="email"
               rules={{
                 required: 'Υποχρεωτικό πεδίο',
                 pattern: {
@@ -76,6 +77,7 @@ const Account = ({ next }: AccountProps) => {
               name="phoneNumber"
               label="Αριθμός Τηλεφώνου"
               required
+              autoComplete="tel"
               rules={{
                 required: 'Υποχρεωτικό πεδίο',
                 validate: {
@@ -89,10 +91,12 @@ const Account = ({ next }: AccountProps) => {
               }}
             />
           </div>
-          
+
           <div className="flex justify-between items-center mt-8">
             <Button asChild variant="outline" className="cursor-pointer">
-              <NavigationLink href="/cart">{t('CHECKOUT.BACK_TO_CART')}</NavigationLink>
+              <NavigationLink href="/cart">
+                {t('CHECKOUT.BACK_TO_CART')}
+              </NavigationLink>
             </Button>
 
             <Button type="submit" className="cursor-pointer">

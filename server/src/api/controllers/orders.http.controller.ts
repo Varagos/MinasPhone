@@ -50,6 +50,7 @@ import { UpdateOrderStatusCommand } from '@modules/orders/application/orders/com
 import { UpdateOrderStatusCommandResponse } from '@modules/orders/application/orders/commands/update-order-status/update-order-status.handler';
 import { DeleteOrderCommand } from '@modules/orders/application/orders/commands/delete-order/delete-order.command';
 import { DeleteOrderCommandResponse } from '@modules/orders/application/orders/commands/delete-order/delete-order.handler';
+import { OrderCreatedResponseDto } from '@modules/orders/application/orders/dtos/order-created.response.dto';
 
 @ApiTags('orders')
 @Controller(routesV1.version)
@@ -60,23 +61,14 @@ export class OrdersHttpController {
   ) {}
 
   // TODO make this request idempotent
-  @ApiOperation({
-    summary: 'Checkout Order',
-    description: 'Checkout Order',
-  })
-  @ApiResponse({
-    status: HttpStatus.OK,
-    type: IdResponse,
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    type: ApiErrorResponse,
-  })
+  @ApiOperation({ summary: 'Checkout Order', description: 'Checkout Order' })
+  @ApiResponse({ status: HttpStatus.ACCEPTED, type: OrderCreatedResponseDto })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: ApiErrorResponse })
   @Post(routesV1.order.checkout)
   async create(
     @Req() request: Request,
     @Body() body: CheckoutOrderRequestDto,
-  ): Promise<IdResponse> {
+  ): Promise<OrderCreatedResponseDto> {
     const cartCookie = this.extractCartFromCookie(request);
     if (cartCookie === null) throw new HttpNotFoundException('Cart not found');
 
@@ -106,7 +98,7 @@ export class OrdersHttpController {
     // if Ok we return a response with an id
     // if Error decide what to do with it depending on its type
     return match(result, {
-      Ok: (id: string) => new IdResponse(id),
+      Ok: (response) => response,
       Err: (error: Error) => {
         if (error instanceof CategoryAlreadyExistsError)
           throw new ConflictHttpException(error.message);

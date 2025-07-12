@@ -13,6 +13,7 @@ export interface OrderLineItemResponseDTO {
 
 export enum OrderStatus {
   Pending = 'pending',
+  Confirmed = 'confirmed',
   // Paid = 'paid',
   // Shipped = 'shipped',
   Delivered = 'delivered',

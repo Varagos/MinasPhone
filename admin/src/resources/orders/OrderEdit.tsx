@@ -121,8 +121,8 @@ const OrderForm = () => {
                       source="status"
                       choices={[
                         {
-                          id: 'pending',
-                          name: 'pending',
+                          id: 'confirmed',
+                          name: 'confirmed',
                         },
                         {
                           id: 'delivered',

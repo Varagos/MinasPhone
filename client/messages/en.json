@@ -92,7 +92,11 @@
     "CHECKOUT": {
       "NEXT_BUTTON": "Next",
       "PREVIOUS_BUTTON": "Back",
-      "BACK_TO_CART": "Back to Cart"
+      "BACK_TO_CART": "Back to Cart",
+      "BACK_BUTTON": "Back",
+      "SHIPPING_METHOD": "Shipping Method",
+      "PICKUP_IN_STORE": "Pickup in store",
+      "SEND_TO_YOUR_PLACE": "Send to your place"
     }
   },
   "footer": {
@@ -135,6 +139,9 @@
     "STORE_CARD_DESC": "The order will be paid at the store with a credit or debit card.",
     "CARD_PAYMENT": "Card payment",
     "CONFIRM": "Confirm order",
-    "BACK": "Back"
+    "BACK": "Back",
+    "ORDER_SUMMARY": "Order Summary",
+    "QUANTITY": "Quantity: {count, number}",
+    "CHECKOUT_TITLE": "Checkout Completion"
   }
 }

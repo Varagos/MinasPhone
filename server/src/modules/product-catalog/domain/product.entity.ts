@@ -5,6 +5,8 @@ import { customAlphabet } from 'nanoid';
 import { ProductImageUpdatedDomainEvent } from './events/product-image-updated.domain-event';
 import { ProductDeletedDomainEvent } from './events/product-deleted.domain-event';
 import { Money } from './value-objects/money.value-object';
+import { Err, Ok, Result } from 'oxide.ts';
+import * as DomainErrors from './product.errors';
 
 interface ProductProps {
   name: string;
@@ -148,12 +150,22 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
     this.props.imageUri = imageUri;
   }
 
-  public reduceStock(quantity: number): void {
+  public reduceStock(
+    quantity: number,
+  ): Result<void, DomainErrors.InsufficientStockError> {
     // TODO Add domain event && domain rules
     if (this.props.quantity < quantity) {
-      throw new Error('Not enough stock');
+      return Err(
+        new DomainErrors.InsufficientStockError(
+          this.id,
+          this.props.name,
+          quantity,
+          this.props.quantity,
+        ),
+      );
     }
     this.props.quantity -= quantity;
+    return Ok(undefined);
   }
 
   validate(): void {

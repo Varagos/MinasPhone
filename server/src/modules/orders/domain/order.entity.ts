@@ -17,6 +17,7 @@ export enum OrderStatus {
   Delivered = 'delivered',
   Cancelled = 'cancelled',
   Confirmed = 'confirmed',
+  // Failed = 'failed',
 }
 
 interface OrderProps {

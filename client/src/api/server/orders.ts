@@ -77,12 +77,12 @@ export class OrdersApi implements IOrdersApi {
         const order = await this.findOrderById(orderId);
 
         // Check if order is in a final state
-        if (order.status === 'confirmed' || order.status === 'processed') {
+        if (order.status === 'confirmed') {
           console.log(`Order ${orderId} is ${order.status}`);
           return;
         }
 
-        if (order.status === 'failed' || order.status === 'cancelled') {
+        if (order.status === 'cancelled') {
           throw new Error(`Order ${orderId} ${order.status}`);
         }
 
@@ -109,8 +109,7 @@ export class OrdersApi implements IOrdersApi {
       console.error('Failed to fetch product slugs', response);
       throw new Error('Failed to fetch product slugs');
     }
-    const data = (await response.json()) as OrderResponseDto;
-    return data;
+    return response.data;
   }
 
   async findOrderBySlug(slug: string): Promise<OrderResponseDto> {
@@ -121,7 +120,6 @@ export class OrdersApi implements IOrdersApi {
       console.error('Failed to fetch product slugs', response);
       throw new Error('Failed to fetch product slugs');
     }
-    const data = (await response.json()) as OrderResponseDto;
-    return data;
+    return response.data;
   }
 }

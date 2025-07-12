@@ -5,7 +5,7 @@
   "description": "MinasPhone Backend",
   "license": "MIT",
   "scripts": {
-    "build": "nest build",
+    "build": "nest build && yarn sentry:sourcemaps",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node dist/src/main",
     "start:dev": "NODE_ENV=development nest start --watch",
@@ -30,7 +30,8 @@
     "migration:pending": "ts-node database/migrate pending",
     "migration:pending:tests": "NODE_ENV=test ts-node database/migrate pending",
     "seed:up": "ts-node database/seed",
-    "open-api-types": "npx swagger-typescript-api generate --path ./swagger.json --output ../client/src/api/server --name api.ts --rewrite --useOptions --useUnionTypes --defaultResponseType never --disable-throw-on-error"
+    "open-api-types": "npx swagger-typescript-api generate --path ./swagger.json --output ../client/src/api/server --name api.ts --rewrite --useOptions --useUnionTypes --defaultResponseType never --disable-throw-on-error",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org varagos --project minasphone ./dist && sentry-cli sourcemaps upload --org varagos --project minasphone ./dist"
   },
   "dependencies": {
     "@google-cloud/storage": "^6.10.1",
@@ -42,6 +43,8 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7",
     "@sendgrid/mail": "^7.7.0",
+    "@sentry/cli": "^2.47.0",
+    "@sentry/nestjs": "^9.38.0",
     "@slonik/migrator": "^0.11.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
@@ -70,7 +73,7 @@
     "@types/cookie-parser": "^1.4.3",
     "@types/express": "^4.17.13",
     "@types/jest": "^28.1.4",
-    "@types/node": "^18.0.3",
+    "@types/node": "^24.0.13",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",

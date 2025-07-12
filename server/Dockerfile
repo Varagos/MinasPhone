@@ -1,5 +1,6 @@
 # Stage 1: Build Using also dev dependencies(like rimraf, typescript, etc)
 FROM node:18 AS build
+ARG SENTRY_AUTH_TOKEN
 
 WORKDIR /app
 

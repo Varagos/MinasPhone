@@ -53,32 +53,32 @@ const Footer = () => {
                 </NavigationLink>
               </div>
 
-              <div className="my-4">
+              {/* <div className="my-4">
                 <NavigationLink
                   href="/information/delivery-and-costs"
                   className="text-white hover:text-gray-300 no-underline"
                 >
                   {t('DELIVERY_AND_COSTS')}
                 </NavigationLink>
-              </div>
+              </div> */}
 
-              <div className="my-4">
+              {/* <div className="my-4">
                 <NavigationLink
                   href="/information/payment-methods"
                   className="text-white hover:text-gray-300 no-underline"
                 >
                   {t('PAYMENT_METHODS')}
                 </NavigationLink>
-              </div>
+              </div> */}
 
-              <div className="my-4">
+              {/* <div className="my-4">
                 <NavigationLink
                   href="/account"
                   className="text-white hover:text-gray-300 no-underline"
                 >
                   {t('MY_ACCOUNT')}
                 </NavigationLink>
-              </div>
+              </div> */}
 
               <div className="my-4">
                 <CookieSettings

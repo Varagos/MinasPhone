@@ -1,21 +1,22 @@
 'use client';
 
 import React from 'react';
-import { CheckoutCapture } from '@/types/checkout-capture';
-import Account from '../Account';
-import PaymentForm from '../Payment/PaymentForm';
-import Shipping from '../Shipping';
-import { CheckoutToken } from '@/types/checkout-token';
+import Account from './Account';
+import PaymentForm from './PaymentForm';
+import Shipping from './Shipping';
+import { CheckoutInfo } from '@/types/checkout-token';
 import { CheckoutOrderInfo } from '../../page';
+import { CheckoutOrderParams } from '@/api/types/orders';
 
 export interface FormProps {
   activeStep: number;
   checkoutOrderInfo: Partial<CheckoutOrderInfo>;
-  checkoutToken: CheckoutToken | null;
-  next: (data: any) => void;
+  checkoutInfo: CheckoutInfo;
+  next: (data: Partial<CheckoutOrderInfo>) => void;
+
   nextStep: () => void;
   backStep: () => void;
-  handleCaptureCheckout: (newOrder: CheckoutCapture) => Promise<void>;
+  handleCaptureCheckout: (newOrder: CheckoutOrderParams) => Promise<void>;
 }
 export default function CheckoutController(
   props: FormProps
@@ -27,16 +28,8 @@ export default function CheckoutController(
     backStep,
     handleCaptureCheckout,
     checkoutOrderInfo,
-    checkoutToken,
+    checkoutInfo,
   } = props;
-
-  if (checkoutToken === null) {
-    return (
-      <div className="flex justify-center items-center p-8">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
 
   switch (activeStep) {
     case 0:
@@ -45,7 +38,7 @@ export default function CheckoutController(
       return (
         <Shipping
           shippingData={checkoutOrderInfo}
-          checkoutToken={checkoutToken}
+          checkoutInfo={checkoutInfo}
           next={next}
           backStep={backStep}
         />
@@ -54,13 +47,17 @@ export default function CheckoutController(
       return (
         <PaymentForm
           shippingData={checkoutOrderInfo as CheckoutOrderInfo}
-          checkoutToken={checkoutToken}
+          checkoutInfo={checkoutInfo}
           nextStep={nextStep}
           backStep={backStep}
           onCaptureCheckout={handleCaptureCheckout}
         />
       );
     default:
-      return <p className="text-lg text-red-600 text-center p-4">{"Unknown checkout step"}</p>;
+      return (
+        <p className="text-lg text-red-600 text-center p-4">
+          {'Unknown checkout step'}
+        </p>
+      );
   }
 }

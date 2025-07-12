@@ -114,24 +114,6 @@ export interface UpdateCategoryRequestDto {
   parentId?: string;
 }
 
-export interface FindCategoriesDto {
-  /**
-   * The slug of the category to filter by
-   * @example "electronics"
-   */
-  slug?: string;
-  /**
-   * The name of the category to filter by
-   * @example "Electronics"
-   */
-  name?: string;
-  /**
-   * The UUID of the parent category to filter by
-   * @example "c7b58d20-92a7-4e72-8da7-82971a1a9f4f"
-   */
-  parentId?: string;
-}
-
 export interface CategoryResponseDto {
   /** @example "2cdc8ab1-6d50-49cc-ba14-54e4ac7ec231" */
   id: string;
@@ -150,7 +132,7 @@ export interface CategoryResponseDto {
    */
   name: string;
   /** Optional parent category id */
-  parentId: object;
+  parentId: string | null;
 }
 
 export interface CategoryPaginatedResponseDto {
@@ -185,6 +167,7 @@ export interface CreateProductRequestDto {
   description: string;
   /**
    * The price of the product to create
+   * @min 0
    * @example 1999.99
    */
   price: number;
@@ -257,19 +240,6 @@ export interface UpdateProductRequestDto {
    * @example "base64 encoded image data"
    */
   image?: string;
-}
-
-export interface FindProductsRequestDto {
-  /**
-   * The slug of the product 1to filter by
-   * @example "iphone-12"
-   */
-  slug?: string;
-  /**
-   * The UUID of the category to filter by
-   * @example "c7b58d20-92a7-4e72-8da7-82971a1a9f4f"
-   */
-  categoryId?: string;
 }
 
 export interface ProductResponseDto {
@@ -379,6 +349,7 @@ export interface AddCartItemRequestDto {
   productId: string;
   /**
    * The quantity of the line item
+   * @min 1
    * @example "1"
    */
   quantity: number;
@@ -387,6 +358,7 @@ export interface AddCartItemRequestDto {
 export interface UpdateCartLineItemRequestDto {
   /**
    * The new quantity of the line item
+   * @min 1
    * @example "1"
    */
   quantity: string;
@@ -436,6 +408,43 @@ export interface CheckoutOrderRequestDto {
   phone: string;
 }
 
+export interface OrderCreatedResponseDto {
+  id: string;
+  slug: string;
+}
+
+export interface OrderLineItemResponseDTO {
+  /** Line item id */
+  id: string;
+  /**
+   * Product id
+   * @example "prod_123456789"
+   */
+  productId: string;
+  /**
+   * Product name
+   * @example "Product name"
+   */
+  productName: string;
+  /** Product image */
+  productImage: string;
+  /**
+   * Item price
+   * @example 10
+   */
+  itemPrice: number;
+  /**
+   * Product quantity
+   * @example 2
+   */
+  quantity: number;
+  /**
+   * Total price
+   * @example 20
+   */
+  totalPrice: number;
+}
+
 export interface OrderResponseDto {
   /** @example "2cdc8ab1-6d50-49cc-ba14-54e4ac7ec231" */
   id: string;
@@ -452,11 +461,15 @@ export interface OrderResponseDto {
    * Order status
    * @example "pending"
    */
-  status: "pending" | "delivered" | "cancelled";
+  status: "pending" | "delivered" | "cancelled" | "confirmed";
   /** Order line items */
-  lineItems: string[];
-  /** Order contact info */
-  contactInfo: object;
+  lineItems: OrderLineItemResponseDTO[];
+  contactInfo: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+  };
   /**
    * Order total
    * @example 100
@@ -757,11 +770,12 @@ export class Api<
       data: CreateAnalyticsDto,
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
+      this.request<string, any>({
         path: `/api/analytics`,
         method: "POST",
         body: data,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 
@@ -772,9 +786,10 @@ export class Api<
      * @request GET:/api/analytics
      */
     analyticsControllerFindAll: (params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<string, any>({
         path: `/api/analytics`,
         method: "GET",
+        format: "json",
         ...params,
       }),
 
@@ -785,9 +800,10 @@ export class Api<
      * @request GET:/api/analytics/{id}
      */
     analyticsControllerFindOne: (id: string, params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<string, any>({
         path: `/api/analytics/${id}`,
         method: "GET",
+        format: "json",
         ...params,
       }),
 
@@ -802,11 +818,12 @@ export class Api<
       data: UpdateAnalyticsDto,
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
+      this.request<string, any>({
         path: `/api/analytics/${id}`,
         method: "PATCH",
         body: data,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 
@@ -817,9 +834,10 @@ export class Api<
      * @request DELETE:/api/analytics/{id}
      */
     analyticsControllerRemove: (id: string, params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<string, any>({
         path: `/api/analytics/${id}`,
         method: "DELETE",
+        format: "json",
         ...params,
       }),
 
@@ -836,11 +854,15 @@ export class Api<
       query?: {
         /**
          * Specifies a limit of returned records
+         * @min 0
+         * @max 99999
          * @example 10
          */
         limit?: number;
         /**
          * Page number
+         * @min 0
+         * @max 99999
          * @example 0
          */
         page?: number;
@@ -882,9 +904,10 @@ export class Api<
      * @request DELETE:/api/v1/users/{id}
      */
     usersControllerRemove: (id: string, params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<CreateAnalyticsDto, any>({
         path: `/api/v1/users/${id}`,
         method: "DELETE",
+        format: "json",
         ...params,
       }),
 
@@ -918,18 +941,25 @@ export class Api<
      * @request GET:/api/v1/categories
      */
     categoriesHttpControllerFindCategories: (
-      data: FindCategoriesDto,
       query?: {
         /**
          * Specifies a limit of returned records
+         * @min 0
+         * @max 99999
          * @example 10
          */
         limit?: number;
         /**
          * Page number
+         * @min 0
+         * @max 99999
          * @example 0
          */
         page?: number;
+        id?: object;
+        name?: string;
+        slug?: string;
+        parentId?: string;
       },
       params: RequestParams = {},
     ) =>
@@ -937,8 +967,6 @@ export class Api<
         path: `/api/v1/categories`,
         method: "GET",
         query: query,
-        body: data,
-        type: ContentType.Json,
         format: "json",
         ...params,
       }),
@@ -1027,21 +1055,18 @@ export class Api<
      * @request GET:/api/v1/products
      */
     productsHttpControllerFindProducts: (
-      query: {
+      query?: {
         /** Order by field and order */
-        sort: string[];
+        sort?: string[];
         /** Range of results to return */
-        range: string[];
+        range?: string[];
       },
-      data: FindProductsRequestDto,
       params: RequestParams = {},
     ) =>
       this.request<ProductPaginatedResponseDto, any>({
         path: `/api/v1/products`,
         method: "GET",
         query: query,
-        body: data,
-        type: ContentType.Json,
         format: "json",
         ...params,
       }),
@@ -1219,7 +1244,7 @@ export class Api<
       data: CheckoutOrderRequestDto,
       params: RequestParams = {},
     ) =>
-      this.request<IdResponse, ApiErrorResponse>({
+      this.request<OrderCreatedResponseDto, ApiErrorResponse>({
         path: `/api/v1/orders/checkout`,
         method: "POST",
         body: data,
@@ -1310,11 +1335,11 @@ export class Api<
      * @request GET:/api/v1/orders
      */
     ordersHttpControllerFindOrders: (
-      query: {
+      query?: {
         /** Order by field and order */
-        sort: string[];
+        sort?: string[];
         /** Range of results to return */
-        range: string[];
+        range?: string[];
       },
       params: RequestParams = {},
     ) =>
@@ -1334,9 +1359,10 @@ export class Api<
      * @request GET:/health
      */
     healthControllerGetHealth: (params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<string, any>({
         path: `/health`,
         method: "GET",
+        format: "json",
         ...params,
       }),
   };

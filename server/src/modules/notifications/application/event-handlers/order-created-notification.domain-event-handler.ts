@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { OrderCreatedDomainEvent } from '@modules/orders/domain/events/order-created.domain-event';
+// import { OrderCreatedDomainEvent } from '@modules/orders/domain/events/order-created.domain-event';
 import { NotificationService } from '../services/notification.service';
+import { OrderConfirmedDomainEvent } from '@modules/orders/domain/events/order-confirmed.domain-event';
 
 @Injectable()
 export class OrderCreatedNotificationHandler {
@@ -9,8 +10,8 @@ export class OrderCreatedNotificationHandler {
 
   constructor(private readonly notificationService: NotificationService) {}
 
-  @OnEvent(OrderCreatedDomainEvent.name, { async: true, promisify: true })
-  async handle(event: OrderCreatedDomainEvent): Promise<void> {
+  @OnEvent(OrderConfirmedDomainEvent.name, { async: true, promisify: true })
+  async handle(event: OrderConfirmedDomainEvent): Promise<void> {
     this.logger.log(
       `Handling order created event for notification: ${event.id}`,
     );

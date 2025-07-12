@@ -1,4 +1,4 @@
-type CheckoutOrderParams = {
+export type CheckoutOrderParams = {
   contactInfo: {
     firstName: string;
     lastName: string;
@@ -15,9 +15,9 @@ export interface Order {
     phone: string;
   };
   id: string;
-  created_at: Date;
   status: string;
-  updated_at: Date;
+  createdAt: string;
+  updatedAt: string;
   lineItems: {
     id: string;
     productId: string;

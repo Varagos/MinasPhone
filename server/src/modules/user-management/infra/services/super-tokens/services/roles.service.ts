@@ -33,7 +33,7 @@ export class SupertokensUserRolesService implements IRoleService {
   }
 
   async assignRole(userId: string, role: Roles) {
-    const response = await UserRoles.addRoleToUser(userId, role);
+    const response = await UserRoles.addRoleToUser('public', userId, role);
 
     if (response.status === 'UNKNOWN_ROLE_ERROR') {
       // No such role exists
@@ -64,7 +64,11 @@ export class SupertokensUserRolesService implements IRoleService {
     session: SessionContainer,
     role: Roles,
   ) {
-    const response = await UserRoles.removeUserRole(session.getUserId(), role);
+    const response = await UserRoles.removeUserRole(
+      'public',
+      session.getUserId(),
+      role,
+    );
 
     if (response.status === 'UNKNOWN_ROLE_ERROR') {
       // No such role exists
@@ -81,13 +85,13 @@ export class SupertokensUserRolesService implements IRoleService {
   }
 
   async getRolesForUser(userId: string) {
-    const response = await UserRoles.getRolesForUser(userId);
+    const response = await UserRoles.getRolesForUser('public', userId);
     const roles: string[] = response.roles;
     return roles;
   }
 
   async getUsersThatHaveRole(role: Roles) {
-    const response = await UserRoles.getUsersThatHaveRole(role);
+    const response = await UserRoles.getUsersThatHaveRole('public', role);
 
     if (response.status === 'UNKNOWN_ROLE_ERROR') {
       // No such role exists

@@ -54,31 +54,12 @@ export class SuperTokensAuthService implements IAuthService {
   }
   async getUsers() {
     // get the latest 100 users
-    let usersResponse = await getUsersNewestFirst();
+    const usersResponse = await getUsersNewestFirst({
+      tenantId: 'public',
+    });
 
-    let users: SuperTokensUsersResponse = usersResponse.users;
+    const users: SuperTokensUsersResponse = usersResponse.users;
     return users.map(({ user }) => user);
-    let nextPaginationToken = usersResponse.nextPaginationToken;
-
-    // get the next 200 users
-    usersResponse = await getUsersNewestFirst({
-      limit: 200,
-      paginationToken: nextPaginationToken,
-    });
-
-    users = usersResponse.users;
-    nextPaginationToken = usersResponse.nextPaginationToken;
-
-    // get for specific recipes
-    usersResponse = await getUsersNewestFirst({
-      limit: 200,
-      paginationToken: nextPaginationToken,
-      // only get for those users who signed up with EmailPassword
-      includeRecipeIds: ['emailpassword'],
-    });
-
-    users = usersResponse.users;
-    nextPaginationToken = usersResponse.nextPaginationToken;
   }
 
   ensureAdmin() {
@@ -99,7 +80,7 @@ export class SuperTokensAuthService implements IAuthService {
     await deleteUser(userId); // this will succeed even if the userId didn't exist.
   }
   async getUserForEmail(email: string): Promise<UserEntity | null> {
-    const usersInfo = await EmailPassword.getUserByEmail(email);
+    const usersInfo = await EmailPassword.getUserByEmail('public', email);
     if (usersInfo === undefined) return null;
     const entity = new UserEntity({
       id: usersInfo.id,

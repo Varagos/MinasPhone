@@ -9716,18 +9716,18 @@ supertokens-js-override@0.0.4, supertokens-js-override@^0.0.4:
   resolved "https://registry.yarnpkg.com/supertokens-js-override/-/supertokens-js-override-0.0.4.tgz#9af583fbc5e1f0195dbb358c4fcf75f44c76dc09"
   integrity sha512-r0JFBjkMIdep3Lbk3JA+MpnpuOtw4RSyrlRAbrzMcxwiYco3GFWl/daimQZ5b1forOiUODpOlXbSOljP/oyurg==
 
-supertokens-web-js@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/supertokens-web-js/-/supertokens-web-js-0.6.0.tgz#df0add6513a0f26f98d76713fe874309eae84963"
-  integrity sha512-2KOgWNGanh+/zpdaFQgiA9dQa6T9wA6LcoB6m1BTZ7JIqR3mYmpLD5uu8ERtISNAGUjcXziON/Fp5ZnlBByCcw==
+supertokens-web-js@0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/supertokens-web-js/-/supertokens-web-js-0.11.0.tgz#5289f7b9ef539a2f4f02173945cbcf3b42245dbb"
+  integrity sha512-6jMmwkR+qi+cOpeymuczKqjHGK/9/1Ckfv8MUFN54k4/4Bs1FMF6wJofTuXOZHEZX80wKZmOHJKQERm8IhBWWg==
   dependencies:
     supertokens-js-override "0.0.4"
-    supertokens-website "^17.0.0"
+    supertokens-website "^20.0.0"
 
-supertokens-website@^17.0.0:
-  version "17.0.0"
-  resolved "https://registry.yarnpkg.com/supertokens-website/-/supertokens-website-17.0.0.tgz#0c20f47c6feda64e4324fa1fe8fe01a15081c56c"
-  integrity sha512-9f1LeiAkfEvA98SF5/c8pKBlvtWBT2Nx6wwylGQqrWYVD2HrCJ1cSsrwznXs160a8zynpF74oBRKKvg9V07WFw==
+supertokens-website@^20.0.0:
+  version "20.1.6"
+  resolved "https://registry.yarnpkg.com/supertokens-website/-/supertokens-website-20.1.6.tgz#8241545d23ee1339ec6997423107b82a3eb4c5f3"
+  integrity sha512-WSehco2PsrFp4WY7h6tDutYyi2nPgJS8lahUadcL/cpBqgEuZ3pjnvN1NDASSNSTfXeO1smm3HrvvLZG5C7qHA==
   dependencies:
     browser-tabs-lock "^1.3.0"
     supertokens-js-override "^0.0.4"

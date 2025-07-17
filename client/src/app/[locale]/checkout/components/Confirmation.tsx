@@ -14,6 +14,7 @@ export type CheckoutOrderResponse = {
 type ConfirmationProps = {
   orderResponse: CheckoutOrderResponse | null;
 };
+
 const Confirmation = ({ orderResponse }: ConfirmationProps) => {
   return (
     <div className="w-full">

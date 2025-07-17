@@ -1,4 +1,5 @@
 import { OrderResponseDto } from '../server/api';
+import * as O from 'fp-ts/Option';
 
 export type CheckoutOrderParams = {
   contactInfo: {
@@ -15,5 +16,5 @@ export interface IOrdersApi {
   checkoutOrder(params: CheckoutOrderParams): Promise<{ orderId: string }>;
 
   findOrderById(orderId: string): Promise<Order>;
-  findOrderBySlug(slug: string): Promise<Order>;
+  findOrderBySlug(slug: string): Promise<O.Option<Order>>;
 }

@@ -1,6 +1,7 @@
 import { routes } from './config';
 import { IOrdersApi, Order } from '../types/types';
 import { Api, OrderCreatedResponseDto, OrderResponseDto } from './api';
+import * as O from 'fp-ts/Option';
 
 export class OrdersApi implements IOrdersApi {
   private httpClient: Api<any>;
@@ -112,14 +113,17 @@ export class OrdersApi implements IOrdersApi {
     return response.data;
   }
 
-  async findOrderBySlug(slug: string): Promise<OrderResponseDto> {
+  async findOrderBySlug(slug: string): Promise<O.Option<OrderResponseDto>> {
     const response =
       await this.httpClient.api.ordersHttpControllerFindOneBySlug(slug);
 
     if (!response.ok) {
+      if (response.status === 404) {
+        return O.none;
+      }
       console.error('Failed to fetch product slugs', response);
       throw new Error('Failed to fetch product slugs');
     }
-    return response.data;
+    return O.some(response.data);
   }
 }

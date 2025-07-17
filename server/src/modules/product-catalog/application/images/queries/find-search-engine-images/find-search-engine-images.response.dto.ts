@@ -1,4 +1,5 @@
 class SearchEngineImageResult {
+  id: string;
   link: string;
   mime: string;
   fileFormat: string;

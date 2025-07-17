@@ -17,7 +17,7 @@ export interface OrderNotificationData {
 }
 
 export interface CustomerOrderConfirmationData {
-  order_id: string;
+  orderReference: string;
   total: number;
   orderItems: Array<{
     name: string;

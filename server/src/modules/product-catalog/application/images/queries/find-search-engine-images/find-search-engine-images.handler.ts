@@ -4,6 +4,7 @@ import { FindSearchEngineImagesQuery } from './find-search-engine-images.query';
 import { InternalServerErrorException } from '@libs/exceptions';
 import { GoogleImageSearchService } from '@modules/product-catalog/infra/services/image-search/google-image.search.service';
 import { FindSearchEngineImagesResponseDto } from './find-search-engine-images.response.dto';
+import { randomUUID } from 'crypto';
 
 export type FindSearchEngineImagesResponse = Result<
   FindSearchEngineImagesResponseDto,
@@ -30,7 +31,10 @@ export class FindSearchEngineImagesQueryHandler implements IQueryHandler {
         query.searchText,
       );
       return Ok({
-        data: images,
+        data: images.map((image) => ({
+          id: randomUUID(),
+          ...image,
+        })),
       });
     } catch (error: any) {
       return Err(new InternalServerErrorException(error.message));

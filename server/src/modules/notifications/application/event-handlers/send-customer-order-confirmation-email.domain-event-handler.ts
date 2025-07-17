@@ -24,7 +24,7 @@ export class SendCustomerOrderConfirmationEmailHandler {
     try {
       // Extract order data from the event
       const notificationData: CustomerOrderConfirmationData = {
-        order_id: event.orderSlug,
+        orderReference: event.orderSlug,
         total: event.total,
         orderItems: event.lineItems.map((item) => ({
           name: item.productName,

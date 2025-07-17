@@ -1,9 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 
-import Confirmation, {
-  CheckoutOrderResponse,
-} from './components/Confirmation/Confirmation';
+import Confirmation, { CheckoutOrderResponse } from './components/Confirmation';
 import CheckoutController from './components/CheckoutController/CheckoutController';
 import { useCart } from '@/hooks/useCart';
 import { api } from '@/api';
@@ -32,7 +30,7 @@ export default function Checkout() {
   const [orderResponse, setOrderResponse] =
     useState<CheckoutOrderResponse | null>(null);
 
-  const { cart, setCart } = useCart();
+  const { cart, setCart, clearCart } = useCart();
 
   const handleCaptureCheckout = async (newOrder: CheckoutOrderParams) => {
     const orderResult = await api.orders.checkoutOrder({
@@ -50,14 +48,12 @@ export default function Checkout() {
       orderReference: orderResult.orderId,
     });
 
-    await api.cart.clearCart();
+    await clearCart();
     // TODO handle this bug, when null confirmation is not shown properly.
     // One solution could be confirmation to be on some other page.
-    // setCart(null); // Clear the cart after successful order capture
 
     // Navigate to orderId page
   };
-  if (!cart) return <div>No cart</div>;
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -109,9 +105,8 @@ export default function Checkout() {
             className="mb-8"
             alternativeLabel
           />
-          {activeStep === steps.length ? (
-            <Confirmation orderResponse={orderResponse} />
-          ) : (
+
+          {activeStep < steps.length && cart && (
             <CheckoutController
               activeStep={activeStep}
               next={next}
@@ -121,6 +116,9 @@ export default function Checkout() {
               handleCaptureCheckout={handleCaptureCheckout}
               checkoutInfo={createCheckoutInfoFromCart(cart)}
             />
+          )}
+          {activeStep === steps.length && (
+            <Confirmation orderResponse={orderResponse} />
           )}
         </div>
       </main>

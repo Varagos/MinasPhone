@@ -32,14 +32,14 @@ const SimpleMenu = () => {
           <Truck className="mr-2 h-4 w-4" />
           <span>Order Tracking</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleNavigate('/auth')}>
+        {/* <DropdownMenuItem onClick={() => handleNavigate('/auth')}>
           <LogIn className="mr-2 h-4 w-4" />
           <span>Login/Register</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => handleNavigate('/another-route')}>
           <Settings className="mr-2 h-4 w-4" />
           <span>Another Option</span>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );

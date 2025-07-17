@@ -1,4 +1,10 @@
-import { deleteUser, getUsersNewestFirst } from 'supertokens-node';
+import {
+  deleteUser,
+  getUser,
+  getUsersNewestFirst,
+  listUsersByAccountInfo,
+  User,
+} from 'supertokens-node';
 import { verifySession } from 'supertokens-node/recipe/session/framework/express';
 import UserRoles from 'supertokens-node/recipe/userroles';
 import EmailPassword from 'supertokens-node/recipe/emailpassword';
@@ -45,12 +51,12 @@ type SuperTokensUsersResponse = Array<{
 export class SuperTokensAuthService implements IAuthService {
   constructor(private readonly rolesService: SupertokensUserRolesService) {}
   async getUserById(userId: string): Promise<Option<UserInfo>> {
-    const userInfo = await EmailPassword.getUserById(userId);
+    const userInfo = await getUser(userId);
     if (userInfo === undefined) {
       return None;
     }
     const roles = await this.rolesService.getRolesForUser(userId);
-    return Some({ ...userInfo, roles });
+    return Some({ ...userInfo, roles, email: userInfo.emails[0] });
   }
   async getUsers() {
     // get the latest 100 users
@@ -58,8 +64,11 @@ export class SuperTokensAuthService implements IAuthService {
       tenantId: 'public',
     });
 
-    const users: SuperTokensUsersResponse = usersResponse.users;
-    return users.map(({ user }) => user);
+    const users: User[] = usersResponse.users;
+    return users.map((user) => ({
+      ...user,
+      email: user.emails[0],
+    }));
   }
 
   ensureAdmin() {
@@ -80,12 +89,14 @@ export class SuperTokensAuthService implements IAuthService {
     await deleteUser(userId); // this will succeed even if the userId didn't exist.
   }
   async getUserForEmail(email: string): Promise<UserEntity | null> {
-    const usersInfo = await EmailPassword.getUserByEmail('public', email);
-    if (usersInfo === undefined) return null;
+    const usersInfo = await listUsersByAccountInfo('public', { email });
+    if (usersInfo === undefined || usersInfo.length === 0) return null;
+    const userInfo = usersInfo[0];
+
     const entity = new UserEntity({
-      id: usersInfo.id,
+      id: userInfo.id,
       props: {
-        email: new UserEmail({ value: usersInfo.email }),
+        email: new UserEmail({ value: userInfo.emails[0] }),
       } as any, // TODO: fix this
     });
     return entity;
@@ -93,7 +104,7 @@ export class SuperTokensAuthService implements IAuthService {
 
   async getUserInfoWithRoles(userId: string): Promise<any> {
     const userRoles = await this.rolesService.getRolesForUser(userId);
-    const userInfo = await EmailPassword.getUserById(userId);
+    const userInfo = await getUser(userId);
     return { ...userInfo, roles: userRoles };
   }
 }

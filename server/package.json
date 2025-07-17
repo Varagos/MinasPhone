@@ -61,7 +61,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.5",
     "slonik": "^31",
-    "supertokens-node": "15.0.0",
+    "supertokens-node": "^16",
     "winston": "^3.11.0",
     "zod": "^3.21.4"
   },

@@ -53,7 +53,7 @@ async function bootstrap() {
     new ValidationPipe({
       transform: true,
       whitelist: true, // Automatically remove properties that are not in the DTO
-      forbidNonWhitelisted: true, // Throw an error if non-whitelisted properties are found
+      // forbidNonWhitelisted: true, // Throw an error if non-whitelisted properties are found
     }),
   );
   app.useGlobalFilters(new SupertokensExceptionFilter());

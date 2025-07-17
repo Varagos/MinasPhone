@@ -9,9 +9,15 @@ export class OrderConfirmedDomainEvent extends DomainEvent {
     productImage: string;
     productName: string;
   }>;
+  orderSlug: string;
+  total: number;
+  customerEmail: string;
 
   constructor(props: DomainEventProps<OrderConfirmedDomainEvent>) {
     super(props);
     this.lineItems = props.lineItems;
+    this.orderSlug = props.orderSlug;
+    this.total = props.total;
+    this.customerEmail = props.customerEmail;
   }
 }

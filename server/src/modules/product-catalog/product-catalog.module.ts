@@ -31,6 +31,8 @@ import { FindProductsByIdsQueryHandler } from './application/products/queries/fi
 import { ReduceProductsStockCommandHandler } from './application/products/commands/reduce-products-stock/reduce-products-stock.handler';
 import { FindAllProductSlugsQueryHandler } from './application/products/queries/find-all-product-slugs/find-all-product-slugs.handler';
 import { ReserveProductsStockCommandHandler } from './application/products/commands/reserve-products-stocks/reserve-products-stock.handler';
+import { FindSearchEngineImagesQueryHandler } from './application/images/queries/find-search-engine-images/find-search-engine-images.handler';
+import { GoogleImageSearchService } from './infra/services/image-search/google-image.search.service';
 
 const commandHandlers: Provider[] = [
   // Category
@@ -60,6 +62,8 @@ const queryHandlers: Provider[] = [
   FindProductsByCategorySlugQueryHandler,
   FindProductsByIdsQueryHandler,
   FindAllProductSlugsQueryHandler,
+  //Images
+  FindSearchEngineImagesQueryHandler,
 ];
 
 const eventHandlers: Provider[] = [
@@ -80,6 +84,7 @@ const services: Provider[] = [
     provide: CLOUD_STORAGE_SERVICE,
     useClass: GoogleCloudStorageServiceAdapter,
   },
+  GoogleImageSearchService,
 ];
 
 @Module({

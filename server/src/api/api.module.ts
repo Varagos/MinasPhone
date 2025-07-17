@@ -7,6 +7,7 @@ import { HealthController } from './health.controller';
 import { CartHttpController } from './controllers/cart.http.controller';
 import { OrdersHttpController } from './controllers/orders.http.controller';
 import { AppHttpRequestLoggerMiddleware } from '@libs/api/middleware/request-logger.middleware';
+import { ProductImagesHttpController } from './controllers/product-images.http.controller';
 
 @Module({
   imports: [CqrsModule],
@@ -17,6 +18,7 @@ import { AppHttpRequestLoggerMiddleware } from '@libs/api/middleware/request-log
     ProductsHttpController,
     CartHttpController,
     OrdersHttpController,
+    ProductImagesHttpController,
   ],
 })
 export class ApiModule implements NestModule {

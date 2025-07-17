@@ -30,6 +30,7 @@ export const routesV1 = {
     update: `/${productsRoot}/:id`,
     findByCategorySlug: `/${productsRoot}/category/:slug`,
     findAllSlugs: `/${productsRoot}/slugs`,
+    searchEngineImages: `/${productsRoot}-images/search-engine-images`,
   },
   cart: {
     // Fetch cart from cookie or create a new one

@@ -49,7 +49,13 @@ async function bootstrap() {
     allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
     credentials: true,
   });
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true, // Automatically remove properties that are not in the DTO
+      forbidNonWhitelisted: true, // Throw an error if non-whitelisted properties are found
+    }),
+  );
   app.useGlobalFilters(new SupertokensExceptionFilter());
   app.setGlobalPrefix('api', {
     exclude: ['auth', 'health'],

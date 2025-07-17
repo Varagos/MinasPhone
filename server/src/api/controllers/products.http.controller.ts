@@ -56,6 +56,9 @@ import { FindProductsByCategorySlugQuery } from '@modules/product-catalog/applic
 import { FindAllProductSlugsQueryDto } from '@modules/product-catalog/application/products/queries/find-all-product-slugs/find-all-product-slugs.request.dto';
 import { FindAllProductSlugsQuery } from '@modules/product-catalog/application/products/queries/find-all-product-slugs/find-all-product-slugs.query';
 import { ProductSlugResponseDto } from '@modules/product-catalog/application/categories/dtos/product-slug.response.dto';
+import { FindSearchEngineImagesResponseDto } from '@modules/product-catalog/application/images/queries/find-search-engine-images/find-search-engine-images.response.dto';
+import { FindSearchEngineImagesQuery } from '@modules/product-catalog/application/images/queries/find-search-engine-images/find-search-engine-images.query';
+import type { FindSearchEngineImagesResponse } from '@modules/product-catalog/application/images/queries/find-search-engine-images/find-search-engine-images.handler';
 
 @ApiTags('products')
 @Controller(routesV1.version)
@@ -400,35 +403,28 @@ export class ProductsHttpController {
     });
   }
 
-  // @Get(routesV1.product.image)
-  // @ApiOperation({ summary: 'Find product Image' })
-  // @ApiResponse({
-  //   status: HttpStatus.OK,
-  // })
-  // @UsePipes(new ValidationPipe({ whitelist: true }))
-  // async findImage(
-  //   @Param('id', ParseUUIDPipe) id: string,
-  //   @Res() res: Response,
-  // ) {
-  //   const query = new FindProductImageQuery(id);
-  //   const result: Result<ProductModel, Error> = await this.queryBus.execute(
-  //     query,
-  //   );
+  @ApiOperation({ summary: 'Find product images from search engine' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: FindSearchEngineImagesResponseDto,
+  })
+  @Get('products/search-engine-images')
+  async findSearchEngineImages(): Promise<FindSearchEngineImagesResponseDto> {
+    console.log('findSearchEngineImages called');
+    const query = new FindSearchEngineImagesQuery({} as any); //queryParams.searchText);
 
-  //   return match(result, {
-  //     Ok: (product) => {
-  //       res.writeHead(200, {
-  //         'Content-Type': product.image_mimetype,
-  //         'Content-Length': product.image_data.length,
-  //       });
-  //       return res.end(product.image_data);
-  //     },
-  //     Err: (error: Error) => {
-  //       if (error instanceof NotFoundException) {
-  //         throw new HttpNotFoundException();
-  //       }
-  //       throw error;
-  //     },
-  //   });
-  // }
+    const result: FindSearchEngineImagesResponse = await this.queryBus.execute(
+      query,
+    );
+
+    return match(result, {
+      Ok: (response) => response,
+      Err: (error: Error) => {
+        if (error instanceof NotFoundException) {
+          throw new HttpNotFoundException(error.message);
+        }
+        throw error;
+      },
+    });
+  }
 }

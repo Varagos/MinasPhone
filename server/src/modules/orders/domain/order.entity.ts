@@ -55,6 +55,10 @@ export class OrderEntity extends AggregateRoot<OrderProps> {
     return this.props.slug;
   }
 
+  get total(): number {
+    return this.props.total;
+  }
+
   public static create(props: CreateOrderProps): OrderEntity {
     const id = randomUUID();
     console.log('order id', id);
@@ -116,6 +120,9 @@ export class OrderEntity extends AggregateRoot<OrderProps> {
           productImage: item.productImage,
           productName: item.productName,
         })),
+        orderSlug: this.slug,
+        total: this.total,
+        customerEmail: this.contactInfo.email,
       }),
     );
   }

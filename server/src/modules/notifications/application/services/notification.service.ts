@@ -16,13 +16,50 @@ export interface OrderNotificationData {
   createdAt: Date;
 }
 
+export interface CustomerOrderConfirmationData {
+  order_id: string;
+  total: number;
+  orderItems: Array<{
+    name: string;
+    description?: string;
+    quantity: number;
+    price: string; // total
+    imageUrl: string;
+  }>;
+}
+
+const ORDER_CONFIRMATION_TEMPLATE_ID = 'd-8f5b8cdb109849e2a53dde554d02f417';
+
 @Injectable()
 export class NotificationService {
   private readonly logger = new Logger(NotificationService.name);
   private readonly adminEmail: string;
+  private readonly fromEmail: string;
 
   constructor(private readonly emailService: EmailService) {
     this.adminEmail = emailConfig.admin_email;
+    this.fromEmail = emailConfig.email_from;
+  }
+
+  async sendCustomerOrderConfirmationEmail(
+    data: CustomerOrderConfirmationData,
+    customerEmail: string,
+  ): Promise<boolean> {
+    try {
+      // Send email to customer
+      return await this.emailService.sendDynamicTemplateEmail(
+        customerEmail,
+        this.fromEmail,
+        ORDER_CONFIRMATION_TEMPLATE_ID,
+        data,
+      );
+    } catch (error: any) {
+      this.logger.error(
+        'Failed to send customer order confirmation email',
+        error.stack,
+      );
+      return false;
+    }
   }
 
   async sendOrderCreatedNotification(

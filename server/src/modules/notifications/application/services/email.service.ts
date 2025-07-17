@@ -36,4 +36,29 @@ export class EmailService {
       return false;
     }
   }
+
+  async sendDynamicTemplateEmail(
+    to: string,
+    from: string,
+    templateId: string,
+    dynamicTemplateData: Record<string, any>,
+  ): Promise<boolean> {
+    try {
+      const sendgridResponse = await sendgrid.send({
+        to,
+        from,
+        templateId,
+        dynamicTemplateData,
+      });
+      console.log('sendgridResponse', sendgridResponse);
+      this.logger.log(`Dynamic template email sent successfully to ${to}`);
+      return true;
+    } catch (error: any) {
+      this.logger.error(
+        `Failed to send dynamic template email to ${to}`,
+        error.stack,
+      );
+      return false;
+    }
+  }
 }

@@ -402,29 +402,4 @@ export class ProductsHttpController {
       },
     });
   }
-
-  @ApiOperation({ summary: 'Find product images from search engine' })
-  @ApiResponse({
-    status: HttpStatus.OK,
-    type: FindSearchEngineImagesResponseDto,
-  })
-  @Get('products/search-engine-images')
-  async findSearchEngineImages(): Promise<FindSearchEngineImagesResponseDto> {
-    console.log('findSearchEngineImages called');
-    const query = new FindSearchEngineImagesQuery({} as any); //queryParams.searchText);
-
-    const result: FindSearchEngineImagesResponse = await this.queryBus.execute(
-      query,
-    );
-
-    return match(result, {
-      Ok: (response) => response,
-      Err: (error: Error) => {
-        if (error instanceof NotFoundException) {
-          throw new HttpNotFoundException(error.message);
-        }
-        throw error;
-      },
-    });
-  }
 }

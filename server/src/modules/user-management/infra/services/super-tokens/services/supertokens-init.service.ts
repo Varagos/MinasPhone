@@ -88,10 +88,10 @@ export class SuperTokensInitService {
 
                   // Post sign up response, we check if it was successful
                   if (response.status === 'OK') {
-                    const { id, email, timeJoined } = response.user;
+                    const { id, emails, timeJoined } = response.user;
 
                     let role = Roles.Customer; // TODO: fetch role based on userId
-                    if (adminEmails.includes(email)) {
+                    if (adminEmails.includes(emails[0])) {
                       role = Roles.Admin;
                     }
                     await new SupertokensUserRolesService().assignRole(
@@ -119,7 +119,7 @@ export class SuperTokensInitService {
                     // post sign up logic
                     const dto: CreateUserDTO = {
                       id,
-                      email,
+                      email: emails[0],
                       firstName,
                       lastName,
                       timeJoined,

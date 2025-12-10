@@ -17,7 +17,9 @@ export type FindProductsByCategorySlugResponse = Result<
 >;
 
 @QueryHandler(FindProductsByCategorySlugQuery)
-export class FindProductsByCategorySlugQueryHandler implements IQueryHandler {
+export class FindProductsByCategorySlugQueryHandler
+  implements IQueryHandler<FindProductsByCategorySlugQuery>
+{
   constructor(
     @InjectPool()
     private readonly pool: DatabasePool,

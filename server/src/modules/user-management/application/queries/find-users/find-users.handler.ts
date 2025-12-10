@@ -9,7 +9,7 @@ import { Paginated } from '@libs/ddd';
 export type FindUsersQueryResponse = Result<Paginated<UserInfo>, Error>;
 
 @QueryHandler(FindUsersQuery)
-export class FindUsersQueryHandler implements IQueryHandler {
+export class FindUsersQueryHandler implements IQueryHandler<FindUsersQuery> {
   constructor(
     @Inject(AUTH_SERVICE_TOKEN)
     private readonly authService: IAuthService,

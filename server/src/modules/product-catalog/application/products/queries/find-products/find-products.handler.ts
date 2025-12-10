@@ -33,7 +33,9 @@ const fieldToColumnMapping: Record<string, string> = {
 };
 
 @QueryHandler(FindProductsQuery)
-export class FindProductsQueryHandler implements IQueryHandler {
+export class FindProductsQueryHandler
+  implements IQueryHandler<FindProductsQuery>
+{
   private readonly logger = new Logger(FindProductsQueryHandler.name);
   constructor(
     @InjectPool()

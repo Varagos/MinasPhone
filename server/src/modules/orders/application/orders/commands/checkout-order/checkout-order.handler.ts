@@ -21,7 +21,9 @@ export type CheckoutOrderCommandResponse = Result<
 >;
 
 @CommandHandler(CheckoutOrderCommand)
-export class CheckoutOrderCommandHandler implements ICommandHandler {
+export class CheckoutOrderCommandHandler
+  implements ICommandHandler<CheckoutOrderCommand>
+{
   private readonly logger = new Logger(CheckoutOrderCommandHandler.name);
 
   constructor(

@@ -12,7 +12,9 @@ import {
 export type FindOrderByIdQueryResponse = Result<OrderModel, Error>;
 
 @QueryHandler(FindOrderByIdQuery)
-export class FindOrderByIdQueryHandler implements IQueryHandler {
+export class FindOrderByIdQueryHandler
+  implements IQueryHandler<FindOrderByIdQuery>
+{
   constructor(
     @InjectPool()
     private readonly pool: DatabasePool,

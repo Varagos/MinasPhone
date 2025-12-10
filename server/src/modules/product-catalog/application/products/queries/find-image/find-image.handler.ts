@@ -12,7 +12,9 @@ import { NotFoundException } from '@libs/exceptions';
 export type FindProductsResponse = Result<ProductModel, Error>;
 
 @QueryHandler(FindProductImageQuery)
-export class FindProductImageQueryHandler implements IQueryHandler {
+export class FindProductImageQueryHandler
+  implements IQueryHandler<FindProductImageQuery>
+{
   constructor(
     @InjectPool()
     private readonly pool: DatabasePool,

@@ -19,7 +19,9 @@ export type UploadImageCommandResponse = Result<
 >;
 
 @CommandHandler(UploadImageCommand)
-export class UploadImageCommandHandler implements ICommandHandler {
+export class UploadImageCommandHandler
+  implements ICommandHandler<UploadImageCommand>
+{
   constructor(
     @Inject(CLOUD_STORAGE_SERVICE)
     protected readonly cloudStorageService: ICloudStorageServicePort,

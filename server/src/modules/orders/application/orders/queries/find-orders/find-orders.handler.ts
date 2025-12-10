@@ -25,7 +25,7 @@ const fieldToColumnMapping: Record<string, string> = {
 };
 
 @QueryHandler(FindOrdersQuery)
-export class FindOrdersQueryHandler implements IQueryHandler {
+export class FindOrdersQueryHandler implements IQueryHandler<FindOrdersQuery> {
   private readonly logger = new Logger(FindOrdersQueryHandler.name);
   constructor(
     @InjectPool()

@@ -12,7 +12,9 @@ export type FindSearchEngineImagesResponse = Result<
 >;
 
 @QueryHandler(FindSearchEngineImagesQuery)
-export class FindSearchEngineImagesQueryHandler implements IQueryHandler {
+export class FindSearchEngineImagesQueryHandler
+  implements IQueryHandler<FindSearchEngineImagesQuery>
+{
   constructor(
     private readonly searchEngineImagesService: GoogleImageSearchService,
   ) {}

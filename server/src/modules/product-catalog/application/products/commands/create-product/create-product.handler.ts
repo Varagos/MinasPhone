@@ -21,7 +21,9 @@ export type CreateProductCommandResponse = Result<
 >;
 
 @CommandHandler(CreateProductCommand)
-export class CreateProductCommandHandler implements ICommandHandler {
+export class CreateProductCommandHandler
+  implements ICommandHandler<CreateProductCommand>
+{
   constructor(
     @Inject(PRODUCT_REPO)
     protected readonly productRepo: ProductRepositoryPort,

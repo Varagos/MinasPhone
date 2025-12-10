@@ -15,7 +15,9 @@ export type CreateCategoryCommandResponse = Result<
 >;
 
 @CommandHandler(CreateCategoryCommand)
-export class CreateCategoryCommandHandler implements ICommandHandler {
+export class CreateCategoryCommandHandler
+  implements ICommandHandler<CreateCategoryCommand>
+{
   constructor(
     @Inject(CATEGORY_REPO)
     protected readonly categoryRepo: CategoryRepositoryPort,

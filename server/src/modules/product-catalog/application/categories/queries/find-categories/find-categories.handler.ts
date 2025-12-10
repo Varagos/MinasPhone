@@ -10,7 +10,9 @@ import {
 } from '@modules/product-catalog/infra/database/category.repository';
 
 @QueryHandler(FindCategoriesQuery)
-export class FindCategoriesQueryHandler implements IQueryHandler {
+export class FindCategoriesQueryHandler
+  implements IQueryHandler<FindCategoriesQuery>
+{
   constructor(
     @InjectPool()
     private readonly pool: DatabasePool,

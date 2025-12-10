@@ -12,7 +12,9 @@ export type CheckoutOrderCommandResponse = Result<
 >;
 
 @CommandHandler(ConfirmOrderCommand)
-export class ConfirmOrderCommandHandler implements ICommandHandler {
+export class ConfirmOrderCommandHandler
+  implements ICommandHandler<ConfirmOrderCommand>
+{
   private readonly logger = new Logger(ConfirmOrderCommandHandler.name);
 
   constructor(

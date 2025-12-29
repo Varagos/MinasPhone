@@ -123,7 +123,16 @@ const customGreeMessages: MinasPhoneMessages = {
         createdAt: 'Δημιουργήθηκε στις',
         updatedAt: 'Ενημερώθηκε στις',
         category: 'Κατηγορία',
+        productType: 'Τύπος Προϊόντος',
+        attributes: 'Χαρακτηριστικά',
       },
+      attributes: {
+        none: 'Χωρίς Χαρακτηριστικά',
+        available: 'Διαθέσιμα Χαρακτηριστικά',
+        existing: 'Υπάρχον Χαρακτηριστικό',
+        defined: 'Ορισμένο Χαρακτηριστικό',
+      },
+
       tabs: {
         image: 'Φωτογραφία',
         details: 'Détails',
@@ -151,6 +160,28 @@ const customGreeMessages: MinasPhoneMessages = {
         name: 'Όνομα',
         slug: 'Slug',
         parent: 'Γονέας',
+      },
+    },
+    product_types: {
+      name: 'Τύπος Προϊόντος |||| Τύποι Προϊόντων',
+      fields: {
+        name: 'Όνομα',
+        attributes: 'Χαρακτηριστικά',
+        attributeId: 'Χαρακτηριστικό',
+        isRequired: 'Υποχρεωτικό',
+        isFilterable: 'Φιλτράρισμα',
+        isSearchable: 'Αναζήτηση',
+        displayOrder: 'Σειρά Εμφάνισης',
+      },
+    },
+    attributes: {
+      name: 'Χαρακτηριστικό |||| Χαρακτηριστικά',
+      fields: {
+        name: 'Όνομα',
+        valueType: 'Τύπος Τιμής',
+        inputType: 'Τύπος Φίλτρου',
+        unit: 'Μονάδα',
+        attributeValues: 'Τιμές',
       },
     },
   },

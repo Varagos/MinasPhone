@@ -55,4 +55,38 @@ export class ProductResponseDto extends ResponseBase {
     description: "Category's id",
   })
   categoryId: string;
+
+  productTypeId: string | undefined;
+
+  @ApiProperty({
+    example: {
+      'attr-id-1': [
+        {
+          valueId: null,
+          textValue: 'Red',
+          numericValue: null,
+          booleanValue: null,
+        },
+      ],
+      'attr-id-2': [
+        {
+          valueId: 'value-id-1',
+          textValue: null,
+          numericValue: null,
+          booleanValue: null,
+        },
+      ],
+    },
+    description: 'Product attribute values grouped by attribute ID',
+    required: false,
+  })
+  attributeValues?: Record<
+    string,
+    Array<{
+      valueId: string | null;
+      textValue: string | null;
+      numericValue: number | null;
+      booleanValue: boolean | null;
+    }>
+  >;
 }

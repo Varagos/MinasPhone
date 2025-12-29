@@ -121,6 +121,14 @@ const customEnglishMessages: MinasPhoneMessages = {
         createdAt: 'Created at',
         updatedAt: 'Updated at',
         category: 'Category',
+        productType: 'Product Type',
+        attributes: 'Attributes',
+      },
+      attributes: {
+        defined: 'Defined Attribute',
+        existing: 'Existing Attribute',
+        none: 'No Attributes',
+        available: 'Available Attributes',
       },
       tabs: {
         image: 'Image',
@@ -149,6 +157,28 @@ const customEnglishMessages: MinasPhoneMessages = {
         name: 'Name',
         slug: 'Slug',
         parent: 'Parent',
+      },
+    },
+    product_types: {
+      name: 'Product Type |||| Product Types',
+      fields: {
+        name: 'Name',
+        attributes: 'Attributes',
+        attributeId: 'Attribute',
+        isRequired: 'Required',
+        isFilterable: 'Filterable',
+        isSearchable: 'Searchable',
+        displayOrder: 'Display Order',
+      },
+    },
+    attributes: {
+      name: 'Attribute |||| Attributes',
+      fields: {
+        name: 'Name',
+        valueType: 'Value Type',
+        inputType: 'Input Type',
+        unit: 'Unit',
+        attributeValues: 'Attribute Values',
       },
     },
   },

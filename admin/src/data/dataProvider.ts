@@ -46,6 +46,40 @@ const dataProvider: DataProvider = {
           title: 'cat.png',
           src: imageUrl,
         };
+
+        // Transform attributeValues from backend DTO format to simple form format
+        if (getOneData.attributeValues) {
+          const simpleAttributeValues: Record<string, any> = {};
+
+          Object.entries(getOneData.attributeValues).forEach(([attributeId, values]: [string, any]) => {
+            if (!Array.isArray(values) || values.length === 0) {
+              return;
+            }
+
+            // Handle multiselect (multiple values)
+            if (values.length > 1) {
+              simpleAttributeValues[attributeId] = values.map((v: any) => v.valueId).filter(Boolean);
+              return;
+            }
+
+            // Single value - extract the actual value
+            const value = values[0];
+            if (value.valueId) {
+              simpleAttributeValues[attributeId] = value.valueId;
+            } else if (value.textValue !== null) {
+              simpleAttributeValues[attributeId] = value.textValue;
+            } else if (value.numericValue !== null) {
+              simpleAttributeValues[attributeId] = value.numericValue;
+            } else if (value.booleanValue !== null) {
+              simpleAttributeValues[attributeId] = value.booleanValue;
+            }
+          });
+
+          console.log('📥 DataProvider - Original attributeValues:', getOneData.attributeValues);
+          console.log('📥 DataProvider - Simplified attributeValues:', simpleAttributeValues);
+
+          getOneData.attributeValues = simpleAttributeValues;
+        }
       }
       return {
         data: getOneData,

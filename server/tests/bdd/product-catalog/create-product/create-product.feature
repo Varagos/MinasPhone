@@ -2,8 +2,8 @@ Feature: Create a product
 
     Scenario: I can create a product
         Given product data
-            | name      | description       | price | quantity | active | image_uri | sku  | category_id                          |
-            | iPhone 13 | The latest iPhone | 1099  | 50       | true   | file-url  | A123 | 9d7205a5-794a-42de-8163-8b35dcb0d6f1 |
+            | name      | description       | price | quantity | active | image_uri | sku  | category_id                          | product_type_id |
+            | iPhone 13 | The latest iPhone | 1099  | 50       | true   | file-url  | A123 | 9d7205a5-794a-42de-8163-8b35dcb0d6f1 | null            |
         When I send a request to create a product
         Then The product is created
 

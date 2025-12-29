@@ -3,11 +3,34 @@ import {
   IsBoolean,
   IsNotEmpty,
   IsNumber,
+  IsObject,
   IsOptional,
   IsString,
   IsUUID,
   Min,
 } from 'class-validator';
+
+export class ProductAttributeValue {
+  @IsUUID()
+  @IsOptional()
+  valueId: string | null;
+
+  @IsString()
+  @IsOptional()
+  textValue: string | null;
+
+  @IsNumber()
+  @IsOptional()
+  numericValue: number | null;
+
+  @IsBoolean()
+  @IsOptional()
+  booleanValue: boolean | null;
+}
+
+export class ProductAttributeValues {
+  [key: string]: ProductAttributeValue[];
+}
 
 export class CreateProductRequestDto {
   @ApiProperty({
@@ -76,11 +99,46 @@ export class CreateProductRequestDto {
   sku: string;
 
   @ApiProperty({
-    required: false,
     example: 'c7b58d20-92a7-4e72-8da7-82971a1a9f4f',
     description: 'The UUID of the category the product belongs to',
   })
   @IsUUID()
   @IsNotEmpty()
   categoryId: string;
+
+  @ApiProperty({
+    required: false,
+    example: 'c7b58d20-92a7-4e72-8da7-82971a1a9f4f',
+    description: 'The UUID of the product type the product belongs to',
+  })
+  @IsUUID()
+  @IsOptional()
+  productTypeId?: string;
+
+  @ApiProperty({
+    required: false,
+    example: {
+      'e96e96df-e34c-4530-92d8-92e0c5c289b0': [
+        {
+          valueId: 'd8837292-366c-4ef9-bd96-cb9f515daf8c',
+          textValue: null,
+          numericValue: null,
+          booleanValue: null,
+        },
+      ],
+      '4f1be95d-f37e-4d65-a3a4-ac571dc6c3fa': [
+        {
+          valueId: null,
+          textValue: '256GB',
+          numericValue: null,
+          booleanValue: null,
+        },
+      ],
+    },
+    description:
+      'Product attribute values grouped by attribute ID. Each key is an attribute UUID, and the value is an array of attribute values.',
+  })
+  @IsObject()
+  @IsOptional()
+  attributeValues?: ProductAttributeValues;
 }

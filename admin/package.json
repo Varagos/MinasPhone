@@ -19,7 +19,8 @@
     "start:dev": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "open-api-types": "npx swagger-typescript-api generate --path ../server/swagger.json --output ./src/api/server --name api.ts --rewrite --useOptions --useUnionTypes --defaultResponseType never --disable-throw-on-error"
   },
   "eslintConfig": {
     "extends": [
@@ -48,6 +49,7 @@
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "@types/recharts": "^1.8.24",
+    "swagger-typescript-api": "^13.2.16",
     "typescript": "^5.1.6"
   }
 }

@@ -8,6 +8,8 @@ const usersRoot = 'users';
 const walletsRoot = 'wallets';
 const categoriesRoot = 'categories';
 const productsRoot = 'products';
+const productTypesRoot = 'product-types';
+const attributesRoot = 'attributes';
 const cartRoot = 'cart';
 const ordersRoot = 'orders';
 
@@ -31,6 +33,18 @@ export const routesV1 = {
     findByCategorySlug: `/${productsRoot}/category/:slug`,
     findAllSlugs: `/${productsRoot}/slugs`,
     searchEngineImages: `/${productsRoot}-images/search-engine-images`,
+  },
+  productType: {
+    root: productTypesRoot,
+    getOne: `/${productTypesRoot}/:id`,
+    delete: `/${productTypesRoot}/:id`,
+    update: `/${productTypesRoot}/:id`,
+  },
+  attribute: {
+    root: attributesRoot,
+    getOne: `/${attributesRoot}/:id`,
+    delete: `/${attributesRoot}/:id`,
+    update: `/${attributesRoot}/:id`,
   },
   cart: {
     // Fetch cart from cookie or create a new one

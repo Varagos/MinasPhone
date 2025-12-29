@@ -122,6 +122,14 @@ const customArabicMessages: MinasPhoneMessages = {
         createdAt: 'تم الإنشاء في',
         updatedAt: 'تم التحديث في',
         category: 'الفئة',
+        productType: 'نوع المنتج',
+        attributes: 'السمات',
+      },
+      attributes: {
+        defined: 'السمة المعرفة',
+        existing: 'السمة الموجودة',
+        none: 'لا سمات',
+        available: 'السمات المتاحة',
       },
       tabs: {
         image: 'صورة',
@@ -150,6 +158,28 @@ const customArabicMessages: MinasPhoneMessages = {
         name: 'الاسم',
         slug: 'Slug',
         parent: 'الأصل',
+      },
+    },
+    product_types: {
+      name: 'Product Type |||| Product Types',
+      fields: {
+        name: 'Name',
+        attributes: 'Attributes',
+        attributeId: 'Attribute',
+        isRequired: 'Required',
+        isFilterable: 'Filterable',
+        isSearchable: 'Searchable',
+        displayOrder: 'Display Order',
+      },
+    },
+    attributes: {
+      name: 'Attribute |||| Attributes',
+      fields: {
+        name: 'Name',
+        valueType: 'Value Type',
+        inputType: 'Input Type',
+        unit: 'Unit',
+        attributeValues: 'Attribute Values',
       },
     },
   },

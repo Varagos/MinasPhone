@@ -5,9 +5,11 @@ import { FindCategoriesQueryHandler } from './application/categories/queries/fin
 import { FindCategoryByIdQueryHandler } from './application/categories/queries/find-category-by-id/find-category-by-id.handler';
 import { CategoryMapper } from './infra/mappers/category.mapper';
 import {
+  ATTRIBUTE_REPO,
   CATEGORY_REPO,
   CLOUD_STORAGE_SERVICE,
   PRODUCT_REPO,
+  PRODUCT_TYPE_REPO,
 } from './constants';
 import { CategoryRepository } from './infra/database/category.repository';
 import { CqrsModule } from '@nestjs/cqrs';
@@ -33,10 +35,23 @@ import { FindAllProductSlugsQueryHandler } from './application/products/queries/
 import { ReserveProductsStockCommandHandler } from './application/products/commands/reserve-products-stocks/reserve-products-stock.handler';
 import { FindSearchEngineImagesQueryHandler } from './application/images/queries/find-search-engine-images/find-search-engine-images.handler';
 import { GoogleImageSearchService } from './infra/services/image-search/google-image.search.service';
+import { CreateProductTypeCommandHandler } from './application/product-types/commands/create-product-type/create-product-type.handler';
+import { DeleteProductTypeCommandHandler } from './application/product-types/commands/delete-product-type/delete-product-type.handler';
+import { ProductTypeRepository } from './infra/database/product-type.repository';
+import { ProductTypeMapper } from './infra/mappers/product-type.mapper';
+import { FindProductTypesQueryHandler } from './application/product-types/queries/find-product-types/find-product-types.handler';
+import { FindProductTypeQueryHandler } from './application/product-types/queries/find-product-type/find-product-type.handler';
+import { FindAttributeQueryHandler } from './application/attributes/queries/find-attribute/find-attribute.handler';
+import { FindAttributesQueryHandler } from './application/attributes/queries/find-attributes/find-attributes.handler';
+import { CreateAttributeCommandHandler } from './application/attributes/commands/create-attribute/create-attribute.handler';
+import { AttributeRepository } from './infra/database/attribute.repository';
+import { AttributeMapper } from './infra/mappers/attribute.mapper';
+import { UpdateProductTypeCommandHandler } from './application/product-types/commands/update-product-type/update-product-type.handler';
+import { UpdateAttributeCommandHandler } from './application/attributes/commands/update-attribute/update-attribute.handler';
+import { DeleteAttributeCommandHandler } from './application/attributes/commands/delete-attribute/delete-attribute.handler';
 
 const commandHandlers: Provider[] = [
   // Category
-  CreateCategoryCommandHandler,
   CreateCategoryCommandHandler,
   DeleteCategoryCommandHandler,
   UpdateCategoryCommandHandler,
@@ -49,6 +64,14 @@ const commandHandlers: Provider[] = [
   // Image
   UploadImageCommandHandler,
   DeleteImageCommandHandler,
+  // Product Type
+  CreateProductTypeCommandHandler,
+  DeleteProductTypeCommandHandler,
+  UpdateProductTypeCommandHandler,
+  // Attributes
+  CreateAttributeCommandHandler,
+  UpdateAttributeCommandHandler,
+  DeleteAttributeCommandHandler,
 ];
 
 const queryHandlers: Provider[] = [
@@ -64,6 +87,12 @@ const queryHandlers: Provider[] = [
   FindAllProductSlugsQueryHandler,
   //Images
   FindSearchEngineImagesQueryHandler,
+  // Product Type
+  FindProductTypesQueryHandler,
+  FindProductTypeQueryHandler,
+  // Attributes
+  FindAttributeQueryHandler,
+  FindAttributesQueryHandler,
 ];
 
 const eventHandlers: Provider[] = [
@@ -72,11 +101,18 @@ const eventHandlers: Provider[] = [
   // UpdateStockAfterOrderCreationDomainEventHandler,
 ];
 
-const mappers: Provider[] = [CategoryMapper, ProductMapper];
+const mappers: Provider[] = [
+  CategoryMapper,
+  ProductMapper,
+  ProductTypeMapper,
+  AttributeMapper,
+];
 
 const repositories: Provider[] = [
   { provide: CATEGORY_REPO, useClass: CategoryRepository },
   { provide: PRODUCT_REPO, useClass: ProductRepository },
+  { provide: PRODUCT_TYPE_REPO, useClass: ProductTypeRepository },
+  { provide: ATTRIBUTE_REPO, useClass: AttributeRepository },
 ];
 
 const services: Provider[] = [

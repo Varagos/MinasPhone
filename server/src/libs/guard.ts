@@ -73,4 +73,8 @@ export class Guard {
     const allowedMimeTypes = ['image/png', 'image/jpeg'];
     return allowedMimeTypes.includes(mimeType);
   }
+
+  static isInArray<T>(value: T, allowedValues: readonly T[]): boolean {
+    return allowedValues.includes(value);
+  }
 }

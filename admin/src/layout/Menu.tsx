@@ -9,6 +9,8 @@ import orders from '../resources/orders/index';
 // import invoices from '../invoices';
 import products from '../resources/products';
 import categories from '../resources/categories';
+import attributes from '../resources/attributes';
+import productTypes from '../resources/productTypes';
 // import reviews from '../reviews';
 import SubMenu from './SubMenu';
 
@@ -90,6 +92,24 @@ const Menu = ({ dense = false }: MenuProps) => {
             smart_count: 2,
           })}
           leftIcon={<categories.icon />}
+          dense={dense}
+        />
+        <MenuItemLink
+          to="/product-types"
+          state={{ _scrollToTop: true }}
+          primaryText={translate(`resources.product_types.name`, {
+            smart_count: 2,
+          })}
+          leftIcon={<productTypes.icon />}
+          dense={dense}
+        />
+        <MenuItemLink
+          to="/attributes"
+          state={{ _scrollToTop: true }}
+          primaryText={translate(`resources.attributes.name`, {
+            smart_count: 2,
+          })}
+          leftIcon={<attributes.icon />}
           dense={dense}
         />
       </SubMenu>

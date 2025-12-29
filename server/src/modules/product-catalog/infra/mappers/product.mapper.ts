@@ -1,8 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { ProductEntity } from '@modules/product-catalog/domain/product.entity';
+import {
+  ProductEntity,
+  ProductAttributeValuesMap,
+} from '@modules/product-catalog/domain/product.entity';
 import { ProductModel, productSchema } from '../database/product.repository';
 import { ProductResponseDto } from '@modules/product-catalog/application/categories/dtos/product.response.dto';
 import { Money } from '@modules/product-catalog/domain/value-objects/money.value-object';
+import { ProductAttributeValue } from '@modules/product-catalog/domain/value-objects/product-attribute-value.value-object';
 @Injectable()
 export class ProductMapper {
   toPersistence(product: ProductEntity): ProductModel {
@@ -19,6 +23,7 @@ export class ProductMapper {
       imageUri,
       sku,
       categoryId,
+      productTypeId,
     } = product;
 
     return productSchema.parse({
@@ -34,12 +39,33 @@ export class ProductMapper {
       image_uri: imageUri,
       sku,
       category_id: categoryId,
+      product_type_id: productTypeId,
     });
   }
   toDomain(productModel: ProductModel): ProductEntity {
     // Get mimetype from image
     // const buffer = Buffer.from(productModel.image, 'base64');
     // const mimeType = fileType(buffer);
+
+    // Convert attribute_values from JSON to ProductAttributeValuesMap
+    const productAttributes: ProductAttributeValuesMap = new Map();
+
+    if (productModel.attribute_values) {
+      for (const [attributeId, values] of Object.entries(
+        productModel.attribute_values,
+      )) {
+        const attributeValues = values.map((v) =>
+          ProductAttributeValue.create({
+            valueId: v.value_id ?? null,
+            textValue: v.text_value ?? null,
+            numericValue: v.numeric_value ?? null,
+            booleanValue: v.boolean_value ?? null,
+          }),
+        );
+        productAttributes.set(attributeId, attributeValues);
+      }
+    }
+
     return new ProductEntity({
       id: productModel.id,
       createdAt: productModel.created_at,
@@ -54,6 +80,9 @@ export class ProductMapper {
         imageUri: productModel.image_uri,
         sku: productModel.sku ? productModel.sku : null,
         categoryId: productModel.category_id,
+        productTypeId: productModel.product_type_id ?? undefined,
+        productAttributes:
+          productAttributes.size > 0 ? productAttributes : undefined,
       },
     });
   }
@@ -69,6 +98,23 @@ export class ProductMapper {
     response.imageUrl = props.imageUri;
     // response.sku = props.sku;
     response.categoryId = props.categoryId;
+    response.productTypeId = props.productTypeId;
+
+    // Add attribute values to response
+    const productAttributes = entity.productAttributes;
+    if (productAttributes) {
+      const attributeValuesResponse: Record<string, any[]> = {};
+      for (const [attributeId, values] of productAttributes.entries()) {
+        attributeValuesResponse[attributeId] = values.map((v) => ({
+          valueId: v.valueId,
+          textValue: v.textValue,
+          numericValue: v.numericValue,
+          booleanValue: v.booleanValue,
+        }));
+      }
+      response.attributeValues = attributeValuesResponse;
+    }
+
     return response;
   }
 }

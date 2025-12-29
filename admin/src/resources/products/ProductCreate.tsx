@@ -18,6 +18,7 @@ import {
 import { Box, Grid } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 import { apiBaseUrl } from '../../config';
+import { AttributesSubform } from './components/AttributesSubform';
 
 interface SearchEngineImageResult {
   id: string;
@@ -117,8 +118,85 @@ const convertStringToNumber = (value: string) => {
   return isNaN(float) ? null : float;
 };
 
+// Transform attribute values to match backend DTO structure
+const transformProductData = (data: any) => {
+  console.log('🔍 Transform - Original data:', JSON.stringify(data, null, 2));
+
+  if (!data.attributeValues) {
+    console.log('⚠️ No attributeValues found in data');
+    return data;
+  }
+
+  console.log('📝 attributeValues before transform:', data.attributeValues);
+
+  const transformedAttributeValues: Record<string, any[]> = {};
+
+  Object.entries(data.attributeValues).forEach(([attributeId, value]) => {
+    // Skip empty values
+    if (value === null || value === undefined || value === '') {
+      return;
+    }
+
+    // Determine the value type and create the appropriate structure
+    let attributeValue: {
+      valueId: string | null;
+      textValue: string | null;
+      numericValue: number | null;
+      booleanValue: boolean | null;
+    };
+
+    if (typeof value === 'boolean') {
+      attributeValue = {
+        valueId: null,
+        textValue: null,
+        numericValue: null,
+        booleanValue: value,
+      };
+    } else if (typeof value === 'number') {
+      attributeValue = {
+        valueId: null,
+        textValue: null,
+        numericValue: value,
+        booleanValue: null,
+      };
+    } else if (Array.isArray(value)) {
+      // For multiselect - multiple valueIds
+      transformedAttributeValues[attributeId] = value.map(v => ({
+        valueId: v,
+        textValue: null,
+        numericValue: null,
+        booleanValue: null,
+      }));
+      return;
+    } else {
+      // For select/radio inputs, the value is the valueId
+      // For text inputs, it's the textValue
+      // We need to determine which one based on if it's a UUID-like string
+      const isValueId = typeof value === 'string' && value.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
+
+      attributeValue = {
+        valueId: isValueId ? value : null,
+        textValue: isValueId ? null : String(value),
+        numericValue: null,
+        booleanValue: null,
+      };
+    }
+
+    transformedAttributeValues[attributeId] = [attributeValue];
+  });
+
+  const result = {
+    ...data,
+    attributeValues: transformedAttributeValues,
+  };
+
+  console.log('✅ Transform - Final data:', JSON.stringify(result, null, 2));
+
+  return result;
+};
+
 /**
- * 
+ *
 image*	[...]
  */
 export const ProductCreate = () => {
@@ -129,7 +207,7 @@ export const ProductCreate = () => {
   };
 
   return (
-    <Create>
+    <Create transform={transformProductData}>
       <SimpleForm>
         <BooleanInput source="active" defaultValue={true} />
         {/* <TextInput source="slug" /> */}
@@ -138,6 +216,7 @@ export const ProductCreate = () => {
         <ReferenceInput source="categoryId" reference="categories">
           <SelectInput optionText="name" label={translate('resources.products.fields.category')} />
         </ReferenceInput>
+        <AttributesSubform />
         <NumberInput source="quantity" label={translate('resources.products.fields.quantity')} defaultValue={1} />
         <ImageInput
           source="media"

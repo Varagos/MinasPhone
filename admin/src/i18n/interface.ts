@@ -162,7 +162,16 @@ interface Products extends StringMap {
     // width_lte: string;
     // width: string;
   };
-
+  sections: {
+    basicInfo: string;
+    basicInfoDesc: string;
+    classification: string;
+    categoryDesc: string;
+    productTypeDesc: string;
+    attributesConfigDesc: string;
+    inventory: string;
+    inventoryDesc: string;
+  };
   tabs: {
     image: string;
     details: string;

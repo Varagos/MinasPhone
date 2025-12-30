@@ -247,7 +247,7 @@ export const AttributesSubformEdit: React.FC = () => {
                     {translate('resources.products.fields.productType', 'Product Type')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                    Select the product type and configure its attributes
+                    {translate('resources.products.sections.productTypeDesc')}
                 </Typography>
 
                 <ReferenceInput source="productTypeId" reference="product-types">

@@ -132,7 +132,16 @@ const customGreeMessages: MinasPhoneMessages = {
         existing: 'Υπάρχον Χαρακτηριστικό',
         defined: 'Ορισμένο Χαρακτηριστικό',
       },
-
+      sections: {
+        basicInfo: 'Βασικές Πληροφορίες',
+        basicInfoDesc: 'Εισαγάγετε τις βασικές πληροφορίες για αυτό το προϊόν',
+        classification: 'Κατηγοριοποίηση',
+        categoryDesc: 'Πού εμφανίζεται στο μενού',
+        productTypeDesc: 'Τι είδους προϊόν είναι, και τι χαρακτηριστικά έχει',
+        attributesConfigDesc: 'Ρυθμίστε τα συγκεκριμένα χαρακτηριστικά για αυτό το προϊόν',
+        inventory: 'Απόθεμα',
+        inventoryDesc: 'Διαχείριση επιπέδων αποθέματος και SKU',
+      },
       tabs: {
         image: 'Φωτογραφία',
         details: 'Détails',

@@ -131,6 +131,16 @@ const customArabicMessages: MinasPhoneMessages = {
         none: 'لا سمات',
         available: 'السمات المتاحة',
       },
+      sections: {
+        basicInfo: 'المعلومات الأساسية',
+        basicInfoDesc: 'أدخل المعلومات الأساسية حول هذا المنتج',
+        classification: 'التصنيف',
+        categoryDesc: 'أين يظهر هذا المنتج في القائمة',
+        productTypeDesc: 'اختر نوع المنتج وقم بتكوين سماته',
+        attributesConfigDesc: 'قم بتكوين السمات المحددة لهذا المنتج',
+        inventory: 'المخزون',
+        inventoryDesc: 'إدارة مستويات المخزون ومعلومات SKU',
+      },
       tabs: {
         image: 'صورة',
         details: 'تفاصيل',

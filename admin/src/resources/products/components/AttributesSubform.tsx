@@ -215,7 +215,7 @@ export const AttributesSubform: React.FC = () => {
                     {translate('resources.products.fields.productType', 'Product Type')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                    Select the product type and configure its attributes
+                    {translate('resources.products.sections.productTypeDesc')}
                 </Typography>
 
                 <ReferenceInput source="productTypeId" reference="product-types">
@@ -248,7 +248,7 @@ export const AttributesSubform: React.FC = () => {
                                     {productType.name} {translate('resources.products.fields.attributes', 'Attributes')}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                                    Configure the specific attributes for this product
+                                    {translate('resources.products.sections.attributesConfigDesc')}
                                 </Typography>
 
                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>

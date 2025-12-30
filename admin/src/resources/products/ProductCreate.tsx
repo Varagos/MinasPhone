@@ -15,7 +15,7 @@ import {
   Button,
   fetchUtils,
 } from 'react-admin';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Card, CardContent, Typography } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 import { apiBaseUrl } from '../../config';
 import { AttributesSubform } from './components/AttributesSubform';
@@ -209,37 +209,78 @@ export const ProductCreate = () => {
   return (
     <Create transform={transformProductData}>
       <SimpleForm>
-        <BooleanInput source="active" defaultValue={true} />
-        {/* <TextInput source="slug" /> */}
-        <TextInput source="name" label={translate('resources.products.fields.name')} />
-        <RichTextInput source="description" label={translate('resources.products.fields.description')} />
-        <ReferenceInput source="categoryId" reference="categories">
-          <SelectInput optionText="name" label={translate('resources.products.fields.category')} />
-        </ReferenceInput>
-        <AttributesSubform />
-        <NumberInput source="quantity" label={translate('resources.products.fields.quantity')} defaultValue={1} />
-        <ImageInput
-          source="media"
-          label={translate('resources.products.fields.image')}
-          accept="image/*"
-          multiple={false}
-        >
-          <ImageField
-            source="src"
-            title="title"
-            sx={{ '& img': { maxWidth: 400, maxHeight: 400, objectFit: 'contain' } }}
-          />
-        </ImageInput>
+        <Box sx={{ width: '100%', maxWidth: 1200 }}>
+          <Grid container spacing={2}>
+            {/* Section 1: Basic Information */}
+            <Grid item xs={12}>
+              <Card sx={{ mb: 2 }}>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    {translate('resources.products.sections.basicInfo')}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    {translate('resources.products.sections.basicInfoDesc')}
+                  </Typography>
 
-        {/* <ImageSearch onSelectImage={handleSelectImage} /> */}
-        {/* <TextInput source="sku" /> */}
-        {/* <NumberInput source="price" /> */}
-        <TextInput
-          label={translate('resources.products.fields.price')}
-          source="price"
-          type="number"
-          parse={convertStringToNumber}
-        />
+                  <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+                    <TextInput source="name" label={translate('resources.products.fields.name')} />
+                    <TextInput
+                      label={translate('resources.products.fields.price')}
+                      source="price"
+                      type="number"
+                      parse={convertStringToNumber}
+                    />
+                  </Box>
+                  <RichTextInput source="description" label={translate('resources.products.fields.description')} />
+                  <ImageInput
+                    source="media"
+                    label={translate('resources.products.fields.image')}
+                    accept="image/*"
+                    multiple={false}
+                  >
+                    <ImageField
+                      source="src"
+                      title="title"
+                      sx={{ '& img': { maxWidth: 400, maxHeight: 400, objectFit: 'contain' } }}
+                    />
+                  </ImageInput>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Section 2: Classification */}
+            <Grid item xs={12}>
+              <Card sx={{ mb: 2 }}>
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    {translate('resources.products.sections.categoryDesc')}
+                  </Typography>
+                  <ReferenceInput source="categoryId" reference="categories">
+                    <SelectInput optionText="name" label={translate('resources.products.fields.category')} fullWidth />
+                  </ReferenceInput>
+                </CardContent>
+              </Card>
+              <AttributesSubform />
+            </Grid>
+
+            {/* Section 3: Inventory */}
+            <Grid item xs={12} md={6}>
+              <Card sx={{ mb: 2 }}>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    {translate('resources.products.sections.inventory')}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    {translate('resources.products.sections.inventoryDesc')}
+                  </Typography>
+
+                  <NumberInput source="quantity" label={translate('resources.products.fields.quantity')} defaultValue={1} fullWidth />
+                  <BooleanInput source="active" defaultValue={true} label={translate('resources.products.fields.available')} />
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Box>
       </SimpleForm>
     </Create>
   );

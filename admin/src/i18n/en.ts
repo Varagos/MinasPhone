@@ -130,6 +130,16 @@ const customEnglishMessages: MinasPhoneMessages = {
         none: 'No Attributes',
         available: 'Available Attributes',
       },
+      sections: {
+        basicInfo: 'Basic Information',
+        basicInfoDesc: 'Enter the essential information about this product',
+        classification: 'Classification',
+        categoryDesc: 'Where this product appears in the menu',
+        productTypeDesc: 'Select the product type and configure its attributes',
+        attributesConfigDesc: 'Configure the specific attributes for this product',
+        inventory: 'Inventory',
+        inventoryDesc: 'Manage stock levels and SKU information',
+      },
       tabs: {
         image: 'Image',
         details: 'Details',

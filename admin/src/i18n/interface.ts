@@ -40,6 +40,8 @@ export interface MinasPhoneMessages extends TranslationMessages {
     orders: Orders;
     products: Products;
     categories: Categories;
+    product_types: ProductTypes;
+    attributes: Attributes;
   };
 }
 
@@ -138,6 +140,14 @@ interface Products extends StringMap {
     createdAt: string;
     updatedAt: string;
     category: string;
+    productType: string;
+    attributes: string;
+  };
+  attributes: {
+    existing: string;
+    available: string;
+    defined: string;
+    none: string;
 
     // category_id: string;
     // height_gte: string;
@@ -151,6 +161,16 @@ interface Products extends StringMap {
     // width_gte: string;
     // width_lte: string;
     // width: string;
+  };
+  sections: {
+    basicInfo: string;
+    basicInfoDesc: string;
+    classification: string;
+    categoryDesc: string;
+    productTypeDesc: string;
+    attributesConfigDesc: string;
+    inventory: string;
+    inventoryDesc: string;
   };
   tabs: {
     image: string;
@@ -180,5 +200,37 @@ interface Categories extends StringMap {
     slug: string;
     name: string;
     parent: string;
+  };
+}
+
+interface ProductTypes extends StringMap {
+  name: string;
+  fields: {
+    name: string;
+    attributes: string;
+    attributeId: string;
+    isRequired: string;
+    isFilterable: string;
+    isSearchable: string;
+    displayOrder: string;
+  };
+  actions: {
+    create_attribute: string;
+    attribute_created: string;
+  };
+}
+
+interface Attributes extends StringMap {
+  name: string;
+  fields: {
+    name: string;
+    valueType: string;
+    inputType: string;
+    unit: string;
+    attributeValues: string;
+  };
+  quick_create: {
+    title: string;
+    success: string;
   };
 }

@@ -30,3 +30,13 @@ export class InsufficientStockError extends ExceptionBase {
     );
   }
 }
+
+export class ProductAttributeValueValidationError extends ExceptionBase {
+  static readonly message = 'Invalid product attribute value';
+
+  public readonly code = 'PRODUCT_ATTRIBUTE_VALUE.VALIDATION_ERROR';
+
+  constructor(cause?: Error, metadata?: unknown) {
+    super(ProductAttributeValueValidationError.message, cause, metadata);
+  }
+}

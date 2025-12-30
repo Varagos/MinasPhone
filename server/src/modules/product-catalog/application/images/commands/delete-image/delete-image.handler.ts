@@ -8,7 +8,9 @@ import { ICloudStorageServicePort } from '@modules/product-catalog/infra/service
 export type UploadImageCommandResponse = Result<void, any>;
 
 @CommandHandler(DeleteImageCommand)
-export class DeleteImageCommandHandler implements ICommandHandler {
+export class DeleteImageCommandHandler
+  implements ICommandHandler<DeleteImageCommand>
+{
   constructor(
     @Inject(CLOUD_STORAGE_SERVICE)
     protected readonly cloudStorageService: ICloudStorageServicePort,

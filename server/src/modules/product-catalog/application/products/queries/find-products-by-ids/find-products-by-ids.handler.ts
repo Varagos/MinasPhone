@@ -15,7 +15,9 @@ export type FindProductsByIdsQueryResponse = Result<
 >;
 
 @QueryHandler(FindProductsByIdsQuery)
-export class FindProductsByIdsQueryHandler implements IQueryHandler {
+export class FindProductsByIdsQueryHandler
+  implements IQueryHandler<FindProductsByIdsQuery>
+{
   constructor(
     @InjectPool()
     private readonly pool: DatabasePool,

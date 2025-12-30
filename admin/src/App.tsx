@@ -19,6 +19,8 @@ import orders from './resources/orders';
 import products from './resources/products';
 import categories from './resources/categories';
 import users from './resources/users';
+import attributes from './resources/attributes';
+import productTypes from './resources/productTypes';
 import Configuration from './pages/configuration/Configuration';
 import { apiBaseUrl } from './config';
 import dataProviderForProductsBase64ImageHandling from './data/addUploadCapabilitiesbase64';
@@ -41,6 +43,8 @@ const App = () => {
       <CustomRoutes>
         <Route path="/configuration" element={<Configuration />} />
       </CustomRoutes>
+      <Resource name="product-types" {...productTypes} />
+      <Resource name="attributes" {...attributes} />
       <Resource name="users" {...users} icon={UserIcon} />
       <Resource name="categories" {...categories} />
       <Resource name="products" {...products} />

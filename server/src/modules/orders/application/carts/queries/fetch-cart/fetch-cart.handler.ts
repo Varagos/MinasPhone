@@ -28,7 +28,7 @@ export type CartReadModel = {
 };
 
 @QueryHandler(FetchCartQuery)
-export class FetchCartQueryHandler implements IQueryHandler {
+export class FetchCartQueryHandler implements IQueryHandler<FetchCartQuery> {
   constructor(private readonly queryBus: QueryBus) {}
 
   async execute(query: FetchCartQuery): Promise<FetchCartQueryResponse> {

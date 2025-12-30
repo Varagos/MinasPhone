@@ -106,7 +106,12 @@ export class ProductsHttpController {
       },
     });
 
-    const command = new CreateProductCommand({ ...rest, imageUri: imageUrl });
+    const command = new CreateProductCommand({
+      ...rest,
+      productTypeId: body.productTypeId,
+      attributeValues: body.attributeValues || {},
+      imageUri: imageUrl,
+    });
 
     const result: CreateProductCommandResponse = await this.commandBus.execute(
       command,
@@ -277,6 +282,7 @@ export class ProductsHttpController {
         active: product.active,
         imageUrl: product.image_uri,
         categoryId: product.category_id,
+        productTypeId: product.product_type_id ?? undefined,
       })),
     });
   }
@@ -392,6 +398,29 @@ export class ProductsHttpController {
           active: product.active,
           imageUrl: product.image_uri,
           categoryId: product.category_id,
+          productTypeId: product.product_type_id ?? undefined,
+          attributeValues: product.attribute_values
+            ? Object.entries(product.attribute_values).reduce(
+                (acc, [attrId, values]) => {
+                  acc[attrId] = values.map((v) => ({
+                    valueId: v.value_id,
+                    textValue: v.text_value,
+                    numericValue: v.numeric_value,
+                    booleanValue: v.boolean_value,
+                  }));
+                  return acc;
+                },
+                {} as Record<
+                  string,
+                  Array<{
+                    valueId: string | null;
+                    textValue: string | null;
+                    numericValue: number | null;
+                    booleanValue: boolean | null;
+                  }>
+                >,
+              )
+            : undefined,
         };
       },
       Err: (error: Error) => {

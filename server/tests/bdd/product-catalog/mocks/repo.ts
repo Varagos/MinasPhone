@@ -1,6 +1,8 @@
 // productRepositoryMock.ts
+
 import { ProductRepositoryPort } from '@modules/product-catalog/domain/ports/product.repository.port';
 import { MOCK_IPHONE_13_PRODUCT } from './product-data';
+import { AttributeRepositoryPort } from '@modules/product-catalog/domain/ports/attribute.repository.port';
 
 // Cast the mock function to align with the expected signature
 const transactionMock: any = async <T>(cb: () => Promise<T>) => {

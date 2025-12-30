@@ -18,7 +18,9 @@ export type FindProductsResponse = Result<
 >;
 
 @QueryHandler(FindAllProductSlugsQuery)
-export class FindAllProductSlugsQueryHandler implements IQueryHandler {
+export class FindAllProductSlugsQueryHandler
+  implements IQueryHandler<FindAllProductSlugsQuery>
+{
   private readonly logger = new Logger(FindAllProductSlugsQueryHandler.name);
   constructor(
     @InjectPool()

@@ -81,4 +81,38 @@ export class UpdateProductRequestDto {
   @IsString()
   @IsOptional()
   image?: string;
+
+  @ApiProperty({
+    required: false,
+    example: 'c7b58d20-92a7-4e72-8da7-82971a1a9f4f',
+    description: 'The UUID of the product type the product belongs to',
+  })
+  @IsUUID()
+  @IsOptional()
+  productTypeId?: string;
+
+  @ApiProperty({
+    required: false,
+    example: {
+      'attr-id-1': [
+        {
+          valueId: null,
+          textValue: 'Red',
+          numericValue: null,
+          booleanValue: null,
+        },
+      ],
+    },
+    description: 'Product attribute values grouped by attribute ID',
+  })
+  @IsOptional()
+  attributeValues?: Record<
+    string,
+    Array<{
+      valueId: string | null;
+      textValue: string | null;
+      numericValue: number | null;
+      booleanValue: boolean | null;
+    }>
+  >;
 }

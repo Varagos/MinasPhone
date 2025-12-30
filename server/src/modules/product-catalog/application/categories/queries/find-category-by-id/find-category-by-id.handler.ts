@@ -12,7 +12,9 @@ import { NotFoundException } from '@libs/exceptions';
 export type FindCategoryByIdQueryResponse = Result<CategoryModel, Error>;
 
 @QueryHandler(FindCategoryByIdQuery)
-export class FindCategoryByIdQueryHandler implements IQueryHandler {
+export class FindCategoryByIdQueryHandler
+  implements IQueryHandler<FindCategoryByIdQuery>
+{
   constructor(
     @InjectPool()
     private readonly pool: DatabasePool,

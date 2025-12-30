@@ -9,7 +9,9 @@ import { NotFoundException } from '@libs/exceptions';
 export type FindUserByIdQueryResponse = Result<UserInfo, Error>;
 
 @QueryHandler(FindUserByIdQuery)
-export class FindUserByIdQueryHandler implements IQueryHandler {
+export class FindUserByIdQueryHandler
+  implements IQueryHandler<FindUserByIdQuery>
+{
   constructor(
     @Inject(AUTH_SERVICE_TOKEN)
     private readonly authService: IAuthService,

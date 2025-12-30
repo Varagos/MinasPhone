@@ -17,7 +17,9 @@ export type CartPrimitives = {
 export type CreateCartCommandResponse = Result<CartPrimitives, never>;
 
 @CommandHandler(CreateCartCommand)
-export class CreateCartCommandHandler implements ICommandHandler {
+export class CreateCartCommandHandler
+  implements ICommandHandler<CreateCartCommand>
+{
   async execute(): Promise<Result<CartPrimitives, never>> {
     const cart = CartEntity.create({ lineItems: [] });
     const cartPrimitives = cart.toPrimitives();

@@ -7,6 +7,12 @@ import { ProductDeletedDomainEvent } from './events/product-deleted.domain-event
 import { Money } from './value-objects/money.value-object';
 import { Err, Ok, Result } from 'oxide.ts';
 import * as DomainErrors from './product.errors';
+import { ProductAttributeValue } from './value-objects/product-attribute-value.value-object';
+
+export type ProductAttributeValuesMap = Map<
+  AggregateID,
+  ProductAttributeValue[]
+>;
 
 interface ProductProps {
   name: string;
@@ -18,8 +24,12 @@ interface ProductProps {
   imageUri: string;
   sku: string | null;
   categoryId: string;
+
+  // New - for product type
+  productTypeId: string | undefined;
+  productAttributes: ProductAttributeValuesMap | undefined;
 }
-interface CreateProductProps {
+export interface CreateProductProps {
   name: string;
   description: string;
   // slug: string;
@@ -29,6 +39,10 @@ interface CreateProductProps {
   imageUri: string;
   sku: string | null;
   categoryId: string;
+
+  // New - for product type
+  productTypeId: string | undefined;
+  productAttributes: ProductAttributeValuesMap | undefined;
 }
 
 export class ProductEntity extends AggregateRoot<ProductProps> {
@@ -76,6 +90,13 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
   // get mediaUrl(): string | undefined {
   //   return this.props.mediaUrl;
   // }
+  get productTypeId(): string | undefined {
+    return this.props.productTypeId;
+  }
+
+  get productAttributes(): ProductAttributeValuesMap | undefined {
+    return this.props.productAttributes;
+  }
 
   public static create(props: CreateProductProps): ProductEntity {
     const id = randomUUID();
@@ -88,7 +109,7 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
         length,
       )();
 
-    const defaultProps = {
+    const defaultProps: ProductProps = {
       active: props.active ?? true,
       slug,
       name: props.name,
@@ -98,12 +119,30 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
       sku: props.sku,
       price: props.price,
       categoryId: props.categoryId,
+      productTypeId: props.productTypeId,
+      productAttributes: props.productAttributes,
     };
     const product = new ProductEntity({ props: defaultProps, id });
 
     return product;
   }
-  delete(): void {
+
+  public updateProductTypeId(productTypeId: AggregateID) {
+    // Reset attributes when product type changes
+    if (this.props.productTypeId !== productTypeId) {
+      this.props.productAttributes = undefined;
+    }
+
+    this.props.productTypeId = productTypeId;
+  }
+
+  public updateProductAttributes(
+    attributes: ProductAttributeValuesMap | undefined,
+  ): void {
+    this.props.productAttributes = attributes;
+  }
+
+  public delete(): void {
     this.addEvent(
       new ProductDeletedDomainEvent({
         aggregateId: this.id,

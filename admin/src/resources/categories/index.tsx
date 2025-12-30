@@ -1,10 +1,10 @@
 import { CategoryCreate, CategoryEdit, CategoryList } from './categories';
-import CategoryIcon from '@mui/icons-material/Category';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 
 const resource = {
   list: CategoryList,
   create: CategoryCreate,
   edit: CategoryEdit,
-  icon: CategoryIcon,
+  icon: AccountTreeIcon,
 };
 export default resource;

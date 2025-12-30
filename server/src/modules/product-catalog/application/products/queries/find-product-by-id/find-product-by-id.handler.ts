@@ -12,7 +12,9 @@ import {
 export type FindProductByIdQueryResponse = Result<ProductModel, Error>;
 
 @QueryHandler(FindProductByIdQuery)
-export class FindProductByIdQueryHandler implements IQueryHandler {
+export class FindProductByIdQueryHandler
+  implements IQueryHandler<FindProductByIdQuery>
+{
   constructor(
     @InjectPool()
     private readonly pool: DatabasePool,
@@ -28,14 +30,38 @@ export class FindProductByIdQueryHandler implements IQueryHandler {
     query: FindProductByIdQuery,
   ): Promise<FindProductByIdQueryResponse> {
     /**
-     * Constructing a query with Slonik.
-     * More info: https://contra.com/p/AqZWWoUB-writing-composable-sql-using-java-script
+     * Fetch product with attribute values joined
      */
     const statement = sql.type(productSchema)`
-         SELECT *
-         FROM products
-         WHERE
-          id = ${query.id}`;
+      SELECT
+        p.*,
+        COALESCE(
+          (
+            SELECT json_object_agg(
+              attribute_id::text,
+              attribute_values
+            )
+            FROM (
+              SELECT
+                pav.attribute_id,
+                json_agg(
+                  json_build_object(
+                    'value_id', pav.attribute_value_id,
+                    'text_value', pav.text_value,
+                    'numeric_value', pav.numeric_value,
+                    'boolean_value', pav.boolean_value
+                  )
+                ) as attribute_values
+              FROM product_attribute_values pav
+              WHERE pav.product_id = p.id
+              GROUP BY pav.attribute_id
+            ) grouped
+          ),
+          '{}'::json
+        ) AS attribute_values
+      FROM products p
+      WHERE p.id = ${query.id}
+    `;
 
     const result = await this.pool.maybeOne(statement);
     if (!result) {

@@ -8,6 +8,8 @@ import { CartHttpController } from './controllers/cart.http.controller';
 import { OrdersHttpController } from './controllers/orders.http.controller';
 import { AppHttpRequestLoggerMiddleware } from '@libs/api/middleware/request-logger.middleware';
 import { ProductImagesHttpController } from './controllers/product-images.http.controller';
+import { ProductTypesHttpController } from './controllers/product-types.http.controller';
+import { AttributesHttpController } from './controllers/attributes.http.controller';
 
 @Module({
   imports: [CqrsModule],
@@ -19,6 +21,8 @@ import { ProductImagesHttpController } from './controllers/product-images.http.c
     CartHttpController,
     OrdersHttpController,
     ProductImagesHttpController,
+    ProductTypesHttpController,
+    AttributesHttpController,
   ],
 })
 export class ApiModule implements NestModule {

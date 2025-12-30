@@ -13,7 +13,8 @@
     "test": "jest --watch",
     "lint": "eslint . --ext .tsx,.ts",
     "lint:fix": "eslint . --ext .tsx,.ts --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "open-api-types": "npx swagger-typescript-api generate --path ../server/swagger.json --output ./src/api/server --name api.ts --rewrite --useOptions --useUnionTypes --defaultResponseType never --disable-throw-on-error"
   },
   "dependencies": {
     "@fontsource/roboto": "^4.5.8",
@@ -77,6 +78,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8.5.5",
     "prettier": "^2.8.7",
+    "swagger-typescript-api": "^13.2.16",
     "tailwindcss": "^4.1.10",
     "tw-animate-css": "^1.3.4",
     "typescript": "5.8.3"

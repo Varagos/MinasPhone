@@ -1,5 +1,5 @@
 # Stage 1: Build Using also dev dependencies(like rimraf, typescript, etc)
-FROM node:18 AS build
+FROM node:22 AS build
 ARG SENTRY_AUTH_TOKEN
 
 WORKDIR /app
@@ -12,7 +12,7 @@ COPY . .
 RUN yarn build
 
 # Stage 2: Production
-FROM node:18-alpine
+FROM node:22-alpine
 
 WORKDIR /app
 

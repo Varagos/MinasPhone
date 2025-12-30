@@ -45,7 +45,7 @@ export class FindAttributeQueryHandler
     query: FindAttributeQuery,
   ): Promise<Result<AttributeModel, Error>> {
     const statement = sql.type(attributeViewSchema)`
-      SELECT 
+      SELECT
         a.id,
         a.name,
         a.value_type as "valueType",
@@ -53,16 +53,18 @@ export class FindAttributeQueryHandler
         a.unit,
         a.created_at,
         a.updated_at,
-        json_agg(
-          json_build_object(
-            'id', av.id,
-            'value', av.value,
-            'displayOrder', av.display_order,
-            'created_at', av.created_at,
-            'updated_at', av.updated_at
-          ) ORDER BY av.display_order ASC
-        ) FILTER (WHERE av.id IS NOT NULL)
-        as "values"
+        COALESCE(
+          json_agg(
+            json_build_object(
+              'id', av.id,
+              'value', av.value,
+              'displayOrder', av.display_order,
+              'created_at', av.created_at,
+              'updated_at', av.updated_at
+            ) ORDER BY av.display_order ASC
+          ) FILTER (WHERE av.id IS NOT NULL),
+          '[]'::json
+        ) as "values"
       FROM attributes a
       LEFT JOIN attribute_values av ON a.id = av.attribute_id
       WHERE a.id = ${query.attributeId}

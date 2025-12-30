@@ -25,7 +25,7 @@ export const GridList = ({ actions }: ProductListProps) => {
       actions={actions}
       //            "createdAt": "2025-12-07T19:57:46.302Z",
 
-      sort={{ field: 'createdAt', order: 'ASC' }}
+      sort={{ field: 'createdAt', order: 'DESC' }}
     >
       <Datagrid rowClick="edit">
         <ImageField

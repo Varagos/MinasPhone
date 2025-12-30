@@ -182,6 +182,10 @@ const customGreeMessages: MinasPhoneMessages = {
         isSearchable: 'Αναζήτηση',
         displayOrder: 'Σειρά Εμφάνισης',
       },
+      actions: {
+        create_attribute: 'Νέο Χαρακτηριστικό',
+        attribute_created: 'Το χαρακτηριστικό δημιουργήθηκε! Μπορείτε τώρα να το επιλέξετε.',
+      },
     },
     attributes: {
       name: 'Χαρακτηριστικό |||| Χαρακτηριστικά',
@@ -191,6 +195,10 @@ const customGreeMessages: MinasPhoneMessages = {
         inputType: 'Τύπος Φίλτρου',
         unit: 'Μονάδα',
         attributeValues: 'Τιμές',
+      },
+      quick_create: {
+        title: 'Δημιουργία Νέου Χαρακτηριστικού',
+        success: 'Το χαρακτηριστικό δημιουργήθηκε επιτυχώς',
       },
     },
   },

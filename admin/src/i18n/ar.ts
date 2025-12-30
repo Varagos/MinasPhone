@@ -181,6 +181,10 @@ const customArabicMessages: MinasPhoneMessages = {
         isSearchable: 'Searchable',
         displayOrder: 'Display Order',
       },
+      actions: {
+        create_attribute: 'سمة جديدة',
+        attribute_created: 'تم إنشاء السمة! يمكنك الآن اختيارها.',
+      },
     },
     attributes: {
       name: 'Attribute |||| Attributes',
@@ -190,6 +194,10 @@ const customArabicMessages: MinasPhoneMessages = {
         inputType: 'Input Type',
         unit: 'Unit',
         attributeValues: 'Attribute Values',
+      },
+      quick_create: {
+        title: 'إنشاء سمة جديدة',
+        success: 'تم إنشاء السمة بنجاح',
       },
     },
   },

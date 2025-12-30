@@ -180,6 +180,10 @@ const customEnglishMessages: MinasPhoneMessages = {
         isSearchable: 'Searchable',
         displayOrder: 'Display Order',
       },
+      actions: {
+        create_attribute: 'New Attribute',
+        attribute_created: 'Attribute created! You can now select it.',
+      },
     },
     attributes: {
       name: 'Attribute |||| Attributes',
@@ -189,6 +193,10 @@ const customEnglishMessages: MinasPhoneMessages = {
         inputType: 'Input Type',
         unit: 'Unit',
         attributeValues: 'Attribute Values',
+      },
+      quick_create: {
+        title: 'Create New Attribute',
+        success: 'Attribute created successfully',
       },
     },
   },

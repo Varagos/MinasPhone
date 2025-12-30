@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import {
     Create,
     SimpleForm,
@@ -12,11 +13,29 @@ import {
     required,
     useTranslate,
     FormDataConsumer,
+    Button,
+    useNotify,
 } from 'react-admin';
-import { Box, Card, CardContent, Typography, Divider } from '@mui/material';
+import { Box, Card, CardContent, Typography, Divider, Dialog, DialogTitle, DialogContent } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import { useQueryClient } from 'react-query';
+import { AttributeQuickCreateForm } from '../attributes/AttributeQuickCreateForm';
 
 export const ProductTypeCreate = () => {
     const translate = useTranslate();
+    const notify = useNotify();
+    const queryClient = useQueryClient();
+    const [createAttributeModalOpen, setCreateAttributeModalOpen] = useState(false);
+
+    const handleAttributeCreated = (newAttribute: any) => {
+        setCreateAttributeModalOpen(false);
+        // Invalidate and refetch attributes list
+        queryClient.invalidateQueries(['attributes', 'getList']);
+        notify(translate('resources.product_types.actions.attribute_created', 'Attribute created! You can now select it.'), {
+            type: 'success'
+        });
+    };
+
     return (
         <Create>
             <SimpleForm>
@@ -61,14 +80,14 @@ export const ProductTypeCreate = () => {
                                             const selectedAttributeIds = formData.attributes
                                                 ?.map((attr: any) => attr?.attributeId)
                                                 .filter(Boolean) || [];
-                                            
+
                                             return (
-                                                <ReferenceInput 
-                                                    source={getSource!('attributeId')} 
-                                                    reference="attributes" 
+                                                <ReferenceInput
+                                                    source={getSource!('attributeId')}
+                                                    reference="attributes"
                                                     label={translate('resources.product_types.fields.attributeId')}
-                                                    filter={{ 
-                                                        id_not_in: selectedAttributeIds.filter((id: string) => id !== scopedFormData?.attributeId) 
+                                                    filter={{
+                                                        id_not_in: selectedAttributeIds.filter((id: string) => id !== scopedFormData?.attributeId)
                                                     }}
                                                 >
                                                     <SelectInput optionText="name" validate={[required()]} fullWidth />
@@ -82,9 +101,35 @@ export const ProductTypeCreate = () => {
                                     <NumberInput source="displayOrder" label={translate('resources.product_types.fields.displayOrder')} defaultValue={0} />
                                 </SimpleFormIterator>
                             </ArrayInput>
+
+                            <Box sx={{ mt: 2 }}>
+                                <Button
+                                    label={translate('resources.product_types.actions.create_attribute', 'New Attribute')}
+                                    onClick={() => setCreateAttributeModalOpen(true)}
+                                    startIcon={<AddIcon />}
+                                />
+                            </Box>
                         </CardContent>
                     </Card>
                 </Box>
+
+                {/* Modal for creating new attribute */}
+                <Dialog
+                    open={createAttributeModalOpen}
+                    onClose={() => setCreateAttributeModalOpen(false)}
+                    maxWidth="md"
+                    fullWidth
+                >
+                    <DialogTitle>
+                        {translate('resources.attributes.quick_create.title', 'Create New Attribute')}
+                    </DialogTitle>
+                    <DialogContent>
+                        <AttributeQuickCreateForm
+                            onSuccess={handleAttributeCreated}
+                            onCancel={() => setCreateAttributeModalOpen(false)}
+                        />
+                    </DialogContent>
+                </Dialog>
             </SimpleForm>
         </Create>
     );

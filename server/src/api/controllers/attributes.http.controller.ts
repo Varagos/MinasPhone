@@ -12,6 +12,7 @@ import {
   ParseUUIDPipe,
   NotFoundException as HttpNotFoundException,
   Put,
+  Delete,
 } from '@nestjs/common';
 import { routesV1 } from '@config/app.routes';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -26,6 +27,8 @@ import { CreateAttributeCommandResponse } from '@modules/product-catalog/applica
 import { UpdateAttributeRequestDto } from '@modules/product-catalog/application/attributes/commands/update-attribute/update-attribute.request.dto';
 import { UpdateAttributeCommand } from '@modules/product-catalog/application/attributes/commands/update-attribute/update-attribute.command';
 import { UpdateProductCommandResponse } from '@modules/product-catalog/application/attributes/commands/update-attribute/update-attribute.handler';
+import { DeleteAttributeCommand } from '@modules/product-catalog/application/attributes/commands/delete-attribute/delete-attribute.command';
+import { DeleteAttributeCommandResponse } from '@modules/product-catalog/application/attributes/commands/delete-attribute/delete-attribute.handler';
 import * as AttributeErrors from '@modules/product-catalog/domain/attribute.errors';
 import { FindAttributesRequestDto } from '@modules/product-catalog/application/attributes/queries/find-attributes/find-attributes.request.dto';
 import { AttributePaginatedResponseDto } from '@modules/product-catalog/application/attributes/dtos/attribute.paginated.response.dto';
@@ -238,6 +241,37 @@ export class AttributesHttpController {
         if (error instanceof NotFoundException) {
           throw new HttpNotFoundException();
         }
+        throw error;
+      },
+    });
+  }
+
+  @ApiOperation({
+    summary: 'Delete an Attribute',
+    description:
+      'This route can only be accessed by admins. It is used to delete an attribute.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: String,
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    type: ApiErrorResponse,
+  })
+  @Delete(routesV1.attribute.delete)
+  @UseGuards(new RolesGuard())
+  async delete(@Param('id', ParseUUIDPipe) id: string): Promise<'OK'> {
+    const command = new DeleteAttributeCommand({ attributeId: id });
+
+    const result: DeleteAttributeCommandResponse =
+      await this.commandBus.execute(command);
+
+    return match(result, {
+      Ok: () => 'OK',
+      Err: (error: Error) => {
+        if (error instanceof NotFoundException)
+          throw new HttpNotFoundException(error.message);
         throw error;
       },
     });

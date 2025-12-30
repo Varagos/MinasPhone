@@ -214,6 +214,10 @@ interface ProductTypes extends StringMap {
     isSearchable: string;
     displayOrder: string;
   };
+  actions: {
+    create_attribute: string;
+    attribute_created: string;
+  };
 }
 
 interface Attributes extends StringMap {
@@ -224,5 +228,9 @@ interface Attributes extends StringMap {
     inputType: string;
     unit: string;
     attributeValues: string;
+  };
+  quick_create: {
+    title: string;
+    success: string;
   };
 }

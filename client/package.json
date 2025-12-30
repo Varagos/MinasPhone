@@ -36,7 +36,7 @@
     "fp-ts": "^2.16.10",
     "jsurl": "^0.1.5",
     "lucide-react": "^0.518.0",
-    "next": "^15.3.4",
+    "next": "15.3.8",
     "next-intl": "^4.1.0",
     "nextjs-google-analytics": "^2.3.3",
     "react": "^19.1.0",

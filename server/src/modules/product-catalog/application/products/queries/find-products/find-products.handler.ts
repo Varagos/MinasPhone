@@ -72,17 +72,35 @@ export class FindProductsQueryHandler
      */
     const whereClauses = [];
     if (query.slug) {
-      whereClauses.push(sql`slug = ${query.slug}`);
+      whereClauses.push(sql`p.slug = ${query.slug}`);
     }
     if (categoryId) {
-      whereClauses.push(sql`category_id = ${categoryId}`);
+      whereClauses.push(sql`p.category_id = ${categoryId}`);
     }
     const priceWhereClause = await this.calculatePriceWhereClause(query);
     if (priceWhereClause) {
       whereClauses.push(priceWhereClause);
     }
     if (query.name) {
-      whereClauses.push(sql`name ILIKE ${'%' + query.name + '%'}`);
+      whereClauses.push(sql`p.name ILIKE ${'%' + query.name + '%'}`);
+    }
+
+    // Add attribute filters
+    if (query.attributeFilters) {
+      for (const [attributeId, valueIds] of Object.entries(
+        query.attributeFilters,
+      )) {
+        if (valueIds && valueIds.length > 0) {
+          whereClauses.push(sql`
+            EXISTS (
+              SELECT 1 FROM product_attribute_values pav
+              WHERE pav.product_id = p.id
+              AND pav.attribute_id = ${attributeId}
+              AND pav.attribute_value_id = ANY(${sql.array(valueIds, 'uuid')})
+            )
+          `);
+        }
+      }
     }
 
     // Join all where clauses with AND
@@ -91,8 +109,33 @@ export class FindProductsQueryHandler
         ? sql`TRUE`
         : sql.join(whereClauses, sql` AND `);
     const statement = sql.type(productSchema)`
-         SELECT *
-         FROM products
+         SELECT
+           p.*,
+           COALESCE(
+             (
+               SELECT json_object_agg(
+                 attribute_id::text,
+                 attribute_values
+               )
+               FROM (
+                 SELECT
+                   pav.attribute_id,
+                   json_agg(
+                     json_build_object(
+                       'value_id', pav.attribute_value_id,
+                       'text_value', pav.text_value,
+                       'numeric_value', pav.numeric_value,
+                       'boolean_value', pav.boolean_value
+                     )
+                   ) as attribute_values
+                 FROM product_attribute_values pav
+                 WHERE pav.product_id = p.id
+                 GROUP BY pav.attribute_id
+               ) grouped
+             ),
+             '{}'::json
+           ) AS attribute_values
+         FROM products p
          WHERE ${whereClause}
            ${sortClause}
          LIMIT ${query.limit}
@@ -123,7 +166,7 @@ export class FindProductsQueryHandler
   ): Promise<number> {
     const totalProductsStatement = sql`
           SELECT COUNT(*)
-          FROM products
+          FROM products p
           WHERE ${whereClause}
     `;
 
@@ -150,11 +193,11 @@ export class FindProductsQueryHandler
     query: FindProductsQuery,
   ): Promise<SqlSqlToken<QueryResultRow> | null> {
     if (query.price_gte !== undefined && query.price_lte !== undefined) {
-      return sql`price BETWEEN ${query.price_gte} AND ${query.price_lte}`;
+      return sql`p.price BETWEEN ${query.price_gte} AND ${query.price_lte}`;
     } else if (query.price_gte !== undefined) {
-      return sql`price >= ${query.price_gte}`;
+      return sql`p.price >= ${query.price_gte}`;
     } else if (query.price_lte !== undefined) {
-      return sql`price <= ${query.price_lte}`;
+      return sql`p.price <= ${query.price_lte}`;
     }
     // null when no price constraints are specified
     return null;

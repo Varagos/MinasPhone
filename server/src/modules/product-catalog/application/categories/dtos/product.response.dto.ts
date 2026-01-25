@@ -1,6 +1,14 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiExtraModels, ApiProperty, getSchemaPath } from '@nestjs/swagger';
 import { ResponseBase } from '@libs/api/response.base';
 
+export class ProductAttributeValueDto {
+  valueId: string | null;
+  textValue: string | null;
+  numericValue: number | null;
+  booleanValue: boolean | null;
+}
+
+@ApiExtraModels(ProductAttributeValueDto)
 export class ProductResponseDto extends ResponseBase {
   @ApiProperty({
     example: 'Cool Product',
@@ -78,15 +86,11 @@ export class ProductResponseDto extends ResponseBase {
       ],
     },
     description: 'Product attribute values grouped by attribute ID',
-    required: false,
+    type: 'object',
+    additionalProperties: {
+      type: 'array',
+      items: { $ref: getSchemaPath(ProductAttributeValueDto) },
+    },
   })
-  attributeValues?: Record<
-    string,
-    Array<{
-      valueId: string | null;
-      textValue: string | null;
-      numericValue: number | null;
-      booleanValue: boolean | null;
-    }>
-  >;
+  attributeValues?: Record<string, ProductAttributeValueDto[]>;
 }

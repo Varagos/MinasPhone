@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^6.10.1",
+    "@google-shopping/products": "^0.8.0",
     "@nestjs/common": "^11.1.5",
     "@nestjs/core": "^11.1.5",
     "@nestjs/cqrs": "^11.0.3",
@@ -52,6 +53,7 @@
     "decimal.js": "^10.4.3",
     "dotenv": "^16.0.3",
     "env-var": "^7.3.0",
+    "googleapis": "^169.0.0",
     "helmet": "^7.1.0",
     "nanoid": "^3",
     "nest-winston": "^1.10.2",

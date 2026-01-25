@@ -22,7 +22,10 @@ import { routesV1 } from '@config/app.routes';
 import { FindProductByIdQuery } from '../../modules/product-catalog/application/products/queries/find-product-by-id/find-product-by-id.query';
 import { FindProductByIdQueryResponse } from '../../modules/product-catalog/application/products/queries/find-product-by-id/find-product-by-id.handler';
 import { ArgumentInvalidException, NotFoundException } from '@libs/exceptions';
-import { ProductResponseDto } from '@modules/product-catalog/application/categories/dtos/product.response.dto';
+import {
+  ProductAttributeValueDto,
+  ProductResponseDto,
+} from '@modules/product-catalog/application/categories/dtos/product.response.dto';
 import {
   ProductPaginatedResponseDto,
   ProductSlugsPaginatedResponseDto,
@@ -283,6 +286,20 @@ export class ProductsHttpController {
         imageUrl: product.image_uri,
         categoryId: product.category_id,
         productTypeId: product.product_type_id ?? undefined,
+        attributeValues: product.attribute_values
+          ? Object.entries(product.attribute_values).reduce(
+              (acc, [attrId, values]) => {
+                acc[attrId] = values.map((v) => ({
+                  valueId: v.value_id,
+                  textValue: v.text_value,
+                  numericValue: v.numeric_value,
+                  booleanValue: v.boolean_value,
+                }));
+                return acc;
+              },
+              {} as Record<string, ProductAttributeValueDto[]>,
+            )
+          : undefined,
       })),
     });
   }

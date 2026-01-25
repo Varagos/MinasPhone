@@ -10,6 +10,7 @@ import { AppHttpRequestLoggerMiddleware } from '@libs/api/middleware/request-log
 import { ProductImagesHttpController } from './controllers/product-images.http.controller';
 import { ProductTypesHttpController } from './controllers/product-types.http.controller';
 import { AttributesHttpController } from './controllers/attributes.http.controller';
+import { GoogleMerchantHttpController } from './controllers/google-merchant.http.controller';
 
 @Module({
   imports: [CqrsModule],
@@ -23,6 +24,7 @@ import { AttributesHttpController } from './controllers/attributes.http.controll
     ProductImagesHttpController,
     ProductTypesHttpController,
     AttributesHttpController,
+    GoogleMerchantHttpController,
   ],
 })
 export class ApiModule implements NestModule {

@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiExtraModels, ApiProperty, getSchemaPath } from '@nestjs/swagger';
 import {
   IsBoolean,
   IsNotEmpty,
@@ -28,10 +28,11 @@ export class ProductAttributeValue {
   booleanValue: boolean | null;
 }
 
-export class ProductAttributeValues {
-  [key: string]: ProductAttributeValue[];
-}
+// export class ProductAttributeValues {
+//   [key: string]: ProductAttributeValue[];
+// }
 
+@ApiExtraModels(ProductAttributeValue)
 export class CreateProductRequestDto {
   @ApiProperty({
     required: true,
@@ -116,7 +117,6 @@ export class CreateProductRequestDto {
   productTypeId?: string;
 
   @ApiProperty({
-    required: false,
     example: {
       'e96e96df-e34c-4530-92d8-92e0c5c289b0': [
         {
@@ -137,8 +137,13 @@ export class CreateProductRequestDto {
     },
     description:
       'Product attribute values grouped by attribute ID. Each key is an attribute UUID, and the value is an array of attribute values.',
+    type: 'object',
+    additionalProperties: {
+      type: 'array',
+      items: { $ref: getSchemaPath(ProductAttributeValue) },
+    },
   })
   @IsObject()
   @IsOptional()
-  attributeValues?: ProductAttributeValues;
+  attributeValues?: Record<string, ProductAttributeValue[]>;
 }

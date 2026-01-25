@@ -71,4 +71,8 @@ export const routesV1 = {
     root: walletsRoot,
     delete: `/${walletsRoot}/:id`,
   },
+  googleMerchant: {
+    root: 'google-merchant',
+    syncAll: 'google-merchant/sync-all',
+  },
 };

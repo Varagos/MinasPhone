@@ -4,6 +4,8 @@ import { Image } from './value-objects/image.value-object';
 import { customAlphabet } from 'nanoid';
 import { ProductImageUpdatedDomainEvent } from './events/product-image-updated.domain-event';
 import { ProductDeletedDomainEvent } from './events/product-deleted.domain-event';
+import { ProductCreatedDomainEvent } from './events/product-created.domain-event';
+import { ProductUpdatedDomainEvent } from './events/product-updated.domain-event';
 import { Money } from './value-objects/money.value-object';
 import { Err, Ok, Result } from 'oxide.ts';
 import * as DomainErrors from './product.errors';
@@ -124,6 +126,10 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
     };
     const product = new ProductEntity({ props: defaultProps, id });
 
+    product.addEvent(
+      new ProductCreatedDomainEvent({ aggregateId: product.id }),
+    );
+
     return product;
   }
 
@@ -149,6 +155,10 @@ export class ProductEntity extends AggregateRoot<ProductProps> {
         imageUri: this.props.imageUri,
       }),
     );
+  }
+
+  public markAsUpdated(): void {
+    this.addEvent(new ProductUpdatedDomainEvent({ aggregateId: this.id }));
   }
 
   public updateName(name: string): void {

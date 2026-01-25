@@ -111,6 +111,7 @@ export class UpdateProductCommandHandler {
         }
       }
 
+      product.markAsUpdated();
       await this.productRepo.update(product);
       return Ok(undefined);
     } catch (error) {

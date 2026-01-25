@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsPhoneNumber, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsPhoneNumber,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 
 export class CheckoutOrderRequestDto {
   @ApiProperty({
@@ -9,6 +15,7 @@ export class CheckoutOrderRequestDto {
   })
   @IsString()
   @IsNotEmpty()
+  @MaxLength(100)
   firstName: string;
 
   @ApiProperty({
@@ -18,6 +25,7 @@ export class CheckoutOrderRequestDto {
   })
   @IsString()
   @IsNotEmpty()
+  @MaxLength(100)
   lastName: string;
 
   @ApiProperty({
@@ -27,6 +35,7 @@ export class CheckoutOrderRequestDto {
   })
   @IsEmail()
   @IsNotEmpty()
+  @MaxLength(100)
   email: string;
 
   @ApiProperty({
@@ -37,5 +46,6 @@ export class CheckoutOrderRequestDto {
   })
   @IsPhoneNumber()
   @IsNotEmpty()
+  @MaxLength(20)
   phone: string;
 }

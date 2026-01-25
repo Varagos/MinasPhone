@@ -46,7 +46,7 @@ async function bootstrap() {
       'https://minasphone.gr',
       'https://www.minasphone.gr',
       'https://www.admin.minasphone.gr',
-      'http://s88w8owo0k8wcg8gg4o08owc.142.132.183.190.sslip.io/',
+      'http://s88w8owo0k8wcg8gg4o08owc.142.132.183.190.sslip.io',
       'https://new.minasphone.gr',
       'http://new.minasphone.gr',
     ],

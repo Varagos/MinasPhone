@@ -61,16 +61,37 @@ export class CustomRangeParam implements ValidatorConstraintInterface {
 
 @ValidatorConstraint({ name: 'customFilter', async: false })
 export class CustomFilterParam implements ValidatorConstraintInterface {
-  validate(value: Record<string, string>, args: ValidationArguments) {
+  validate(
+    value: Record<string, string | number | Record<string, string[]>>,
+    args: ValidationArguments,
+  ) {
     const validFields = args.constraints as string[];
     try {
       for (const key of Object.keys(value)) {
         if (!validFields.includes(key)) {
           return false; // invalid key found
         }
-        // console.log('RECEIVED VALUE', value);
-        if (typeof value[key] !== 'number' && typeof value[key] !== 'string') {
+        const fieldValue = value[key];
+        // Allow string, number, or object (for attributeFilters)
+        if (
+          typeof fieldValue !== 'number' &&
+          typeof fieldValue !== 'string' &&
+          typeof fieldValue !== 'object'
+        ) {
           return false; // invalid value type found
+        }
+        // Validate attributeFilters structure if present
+        if (key === 'attributeFilters' && typeof fieldValue === 'object') {
+          for (const attrValue of Object.values(
+            fieldValue as Record<string, string[]>,
+          )) {
+            if (!Array.isArray(attrValue)) {
+              return false; // must be an array
+            }
+            if (!attrValue.every((v) => typeof v === 'string')) {
+              return false; // all values must be strings (UUIDs)
+            }
+          }
         }
       }
       return true;
@@ -83,7 +104,7 @@ export class CustomFilterParam implements ValidatorConstraintInterface {
   defaultMessage(args: ValidationArguments) {
     return `Allowed filter keys are ${args.constraints.join(
       ', ',
-    )} with either string or number values, received: ${Object.keys(
+    )} with either string, number, or object values, received: ${Object.keys(
       args.value,
     ).join(', ')}`;
   }

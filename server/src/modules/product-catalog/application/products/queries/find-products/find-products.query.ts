@@ -13,6 +13,9 @@ export class FindProductsQuery extends PaginatedQueryBase {
 
   public readonly price_lte?: number;
 
+  /** Filter by attribute values: { [attributeId]: [valueId1, valueId2, ...] } */
+  public readonly attributeFilters?: Record<string, string[]>;
+
   constructor(props: PaginatedParams<FindProductsQuery>) {
     super(props);
     this.slug = props.slug;
@@ -21,5 +24,6 @@ export class FindProductsQuery extends PaginatedQueryBase {
     this.categorySlug = props.categorySlug;
     this.price_gte = props.price_gte;
     this.price_lte = props.price_lte;
+    this.attributeFilters = props.attributeFilters;
   }
 }

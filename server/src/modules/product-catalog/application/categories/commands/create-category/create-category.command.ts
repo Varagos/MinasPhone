@@ -3,5 +3,6 @@ export class CreateCategoryCommand {
     public readonly slug: string,
     public readonly name: string,
     public readonly parentId: string | null,
+    public readonly sortOrder?: number,
   ) {}
 }

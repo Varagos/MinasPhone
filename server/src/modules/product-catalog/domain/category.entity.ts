@@ -5,11 +5,13 @@ interface CategoryProps {
   slug: string;
   name: string;
   parentId: string | null;
+  sortOrder?: number;
 }
 interface CreateCategoryProps {
   slug: string;
   name: string;
   parentId: string | null;
+  sortOrder?: number;
 }
 
 export class CategoryEntity extends AggregateRoot<CategoryProps> {
@@ -26,6 +28,10 @@ export class CategoryEntity extends AggregateRoot<CategoryProps> {
     return this.props.name;
   }
 
+  get sortOrder(): number {
+    return this.props.sortOrder ?? 0;
+  }
+
   public static create(props: CreateCategoryProps): CategoryEntity {
     // TODO validations
     const id = randomUUID();
@@ -34,6 +40,7 @@ export class CategoryEntity extends AggregateRoot<CategoryProps> {
       slug: props.slug,
       name: props.name,
       parentId: props.parentId,
+      sortOrder: props.sortOrder ?? 0,
     };
     const category = new CategoryEntity({ props: defaultProps, id });
 
@@ -62,5 +69,9 @@ export class CategoryEntity extends AggregateRoot<CategoryProps> {
 
   public updateParentId(parentId: string): void {
     this.props.parentId = parentId;
+  }
+
+  public updateSortOrder(sortOrder: number): void {
+    this.props.sortOrder = sortOrder;
   }
 }

@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class CreateCategoryRequestDto {
   @ApiProperty({
@@ -28,4 +35,13 @@ export class CreateCategoryRequestDto {
   @IsUUID()
   @IsOptional()
   parentId?: string;
+
+  @ApiProperty({
+    required: false,
+    example: 1,
+    description: 'The sort order of the category',
+  })
+  @IsOptional()
+  @IsNumber()
+  sortOrder?: number;
 }

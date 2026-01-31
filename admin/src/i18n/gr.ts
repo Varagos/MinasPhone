@@ -169,6 +169,7 @@ const customGreeMessages: MinasPhoneMessages = {
         name: 'Όνομα',
         slug: 'Slug',
         parent: 'Γονέας',
+        sortOrder: 'Σειρά Ταξινόμησης',
       },
     },
     product_types: {

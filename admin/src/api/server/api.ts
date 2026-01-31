@@ -143,6 +143,7 @@ export interface CategoryResponseDto {
   name: string;
   /** Optional parent category id */
   parentId: string | null;
+  sortOrder: number;
 }
 
 export interface CategoryPaginatedResponseDto {
@@ -216,6 +217,10 @@ export interface CreateProductRequestDto {
    * @example "c7b58d20-92a7-4e72-8da7-82971a1a9f4f"
    */
   productTypeId?: string;
+  /**
+   * Product attribute values grouped by attribute ID. Each key is an attribute UUID, and the value is an array of attribute values.
+   * @example {"e96e96df-e34c-4530-92d8-92e0c5c289b0":[{"valueId":"d8837292-366c-4ef9-bd96-cb9f515daf8c","textValue":null,"numericValue":null,"booleanValue":null}],"4f1be95d-f37e-4d65-a3a4-ac571dc6c3fa":[{"valueId":null,"textValue":"256GB","numericValue":null,"booleanValue":null}]}
+   */
   attributeValues?: ProductAttributeValues;
 }
 
@@ -274,7 +279,38 @@ export interface UpdateProductRequestDto {
   attributeValues?: object;
 }
 
-export type Object = object;
+export interface ProductsFilterDto {
+  /**
+   * Filter by category ID
+   * @example "550e8400-e29b-41d4-a716-446655440000"
+   */
+  categoryId?: string;
+  /**
+   * Filter by category slug
+   * @example "smartphones"
+   */
+  categorySlug?: string;
+  /**
+   * Filter by product name (partial match)
+   * @example "iPhone"
+   */
+  name?: string;
+  /**
+   * Minimum price filter
+   * @example 100
+   */
+  price_gte?: number;
+  /**
+   * Maximum price filter
+   * @example 1000
+   */
+  price_lte?: number;
+  /**
+   * Filter by attribute values. Keys are attribute IDs, values are arrays of attribute value IDs. Multiple values per attribute = OR, multiple attributes = AND.
+   * @example {"brand-attr-id":["apple-value-id","samsung-value-id"],"ram-attr-id":["8gb-value-id"]}
+   */
+  attributeFilters?: object;
+}
 
 export interface ProductResponseDto {
   /** @example "2cdc8ab1-6d50-49cc-ba14-54e4ac7ec231" */
@@ -517,6 +553,8 @@ export interface OrderResponseDto {
    */
   total: number;
 }
+
+export type Object = object;
 
 export interface OrderPaginatedResponseDto {
   /**
@@ -1387,12 +1425,12 @@ export class Api<
      */
     productsHttpControllerFindProducts: (
       query?: {
-        /** Order by field and order */
+        /** Sort by field and order. Available fields: slug, name, price, quantity, createdAt, updatedAt, id */
         sort?: string[];
-        /** Range of results to return */
+        /** Pagination range [start, end]. Example: [0, 9] returns first 10 items. */
         range?: string[];
-        /** Filter results */
-        filter?: Object;
+        /** Filter products by various criteria */
+        filter?: ProductsFilterDto;
       },
       params: RequestParams = {},
     ) =>
@@ -1924,6 +1962,22 @@ export class Api<
       this.request<AttributeResponseDto, ApiErrorResponse>({
         path: `/api/v1/attributes/${id}`,
         method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description This route can only be accessed by admins. It is used to delete an attribute.
+     *
+     * @tags attributes
+     * @name AttributesHttpControllerDelete
+     * @summary Delete an Attribute
+     * @request DELETE:/api/v1/attributes/{id}
+     */
+    attributesHttpControllerDelete: (id: string, params: RequestParams = {}) =>
+      this.request<string, ApiErrorResponse>({
+        path: `/api/v1/attributes/${id}`,
+        method: "DELETE",
         format: "json",
         ...params,
       }),

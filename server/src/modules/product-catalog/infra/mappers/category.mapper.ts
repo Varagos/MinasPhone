@@ -24,6 +24,7 @@ export class CategoryMapper
       slug: copy.slug,
       name: copy.name,
       parent_id: copy.parentId,
+      sort_order: copy.sortOrder ?? 0,
     };
     return categorySchema.parse(record);
   }
@@ -37,6 +38,7 @@ export class CategoryMapper
         name: record.name,
         slug: record.slug,
         parentId: record.parent_id ?? null,
+        sortOrder: record.sort_order ?? 0,
       },
     });
     return entity;
@@ -48,6 +50,7 @@ export class CategoryMapper
     response.name = props.name;
     response.slug = props.slug;
     response.parentId = props.parentId;
+    response.sortOrder = props.sortOrder ?? 0;
     return response;
   }
 

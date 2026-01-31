@@ -18,4 +18,6 @@ export class CategoryResponseDto extends ResponseBase {
     description: 'Optional parent category id',
   })
   parentId: string | null;
+
+  sortOrder: number;
 }

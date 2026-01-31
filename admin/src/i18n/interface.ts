@@ -200,6 +200,7 @@ interface Categories extends StringMap {
     slug: string;
     name: string;
     parent: string;
+    sortOrder: string;
   };
 }
 

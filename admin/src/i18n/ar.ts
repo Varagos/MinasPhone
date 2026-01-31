@@ -168,6 +168,7 @@ const customArabicMessages: MinasPhoneMessages = {
         name: 'الاسم',
         slug: 'Slug',
         parent: 'الأصل',
+        sortOrder: 'ترتيب الفرز',
       },
     },
     product_types: {

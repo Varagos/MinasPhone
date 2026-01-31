@@ -45,6 +45,10 @@ export class UpdateCategoryCommandHandler {
       category.updateParentId(command.parentId);
     }
 
+    if (command.sortOrder !== undefined) {
+      category.updateSortOrder(command.sortOrder);
+    }
+
     try {
       await this.categoryRepo.update(category);
       return Ok(undefined);

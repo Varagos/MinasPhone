@@ -56,7 +56,7 @@ const Configuration = () => {
         <Button
           variant="contained"
           sx={{ margin: '1em' }}
-          color={locale === LocaleEnum.GR ? 'primary' : 'secondary'}
+          color={locale === LocaleEnum.AR ? 'primary' : 'secondary'}
           onClick={() => setLocale(LocaleEnum.AR)}
         >
           ar

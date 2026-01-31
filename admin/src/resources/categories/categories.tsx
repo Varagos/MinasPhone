@@ -4,6 +4,7 @@ import {
   Datagrid,
   Edit,
   List,
+  NumberInput,
   ReferenceField,
   ReferenceInput,
   SelectInput,
@@ -28,6 +29,7 @@ export const CategoryList = () => {
         >
           <TextField source="name" />
         </ReferenceField>
+        <TextField source="sortOrder" label={translate('resources.categories.fields.sortOrder')} />
       </Datagrid>
     </List>
   );
@@ -49,6 +51,7 @@ export const CategoryEdit = () => {
         >
           <SelectInput optionText="name" label={translate('resources.categories.fields.parent')} />
         </ReferenceInput>
+        <NumberInput source="sortOrder" label={translate('resources.categories.fields.sortOrder')} />
       </SimpleForm>
     </Edit>
   );
@@ -68,6 +71,7 @@ export const CategoryCreate = () => {
         >
           <SelectInput optionText="name" label={translate('resources.categories.fields.parent')} />
         </ReferenceInput>
+        <NumberInput source="sortOrder" label={translate('resources.categories.fields.sortOrder')} />
       </SimpleForm>
     </Create>
   );

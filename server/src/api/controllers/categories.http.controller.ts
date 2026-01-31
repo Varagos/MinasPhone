@@ -76,8 +76,8 @@ export class CategoriesHttpController {
   @Post(routesV1.category.root)
   @UseGuards(new RolesGuard())
   async create(@Body() body: CreateCategoryRequestDto): Promise<IdResponse> {
-    const { slug, name, parentId = null } = body;
-    const command = new CreateCategoryCommand(slug, name, parentId);
+    const { slug, name, parentId = null, sortOrder } = body;
+    const command = new CreateCategoryCommand(slug, name, parentId, sortOrder);
 
     const result: CreateCategoryCommandResponse = await this.commandBus.execute(
       command,
@@ -210,6 +210,7 @@ export class CategoriesHttpController {
         slug: category.slug,
         name: category.name,
         parentId: category.parent_id,
+        sortOrder: category.sort_order ?? 0,
       })),
     });
   }
@@ -245,6 +246,7 @@ export class CategoriesHttpController {
           slug: category.slug,
           name: category.name,
           parentId: category.parent_id,
+          sortOrder: category.sort_order ?? 0,
         };
       },
       Err: (error: Error) => {

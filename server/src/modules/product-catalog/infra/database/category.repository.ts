@@ -19,6 +19,7 @@ export const categorySchema = z.object({
   updated_at: z.preprocess((val: any) => new Date(val), z.date()),
   slug: z.string().min(1).max(255),
   name: z.string().min(1).max(255),
+  sort_order: z.number().int().nonnegative().default(0),
   parent_id: z.string().uuid().nullable(),
 });
 

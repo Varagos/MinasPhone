@@ -41,6 +41,7 @@ defineFeature(feature, (test) => {
         data.slug,
         data.name,
         data.parentId === 'null' ? null : data.parentId,
+        data.sortOrder ? Number(data.sortOrder) : undefined,
       );
 
       // Mock the repository to return null (no existing category)

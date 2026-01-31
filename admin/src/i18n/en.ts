@@ -167,6 +167,7 @@ const customEnglishMessages: MinasPhoneMessages = {
         name: 'Name',
         slug: 'Slug',
         parent: 'Parent',
+        sortOrder: 'Sort Order',
       },
     },
     product_types: {

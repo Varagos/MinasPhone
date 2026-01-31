@@ -15,4 +15,4 @@ export const i18nProvider = polyglotI18nProvider((locale) => {
     return import('./ar').then((messages) => messages.default);
   }
   return englishMessages;
-}, LocaleEnum.EN);
+}, LocaleEnum.GR);

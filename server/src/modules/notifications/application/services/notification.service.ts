@@ -33,11 +33,11 @@ const ORDER_CONFIRMATION_TEMPLATE_ID = 'd-8f5b8cdb109849e2a53dde554d02f417';
 @Injectable()
 export class NotificationService {
   private readonly logger = new Logger(NotificationService.name);
-  private readonly adminEmail: string;
+  private readonly adminEmails: string[];
   private readonly fromEmail: string;
 
   constructor(private readonly emailService: EmailService) {
-    this.adminEmail = emailConfig.admin_email;
+    this.adminEmails = emailConfig.admin_emails;
     this.fromEmail = emailConfig.email_from;
   }
 
@@ -66,18 +66,26 @@ export class NotificationService {
     data: OrderNotificationData,
   ): Promise<boolean> {
     try {
-      const subject = `New Order Received: #${data.orderId}`;
+      const subject = `MINAS PHONE: ΝΕΑ ΠΑΡΑΓΓΕΛΙΑ - ID: ${data.orderId}`;
 
       // Create HTML content for the email
       const html = this.createOrderCreatedEmailTemplate(data);
 
-      // Send email to admin
-      return await this.emailService.sendEmail({
-        to: this.adminEmail,
-        subject,
-        html,
-        text: `New order received with ID: ${data.orderId}. Contains ${data.lineItems.length} items.`,
-      });
+      let allSuccess = true;
+      for (const adminEmail of this.adminEmails) {
+        // Send email to admin
+        const success = await this.emailService.sendEmail({
+          to: adminEmail,
+          subject,
+          html,
+          text: `Νέα παραγγελία με ID: ${data.orderId}. Περιέχει ${data.lineItems.length} αντικείμενα.`,
+        });
+
+        if (!success) {
+          allSuccess = false;
+        }
+      }
+      return allSuccess;
     } catch (error: any) {
       this.logger.error(
         'Failed to send order created notification',

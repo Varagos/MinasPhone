@@ -4,7 +4,7 @@ A clean architecture implementation of an e-commerce system using **NestJS**, **
 
 ## 🏗️ Architecture Overview
 
-This project demonstrates a microservices-based e-commerce platform with clear separation of concerns through:
+This project demonstrates a Modular Monolith e-commerce platform with clear separation of concerns through:
 
 - **Clean Architecture** with distinct layers
 - **CQRS (Command Query Responsibility Segregation)** for scalable read/write operations
